@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Engines — AI Consulting &amp; Media Production</title>
+  <meta name="description" content="15+ years of consulting and product development. We help businesses grow revenue and cut costs through AI strategy, custom apps, and media production.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,800;9..144,900&family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --midnight: #0B1121;
+      --deep: #111B2E;
+      --surface: #162038;
+      --border: #1E2D4A;
+      --copper: #E8734A;
+      --copper-dim: #e8734a25;
+      --copper-mid: #e8734a55;
+      --teal: #4ECDC4;
+      --teal-dim: #4ecdc420;
+      --cream: #F0EDE6;
+      --dim: #7A8BA0;
+      --dim2: #4A5C72;
+      --font-serif: 'Fraunces', serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-sans: 'DM Sans', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--midnight);
+      color: var(--cream);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── TOPO SVG BG ── */
+    .topo-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.07;
+    }
+
+    .topo-bg svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    section, footer, nav { position: relative; z-index: 1; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 18px 0;
+      backdrop-filter: blur(24px);
+      background: rgba(11, 17, 33, 0.85);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-serif);
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--copper);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: var(--dim); font-weight: 300; }
+
+    .nav-links { display: flex; gap: 28px; align-items: center; list-style: none; }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--dim);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--copper); }
+
+    .nav-cta {
+      background: var(--copper) !important;
+      color: var(--midnight) !important;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      transition: transform 0.2s, box-shadow 0.3s !important;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 24px var(--copper-dim);
+    }
+
+    .mobile-nav { display: none; background: none; border: 1px solid var(--border); color: var(--cream); padding: 8px 14px; border-radius: 6px; cursor: pointer; font-family: var(--font-mono); font-size: 12px; }
+
+    .shift-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      color: var(--dim);
+      background: none;
+      border: 1px solid var(--border);
+      padding: 7px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.3s, border-color 0.3s, background 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .shift-btn:hover {
+      color: var(--copper);
+      border-color: var(--copper-mid);
+      background: var(--copper-dim);
+    }
+
+    .shift-icon {
+      display: inline-block;
+      transition: transform 0.4s ease;
+    }
+
+    .shift-btn:hover .shift-icon {
+      transform: rotate(180deg);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 140px 0 100px;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 15%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--copper-dim), transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--copper);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-weight: 900;
+      font-size: clamp(44px, 6.5vw, 80px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.8s ease forwards 0.35s;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--copper);
+      font-weight: 600;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--dim);
+      line-height: 1.8;
+      max-width: 520px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.7s ease forwards 0.55s;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.7s ease forwards 0.7s;
+    }
+
+    .btn {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 16px 32px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    .btn-warm {
+      background: var(--copper);
+      color: var(--midnight);
+    }
+
+    .btn-warm:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px var(--copper-dim);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--copper);
+      color: var(--copper);
+    }
+
+    /* hero right — floating orbit visual */
+    .hero-visual {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.5s;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      animation: spin 40s linear infinite;
+    }
+
+    .orbit-ring:nth-child(1) { inset: 5%; }
+    .orbit-ring:nth-child(2) { inset: 20%; animation-duration: 30s; animation-direction: reverse; }
+    .orbit-ring:nth-child(3) { inset: 35%; animation-duration: 20s; }
+
+    .orbit-node {
+      position: absolute;
+      background: var(--deep);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--dim);
+      white-space: nowrap;
+      transition: border-color 0.3s, color 0.3s;
+    }
+
+    .orbit-node:hover {
+      border-color: var(--copper);
+      color: var(--cream);
+    }
+
+    .orbit-node .dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .dot-copper { background: var(--copper); }
+    .dot-teal { background: var(--teal); }
+    .dot-cream { background: var(--cream); }
+
+    .orbit-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--copper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--midnight);
+      box-shadow: 0 0 60px var(--copper-dim);
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── MARQUEE ── */
+    .marquee {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex;
+      animation: marquee 30s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-item {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-style: italic;
+      font-size: 16px;
+      white-space: nowrap;
+      padding: 0 48px;
+      color: var(--dim);
+    }
+
+    .marquee-item .sep {
+      color: var(--copper);
+      margin: 0 16px;
+      font-style: normal;
+    }
+
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* ── SECTION UTILS ── */
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--copper);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-tag::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--copper);
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-weight: 800;
+      font-size: clamp(32px, 4.5vw, 52px);
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .section-desc {
+      font-size: 17px;
+      color: var(--dim);
+      max-width: 540px;
+      line-height: 1.8;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.vis { opacity: 1; transform: translateY(0); }
+
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .stagger.vis > *:nth-child(1) { transition-delay: 0s; }
+    .stagger.vis > *:nth-child(2) { transition-delay: 0.08s; }
+    .stagger.vis > *:nth-child(3) { transition-delay: 0.16s; }
+    .stagger.vis > *:nth-child(4) { transition-delay: 0.24s; }
+    .stagger.vis > *:nth-child(5) { transition-delay: 0.32s; }
+    .stagger.vis > *:nth-child(6) { transition-delay: 0.4s; }
+    .stagger.vis > * { opacity: 1; transform: translateY(0); }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* ── ABOUT ── */
+    .about { padding: 120px 0; }
+
+    .about-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 56px;
+    }
+
+    .about-narrative p {
+      color: var(--dim);
+      font-size: 16px;
+      line-height: 1.9;
+      margin-bottom: 24px;
+    }
+
+    .about-narrative strong {
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: linear-gradient(180deg, var(--copper), var(--teal), var(--border));
+    }
+
+    .timeline-item {
+      margin-bottom: 36px;
+      position: relative;
+    }
+
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -36px;
+      top: 8px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--copper);
+      box-shadow: 0 0 12px var(--copper-dim);
+    }
+
+    .timeline-item:nth-child(even)::before { background: var(--teal); box-shadow: 0 0 12px var(--teal-dim); }
+
+    .timeline-year {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--copper);
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-year { color: var(--teal); }
+
+    .timeline-title {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    .timeline-desc {
+      font-size: 14px;
+      color: var(--dim);
+      line-height: 1.7;
+    }
+
+    /* trusted strip */
+    .trusted {
+      margin-top: 64px;
+      padding: 32px 40px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--deep);
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .trusted-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--dim2);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      flex-shrink: 0;
+    }
+
+    .trusted-sep { width: 1px; height: 32px; background: var(--border); flex-shrink: 0; }
+
+    .trusted-names {
+      display: flex;
+      gap: 36px;
+      flex-wrap: wrap;
+    }
+
+    .trusted-name {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--dim);
+      transition: color 0.3s;
+    }
+
+    .trusted-name:hover { color: var(--copper); }
+
+    /* ── WHAT WE ACTUALLY DO — expanded grid ── */
+    .offerings { padding: 120px 0; background: var(--deep); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .offering-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 56px;
+      background: var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .offering-card {
+      background: var(--midnight);
+      padding: 44px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+    }
+
+    .offering-card:hover { background: var(--surface); }
+
+    .offering-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--copper);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+
+    .offering-card:hover::after { transform: scaleX(1); }
+
+    .offering-icon {
+      font-size: 28px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .offering-card h3 {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .offering-card p {
+      font-size: 14px;
+      color: var(--dim);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .offering-examples {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--dim2);
+      line-height: 2;
+    }
+
+    .offering-examples span {
+      color: var(--copper);
+    }
+
+    /* ── "WHAT IF" SECTION — provocative thought starters ── */
+    .whatif {
+      padding: 120px 0;
+    }
+
+    .whatif-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .whatif-header .section-tag { justify-content: center; }
+    .whatif-header .section-desc { margin: 0 auto; }
+
+    .whatif-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .whatif-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px 32px;
+      background: var(--deep);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s, transform 0.3s;
+    }
+
+    .whatif-card:hover {
+      border-color: var(--copper-mid);
+      transform: translateY(-4px);
+    }
+
+    .whatif-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 40px;
+      right: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--copper-mid), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .whatif-card:hover::before { opacity: 1; }
+
+    .whatif-q {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 20px;
+      font-style: italic;
+      line-height: 1.4;
+      margin-bottom: 16px;
+      color: var(--cream);
+    }
+
+    .whatif-a {
+      font-size: 14px;
+      color: var(--dim);
+      line-height: 1.8;
+    }
+
+    .whatif-a strong {
+      color: var(--copper);
+      font-weight: 500;
+    }
+
+    /* ── WORK ── */
+    .work { padding: 120px 0; background: var(--deep); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .work-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      background: var(--midnight);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .work-card:hover { border-color: var(--copper-dim); transform: translateY(-3px); }
+
+    .work-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--teal);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .work-card h3 {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .work-card p {
+      font-size: 14px;
+      color: var(--dim);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .work-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .work-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--copper);
+      padding: 4px 10px;
+      border: 1px solid var(--copper-dim);
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .work-tag a { color: var(--copper); text-decoration: none; }
+
+    /* ── PROCESS ── */
+    .process { padding: 120px 0; }
+
+    .process-track {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 56px;
+      position: relative;
+    }
+
+    .process-track::before {
+      content: '';
+      position: absolute;
+      top: 38px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--copper), var(--teal), var(--copper));
+      opacity: 0.3;
+    }
+
+    .process-step {
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    .step-num {
+      font-family: var(--font-serif);
+      font-weight: 900;
+      font-size: 64px;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 16px;
+      transition: color 0.3s;
+    }
+
+    .process-step:hover .step-num { color: var(--copper-dim); }
+
+    .process-step h3 {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .process-step p {
+      font-size: 14px;
+      color: var(--dim);
+      line-height: 1.8;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      padding: 140px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 50% at 50% 60%, var(--copper-dim), transparent);
+      pointer-events: none;
+    }
+
+    .cta .section-title { max-width: 600px; margin: 0 auto 20px; }
+    .cta .section-desc { max-width: 460px; margin: 0 auto 48px; text-align: center; }
+
+    /* ── CONTACT ── */
+    .contact { padding: 120px 0; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-left h3 {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .contact-left p {
+      color: var(--dim);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .contact-email {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--copper);
+      text-decoration: none;
+      padding: 12px 20px;
+      border: 1px solid var(--copper-dim);
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.3s;
+    }
+
+    .contact-email:hover { background: var(--copper-dim); }
+
+    .form-group { margin-bottom: 18px; }
+
+    .form-group label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--dim2);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: var(--deep);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 13px 16px;
+      color: var(--cream);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--copper); }
+
+    .form-group textarea { min-height: 110px; resize: vertical; }
+
+    .form-group select {
+      appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%237A8BA0' stroke-width='1.5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+    }
+
+    .form-group select option { background: var(--deep); color: var(--cream); }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 0;
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--dim2);
+    }
+
+    .footer-links { display: flex; gap: 24px; }
+
+    .footer-links a {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--dim2);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--copper); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .about-split { grid-template-columns: 1fr; gap: 48px; }
+      .offering-grid { grid-template-columns: 1fr; }
+      .whatif-grid { grid-template-columns: 1fr; }
+      .work-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .trusted { flex-direction: column; align-items: flex-start; }
+      .trusted-sep { width: 40px; height: 1px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-nav { display: block; }
+      .process-track { grid-template-columns: 1fr; gap: 40px; }
+      .process-track::before { display: none; }
+      .process-step { text-align: left; }
+      .process-step p { margin: 0; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; }
+      footer .container { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPO BG -->
+  <div class="topo-bg">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+      <g fill="none" stroke="#4ECDC4" stroke-width="0.5">
+        <path d="M-100,200 Q200,100 400,200 T800,180 T1200,220 T1600,190" />
+        <path d="M-100,260 Q180,180 420,260 T820,240 T1200,280 T1600,250" />
+        <path d="M-100,340 Q240,260 480,340 T860,320 T1240,360 T1600,330" />
+        <path d="M-100,420 Q200,360 440,420 T840,400 T1200,440 T1600,410" />
+        <path d="M-100,500 Q260,440 500,500 T880,480 T1260,520 T1600,490" />
+        <path d="M-100,580 Q220,520 460,580 T860,560 T1240,600 T1600,570" />
+        <path d="M-100,660 Q280,600 520,660 T900,640 T1280,680 T1600,650" />
+        <path d="M-100,740 Q240,680 480,740 T880,720 T1260,760 T1600,730" />
+      </g>
+      <g fill="none" stroke="#E8734A" stroke-width="0.3" opacity="0.5">
+        <path d="M-50,150 Q300,80 500,170 T900,140 T1300,180 T1650,150" />
+        <path d="M-50,380 Q280,320 520,390 T920,370 T1300,410 T1650,380" />
+        <path d="M-50,620 Q300,560 540,630 T940,610 T1320,650 T1650,620" />
+      </g>
+    </svg>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">Prompt<span>Engines</span></a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#offerings">Services</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#whatif">Ideas</a></li>
+        <li><a href="v1.html" class="shift-btn"><span class="shift-icon">◐</span> Shift View</a></li>
+        <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
+      </ul>
+      <button class="mobile-nav" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Let's Talk</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-eyebrow">AI Consulting &middot; Apps &middot; Media</div>
+          <h1>We build the things that make your business <em>go.</em></h1>
+          <p class="hero-sub">15 years of consulting and product development — now focused on helping small businesses grow with AI. Strategy, custom software, and media production, all under one roof.</p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-warm">Start a Conversation <span>→</span></a>
+            <a href="#work" class="btn btn-ghost">See Our Work</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="orbit-ring"></div>
+          <div class="orbit-ring"></div>
+          <div class="orbit-ring"></div>
+          <div class="orbit-center">PE</div>
+          <div class="orbit-node" style="top: 5%; left: 55%;"><span class="dot dot-copper"></span>AI Strategy</div>
+          <div class="orbit-node" style="top: 30%; right: 0;"><span class="dot dot-teal"></span>Video &amp; Media</div>
+          <div class="orbit-node" style="bottom: 28%; right: 5%;"><span class="dot dot-copper"></span>Custom Apps</div>
+          <div class="orbit-node" style="bottom: 5%; left: 40%;"><span class="dot dot-teal"></span>Automation</div>
+          <div class="orbit-node" style="top: 50%; left: -5%;"><span class="dot dot-cream"></span>Brand &amp; Design</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <div class="marquee-item">AI that disappears into your workflow<span class="sep">◆</span></div>
+      <div class="marquee-item">Apps built for real industries<span class="sep">◆</span></div>
+      <div class="marquee-item">Media that moves the needle<span class="sep">◆</span></div>
+      <div class="marquee-item">15 years of shipping products<span class="sep">◆</span></div>
+      <div class="marquee-item">From IBM to your local business<span class="sep">◆</span></div>
+      <div class="marquee-item">Strategy you can actually execute<span class="sep">◆</span></div>
+      <div class="marquee-item">AI that disappears into your workflow<span class="sep">◆</span></div>
+      <div class="marquee-item">Apps built for real industries<span class="sep">◆</span></div>
+      <div class="marquee-item">Media that moves the needle<span class="sep">◆</span></div>
+      <div class="marquee-item">15 years of shipping products<span class="sep">◆</span></div>
+      <div class="marquee-item">From IBM to your local business<span class="sep">◆</span></div>
+      <div class="marquee-item">Strategy you can actually execute<span class="sep">◆</span></div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="section-tag">About Us</div>
+      <div class="section-title reveal">Fifteen years of building<br>things that matter.</div>
+
+      <div class="about-split">
+        <div class="about-narrative reveal">
+          <p>Prompt Engines was born from a straightforward observation: <strong>most businesses don't need more technology — they need the right technology, applied well.</strong></p>
+          <p>We've spent over 15 years in consulting and product development, working with organizations ranging from <strong>IBM</strong> and <strong>Stability AI</strong> to local startups and small businesses. That range gives us a rare perspective — we understand enterprise rigor and startup speed.</p>
+          <p>Today we focus on three things: <strong>AI consulting</strong> that identifies where you're leaving money on the table, <strong>custom applications</strong> built for your specific industry, and <strong>media production</strong> — from marketing videos to brand photography to campaign ads — that actually converts.</p>
+          <p>We don't hand you a strategy deck and walk away. We build the thing. We ship it. We stick around until it works.</p>
+        </div>
+
+        <div class="timeline reveal">
+          <div class="timeline-item">
+            <div class="timeline-year">THE EARLY DAYS</div>
+            <div class="timeline-title">Enterprise Consulting</div>
+            <div class="timeline-desc">Years of product development and consulting at scale, including work with IBM — building the operational muscle for complex projects.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">THE AI ERA</div>
+            <div class="timeline-title">Generative AI &amp; Stability AI</div>
+            <div class="timeline-desc">Deep work in image generation, video production, and AI pipelines. Built tools and workflows at the frontier of what's possible.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">TODAY</div>
+            <div class="timeline-title">Prompt Engines</div>
+            <div class="timeline-desc">Bringing 15 years of experience to small businesses — AI strategy, custom apps, and media production. From a roofing app to an ESL tutoring platform in Pakistan.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">WHAT'S NEXT</div>
+            <div class="timeline-title">Scaling Impact</div>
+            <div class="timeline-desc">Deploying more products, expanding our app portfolio, and helping more businesses discover what AI can actually do for them.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trusted reveal">
+        <div class="trusted-label">Worked With</div>
+        <div class="trusted-sep"></div>
+        <div class="trusted-names">
+          <div class="trusted-name">IBM</div>
+          <div class="trusted-name">Stability AI</div>
+          <div class="trusted-name">Gizri School</div>
+          <div class="trusted-name">Startups &amp; SMBs</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="offerings" id="offerings">
+    <div class="container">
+      <div class="section-tag">What We Do</div>
+      <div class="section-title reveal">Everything you need.<br>Nothing you don't.</div>
+      <div class="section-desc reveal">We keep it focused: AI strategy, software, and media. Three capabilities that cover the full spectrum of what small businesses actually need to grow.</div>
+
+      <div class="offering-grid stagger">
+        <div class="offering-card">
+          <span class="offering-icon">◈</span>
+          <h3>AI Consulting</h3>
+          <p>We find the highest-impact places where AI can save you money, make you money, or free up your team — then we build and deploy the solution.</p>
+          <div class="offering-examples">
+            <span>→</span> Process automation<br>
+            <span>→</span> Cost reduction audits<br>
+            <span>→</span> Revenue opportunity mapping<br>
+            <span>→</span> AI tool selection &amp; deployment
+          </div>
+        </div>
+        <div class="offering-card">
+          <span class="offering-icon">⬡</span>
+          <h3>Custom Applications</h3>
+          <p>Full-stack apps built for your specific industry and workflow. AI-native from the ground up — not bolted on as an afterthought.</p>
+          <div class="offering-examples">
+            <span>→</span> Industry-specific SaaS (roofing, education)<br>
+            <span>→</span> AI tutoring platforms<br>
+            <span>→</span> Image &amp; video generation tools<br>
+            <span>→</span> Internal business tools
+          </div>
+        </div>
+        <div class="offering-card">
+          <span class="offering-icon">△</span>
+          <h3>Media Production</h3>
+          <p>End-to-end creative services — from concept to final cut. Marketing media that gets attention, builds your brand, and drives real business results.</p>
+          <div class="offering-examples">
+            <span>→</span> Campaign ads &amp; viral videos<br>
+            <span>→</span> Professional &amp; personal photography<br>
+            <span>→</span> Brand identity &amp; posters<br>
+            <span>→</span> Video editing &amp; post-production
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IF -->
+  <section class="whatif" id="whatif">
+    <div class="container">
+      <div class="whatif-header">
+        <div class="section-tag" style="justify-content: center;">Think About It</div>
+        <div class="section-title reveal">What if your business<br>could do this?</div>
+        <div class="section-desc reveal">AI isn't magic — but it's close. Here are real scenarios we help businesses tackle every day.</div>
+      </div>
+
+      <div class="whatif-grid stagger">
+        <div class="whatif-card">
+          <div class="whatif-q">"What if my marketing team of two could produce the content of a team of ten?"</div>
+          <div class="whatif-a">With AI-powered image generation, video tools, and templated campaign systems, <strong>they can.</strong> We've built media pipelines that let small teams punch way above their weight — professional quality, fraction of the cost.</div>
+        </div>
+        <div class="whatif-card">
+          <div class="whatif-q">"What if I could automate the 40% of my week that's just... admin?"</div>
+          <div class="whatif-a">Scheduling, invoicing, data entry, follow-ups — these are exactly the tasks AI handles best. <strong>We identify, automate, and eliminate</strong> the busywork so you can spend time on what actually grows the business.</div>
+        </div>
+        <div class="whatif-card">
+          <div class="whatif-q">"What if I could give every student a personal tutor — at scale?"</div>
+          <div class="whatif-a">We built exactly this. <strong>Flow, our AI tutoring app,</strong> is being used for ESL instruction at Gizri School in Pakistan. Personalized learning paths, real-time feedback, and it works for homeschooling too.</div>
+        </div>
+        <div class="whatif-card">
+          <div class="whatif-q">"What if my kids could learn through play — with content that never runs out?"</div>
+          <div class="whatif-a"><strong>That's Kaizen.</strong> AI-generated coloring pages and cartoons, interactive coloring on iPad, plus structured lessons in typing, letters, numbers, and early math. Fresh creative content, every time.</div>
+        </div>
+        <div class="whatif-card">
+          <div class="whatif-q">"What if I need an app, but nothing off-the-shelf fits my industry?"</div>
+          <div class="whatif-a">That's our sweet spot. We've built custom apps for <strong>roofing companies, schools, and service businesses</strong> — tools designed around how you actually work, not how a generic SaaS thinks you work.</div>
+        </div>
+        <div class="whatif-card">
+          <div class="whatif-q">"What if I could get enterprise-grade AI strategy without the enterprise price tag?"</div>
+          <div class="whatif-a">We've done the enterprise work — IBM, Stability AI. Now we bring that same <strong>strategic rigor to small businesses</strong> at a fraction of the cost. Same brain, smaller bill.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="work" id="work">
+    <div class="container">
+      <div class="section-tag">Our Work</div>
+      <div class="section-title reveal">Built. Shipped. Running.</div>
+      <div class="section-desc reveal">A look at some of the products and projects we've delivered — across industries, across continents.</div>
+
+      <div class="work-grid stagger">
+        <div class="work-card">
+          <div class="work-label">Education &middot; Live Product</div>
+          <h3>Flow — AI Tutoring</h3>
+          <p>An AI-powered tutoring platform for homeschooling and schools. Currently deployed for ESL instruction at Gizri School in Pakistan — personalized learning that adapts to each student.</p>
+          <div class="work-tags">
+            <span class="work-tag">EdTech</span>
+            <span class="work-tag">ESL</span>
+            <span class="work-tag">AI Tutoring</span>
+            <span class="work-tag"><a href="https://flow.promptengines.com">flow.promptengines.com →</a></span>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-label">Kids &middot; Live Product</div>
+          <h3>Kaizen — Creative Learning</h3>
+          <p>A creative learning app for young children. AI-generated coloring pages and cartoons, interactive iPad coloring, plus structured lessons for typing, letters, numbers, early math, and language.</p>
+          <div class="work-tags">
+            <span class="work-tag">iPad</span>
+            <span class="work-tag">Image Gen</span>
+            <span class="work-tag">Early Learning</span>
+            <span class="work-tag"><a href="https://kaizen.promptengines.com">kaizen.promptengines.com →</a></span>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-label">Media &middot; Ongoing</div>
+          <h3>Campaign &amp; Brand Media</h3>
+          <p>End-to-end media production — campaign ads, viral video content, internal brand assets, professional and personal photography, poster design, and video editing for businesses.</p>
+          <div class="work-tags">
+            <span class="work-tag">Video</span>
+            <span class="work-tag">Photography</span>
+            <span class="work-tag">Branding</span>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-label">Enterprise &middot; Consulting</div>
+          <h3>AI Strategy &amp; Custom Apps</h3>
+          <p>Consulting and product development with IBM and Stability AI. Custom applications for industries like roofing. Identifying where AI creates real value and building the tools to capture it.</p>
+          <div class="work-tags">
+            <span class="work-tag">IBM</span>
+            <span class="work-tag">Stability AI</span>
+            <span class="work-tag">Custom Apps</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-tag">How We Work</div>
+      <div class="section-title reveal">Simple process.<br>Serious results.</div>
+
+      <div class="process-track stagger">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <h3>Discover</h3>
+          <p>We learn your business inside and out. Pain points, goals, opportunities. We figure out where AI and smart tooling will make the biggest difference.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <h3>Build</h3>
+          <p>No drawn-out timelines. We design and ship fast — apps, automations, media assets, campaigns. You see real work, not proposals.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <h3>Deliver</h3>
+          <p>We measure success in outcomes. Revenue generated, costs cut, media that converts. We stay engaged until the results speak for themselves.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+      <div class="section-tag" style="justify-content: center;">Ready?</div>
+      <div class="section-title reveal">Let's figure out what<br>AI can do for you.</div>
+      <div class="section-desc reveal">Free consultation. No pressure. Just a conversation about your business and where the biggest opportunities are.</div>
+      <a href="#contact" class="btn btn-warm">Start a Conversation →</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-tag">Contact</div>
+      <div class="section-title reveal">Let's talk.</div>
+      <div class="contact-grid">
+        <div class="contact-left reveal">
+          <h3>Tell us what you're working on.</h3>
+          <p>Whether it's an AI strategy, a custom app, a media campaign, or something you haven't fully figured out yet — we'd love to hear about it. Free consultation, no commitment.</p>
+          <a href="mailto:promptengines@gmail.com" class="contact-email">
+            <span>→</span> promptengines@gmail.com
+          </a>
+        </div>
+        <form class="reveal" action="https://formsubmit.co/promptengines@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New Inquiry from PromptEngines.com">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://promptengines.com#contact">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@company.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="interest">What are you looking for?</label>
+            <select id="interest" name="interest">
+              <option value="">Select a service</option>
+              <option value="ai-consulting">AI Consulting &amp; Strategy</option>
+              <option value="app-development">Custom App Development</option>
+              <option value="media-production">Media &amp; Video Production</option>
+              <option value="marketing">Marketing &amp; Campaign Ads</option>
+              <option value="automation">Process Automation</option>
+              <option value="other">Something Else</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Tell us about your project</label>
+            <textarea id="message" name="message" placeholder="What are you building, what's the challenge, what does success look like?"></textarea>
+          </div>
+          <button type="submit" class="btn btn-warm" style="width: 100%; justify-content: center;">Send It →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-left">© 2025 Prompt Engines. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="mailto:promptengines@gmail.com">Contact</a>
+        <a href="#offerings">Services</a>
+        <a href="#work">Work</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── SCROLL REVEAL ──
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal, .stagger').forEach(el => obs.observe(el));
+
+    // ── SMOOTH SCROLL ──
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // ── TOPO LINE ANIMATION ──
+    const paths = document.querySelectorAll('.topo-bg path');
+    let tick = 0;
+    function animateTopo() {
+      tick += 0.003;
+      paths.forEach((p, i) => {
+        const offset = Math.sin(tick + i * 0.5) * 8;
+        p.style.transform = `translateY(${offset}px)`;
+      });
+      requestAnimationFrame(animateTopo);
+    }
+    animateTopo();
+  </script>
+</body>
+</html>
