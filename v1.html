@@ -88,7 +88,7 @@
     /* ── NAV ── */
     nav {
       position: fixed;
-      top: 0;
+      top: 40px;
       left: 0;
       right: 0;
       z-index: 100;
@@ -153,7 +153,7 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding: 120px 0 80px;
+      padding: 160px 0 80px;
     }
 
     .hero-content {
@@ -887,35 +887,49 @@
       font-size: 13px;
     }
 
-    .shift-btn {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.5px;
-      color: var(--text-dim);
-      background: none;
-      border: 1px solid var(--border);
-      padding: 7px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: color 0.3s, border-color 0.3s, background 0.3s;
-      display: inline-flex;
+    /* ── VIEW SWITCHER BAR ── */
+    .view-switcher {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: rgba(8, 8, 8, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      height: 40px;
     }
 
-    .shift-btn:hover {
+    .view-switcher a {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: color 0.3s, border-color 0.3s, background 0.3s;
+    }
+
+    .view-switcher a:hover {
       color: var(--green);
       border-color: var(--green-dim);
       background: var(--green-dim);
     }
 
-    .shift-icon {
+    .view-switcher a span {
       display: inline-block;
       transition: transform 0.4s ease;
     }
 
-    .shift-btn:hover .shift-icon {
+    .view-switcher a:hover span {
       transform: rotate(180deg);
     }
 
@@ -1230,6 +1244,11 @@
   <div class="grid-bg"></div>
   <div class="cursor-glow" id="cursorGlow"></div>
 
+  <!-- VIEW SWITCHER -->
+  <div class="view-switcher">
+    <a href="v3.html"><span>◑</span> Switch Perspective</a>
+  </div>
+
   <!-- NAV -->
   <nav>
     <div class="container">
@@ -1239,7 +1258,6 @@
         <li><a href="#services">Services</a></li>
         <li><a href="#work">Work</a></li>
         <li><a href="#process">Process</a></li>
-        <li><a href="v3.html" class="shift-btn"><span class="shift-icon">◑</span> Shift View</a></li>
         <li><a href="#contact" class="nav-cta">Get Started</a></li>
       </ul>
       <button class="mobile-menu-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
@@ -1396,12 +1414,23 @@
         <div class="work-card">
           <div class="work-category">Kids &amp; Learning</div>
           <h3>Kaizen — Creative Learning</h3>
-          <p>A creative learning app for young children — AI-generated coloring pages and cartoons, interactive coloring on iPad, plus structured lessons for typing, letters, numbers, early math, and language.</p>
+          <p>A creative learning platform for young children. AI-generated coloring pages, cartoons, and interactive activities on iPad — plus structured lessons in typing, letters, numbers, early math, and language. Fresh content every session, powered by AI.</p>
           <div class="work-tags">
             <span class="work-tag">iPad</span>
             <span class="work-tag">Image Gen</span>
             <span class="work-tag">Early Learning</span>
             <span class="work-tag"><a href="https://kaizen.promptengines.com" style="color: var(--green); text-decoration: none;">kaizen.promptengines.com →</a></span>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-category">Kids &amp; Creativity</div>
+          <h3>Storybook Studio — AI Storybooks</h3>
+          <p>An app that lets families create personalized children's storybooks with AI. Choose characters, settings, and themes — then watch as beautiful illustrated stories come to life. Every book is unique, printable, and made to spark imagination.</p>
+          <div class="work-tags">
+            <span class="work-tag">AI Storytelling</span>
+            <span class="work-tag">Image Gen</span>
+            <span class="work-tag">Kids</span>
+            <span class="work-tag"><a href="https://storybookstudio.promptengines.com" style="color: var(--green); text-decoration: none;">storybookstudio.promptengines.com →</a></span>
           </div>
         </div>
         <div class="work-card">
@@ -1512,7 +1541,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="container">
-      <div class="footer-text">© 2025 Prompt Engines. All rights reserved.</div>
+      <div class="footer-text">© 2026 Prompt Engines. All rights reserved.</div>
       <div class="footer-links">
         <a href="mailto:promptengines@gmail.com">Contact</a>
         <a href="#services">Services</a>

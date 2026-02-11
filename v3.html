@@ -77,7 +77,7 @@
     /* ── NAV ── */
     nav {
       position: fixed;
-      top: 0;
+      top: 40px;
       left: 0;
       right: 0;
       z-index: 100;
@@ -138,43 +138,58 @@
 
     .nav-cta:hover { background: var(--white) !important; }
 
-    .shift-btn {
+    .mobile-nav { display: none; background: var(--amber); border: none; color: var(--black); padding: 10px 20px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
+
+    /* ── VIEW SWITCHER BAR ── */
+    .view-switcher {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.95);
+      border-bottom: 1px solid var(--iron);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+    }
+
+    .view-switcher a {
       font-family: var(--font-mono);
       font-size: 10px;
       letter-spacing: 1px;
       text-transform: uppercase;
       color: var(--ash);
-      background: none;
-      border: 1px solid var(--iron);
-      padding: 8px 16px;
-      cursor: pointer;
       text-decoration: none;
-      transition: all 0.2s;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      padding: 6px 18px;
+      border: 1px solid var(--iron);
+      transition: all 0.2s;
     }
 
-    .shift-btn:hover {
+    .view-switcher a:hover {
       color: var(--amber);
       border-color: var(--amber);
     }
 
-    .shift-icon {
+    .view-switcher a span {
       display: inline-block;
       transition: transform 0.3s ease;
     }
 
-    .shift-btn:hover .shift-icon { transform: rotate(180deg); }
-
-    .mobile-nav { display: none; background: var(--amber); border: none; color: var(--black); padding: 10px 20px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
+    .view-switcher a:hover span {
+      transform: rotate(180deg);
+    }
 
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding: 140px 0 100px;
+      padding: 180px 0 100px;
       position: relative;
       border-bottom: 1px solid var(--iron);
     }
@@ -950,6 +965,11 @@
   <div class="bracket-bl"></div>
   <div class="bracket-br"></div>
 
+  <!-- VIEW SWITCHER -->
+  <div class="view-switcher">
+    <a href="v4.html"><span>◧</span> Switch Perspective</a>
+  </div>
+
   <!-- NAV -->
   <nav>
     <div class="container">
@@ -962,7 +982,6 @@
         <li><a href="#capabilities">Capabilities</a></li>
         <li><a href="#products">Products</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a href="index.html" class="shift-btn"><span class="shift-icon">◧</span> Shift View</a></li>
         <li><a href="#contact" class="nav-cta">Inquire</a></li>
       </ul>
       <button class="mobile-nav" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button>
@@ -999,7 +1018,7 @@
             </div>
             <div class="panel-stat">
               <span class="panel-stat-label">Products Live</span>
-              <span class="panel-stat-value amber">2</span>
+              <span class="panel-stat-value amber">3</span>
             </div>
             <div class="panel-stat">
               <span class="panel-stat-label">Avg. Deploy Time</span>
@@ -1138,8 +1157,14 @@
         <div class="product-card">
           <div class="product-status"><span class="dot"></span> Operational</div>
           <h3>Kaizen — Learning Application</h3>
-          <p>Educational platform for early learning. AI-generated content, interactive exercises, structured curriculum for typing, mathematics, and language fundamentals.</p>
+          <p>Creative learning platform for young children. AI-generated coloring pages, cartoons, and interactive activities on iPad — plus structured lessons in typing, letters, numbers, early math, and language. Fresh content every session.</p>
           <a href="https://kaizen.promptengines.com" class="product-link">kaizen.promptengines.com →</a>
+        </div>
+        <div class="product-card">
+          <div class="product-status"><span class="dot"></span> Operational</div>
+          <h3>Storybook Studio — AI Storybooks</h3>
+          <p>Personalized children's storybook creation. Families choose characters, settings, and themes — AI generates fully illustrated stories. Every book is unique, printable, and designed to spark a child's imagination.</p>
+          <a href="https://storybookstudio.promptengines.com" class="product-link">storybookstudio.promptengines.com →</a>
         </div>
       </div>
     </div>
@@ -1271,7 +1296,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="container">
-      <div class="footer-left">© 2025 Prompt Engines. All rights reserved.</div>
+      <div class="footer-left">© 2026 Prompt Engines. All rights reserved.</div>
       <div class="footer-links">
         <a href="mailto:promptengines@gmail.com">Contact</a>
         <a href="#capabilities">Capabilities</a>

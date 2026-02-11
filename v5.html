@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Engines — AI Consulting &amp; Media Production</title>
+  <meta name="description" content="15+ years of consulting and product development. We help businesses grow revenue and cut costs through AI strategy, custom apps, and media production.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --dark: #0d1117;
+      --surface: #111820;
+      --border: #1a2332;
+      --green: #00FF41;
+      --green-dim: #00ff4115;
+      --green-mid: #00ff4133;
+      --green-glow: #00ff4166;
+      --bright: #33ff66;
+      --amber: #ffb000;
+      --dim: #3a5a3a;
+      --dim2: #2a3a2a;
+      --text: #b0d0b0;
+      --text-bright: #d0f0d0;
+      --font-display: 'Outfit', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--green) var(--black); }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── MATRIX RAIN CANVAS ── */
+    #matrix-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.08;
+    }
+
+    /* ── CRT EFFECTS ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,255,65,0.015) 2px,
+        rgba(0,255,65,0.015) 4px
+      );
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.4) 100%);
+      pointer-events: none;
+      z-index: 9997;
+    }
+
+    section, footer, nav { position: relative; z-index: 1; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+
+    /* ── VIEW SWITCHER BAR ── */
+    .view-switcher {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: rgba(10, 10, 10, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+    }
+
+    .view-switcher a {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: var(--dim);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .view-switcher a:hover {
+      color: var(--green);
+      border-color: var(--green-mid);
+      background: var(--green-dim);
+      box-shadow: 0 0 12px var(--green-dim);
+    }
+
+    .view-switcher a span {
+      display: inline-block;
+      transition: transform 0.4s ease;
+    }
+
+    .view-switcher a:hover span {
+      transform: rotate(180deg);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 40px;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 14px 0;
+      background: rgba(10, 10, 10, 0.92);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .container { display: flex; justify-content: space-between; align-items: center; }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--green);
+      text-decoration: none;
+      text-shadow: 0 0 10px var(--green-dim);
+      letter-spacing: 1px;
+    }
+
+    .logo span { color: var(--dim); }
+
+    .nav-links { display: flex; gap: 28px; align-items: center; list-style: none; }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.3s, text-shadow 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+      text-shadow: 0 0 8px var(--green-dim);
+    }
+
+    .nav-cta {
+      color: var(--black) !important;
+      background: var(--green) !important;
+      padding: 8px 20px;
+      text-shadow: none !important;
+      transition: box-shadow 0.3s !important;
+    }
+
+    .nav-cta:hover {
+      box-shadow: 0 0 20px var(--green-mid), 0 0 40px var(--green-dim) !important;
+    }
+
+    .mobile-nav {
+      display: none;
+      background: var(--green);
+      border: none;
+      color: var(--black);
+      padding: 8px 18px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ── TYPING CURSOR ── */
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1.2em;
+      background: var(--green);
+      margin-left: 4px;
+      animation: blink-cursor 1s step-end infinite;
+      vertical-align: text-bottom;
+    }
+
+    @keyframes blink-cursor {
+      50% { opacity: 0; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 180px 0 100px;
+      position: relative;
+    }
+
+    .hero-content { max-width: 800px; }
+
+    .hero-prompt {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--green);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+
+    .hero-prompt .prompt-char { color: var(--bright); }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 100px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      color: var(--green);
+      text-shadow: 0 0 30px var(--green-dim), 0 0 60px rgba(0,255,65,0.05);
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--bright);
+      text-shadow: 0 0 20px var(--green-mid);
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--text);
+      max-width: 560px;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.7s ease forwards 0.6s;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.7s ease forwards 0.8s;
+    }
+
+    .btn-primary {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      background: var(--green);
+      color: var(--black);
+      padding: 14px 28px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      transition: box-shadow 0.3s, transform 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px var(--green-mid), 0 0 48px var(--green-dim);
+    }
+
+    .btn-ghost {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      background: transparent;
+      color: var(--green);
+      padding: 14px 28px;
+      border: 1px solid var(--green-mid);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-ghost:hover {
+      background: var(--green-dim);
+      box-shadow: 0 0 16px var(--green-dim);
+    }
+
+    /* ── SYSTEM STATUS BAR ── */
+    .status-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      overflow: hidden;
+      background: var(--dark);
+    }
+
+    .status-track {
+      display: flex;
+      animation: scroll-status 30s linear infinite;
+      width: max-content;
+    }
+
+    .status-item {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      white-space: nowrap;
+      padding: 0 32px;
+      color: var(--dim);
+    }
+
+    .status-item .val { color: var(--green); }
+    .status-item .sep { color: var(--border); margin: 0 8px; }
+
+    @keyframes scroll-status {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── SECTION UTILS ── */
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--green);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-tag::before {
+      content: '>';
+      color: var(--bright);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      color: var(--green);
+      text-shadow: 0 0 16px var(--green-dim);
+    }
+
+    .section-desc {
+      font-size: 15px;
+      color: var(--text);
+      max-width: 540px;
+      line-height: 1.8;
+    }
+
+    /* ── TERMINAL CARDS ── */
+    .terminal {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .terminal:hover {
+      border-color: var(--green-mid);
+      box-shadow: 0 0 20px var(--green-dim);
+    }
+
+    .terminal-bar {
+      background: var(--surface);
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .terminal-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .terminal-dot.r { background: #ff5f57; }
+    .terminal-dot.y { background: #febc2e; }
+    .terminal-dot.g { background: #28c840; }
+
+    .terminal-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--dim);
+      margin-left: 8px;
+      letter-spacing: 1px;
+    }
+
+    .terminal-body {
+      padding: 28px 24px;
+    }
+
+    /* ── ABOUT ── */
+    .about { padding: 100px 0; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+      margin-top: 40px;
+    }
+
+    .about-text p {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    .about-text strong {
+      color: var(--green);
+      font-weight: 400;
+    }
+
+    .log-entry {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .log-entry:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+    .log-timestamp {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .log-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text-bright);
+      margin-bottom: 4px;
+    }
+
+    .log-desc {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .clients-bar {
+      margin-top: 48px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .clients-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      flex-shrink: 0;
+    }
+
+    .clients-sep {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .clients-names {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .client-name {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--dim);
+      transition: color 0.3s, text-shadow 0.3s;
+      cursor: default;
+    }
+
+    .client-name:hover {
+      color: var(--green);
+      text-shadow: 0 0 8px var(--green-dim);
+    }
+
+    /* ── SERVICES ── */
+    .services { padding: 100px 0; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .service-card .terminal-body h3 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 17px;
+      color: var(--green);
+      margin-bottom: 12px;
+      text-shadow: 0 0 8px var(--green-dim);
+    }
+
+    .service-card .terminal-body p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .service-list {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--dim);
+      line-height: 2.2;
+    }
+
+    .service-list .arrow { color: var(--green); margin-right: 6px; }
+
+    /* ── WORK ── */
+    .work { padding: 100px 0; }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .work-card .terminal-body .work-category {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--amber);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .work-card .terminal-body h3 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--text-bright);
+      margin-bottom: 10px;
+    }
+
+    .work-card .terminal-body p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .work-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .work-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--green);
+      padding: 3px 8px;
+      border: 1px solid var(--green-mid);
+      letter-spacing: 0.5px;
+    }
+
+    .work-link {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--green);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: text-shadow 0.3s, gap 0.3s;
+    }
+
+    .work-link:hover {
+      text-shadow: 0 0 10px var(--green-dim);
+      gap: 10px;
+    }
+
+    /* ── PROCESS ── */
+    .process { padding: 100px 0; }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .process-step .terminal-body { text-align: center; }
+
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 64px;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 12px;
+      transition: color 0.3s, text-shadow 0.3s;
+    }
+
+    .terminal:hover .step-num {
+      color: var(--green-mid);
+      text-shadow: 0 0 20px var(--green-dim);
+    }
+
+    .process-step h3 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--text-bright);
+      margin-bottom: 10px;
+    }
+
+    .process-step p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.8;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      padding: 120px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 40% 40% at 50% 60%, var(--green-dim), transparent);
+      pointer-events: none;
+    }
+
+    .cta .section-tag { justify-content: center; }
+    .cta .section-title { max-width: 600px; margin: 0 auto 16px; }
+    .cta .section-desc { max-width: 460px; margin: 0 auto 40px; text-align: center; }
+
+    /* ── CONTACT ── */
+    .contact { padding: 100px 0; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .contact-left h3 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 20px;
+      color: var(--text-bright);
+      margin-bottom: 14px;
+    }
+
+    .contact-left p {
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .contact-email {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--green);
+      text-decoration: none;
+      padding: 12px 20px;
+      border: 1px solid var(--green-mid);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .contact-email:hover {
+      background: var(--green-dim);
+      box-shadow: 0 0 16px var(--green-dim);
+    }
+
+    .form-group { margin-bottom: 18px; }
+
+    .form-group label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      color: var(--text-bright);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--green-mid);
+      box-shadow: 0 0 12px var(--green-dim);
+    }
+
+    .form-group textarea { min-height: 100px; resize: vertical; }
+
+    .form-group select {
+      appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%233a5a3a' stroke-width='1.5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+    }
+
+    .form-group select option { background: var(--dark); color: var(--text-bright); }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      background: var(--dark);
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--dim);
+    }
+
+    .footer-links { display: flex; gap: 24px; }
+
+    .footer-links a {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--green); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.vis { opacity: 1; transform: translateY(0); }
+
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .stagger.vis > *:nth-child(1) { transition-delay: 0s; }
+    .stagger.vis > *:nth-child(2) { transition-delay: 0.08s; }
+    .stagger.vis > *:nth-child(3) { transition-delay: 0.16s; }
+    .stagger.vis > *:nth-child(4) { transition-delay: 0.24s; }
+    .stagger.vis > *:nth-child(5) { transition-delay: 0.32s; }
+    .stagger.vis > * { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .work-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+      .process-grid { grid-template-columns: 1fr; gap: 16px; }
+      .process-step .terminal-body { text-align: left; }
+      .process-step p { margin: 0; max-width: none; }
+      .clients-bar { flex-direction: column; align-items: flex-start; }
+      .clients-sep { width: 32px; height: 1px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-nav { display: block; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; }
+      footer .container { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MATRIX RAIN -->
+  <canvas id="matrix-canvas"></canvas>
+
+  <!-- VIEW SWITCHER -->
+  <div class="view-switcher">
+    <a href="v6.html"><span>&#x25D0;</span> Switch Perspective</a>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">PROMPT<span>ENGINES</span></a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#contact" class="nav-cta">Get Started</a></li>
+      </ul>
+      <button class="mobile-nav" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-prompt"><span class="prompt-char">$</span> ./prompt-engines --deploy --target=your-business</div>
+        <h1>We build the things that make your business <em>go.</em><span class="cursor"></span></h1>
+        <p class="hero-sub">15 years of consulting and product development — now focused on helping businesses grow with AI. Strategy, custom software, and media production, all under one roof.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-primary">Start a Conversation &rarr;</a>
+          <a href="#work" class="btn-ghost">See Our Work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="status-track">
+      <div class="status-item"><span class="val">AI_STRATEGY</span><span class="sep">|</span>online</div>
+      <div class="status-item"><span class="val">CUSTOM_APPS</span><span class="sep">|</span>deploying</div>
+      <div class="status-item"><span class="val">MEDIA_PROD</span><span class="sep">|</span>rendering</div>
+      <div class="status-item"><span class="val">AUTOMATION</span><span class="sep">|</span>active</div>
+      <div class="status-item"><span class="val">COST_REDUCTION</span><span class="sep">|</span>optimizing</div>
+      <div class="status-item"><span class="val">FLOW_APP</span><span class="sep">|</span>live</div>
+      <div class="status-item"><span class="val">KAIZEN_APP</span><span class="sep">|</span>live</div>
+      <div class="status-item"><span class="val">STORYBOOK_STUDIO</span><span class="sep">|</span>live</div>
+      <div class="status-item"><span class="val">AI_STRATEGY</span><span class="sep">|</span>online</div>
+      <div class="status-item"><span class="val">CUSTOM_APPS</span><span class="sep">|</span>deploying</div>
+      <div class="status-item"><span class="val">MEDIA_PROD</span><span class="sep">|</span>rendering</div>
+      <div class="status-item"><span class="val">AUTOMATION</span><span class="sep">|</span>active</div>
+      <div class="status-item"><span class="val">COST_REDUCTION</span><span class="sep">|</span>optimizing</div>
+      <div class="status-item"><span class="val">FLOW_APP</span><span class="sep">|</span>live</div>
+      <div class="status-item"><span class="val">KAIZEN_APP</span><span class="sep">|</span>live</div>
+      <div class="status-item"><span class="val">STORYBOOK_STUDIO</span><span class="sep">|</span>live</div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="section-tag">cat about.txt</div>
+      <div class="section-title reveal">Fifteen years of building<br>things that matter.</div>
+
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>Prompt Engines was born from a straightforward observation: <strong>most businesses don't need more technology — they need the right technology, applied well.</strong></p>
+          <p>We've spent over 15 years in consulting and product development, working with organizations ranging from <strong>IBM</strong> and <strong>Stability AI</strong> to local startups and small businesses. That range gives us a rare perspective — we understand enterprise rigor and startup speed.</p>
+          <p>Today we focus on three things: <strong>AI consulting</strong> that identifies where you're leaving money on the table, <strong>custom applications</strong> built for your specific industry, and <strong>media production</strong> — from marketing videos to brand photography to campaign ads — that actually converts.</p>
+          <p>We don't hand you a strategy deck and walk away. We build the thing. We ship it. We stick around until it works.</p>
+        </div>
+
+        <div class="terminal reveal">
+          <div class="terminal-bar">
+            <div class="terminal-dot r"></div>
+            <div class="terminal-dot y"></div>
+            <div class="terminal-dot g"></div>
+            <span class="terminal-title">history.log</span>
+          </div>
+          <div class="terminal-body">
+            <div class="log-entry">
+              <div class="log-timestamp">[PHASE_01]</div>
+              <div class="log-title">Enterprise Consulting</div>
+              <div class="log-desc">Years of product development and consulting at scale, including work with IBM — building the operational muscle for complex projects.</div>
+            </div>
+            <div class="log-entry">
+              <div class="log-timestamp">[PHASE_02]</div>
+              <div class="log-title">Generative AI &amp; Stability AI</div>
+              <div class="log-desc">Deep work in image generation, video production, and AI pipelines. Built tools and workflows at the frontier of what's possible.</div>
+            </div>
+            <div class="log-entry">
+              <div class="log-timestamp">[PHASE_03]</div>
+              <div class="log-title">Prompt Engines</div>
+              <div class="log-desc">Bringing 15 years of experience to businesses — AI strategy, custom apps, and media production. From a roofing app to an ESL tutoring platform in Pakistan.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clients-bar terminal reveal">
+        <div class="clients-label">Connections</div>
+        <div class="clients-sep"></div>
+        <div class="clients-names">
+          <div class="client-name">IBM</div>
+          <div class="client-name">Stability AI</div>
+          <div class="client-name">Gizri School</div>
+          <div class="client-name">Startups &amp; SMBs</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-tag">ls services/</div>
+      <div class="section-title reveal">Everything you need.<br>Nothing you don't.</div>
+      <div class="section-desc reveal">Three capabilities that cover the full spectrum of what businesses actually need to grow.</div>
+
+      <div class="services-grid stagger">
+        <div class="service-card terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot r"></div>
+            <div class="terminal-dot y"></div>
+            <div class="terminal-dot g"></div>
+            <span class="terminal-title">ai-consulting.sh</span>
+          </div>
+          <div class="terminal-body">
+            <h3>AI Consulting</h3>
+            <p>We find the highest-impact places where AI can save you money, make you money, or free up your team — then we build and deploy the solution.</p>
+            <div class="service-list">
+              <span class="arrow">&gt;</span> Process automation<br>
+              <span class="arrow">&gt;</span> Cost reduction audits<br>
+              <span class="arrow">&gt;</span> Revenue opportunity mapping<br>
+              <span class="arrow">&gt;</span> AI tool selection &amp; deployment
+            </div>
+          </div>
+        </div>
+        <div class="service-card terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot r"></div>
+            <div class="terminal-dot y"></div>
+            <div class="terminal-dot g"></div>
+            <span class="terminal-title">custom-apps.sh</span>
+          </div>
+          <div class="terminal-body">
+            <h3>Custom Applications</h3>
+            <p>Full-stack apps built for your specific industry and workflow. AI-native from the ground up — not bolted on as an afterthought.</p>
+            <div class="service-list">
+              <span class="arrow">&gt;</span> Industry-specific SaaS<br>
+              <span class="arrow">&gt;</span> AI tutoring platforms<br>
+              <span class="arrow">&gt;</span> Image &amp; video generation tools<br>
+              <span class="arrow">&gt;</span> Internal business tools
+            </div>
+          </div>
+        </div>
+        <div class="service-card terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot r"></div>
+            <div class="terminal-dot y"></div>
+            <div class="terminal-dot g"></div>
+            <span class="terminal-title">media-prod.sh</span>
+          </div>
+          <div class="terminal-body">
+            <h3>Media Production</h3>
+            <p>End-to-end creative services — from concept to final cut. Marketing media that gets attention, builds your brand, and drives results.</p>
+            <div class="service-list">
+              <span class="arrow">&gt;</span> Campaign ads &amp; viral videos<br>
+              <span class="arrow">&gt;</span> Professional photography<br>
+              <span class="arrow">&gt;</span> Brand identity &amp; design<br>
+              <span class="arrow">&gt;</span> Video editing &amp; post-production
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="work" id="work">
+    <div class="container">
+      <div class="section-tag">ls -la products/</div>
+      <div class="section-title reveal">Built. Shipped. Running.</div>
+      <div class="section-desc reveal">Products and projects across industries — from enterprise AI to creative apps to full media campaigns.</div>
+
+      <div class="work-grid stagger">
+        <div class="work-card terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot r"></div>
+            <div class="terminal-dot y"></div>
+            <div class="terminal-dot g"></div>
+            <span class="terminal-title">flow.process</span>
+          </div>
+          <div class="terminal-body">
+            <div class="work-category">Education &middot; Live</div>
+            <h3>Flow — AI Tutoring</h3>
+            <p>An AI-powered tutoring platform for homeschooling and schools. Currently deployed for ESL instruction at Gizri School in Pakistan — personalized learning that adapts to each student.</p>
+            <div class="work-tags">
+              <span class="work-tag">EdTech</span>
+              <span class="work-tag">ESL</span>
+              <span class="work-tag">AI Tutoring</span>
+            </div>
+            <a href="https://flow.promptengines.com" class="work-link">flow.promptengines.com &rarr;</a>
+          </div>
+        </div>
+
+        <div class="work-card terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot r"></div>
+            <div class="terminal-dot y"></div>
+            <div class="terminal-dot g"></div>
+            <span class="terminal-title">kaizen.process</span>
+          </div>
+          <div class="terminal-body">
+            <div class="work-category">Kids &middot; Live</div>
+            <h3>Kaizen — Creative Learning</h3>
+            <p>A creative learning platform for young children. AI-generated coloring pages, cartoons, and interactive activities on iPad — plus structured lessons in typing, letters, numbers, early math, and language. Fresh content every session, powered by AI.</p>
+            <div class="work-tags">
+              <span class="work-tag">iPad</span>
+              <span class="work-tag">Image Gen</span>
+              <span class="work-tag">Early Learning</span>
+            </div>
+            <a href="https://kaizen.promptengines.com" class="work-link">kaizen.promptengines.com &rarr;</a>
+          </div>
+        </div>
+
+        <div class="work-card terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot r"></div>
+            <div class="terminal-dot y"></div>
+            <div class="terminal-dot g"></div>
+            <span class="terminal-title">storybook.process</span>
+          </div>
+          <div class="terminal-body">
+            <div class="work-category">Kids &middot; Live</div>
+            <h3>Storybook Studio — AI Storybooks</h3>
+            <p>An app that lets families create personalized children's storybooks with AI. Choose characters, settings, and themes — then watch as beautiful illustrated stories come to life. Every book is unique, printable, and made to spark a child's imagination.</p>
+            <div class="work-tags">
+              <span class="work-tag">AI Storytelling</span>
+              <span class="work-tag">Image Gen</span>
+              <span class="work-tag">Kids</span>
+            </div>
+            <a href="https://storybookstudio.promptengines.com" class="work-link">storybookstudio.promptengines.com &rarr;</a>
+          </div>
+        </div>
+
+        <div class="work-card terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot r"></div>
+            <div class="terminal-dot y"></div>
+            <div class="terminal-dot g"></div>
+            <span class="terminal-title">media.process</span>
+          </div>
+          <div class="terminal-body">
+            <div class="work-category">Media &middot; Ongoing</div>
+            <h3>Campaign &amp; Brand Media</h3>
+            <p>End-to-end media production for businesses — campaign ads, viral video content, internal brand assets, professional and personal photography, poster design, and video editing.</p>
+            <div class="work-tags">
+              <span class="work-tag">Video</span>
+              <span class="work-tag">Photography</span>
+              <span class="work-tag">Branding</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot r"></div>
+            <div class="terminal-dot y"></div>
+            <div class="terminal-dot g"></div>
+            <span class="terminal-title">enterprise.process</span>
+          </div>
+          <div class="terminal-body">
+            <div class="work-category">Enterprise &middot; Consulting</div>
+            <h3>AI Strategy &amp; Custom Apps</h3>
+            <p>Consulting and product development with IBM and Stability AI. Custom applications for industries like roofing — identifying where AI creates real value and building the tools to capture it.</p>
+            <div class="work-tags">
+              <span class="work-tag">IBM</span>
+              <span class="work-tag">Stability AI</span>
+              <span class="work-tag">Custom Apps</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-tag">cat process.md</div>
+      <div class="section-title reveal">Simple process.<br>Serious results.</div>
+
+      <div class="process-grid stagger">
+        <div class="process-step terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot r"></div>
+            <div class="terminal-dot y"></div>
+            <div class="terminal-dot g"></div>
+            <span class="terminal-title">step_01</span>
+          </div>
+          <div class="terminal-body">
+            <div class="step-num">01</div>
+            <h3>Discover</h3>
+            <p>We learn your business inside and out. Pain points, goals, opportunities. We figure out where AI and smart tooling will make the biggest difference.</p>
+          </div>
+        </div>
+        <div class="process-step terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot r"></div>
+            <div class="terminal-dot y"></div>
+            <div class="terminal-dot g"></div>
+            <span class="terminal-title">step_02</span>
+          </div>
+          <div class="terminal-body">
+            <div class="step-num">02</div>
+            <h3>Build</h3>
+            <p>No drawn-out timelines. We design and ship fast — apps, automations, media assets, campaigns. You see real work, not proposals.</p>
+          </div>
+        </div>
+        <div class="process-step terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot r"></div>
+            <div class="terminal-dot y"></div>
+            <div class="terminal-dot g"></div>
+            <span class="terminal-title">step_03</span>
+          </div>
+          <div class="terminal-body">
+            <div class="step-num">03</div>
+            <h3>Deliver</h3>
+            <p>We measure success in outcomes. Revenue generated, costs cut, media that converts. We stay engaged until the results speak for themselves.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+      <div class="section-tag">sudo start</div>
+      <div class="section-title reveal">Let's figure out what<br>AI can do for you.</div>
+      <div class="section-desc reveal">Free consultation. No pressure. Just a conversation about your business and where the biggest opportunities are.</div>
+      <a href="#contact" class="btn-primary">Start a Conversation &rarr;</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-tag">ssh contact@promptengines</div>
+      <div class="section-title reveal">Let's talk.</div>
+
+      <div class="contact-grid">
+        <div class="contact-left reveal">
+          <h3>Tell us what you're working on.</h3>
+          <p>Whether it's an AI strategy, a custom app, a media campaign, or something you haven't fully figured out yet — we'd love to hear about it. Free consultation, no commitment.</p>
+          <a href="mailto:promptengines@gmail.com" class="contact-email">
+            <span>&rarr;</span> promptengines@gmail.com
+          </a>
+        </div>
+
+        <form class="reveal" action="https://formsubmit.co/promptengines@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New Inquiry from PromptEngines.com">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://promptengines.com#contact">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@company.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="interest">What are you looking for?</label>
+            <select id="interest" name="interest">
+              <option value="">Select a service</option>
+              <option value="ai-consulting">AI Consulting &amp; Strategy</option>
+              <option value="app-development">Custom App Development</option>
+              <option value="media-production">Media &amp; Video Production</option>
+              <option value="marketing">Marketing &amp; Campaign Ads</option>
+              <option value="automation">Process Automation</option>
+              <option value="other">Something Else</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Tell us about your project</label>
+            <textarea id="message" name="message" placeholder="What are you building, what's the challenge, what does success look like?"></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Send It &rarr;</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-left">&copy; 2026 Prompt Engines. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="mailto:promptengines@gmail.com">Contact</a>
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── MATRIX RAIN ──
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF';
+    const fontSize = 14;
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = Array(columns).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(10, 10, 10, 0.06)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00FF41';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 50);
+
+    window.addEventListener('resize', () => {
+      columns = Math.floor(canvas.width / fontSize);
+      drops = Array(columns).fill(1);
+    });
+
+    // ── SCROLL REVEAL ──
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal, .stagger').forEach(el => obs.observe(el));
+
+    // ── SMOOTH SCROLL ──
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

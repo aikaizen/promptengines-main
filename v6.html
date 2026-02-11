@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Engines — AI Consulting &amp; Media Production</title>
+  <meta name="description" content="15+ years of consulting and product development. We help businesses grow revenue and cut costs through AI strategy, custom apps, and media production.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0e2a;
+      --bg2: #161440;
+      --surface: #1c1a52;
+      --wall: #232060;
+      --floor: #2d2970;
+      --border: #3a3580;
+      --border-light: #4e48a0;
+      --border-dark: #1a1840;
+      --cyan: #00e5ff;
+      --cyan-dim: #00e5ff22;
+      --cyan-mid: #00e5ff44;
+      --lime: #78ff00;
+      --gold: #ffd700;
+      --pink: #ff4da6;
+      --red: #ff4444;
+      --text: #b8bfee;
+      --text-bright: #e0e4ff;
+      --text-dim: #5a5590;
+      --pixel: 'Press Start 2P', cursive;
+      --body: 'Outfit', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--cyan) var(--bg); }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+      image-rendering: auto;
+    }
+
+    /* ── ISOMETRIC CITY CANVAS ── */
+    #city-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      image-rendering: pixelated;
+    }
+
+    section, footer, nav, .building-wrapper, .status-bar { position: relative; z-index: 1; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── VIEW SWITCHER BAR ── */
+    .view-switcher {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: rgba(15, 14, 42, 0.95);
+      border-bottom: 3px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+    }
+
+    .view-switcher a {
+      font-family: var(--pixel);
+      font-size: 8px;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      border: 2px solid var(--border);
+      transition: all 0.1s steps(1);
+    }
+
+    .view-switcher a:hover {
+      color: var(--cyan);
+      border-color: var(--cyan);
+      background: var(--cyan-dim);
+    }
+
+    .view-switcher a span {
+      display: inline-block;
+      transition: transform 0.2s steps(4);
+    }
+
+    .view-switcher a:hover span {
+      transform: rotate(180deg);
+    }
+
+    /* ── NAV / GAME HUD ── */
+    nav {
+      position: fixed;
+      top: 40px;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 12px 0;
+      background: var(--bg2);
+      border-bottom: 3px solid var(--border);
+      border-top: 3px solid var(--border-light);
+    }
+
+    nav .container { display: flex; justify-content: space-between; align-items: center; }
+
+    .logo {
+      font-family: var(--pixel);
+      font-size: 12px;
+      color: var(--cyan);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .logo span { color: var(--text-dim); }
+
+    .nav-links { display: flex; gap: 20px; align-items: center; list-style: none; }
+
+    .nav-links a {
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 4px 8px;
+      transition: color 0.1s steps(1);
+    }
+
+    .nav-links a:hover {
+      color: var(--cyan);
+    }
+
+    .nav-cta {
+      color: var(--bg) !important;
+      background: var(--cyan) !important;
+      border-top: 2px solid #66f0ff;
+      border-left: 2px solid #66f0ff;
+      border-right: 2px solid #009db3;
+      border-bottom: 2px solid #009db3;
+      padding: 8px 16px !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--lime) !important;
+      color: var(--bg) !important;
+    }
+
+    .mobile-nav {
+      display: none;
+      background: var(--cyan);
+      border: none;
+      border-top: 2px solid #66f0ff;
+      border-left: 2px solid #66f0ff;
+      border-right: 2px solid #009db3;
+      border-bottom: 2px solid #009db3;
+      color: var(--bg);
+      padding: 8px 16px;
+      cursor: pointer;
+      font-family: var(--pixel);
+      font-size: 8px;
+    }
+
+    /* ── BUILDING WRAPPER ── */
+    .building-wrapper {
+      max-width: 1060px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Wall strips */
+    .building-wrapper::before,
+    .building-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 28px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .building-wrapper::before {
+      left: 0;
+      background:
+        repeating-linear-gradient(
+          180deg,
+          var(--wall) 0px,
+          var(--wall) 48px,
+          var(--cyan-dim) 48px,
+          var(--cyan-dim) 64px
+        );
+      border-left: 3px solid var(--border);
+      border-right: 2px solid var(--border-dark);
+    }
+
+    .building-wrapper::after {
+      right: 0;
+      background:
+        repeating-linear-gradient(
+          180deg,
+          var(--border-dark) 0px,
+          var(--border-dark) 48px,
+          var(--cyan-dim) 48px,
+          var(--cyan-dim) 64px
+        );
+      border-right: 3px solid var(--border);
+      border-left: 2px solid var(--border-dark);
+    }
+
+    /* ── FLOOR PLATE ── */
+    .floor-plate {
+      height: 20px;
+      background: linear-gradient(180deg, var(--border-light) 0%, var(--floor) 40%, var(--border-dark) 100%);
+      border-top: 3px solid #5a54b0;
+      border-bottom: 3px solid #0e0c25;
+      position: relative;
+    }
+
+    /* ── FLOOR BADGE ── */
+    .floor-badge {
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding: 8px 14px;
+      background: var(--bg2);
+      border: 2px solid var(--border);
+      border-top-color: var(--border-light);
+      border-left-color: var(--border-light);
+      border-right-color: var(--border-dark);
+      border-bottom-color: var(--border-dark);
+      display: inline-flex;
+    }
+
+    .floor-badge .fl-num { color: var(--cyan); }
+
+    /* ── SECTION STYLING ── */
+    .floor-section {
+      padding: 80px 56px;
+      background: var(--bg);
+      position: relative;
+    }
+
+    .section-title {
+      font-family: var(--pixel);
+      font-size: clamp(16px, 3vw, 28px);
+      line-height: 1.8;
+      margin-bottom: 16px;
+      color: var(--cyan);
+    }
+
+    .section-desc {
+      font-family: var(--body);
+      font-size: 16px;
+      color: var(--text);
+      max-width: 560px;
+      line-height: 1.8;
+    }
+
+    /* ── PIXEL CARD ── */
+    .pixel-card {
+      background: var(--surface);
+      border: 3px solid var(--border);
+      border-top-color: var(--border-light);
+      border-left-color: var(--border-light);
+      border-right-color: var(--border-dark);
+      border-bottom-color: var(--border-dark);
+      padding: 24px;
+      transition: transform 0.1s steps(1), border-color 0.1s steps(1);
+    }
+
+    .pixel-card:hover {
+      transform: translate(-2px, -2px);
+      border-color: var(--cyan);
+    }
+
+    /* ── PIXEL BUTTONS ── */
+    .pixel-btn {
+      font-family: var(--pixel);
+      font-size: 10px;
+      padding: 14px 28px;
+      background: var(--cyan);
+      color: var(--bg);
+      border: none;
+      border-top: 3px solid #66f0ff;
+      border-left: 3px solid #66f0ff;
+      border-right: 3px solid #009db3;
+      border-bottom: 3px solid #009db3;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.05s steps(1);
+    }
+
+    .pixel-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 2px 2px 0 var(--cyan-mid);
+    }
+
+    .pixel-btn:active {
+      transform: translate(2px, 2px);
+      border-top-color: #009db3;
+      border-left-color: #009db3;
+      border-right-color: #66f0ff;
+      border-bottom-color: #66f0ff;
+    }
+
+    .pixel-btn-ghost {
+      font-family: var(--pixel);
+      font-size: 10px;
+      padding: 14px 28px;
+      background: transparent;
+      color: var(--cyan);
+      border: 3px solid var(--cyan);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.1s steps(1);
+    }
+
+    .pixel-btn-ghost:hover {
+      background: var(--cyan-dim);
+    }
+
+    /* ── HERO / ROOFTOP ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 180px 56px 100px;
+      position: relative;
+      background: var(--bg);
+    }
+
+    .hero-content { max-width: 700px; }
+
+    .hero-prompt {
+      font-family: var(--pixel);
+      font-size: 9px;
+      color: var(--lime);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+
+    .hero-prompt .blink {
+      animation: blink-cursor 0.8s steps(1) infinite;
+    }
+
+    @keyframes blink-cursor { 50% { opacity: 0; } }
+
+    .hero h1 {
+      font-family: var(--pixel);
+      font-size: clamp(20px, 4vw, 40px);
+      line-height: 2;
+      color: var(--text-bright);
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--cyan);
+      text-shadow: 0 0 20px var(--cyan-dim);
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text);
+      max-width: 560px;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.7s ease forwards 0.6s;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.7s ease forwards 0.8s;
+    }
+
+    /* ── STATUS BAR ── */
+    .status-bar {
+      border-top: 3px solid var(--border-light);
+      border-bottom: 3px solid var(--border-dark);
+      padding: 10px 0;
+      overflow: hidden;
+      background: var(--bg2);
+    }
+
+    .status-track {
+      display: flex;
+      animation: scroll-status 30s linear infinite;
+      width: max-content;
+    }
+
+    .status-item {
+      font-family: var(--pixel);
+      font-size: 8px;
+      white-space: nowrap;
+      padding: 0 28px;
+      color: var(--text-dim);
+    }
+
+    .status-item .val { color: var(--lime); }
+    .status-item .sep { color: var(--border); margin: 0 6px; }
+
+    @keyframes scroll-status {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+      margin-top: 32px;
+    }
+
+    .about-text p {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.9;
+      margin-bottom: 18px;
+    }
+
+    .about-text strong { color: var(--cyan); font-weight: 500; }
+
+    /* History log - styled as RPG journal */
+    .journal-entry {
+      margin-bottom: 16px;
+      padding: 14px;
+      background: var(--bg2);
+      border: 2px solid var(--border);
+      border-top-color: var(--border-light);
+      border-left-color: var(--border-light);
+      border-right-color: var(--border-dark);
+      border-bottom-color: var(--border-dark);
+    }
+
+    .journal-entry:last-child { margin-bottom: 0; }
+
+    .journal-phase {
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: var(--gold);
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    .journal-title {
+      font-family: var(--body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text-bright);
+      margin-bottom: 4px;
+    }
+
+    .journal-desc {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* Clients bar */
+    .clients-bar {
+      margin-top: 40px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .clients-label {
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .clients-sep {
+      width: 2px;
+      height: 20px;
+      background: var(--border);
+    }
+
+    .clients-names { display: flex; gap: 24px; flex-wrap: wrap; }
+
+    .client-name {
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: var(--text-dim);
+      cursor: default;
+      transition: color 0.1s steps(1);
+    }
+
+    .client-name:hover { color: var(--cyan); }
+
+    /* ── SERVICES / SKILL TREE ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .service-icon {
+      font-size: 32px;
+      margin-bottom: 14px;
+      display: block;
+      image-rendering: pixelated;
+    }
+
+    .pixel-card h3 {
+      font-family: var(--pixel);
+      font-size: 10px;
+      line-height: 1.8;
+      color: var(--cyan);
+      margin-bottom: 12px;
+    }
+
+    .pixel-card p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    .skill-list {
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: var(--text-dim);
+      line-height: 2.8;
+    }
+
+    .skill-list .arrow { color: var(--lime); margin-right: 4px; }
+
+    /* ── WORK / INVENTORY ── */
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .work-category {
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: var(--gold);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .work-card h3 {
+      font-family: var(--pixel);
+      font-size: 10px;
+      line-height: 1.8;
+      color: var(--text-bright);
+      margin-bottom: 10px;
+    }
+
+    .work-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .work-tag {
+      font-family: var(--pixel);
+      font-size: 6px;
+      color: var(--lime);
+      padding: 4px 8px;
+      border: 2px solid var(--lime);
+      letter-spacing: 0.5px;
+    }
+
+    .work-link {
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: var(--cyan);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.1s steps(2);
+    }
+
+    .work-link:hover { gap: 12px; }
+
+    /* ── PROCESS / QUEST LOG ── */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .step-num {
+      font-family: var(--pixel);
+      font-size: 48px;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 14px;
+      transition: color 0.1s steps(1);
+    }
+
+    .pixel-card:hover .step-num {
+      color: var(--cyan);
+    }
+
+    .process-step h3 {
+      font-family: var(--pixel);
+      font-size: 10px;
+      line-height: 1.8;
+      color: var(--text-bright);
+      margin-bottom: 10px;
+    }
+
+    .process-step p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      padding: 100px 56px;
+      text-align: center;
+      position: relative;
+      background: var(--bg);
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%, var(--cyan-dim), transparent);
+      pointer-events: none;
+    }
+
+    .cta .section-title { margin: 0 auto 16px; }
+    .cta .section-desc { max-width: 500px; margin: 0 auto 36px; text-align: center; }
+    .cta .floor-badge { margin: 0 auto 24px; }
+
+    /* ── CONTACT / LOBBY ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+      margin-top: 24px;
+    }
+
+    .contact-left h3 {
+      font-family: var(--body);
+      font-weight: 600;
+      font-size: 20px;
+      color: var(--text-bright);
+      margin-bottom: 14px;
+    }
+
+    .contact-left p {
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .contact-email {
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: var(--cyan);
+      text-decoration: none;
+      padding: 12px 18px;
+      border: 2px solid var(--cyan);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.1s steps(1);
+    }
+
+    .contact-email:hover {
+      background: var(--cyan-dim);
+    }
+
+    .form-group { margin-bottom: 16px; }
+
+    .form-group label {
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: var(--bg2);
+      border: 3px solid var(--border);
+      border-top-color: var(--border-dark);
+      border-left-color: var(--border-dark);
+      border-right-color: var(--border-light);
+      border-bottom-color: var(--border-light);
+      padding: 12px 14px;
+      color: var(--text-bright);
+      font-family: var(--body);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.1s steps(1);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--cyan);
+    }
+
+    .form-group textarea { min-height: 100px; resize: vertical; }
+
+    .form-group select {
+      appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%235a5590' stroke-width='2'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+    }
+
+    .form-group select option { background: var(--bg2); color: var(--text-bright); }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* ── FOOTER / GROUND ── */
+    footer {
+      border-top: 3px solid var(--border-light);
+      padding: 28px 0;
+      background: var(--bg2);
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left {
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: var(--text-dim);
+      line-height: 2;
+    }
+
+    .footer-links { display: flex; gap: 20px; }
+
+    .footer-links a {
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.1s steps(1);
+    }
+
+    .footer-links a:hover { color: var(--cyan); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.vis { opacity: 1; transform: translateY(0); }
+
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .stagger.vis > *:nth-child(1) { transition-delay: 0s; }
+    .stagger.vis > *:nth-child(2) { transition-delay: 0.1s; }
+    .stagger.vis > *:nth-child(3) { transition-delay: 0.2s; }
+    .stagger.vis > *:nth-child(4) { transition-delay: 0.3s; }
+    .stagger.vis > *:nth-child(5) { transition-delay: 0.4s; }
+    .stagger.vis > * { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 24px; }
+      .work-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 24px; }
+      .process-grid { grid-template-columns: 1fr; gap: 16px; }
+      .clients-bar { flex-direction: column; align-items: flex-start; }
+      .clients-sep { width: 24px; height: 2px; }
+      .building-wrapper::before,
+      .building-wrapper::after { width: 16px; }
+      .floor-section { padding: 60px 40px; }
+      .hero { padding: 160px 40px 80px; }
+      .cta { padding: 80px 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-nav { display: block; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; }
+      .building-wrapper::before,
+      .building-wrapper::after { width: 8px; }
+      .floor-section { padding: 48px 20px; }
+      .hero { padding: 140px 20px 60px; }
+      .cta { padding: 60px 20px; }
+      footer .container { flex-direction: column; gap: 12px; text-align: center; }
+      .section-title { font-size: clamp(14px, 3vw, 24px); }
+      .hero h1 { font-size: clamp(16px, 4vw, 32px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ISOMETRIC CITY CANVAS -->
+  <canvas id="city-canvas"></canvas>
+
+  <!-- VIEW SWITCHER -->
+  <div class="view-switcher">
+    <a href="index.html"><span>&#x25D0;</span> Switch Perspective</a>
+  </div>
+
+  <!-- NAV / HUD -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">PROMPT<span>ENGINES</span></a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#contact" class="nav-cta">Start</a></li>
+      </ul>
+      <button class="mobile-nav" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Start</button>
+    </div>
+  </nav>
+
+  <div class="building-wrapper">
+
+    <!-- HERO / ROOFTOP -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="floor-badge"><span class="fl-num">FL.06</span> ROOFTOP</div>
+        <div class="hero-prompt">&gt; LOADING prompt_engines.exe ...<span class="blink">_</span></div>
+        <h1>We build the things that make your business <em>go.</em></h1>
+        <p class="hero-sub">15 years of consulting and product development — now focused on helping businesses grow with AI. Strategy, custom software, and media production, all under one roof.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="pixel-btn">Start a Conversation ►</a>
+          <a href="#work" class="pixel-btn-ghost">See Our Work</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="floor-plate"></div>
+
+    <!-- STATUS BAR -->
+    <div class="status-bar">
+      <div class="status-track">
+        <div class="status-item"><span class="val">AI_STRATEGY</span><span class="sep">|</span>online</div>
+        <div class="status-item"><span class="val">CUSTOM_APPS</span><span class="sep">|</span>deployed</div>
+        <div class="status-item"><span class="val">MEDIA_PROD</span><span class="sep">|</span>rendering</div>
+        <div class="status-item"><span class="val">AUTOMATION</span><span class="sep">|</span>active</div>
+        <div class="status-item"><span class="val">FLOW_APP</span><span class="sep">|</span>live</div>
+        <div class="status-item"><span class="val">KAIZEN_APP</span><span class="sep">|</span>live</div>
+        <div class="status-item"><span class="val">STORYBOOK</span><span class="sep">|</span>live</div>
+        <div class="status-item"><span class="val">XP_EARNED</span><span class="sep">|</span>15yrs</div>
+        <div class="status-item"><span class="val">AI_STRATEGY</span><span class="sep">|</span>online</div>
+        <div class="status-item"><span class="val">CUSTOM_APPS</span><span class="sep">|</span>deployed</div>
+        <div class="status-item"><span class="val">MEDIA_PROD</span><span class="sep">|</span>rendering</div>
+        <div class="status-item"><span class="val">AUTOMATION</span><span class="sep">|</span>active</div>
+        <div class="status-item"><span class="val">FLOW_APP</span><span class="sep">|</span>live</div>
+        <div class="status-item"><span class="val">KAIZEN_APP</span><span class="sep">|</span>live</div>
+        <div class="status-item"><span class="val">STORYBOOK</span><span class="sep">|</span>live</div>
+        <div class="status-item"><span class="val">XP_EARNED</span><span class="sep">|</span>15yrs</div>
+      </div>
+    </div>
+
+    <div class="floor-plate"></div>
+
+    <!-- ABOUT / FL.05 -->
+    <section class="floor-section" id="about">
+      <div class="floor-badge"><span class="fl-num">FL.05</span> EXECUTIVE SUITE</div>
+      <div class="section-title reveal">Fifteen years of<br>building things<br>that matter.</div>
+
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>Prompt Engines was born from a straightforward observation: <strong>most businesses don't need more technology — they need the right technology, applied well.</strong></p>
+          <p>We've spent over 15 years in consulting and product development, working with organizations ranging from <strong>IBM</strong> and <strong>Stability AI</strong> to local startups and small businesses. That range gives us a rare perspective — we understand enterprise rigor and startup speed.</p>
+          <p>Today we focus on three things: <strong>AI consulting</strong> that identifies where you're leaving money on the table, <strong>custom applications</strong> built for your specific industry, and <strong>media production</strong> — from marketing videos to brand photography to campaign ads — that actually converts.</p>
+          <p>We don't hand you a strategy deck and walk away. We build the thing. We ship it. We stick around until it works.</p>
+        </div>
+
+        <div class="reveal">
+          <div class="journal-entry">
+            <div class="journal-phase">★ PHASE 01</div>
+            <div class="journal-title">Enterprise Consulting</div>
+            <div class="journal-desc">Years of product development and consulting at scale, including work with IBM — building the operational muscle for complex projects.</div>
+          </div>
+          <div class="journal-entry">
+            <div class="journal-phase">★ PHASE 02</div>
+            <div class="journal-title">Generative AI &amp; Stability AI</div>
+            <div class="journal-desc">Deep work in image generation, video production, and AI pipelines. Built tools and workflows at the frontier of what's possible.</div>
+          </div>
+          <div class="journal-entry">
+            <div class="journal-phase">★ PHASE 03</div>
+            <div class="journal-title">Prompt Engines</div>
+            <div class="journal-desc">Bringing 15 years of experience to businesses — AI strategy, custom apps, and media production. From a roofing app to an ESL tutoring platform in Pakistan.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pixel-card clients-bar reveal">
+        <div class="clients-label">Party Members</div>
+        <div class="clients-sep"></div>
+        <div class="clients-names">
+          <div class="client-name">IBM</div>
+          <div class="client-name">Stability AI</div>
+          <div class="client-name">Gizri School</div>
+          <div class="client-name">Startups &amp; SMBs</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="floor-plate"></div>
+
+    <!-- SERVICES / FL.04 -->
+    <section class="floor-section" id="services">
+      <div class="floor-badge"><span class="fl-num">FL.04</span> SKILL TREE</div>
+      <div class="section-title reveal">Everything you need.<br>Nothing you don't.</div>
+      <div class="section-desc reveal">Three capabilities that cover the full spectrum of what businesses actually need to grow.</div>
+
+      <div class="services-grid stagger">
+        <div class="pixel-card">
+          <div class="service-icon">🤖</div>
+          <h3>AI Consulting</h3>
+          <p>We find the highest-impact places where AI can save you money, make you money, or free up your team — then we build and deploy the solution.</p>
+          <div class="skill-list">
+            <span class="arrow">▸</span> Process automation<br>
+            <span class="arrow">▸</span> Cost reduction audits<br>
+            <span class="arrow">▸</span> Revenue opportunity mapping<br>
+            <span class="arrow">▸</span> AI tool selection &amp; deployment
+          </div>
+        </div>
+        <div class="pixel-card">
+          <div class="service-icon">⚙️</div>
+          <h3>Custom Applications</h3>
+          <p>Full-stack apps built for your specific industry and workflow. AI-native from the ground up — not bolted on as an afterthought.</p>
+          <div class="skill-list">
+            <span class="arrow">▸</span> Industry-specific SaaS<br>
+            <span class="arrow">▸</span> AI tutoring platforms<br>
+            <span class="arrow">▸</span> Image &amp; video generation tools<br>
+            <span class="arrow">▸</span> Internal business tools
+          </div>
+        </div>
+        <div class="pixel-card">
+          <div class="service-icon">🎬</div>
+          <h3>Media Production</h3>
+          <p>End-to-end creative services — from concept to final cut. Marketing media that gets attention, builds your brand, and drives results.</p>
+          <div class="skill-list">
+            <span class="arrow">▸</span> Campaign ads &amp; viral videos<br>
+            <span class="arrow">▸</span> Professional photography<br>
+            <span class="arrow">▸</span> Brand identity &amp; design<br>
+            <span class="arrow">▸</span> Video editing &amp; post-production
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="floor-plate"></div>
+
+    <!-- WORK / FL.03 -->
+    <section class="floor-section" id="work">
+      <div class="floor-badge"><span class="fl-num">FL.03</span> INVENTORY</div>
+      <div class="section-title reveal">Built. Shipped.<br>Running.</div>
+      <div class="section-desc reveal">Products and projects across industries — from enterprise AI to creative apps to full media campaigns.</div>
+
+      <div class="work-grid stagger">
+        <div class="pixel-card work-card">
+          <div class="work-category">Education · Live</div>
+          <h3>Flow — AI Tutoring</h3>
+          <p>An AI-powered tutoring platform for homeschooling and schools. Currently deployed for ESL instruction at Gizri School in Pakistan — personalized learning that adapts to each student.</p>
+          <div class="work-tags">
+            <span class="work-tag">EdTech</span>
+            <span class="work-tag">ESL</span>
+            <span class="work-tag">AI Tutoring</span>
+          </div>
+          <a href="https://flow.promptengines.com" class="work-link">flow.promptengines.com ►</a>
+        </div>
+
+        <div class="pixel-card work-card">
+          <div class="work-category">Kids · Live</div>
+          <h3>Kaizen — Creative Learning</h3>
+          <p>A creative learning platform for young children. AI-generated coloring pages, cartoons, and interactive activities on iPad — plus structured lessons in typing, letters, numbers, early math, and language. Fresh content every session, powered by AI.</p>
+          <div class="work-tags">
+            <span class="work-tag">iPad</span>
+            <span class="work-tag">Image Gen</span>
+            <span class="work-tag">Early Learning</span>
+          </div>
+          <a href="https://kaizen.promptengines.com" class="work-link">kaizen.promptengines.com ►</a>
+        </div>
+
+        <div class="pixel-card work-card">
+          <div class="work-category">Kids · Live</div>
+          <h3>Storybook Studio — AI Storybooks</h3>
+          <p>An app that lets families create personalized children's storybooks with AI. Choose characters, settings, and themes — then watch as beautiful illustrated stories come to life. Every book is unique, printable, and made to spark a child's imagination.</p>
+          <div class="work-tags">
+            <span class="work-tag">AI Storytelling</span>
+            <span class="work-tag">Image Gen</span>
+            <span class="work-tag">Kids</span>
+          </div>
+          <a href="https://storybookstudio.promptengines.com" class="work-link">storybookstudio.promptengines.com ►</a>
+        </div>
+
+        <div class="pixel-card work-card">
+          <div class="work-category">Media · Ongoing</div>
+          <h3>Campaign &amp; Brand Media</h3>
+          <p>End-to-end media production for businesses — campaign ads, viral video content, internal brand assets, professional and personal photography, poster design, and video editing.</p>
+          <div class="work-tags">
+            <span class="work-tag">Video</span>
+            <span class="work-tag">Photography</span>
+            <span class="work-tag">Branding</span>
+          </div>
+        </div>
+
+        <div class="pixel-card work-card">
+          <div class="work-category">Enterprise · Consulting</div>
+          <h3>AI Strategy &amp; Custom Apps</h3>
+          <p>Consulting and product development with IBM and Stability AI. Custom applications for industries like roofing — identifying where AI creates real value and building the tools to capture it.</p>
+          <div class="work-tags">
+            <span class="work-tag">IBM</span>
+            <span class="work-tag">Stability AI</span>
+            <span class="work-tag">Custom Apps</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="floor-plate"></div>
+
+    <!-- PROCESS / FL.02 -->
+    <section class="floor-section" id="process">
+      <div class="floor-badge"><span class="fl-num">FL.02</span> QUEST LOG</div>
+      <div class="section-title reveal">Simple process.<br>Serious results.</div>
+
+      <div class="process-grid stagger">
+        <div class="pixel-card process-step">
+          <div class="step-num">01</div>
+          <h3>Discover</h3>
+          <p>We learn your business inside and out. Pain points, goals, opportunities. We figure out where AI and smart tooling will make the biggest difference.</p>
+        </div>
+        <div class="pixel-card process-step">
+          <div class="step-num">02</div>
+          <h3>Build</h3>
+          <p>No drawn-out timelines. We design and ship fast — apps, automations, media assets, campaigns. You see real work, not proposals.</p>
+        </div>
+        <div class="pixel-card process-step">
+          <div class="step-num">03</div>
+          <h3>Deliver</h3>
+          <p>We measure success in outcomes. Revenue generated, costs cut, media that converts. We stay engaged until the results speak for themselves.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="floor-plate"></div>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="floor-badge"><span class="fl-num">FL.01</span> LOBBY</div>
+      <div class="section-title reveal">Let's figure out<br>what AI can do<br>for you.</div>
+      <div class="section-desc reveal">Free consultation. No pressure. Just a conversation about your business and where the biggest opportunities are.</div>
+      <a href="#contact" class="pixel-btn">Start a Conversation ►</a>
+    </section>
+
+    <div class="floor-plate"></div>
+
+    <!-- CONTACT / GROUND FLOOR -->
+    <section class="floor-section" id="contact">
+      <div class="floor-badge"><span class="fl-num">GF</span> SAVE POINT</div>
+      <div class="section-title reveal">Let's talk.</div>
+
+      <div class="contact-grid">
+        <div class="contact-left reveal">
+          <h3>Tell us what you're working on.</h3>
+          <p>Whether it's an AI strategy, a custom app, a media campaign, or something you haven't fully figured out yet — we'd love to hear about it. Free consultation, no commitment.</p>
+          <a href="mailto:promptengines@gmail.com" class="contact-email">
+            <span>►</span> promptengines@gmail.com
+          </a>
+        </div>
+
+        <form class="reveal" action="https://formsubmit.co/promptengines@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New Inquiry from PromptEngines.com">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://promptengines.com#contact">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@company.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="interest">What are you looking for?</label>
+            <select id="interest" name="interest">
+              <option value="">Select a service</option>
+              <option value="ai-consulting">AI Consulting &amp; Strategy</option>
+              <option value="app-development">Custom App Development</option>
+              <option value="media-production">Media &amp; Video Production</option>
+              <option value="marketing">Marketing &amp; Campaign Ads</option>
+              <option value="automation">Process Automation</option>
+              <option value="other">Something Else</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Tell us about your project</label>
+            <textarea id="message" name="message" placeholder="What are you building, what's the challenge, what does success look like?"></textarea>
+          </div>
+          <button type="submit" class="pixel-btn" style="width: 100%; justify-content: center;">Send It ►</button>
+        </form>
+      </div>
+    </section>
+
+  </div><!-- /building-wrapper -->
+
+  <!-- FOOTER / GROUND LEVEL -->
+  <footer>
+    <div class="container">
+      <div class="footer-left">&copy; 2026 Prompt Engines.<br>All rights reserved.</div>
+      <div class="footer-links">
+        <a href="mailto:promptengines@gmail.com">Contact</a>
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── ISOMETRIC CITY CANVAS ──
+    const canvas = document.getElementById('city-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Isometric helpers
+    const TILE = 32;
+    const HALF = TILE / 2;
+
+    function toScreen(gx, gy) {
+      return {
+        x: (gx - gy) * HALF + canvas.width / 2,
+        y: (gx + gy) * (HALF / 2) + 80
+      };
+    }
+
+    function drawBlock(gx, gy, w, d, h, color) {
+      const topColor = lighten(color, 30);
+      const leftColor = color;
+      const rightColor = darken(color, 40);
+
+      // Front-bottom corner
+      const fb = toScreen(gx + w, gy + d);
+      const ft = { x: fb.x, y: fb.y - h };
+
+      // All 4 base corners
+      const bl = toScreen(gx, gy + d);
+      const br = toScreen(gx + w, gy + d);
+      const fl = toScreen(gx, gy);
+      const fr = toScreen(gx + w, gy);
+
+      // Top face
+      ctx.fillStyle = topColor;
+      ctx.beginPath();
+      ctx.moveTo(fl.x, fl.y - h);
+      ctx.lineTo(fr.x, fr.y - h);
+      ctx.lineTo(br.x, br.y - h);
+      ctx.lineTo(bl.x, bl.y - h);
+      ctx.closePath();
+      ctx.fill();
+
+      // Left face
+      ctx.fillStyle = leftColor;
+      ctx.beginPath();
+      ctx.moveTo(bl.x, bl.y - h);
+      ctx.lineTo(bl.x, bl.y);
+      ctx.lineTo(br.x, br.y);
+      ctx.lineTo(br.x, br.y - h);
+      ctx.closePath();
+      ctx.fill();
+
+      // Right face
+      ctx.fillStyle = rightColor;
+      ctx.beginPath();
+      ctx.moveTo(br.x, br.y - h);
+      ctx.lineTo(br.x, br.y);
+      ctx.lineTo(fr.x, fr.y);
+      ctx.lineTo(fr.x, fr.y - h);
+      ctx.closePath();
+      ctx.fill();
+
+      // Windows on left face
+      if (h > 30) {
+        ctx.fillStyle = '#00e5ff33';
+        const windowRows = Math.floor(h / 20);
+        for (let r = 0; r < windowRows; r++) {
+          const wy = br.y - 10 - r * 20;
+          const portions = Math.floor(w * 1.5);
+          for (let c = 0; c < portions; c++) {
+            const ratio = (c + 0.3) / (portions + 0.6);
+            const wx = bl.x + (br.x - bl.x) * ratio;
+            ctx.fillRect(wx - 2, wy - 4, 4, 6);
+          }
+        }
+      }
+
+      // Windows on right face
+      if (h > 30) {
+        ctx.fillStyle = '#00e5ff22';
+        const windowRows = Math.floor(h / 20);
+        for (let r = 0; r < windowRows; r++) {
+          const wy = fr.y - 10 - r * 20;
+          const portions = Math.floor(d * 1.5);
+          for (let c = 0; c < portions; c++) {
+            const ratio = (c + 0.3) / (portions + 0.6);
+            const wx = br.x + (fr.x - br.x) * ratio;
+            ctx.fillRect(wx - 2, wy - 4, 4, 6);
+          }
+        }
+      }
+    }
+
+    function lighten(hex, amt) {
+      let r = parseInt(hex.slice(1, 3), 16);
+      let g = parseInt(hex.slice(3, 5), 16);
+      let b = parseInt(hex.slice(5, 7), 16);
+      r = Math.min(255, r + amt);
+      g = Math.min(255, g + amt);
+      b = Math.min(255, b + amt);
+      return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+    }
+
+    function darken(hex, amt) {
+      let r = parseInt(hex.slice(1, 3), 16);
+      let g = parseInt(hex.slice(3, 5), 16);
+      let b = parseInt(hex.slice(5, 7), 16);
+      r = Math.max(0, r - amt);
+      g = Math.max(0, g - amt);
+      b = Math.max(0, b - amt);
+      return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+    }
+
+    function drawTree(gx, gy) {
+      const base = toScreen(gx, gy);
+      // Trunk
+      ctx.fillStyle = '#4a3520';
+      ctx.fillRect(base.x - 2, base.y - 12, 4, 12);
+      // Canopy (diamond)
+      ctx.fillStyle = '#2a7a3a';
+      ctx.beginPath();
+      ctx.moveTo(base.x, base.y - 28);
+      ctx.lineTo(base.x + 8, base.y - 16);
+      ctx.lineTo(base.x, base.y - 10);
+      ctx.lineTo(base.x - 8, base.y - 16);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = '#3a9a4a';
+      ctx.beginPath();
+      ctx.moveTo(base.x, base.y - 32);
+      ctx.lineTo(base.x + 6, base.y - 22);
+      ctx.lineTo(base.x, base.y - 16);
+      ctx.lineTo(base.x - 6, base.y - 22);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // City layout
+    const buildings = [
+      // [gx, gy, width, depth, height, color]
+      [-8, -4, 3, 3, 90, '#2a3a7a'],
+      [-4, -6, 2, 2, 50, '#3a2a6a'],
+      [-3, -2, 4, 3, 120, '#2a5a5a'],
+      [2, -5, 2, 3, 70, '#4a2a5a'],
+      [5, -3, 3, 2, 100, '#2a4a6a'],
+      [8, -6, 2, 2, 40, '#3a3a5a'],
+      [-7, 2, 2, 3, 60, '#3a4a3a'],
+      [-3, 4, 3, 2, 80, '#4a3a3a'],
+      [1, 3, 2, 2, 55, '#2a3a5a'],
+      [4, 1, 3, 3, 110, '#3a2a4a'],
+      [8, 2, 2, 2, 45, '#2a4a4a'],
+      [-6, -9, 2, 2, 65, '#3a3a6a'],
+      [6, -8, 3, 2, 75, '#2a3a5a'],
+      [0, -9, 2, 3, 85, '#4a3a5a'],
+      [-9, 5, 2, 2, 35, '#3a4a5a'],
+      [9, 5, 2, 2, 50, '#2a5a4a'],
+    ];
+
+    const trees = [
+      [-6, -1], [-1, -8], [3, -7], [7, 0], [-8, 4], [2, 5], [-5, 6], [7, 4], [10, -1], [-10, 0]
+    ];
+
+    let windowBlink = 0;
+
+    function drawCity() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Ground plane - isometric grid
+      ctx.strokeStyle = '#1a1840';
+      ctx.lineWidth = 1;
+      for (let i = -15; i <= 15; i++) {
+        const s1 = toScreen(i, -15);
+        const e1 = toScreen(i, 15);
+        ctx.beginPath();
+        ctx.moveTo(s1.x, s1.y);
+        ctx.lineTo(e1.x, e1.y);
+        ctx.stroke();
+        const s2 = toScreen(-15, i);
+        const e2 = toScreen(15, i);
+        ctx.beginPath();
+        ctx.moveTo(s2.x, s2.y);
+        ctx.lineTo(e2.x, e2.y);
+        ctx.stroke();
+      }
+
+      // Roads (darker strips)
+      ctx.fillStyle = '#0c0a20';
+      for (let i = -15; i <= 15; i++) {
+        const a = toScreen(i, -1);
+        const b = toScreen(i, 1);
+        ctx.fillRect(a.x, a.y, 2, 2);
+      }
+
+      // Sort buildings by depth (painter's algorithm)
+      const sorted = [...buildings].sort((a, b) => (a[0] + a[1]) - (b[0] + b[1]));
+
+      // Draw trees (back)
+      trees.filter(t => t[0] + t[1] < 0).forEach(t => drawTree(t[0], t[1]));
+
+      // Draw buildings
+      sorted.forEach(b => drawBlock(b[0], b[1], b[2], b[3], b[4], b[5]));
+
+      // Draw trees (front)
+      trees.filter(t => t[0] + t[1] >= 0).forEach(t => drawTree(t[0], t[1]));
+
+      // Blinking window highlights
+      windowBlink++;
+      if (windowBlink % 60 < 30) {
+        ctx.fillStyle = '#ffd70044';
+        sorted.forEach(b => {
+          if (Math.random() > 0.7) {
+            const pos = toScreen(b[0] + b[2], b[1] + b[3]);
+            ctx.fillRect(pos.x - 4, pos.y - b[4] + Math.random() * b[4] * 0.8, 3, 4);
+          }
+        });
+      }
+    }
+
+    drawCity();
+
+    // Redraw on resize
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      drawCity();
+    });
+
+    // Slow blink animation
+    setInterval(() => {
+      drawCity();
+    }, 2000);
+
+    // ── SCROLL REVEAL ──
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal, .stagger').forEach(el => obs.observe(el));
+
+    // ── SMOOTH SCROLL ──
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
