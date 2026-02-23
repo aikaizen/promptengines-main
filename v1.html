@@ -208,24 +208,13 @@
       border-radius: 2px;
     }
 
-    .hero-sub {
-      font-size: 20px;
-      color: var(--text-dim);
-      max-width: 600px;
-      line-height: 1.7;
-      margin-bottom: 48px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s ease forwards 0.6s;
-    }
-
     .hero-actions {
       display: flex;
       gap: 16px;
       flex-wrap: wrap;
       opacity: 0;
       transform: translateY(20px);
-      animation: fadeUp 0.8s ease forwards 0.8s;
+      animation: fadeUp 0.8s ease forwards 0.6s;
     }
 
     .btn-primary {
@@ -271,36 +260,75 @@
       color: var(--green);
     }
 
-    /* ── TICKER BAR ── */
-    .ticker-bar {
+    /* ── HOW WE WORK ── */
+    .how-we-work {
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 16px 0;
-      overflow: hidden;
+      background: var(--surface);
+      padding: 80px 0;
       position: relative;
       z-index: 1;
     }
 
-    .ticker-track {
-      display: flex;
-      animation: scroll 25s linear infinite;
-      width: max-content;
-    }
-
-    .ticker-item {
-      font-family: var(--font-mono);
+    .how-we-work-title {
+      font-family: var(--font-display);
+      font-weight: 700;
       font-size: 14px;
-      white-space: nowrap;
-      padding: 0 40px;
-      color: var(--text-dim);
+      color: var(--green);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+      text-align: center;
     }
 
-    .ticker-item .up { color: var(--green); }
-    .ticker-item .metric { color: var(--text); font-weight: 500; }
+    .how-we-work-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 32px;
+    }
 
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+    .how-step {
+      position: relative;
+    }
+
+    .how-step-num {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 40px;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .how-step-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 17px;
+      color: var(--text);
+      line-height: 1.35;
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+
+    .how-step-desc {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 1024px) {
+      .how-we-work-grid { grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .how-we-work-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+      .how-we-work { padding: 60px 0; }
+    }
+
+    @media (max-width: 480px) {
+      .how-we-work-grid { grid-template-columns: 1fr; gap: 32px; }
     }
 
     /* ── STATS SECTION ── */
@@ -946,213 +974,6 @@
       50% { opacity: 0; }
     }
 
-    /* ── ABOUT US ── */
-    .about {
-      padding: 120px 0;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-    }
-
-    .about-hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-      margin-bottom: 80px;
-    }
-
-    .about-headline {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: clamp(32px, 4vw, 48px);
-      line-height: 1.15;
-      letter-spacing: -1.5px;
-      margin-bottom: 24px;
-    }
-
-    .about-headline .thin {
-      font-weight: 400;
-      color: var(--text-dim);
-    }
-
-    .about-lead {
-      font-size: 18px;
-      color: var(--text-dim);
-      line-height: 1.8;
-      margin-bottom: 32px;
-    }
-
-    .about-stat-row {
-      display: flex;
-      gap: 48px;
-    }
-
-    .about-stat {
-      position: relative;
-      padding-left: 16px;
-    }
-
-    .about-stat::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 4px;
-      bottom: 4px;
-      width: 2px;
-      background: var(--green);
-    }
-
-    .about-stat-num {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 32px;
-      color: var(--green);
-      letter-spacing: -1px;
-      line-height: 1;
-    }
-
-    .about-stat-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-top: 4px;
-    }
-
-    /* about right — vertical philosophy strip */
-    .about-philosophy {
-      position: relative;
-      padding: 48px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--black);
-      overflow: hidden;
-    }
-
-    .about-philosophy::before {
-      content: '';
-      position: absolute;
-      top: -1px;
-      left: 48px;
-      right: 48px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--green), transparent);
-    }
-
-    .about-philosophy::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, var(--green-dim), transparent 70%);
-      opacity: 0.3;
-    }
-
-    .philosophy-item {
-      margin-bottom: 32px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .philosophy-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .philosophy-num {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--green);
-      letter-spacing: 2px;
-      margin-bottom: 8px;
-    }
-
-    .philosophy-text {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 18px;
-      line-height: 1.5;
-      letter-spacing: -0.3px;
-    }
-
-    .philosophy-text span {
-      color: var(--text-dim);
-      font-weight: 300;
-      font-family: var(--font-body);
-      font-size: 15px;
-      display: block;
-      margin-top: 4px;
-      letter-spacing: 0;
-    }
-
-    /* client strip */
-    .about-clients {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 40px 48px;
-      background: var(--black);
-      display: flex;
-      align-items: center;
-      gap: 48px;
-    }
-
-    .clients-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .clients-divider {
-      width: 1px;
-      height: 40px;
-      background: var(--border);
-      flex-shrink: 0;
-    }
-
-    .clients-list {
-      display: flex;
-      gap: 40px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .client-name {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 20px;
-      color: var(--text-dim);
-      letter-spacing: -0.5px;
-      transition: color 0.3s;
-      cursor: default;
-    }
-
-    .client-name:hover {
-      color: var(--text);
-    }
-
-    .client-name.accent-hover:hover {
-      color: var(--green);
-    }
-
-    @media (max-width: 1024px) {
-      .about-hero { grid-template-columns: 1fr; gap: 48px; }
-      .about-clients { flex-direction: column; align-items: flex-start; gap: 24px; }
-      .clients-divider { width: 40px; height: 1px; }
-    }
-
-    @media (max-width: 768px) {
-      .about-stat-row { gap: 32px; }
-      .about-philosophy { padding: 32px; }
-    }
-
     /* ── WORK / PORTFOLIO GRID ── */
     .work-grid {
       display: grid;
@@ -1231,12 +1052,7 @@
     }
 
     @media (max-width: 1024px) {
-      .about-grid { grid-template-columns: 1fr; gap: 48px; }
       .work-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 768px) {
-      .about-highlights { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -1254,7 +1070,6 @@
     <div class="container">
       <a href="#" class="logo">PROMPT<span>ENGINES</span></a>
       <ul class="nav-links">
-        <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#work">Work</a></li>
         <li><a href="#process">Process</a></li>
@@ -1270,7 +1085,6 @@
       <div class="hero-content">
         <div class="hero-tag">AI Consulting &amp; Media Production</div>
         <h1>AI that actually <span class="accent">grows</span> your business.</h1>
-        <p class="hero-sub">You don't need to understand AI — you just need results. We bring 15+ years of consulting experience to help small businesses increase revenue, reduce costs, and build products that work. We handle the complexity so you don't have to.</p>
         <div class="hero-actions">
           <a href="#contact" class="btn-primary">Book a Free Consult <span>→</span></a>
           <a href="#work" class="btn-secondary">See Our Work</a>
@@ -1279,97 +1093,46 @@
     </div>
   </section>
 
-  <!-- TICKER BAR -->
-  <div class="ticker-bar">
-    <div class="ticker-track" id="ticker">
-      <div class="ticker-item"><span class="metric">AI STRATEGY</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">CUSTOM APPS</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">IMAGE GENERATION</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">VIDEO PRODUCTION</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">CAMPAIGN ADS</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">BRAND MEDIA</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">COST REDUCTION</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">PROCESS AUTOMATION</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">AI STRATEGY</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">CUSTOM APPS</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">IMAGE GENERATION</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">VIDEO PRODUCTION</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">CAMPAIGN ADS</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">BRAND MEDIA</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">COST REDUCTION</span> <span class="up">→</span></div>
-      <div class="ticker-item"><span class="metric">PROCESS AUTOMATION</span> <span class="up">→</span></div>
+  <!-- HOW WE WORK -->
+  <div class="how-we-work">
+    <div class="container">
+      <div class="how-we-work-title">How We Work</div>
+      <div class="how-we-work-grid">
+        <div class="how-step">
+          <div class="how-step-num">01</div>
+          <div class="how-step-title">Start with an idea or a pain point</div>
+          <div class="how-step-desc">You don't need a spec. Bring a problem, a half-formed idea, or a goal.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">02</div>
+          <div class="how-step-title">We spin up a project and start building</div>
+          <div class="how-step-desc">App, media, AI integration — we scope fast and ship within days.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">03</div>
+          <div class="how-step-title">Agent + human teams move fast</div>
+          <div class="how-step-desc">AI tooling with experienced builders. Weeks of work done in days.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">04</div>
+          <div class="how-step-title">Hand off or keep building</div>
+          <div class="how-step-desc">Your call. We hand over a finished product or stay on as build partner.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">05</div>
+          <div class="how-step-title">Runs securely in production</div>
+          <div class="how-step-desc">Monitoring, analytics, infrastructure. Operationalized and maintained.</div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <div class="container">
-      <div class="section-tag">About Us</div>
-
-      <div class="about-hero">
-        <!-- Left: story + stats -->
-        <div class="reveal">
-          <div class="about-headline">We've been building products<br>for <span class="thin">over fifteen years.</span></div>
-          <p class="about-lead">Prompt Engines started with a simple idea: businesses shouldn't need a PhD in machine learning to benefit from AI. We take the complexity out of the equation and give you tools, media, and strategies that just work — so you can focus on running your business.</p>
-          <div class="about-stat-row">
-            <div class="about-stat">
-              <div class="about-stat-num">15+</div>
-              <div class="about-stat-label">Years in the Game</div>
-            </div>
-            <div class="about-stat">
-              <div class="about-stat-num">50+</div>
-              <div class="about-stat-label">Projects Shipped</div>
-            </div>
-            <div class="about-stat">
-              <div class="about-stat-num">3</div>
-              <div class="about-stat-label">Continents Served</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: philosophy card -->
-        <div class="about-philosophy reveal">
-          <div class="philosophy-item">
-            <div class="philosophy-num">01</div>
-            <div class="philosophy-text">Outcomes over output.
-              <span>We measure success in revenue gained and costs cut — not hours billed or decks delivered.</span>
-            </div>
-          </div>
-          <div class="philosophy-item">
-            <div class="philosophy-num">02</div>
-            <div class="philosophy-text">Build it, don't just plan it.
-              <span>Strategy is worthless without execution. We ship real products — apps, automations, campaigns — fast.</span>
-            </div>
-          </div>
-          <div class="philosophy-item">
-            <div class="philosophy-num">03</div>
-            <div class="philosophy-text">Make AI disappear.
-              <span>The best AI is invisible. Your customers see a better product. Your team sees less busywork. Nobody sees the wiring.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Client strip -->
-      <div class="about-clients reveal">
-        <div class="clients-label">Trusted By</div>
-        <div class="clients-divider"></div>
-        <div class="clients-list">
-          <div class="client-name accent-hover">IBM</div>
-          <div class="client-name accent-hover">Stability AI</div>
-          <div class="client-name">Gizri School</div>
-          <div class="client-name">Startups &amp; SMBs</div>
-        </div>
-      </div>
-
-    </div>
-  </section>
 
   <!-- SERVICES -->
   <section class="services" id="services">
     <div class="container">
       <div class="section-tag">What We Do</div>
-      <div class="section-title reveal">Strategy. Software.<br>Media. Results.</div>
+      <div class="section-title reveal">What we build.<br>What we run.</div>
+      <div class="section-desc reveal">Products, consulting, and media. We build our own ventures and help others build theirs.</div>
       <div class="services-grid reveal-stagger">
         <div class="service-card">
           <span class="service-icon">⚡</span>

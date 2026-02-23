@@ -64,7 +64,7 @@
       z-index: 9998;
     }
 
-    section, footer, nav { position: relative; z-index: 1; }
+    section, footer, nav, .how-we-work { position: relative; z-index: 1; }
 
     .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
 
@@ -231,17 +231,6 @@
       font-weight: 600;
     }
 
-    .hero-sub {
-      font-size: 18px;
-      color: var(--dim);
-      line-height: 1.8;
-      max-width: 520px;
-      margin-bottom: 40px;
-      opacity: 0;
-      transform: translateY(16px);
-      animation: fadeUp 0.7s ease forwards 0.55s;
-    }
-
     .hero-actions {
       display: flex;
       gap: 16px;
@@ -288,108 +277,108 @@
       color: var(--copper);
     }
 
-    /* hero right — floating orbit visual */
-    .hero-visual {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1;
+    /* hero right — project cards grid */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
       opacity: 0;
       animation: fadeUp 1s ease forwards 0.5s;
     }
-
-    .orbit-ring {
-      position: absolute;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      animation: spin 40s linear infinite;
-    }
-
-    .orbit-ring:nth-child(1) { inset: 5%; }
-    .orbit-ring:nth-child(2) { inset: 20%; animation-duration: 30s; animation-direction: reverse; }
-    .orbit-ring:nth-child(3) { inset: 35%; animation-duration: 20s; }
-
-    .orbit-node {
-      position: absolute;
+    .project-card {
       background: var(--deep);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 14px 18px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--dim);
-      white-space: nowrap;
-      transition: border-color 0.3s, color 0.3s;
+      padding: 24px 20px;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     }
-
-    .orbit-node:hover {
+    .project-card[href]:hover {
       border-color: var(--copper);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px var(--copper-dim);
+    }
+    .project-card:not([href]) {
+      cursor: default;
+    }
+    .project-card h3 {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 17px;
       color: var(--cream);
-    }
-
-    .orbit-node .dot {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      margin-right: 8px;
-    }
-
-    .dot-copper { background: var(--copper); }
-    .dot-teal { background: var(--teal); }
-    .dot-cream { background: var(--cream); }
-
-    .orbit-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: var(--copper);
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-family: var(--font-serif);
-      font-weight: 800;
-      font-size: 20px;
-      color: var(--midnight);
-      box-shadow: 0 0 60px var(--copper-dim);
+      justify-content: space-between;
+    }
+    .project-card h3 .arrow {
+      font-size: 14px;
+      color: var(--copper);
+      transition: transform 0.3s;
+    }
+    .project-card[href]:hover h3 .arrow {
+      transform: translateX(4px);
+    }
+    .project-card p {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--dim);
+      line-height: 1.6;
     }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ── MARQUEE ── */
-    .marquee {
+    /* ── HOW WE WORK (5-step engagement flow) ── */
+    .how-we-work {
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 18px 0;
-      overflow: hidden;
+      padding: 56px 0;
     }
 
-    .marquee-track {
-      display: flex;
-      animation: marquee 30s linear infinite;
-      width: max-content;
+    .how-we-work-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
     }
 
-    .marquee-item {
-      font-family: var(--font-serif);
-      font-weight: 300;
-      font-style: italic;
-      font-size: 16px;
-      white-space: nowrap;
-      padding: 0 48px;
-      color: var(--dim);
+    .how-we-work-step {
+      padding: 0 24px;
+      position: relative;
     }
 
-    .marquee-item .sep {
+    .how-we-work-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 10px;
+      bottom: 10px;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, var(--border), transparent);
+    }
+
+    .how-we-work-num {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
       color: var(--copper);
-      margin: 0 16px;
-      font-style: normal;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
     }
 
-    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .how-we-work-step h3 {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 17px;
+      color: var(--cream);
+      line-height: 1.35;
+      margin-bottom: 10px;
+    }
+
+    .how-we-work-step p {
+      font-size: 13px;
+      color: var(--dim);
+      line-height: 1.7;
+    }
 
     /* ── SECTION UTILS ── */
     .section-tag {
@@ -449,128 +438,6 @@
     .stagger.vis > * { opacity: 1; transform: translateY(0); }
 
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-
-    /* ── ABOUT ── */
-    .about { padding: 120px 0; }
-
-    .about-split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-      margin-top: 56px;
-    }
-
-    .about-narrative p {
-      color: var(--dim);
-      font-size: 16px;
-      line-height: 1.9;
-      margin-bottom: 24px;
-    }
-
-    .about-narrative strong {
-      color: var(--cream);
-      font-weight: 500;
-    }
-
-    .timeline {
-      position: relative;
-      padding-left: 32px;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      bottom: 8px;
-      width: 1px;
-      background: linear-gradient(180deg, var(--copper), var(--teal), var(--border));
-    }
-
-    .timeline-item {
-      margin-bottom: 36px;
-      position: relative;
-    }
-
-    .timeline-item:last-child { margin-bottom: 0; }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -36px;
-      top: 8px;
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--copper);
-      box-shadow: 0 0 12px var(--copper-dim);
-    }
-
-    .timeline-item:nth-child(even)::before { background: var(--teal); box-shadow: 0 0 12px var(--teal-dim); }
-
-    .timeline-year {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--copper);
-      letter-spacing: 2px;
-      margin-bottom: 4px;
-    }
-
-    .timeline-item:nth-child(even) .timeline-year { color: var(--teal); }
-
-    .timeline-title {
-      font-family: var(--font-serif);
-      font-weight: 600;
-      font-size: 17px;
-      margin-bottom: 4px;
-    }
-
-    .timeline-desc {
-      font-size: 14px;
-      color: var(--dim);
-      line-height: 1.7;
-    }
-
-    /* trusted strip */
-    .trusted {
-      margin-top: 64px;
-      padding: 32px 40px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--deep);
-      display: flex;
-      align-items: center;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-
-    .trusted-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--dim2);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      flex-shrink: 0;
-    }
-
-    .trusted-sep { width: 1px; height: 32px; background: var(--border); flex-shrink: 0; }
-
-    .trusted-names {
-      display: flex;
-      gap: 36px;
-      flex-wrap: wrap;
-    }
-
-    .trusted-name {
-      font-family: var(--font-serif);
-      font-weight: 600;
-      font-size: 18px;
-      color: var(--dim);
-      transition: color 0.3s;
-    }
-
-    .trusted-name:hover { color: var(--copper); }
 
     /* ── WHAT WE ACTUALLY DO — expanded grid ── */
     .offerings { padding: 120px 0; background: var(--deep); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -959,19 +826,19 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
       .hero-grid { grid-template-columns: 1fr; }
-      .hero-visual { display: none; }
-      .about-split { grid-template-columns: 1fr; gap: 48px; }
+      .project-grid { grid-template-columns: repeat(3, 1fr); margin-top: 40px; }
       .offering-grid { grid-template-columns: 1fr; }
       .whatif-grid { grid-template-columns: 1fr; }
       .work-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; gap: 48px; }
-      .trusted { flex-direction: column; align-items: flex-start; }
-      .trusted-sep { width: 40px; height: 1px; }
+      .how-we-work-grid { grid-template-columns: repeat(3, 1fr); row-gap: 32px; }
+      .how-we-work-step:nth-child(3)::after { display: none; }
     }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .mobile-nav { display: block; }
+      .project-grid { grid-template-columns: repeat(2, 1fr); }
       .process-track { grid-template-columns: 1fr; gap: 40px; }
       .process-track::before { display: none; }
       .process-step { text-align: left; }
@@ -979,6 +846,10 @@
       .form-row { grid-template-columns: 1fr; }
       .hero-actions { flex-direction: column; }
       footer .container { flex-direction: column; gap: 16px; text-align: center; }
+      .how-we-work-grid { grid-template-columns: 1fr; row-gap: 28px; }
+      .how-we-work-step::after { display: none !important; }
+      .how-we-work-step { padding: 0; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
+      .how-we-work-step:last-child { border-bottom: none; padding-bottom: 0; }
     }
   </style>
 </head>
@@ -1015,7 +886,6 @@
     <div class="container">
       <a href="#" class="logo">Prompt<span>Engines</span></a>
       <ul class="nav-links">
-        <li><a href="#about">About</a></li>
         <li><a href="#offerings">Services</a></li>
         <li><a href="#work">Work</a></li>
         <li><a href="#whatif">Ideas</a></li>
@@ -1032,102 +902,76 @@
         <div>
           <div class="hero-eyebrow">AI Consulting &middot; Apps &middot; Media</div>
           <h1>We build the things that make your business <em>go.</em></h1>
-          <p class="hero-sub">15 years of consulting and product development — now focused on helping small businesses grow with AI. Strategy, custom software, and media production, all under one roof.</p>
           <div class="hero-actions">
             <a href="#contact" class="btn btn-warm">Start a Conversation <span>→</span></a>
             <a href="#work" class="btn btn-ghost">See Our Work</a>
           </div>
         </div>
-        <div class="hero-visual">
-          <div class="orbit-ring"></div>
-          <div class="orbit-ring"></div>
-          <div class="orbit-ring"></div>
-          <div class="orbit-center">PE</div>
-          <div class="orbit-node" style="top: 5%; left: 55%;"><span class="dot dot-copper"></span>AI Strategy</div>
-          <div class="orbit-node" style="top: 30%; right: 0;"><span class="dot dot-teal"></span>Video &amp; Media</div>
-          <div class="orbit-node" style="bottom: 28%; right: 5%;"><span class="dot dot-copper"></span>Custom Apps</div>
-          <div class="orbit-node" style="bottom: 5%; left: 40%;"><span class="dot dot-teal"></span>Automation</div>
-          <div class="orbit-node" style="top: 50%; left: -5%;"><span class="dot dot-cream"></span>Brand &amp; Design</div>
+        <div class="project-grid">
+          <a href="https://consulting.promptengines.com" target="_blank" class="project-card">
+            <h3>AI Consulting <span class="arrow">&rarr;</span></h3>
+            <p>RAG chat systems, Openclaw, image &amp; media workflows, automations</p>
+          </a>
+          <a href="https://kaizen.promptengines.com" target="_blank" class="project-card">
+            <h3>Kaizen <span class="arrow">&rarr;</span></h3>
+            <p>Continuously improving educational sandbox</p>
+          </a>
+          <a href="https://storybookstudio.promptengines.com" target="_blank" class="project-card">
+            <h3>Storybook Studio <span class="arrow">&rarr;</span></h3>
+            <p>Create and ship custom children's storybooks with illustrations</p>
+          </a>
+          <a class="project-card">
+            <h3>Flow</h3>
+            <p>Adaptive AI tutoring for schools</p>
+          </a>
+          <a class="project-card">
+            <h3>Media Consulting</h3>
+            <p>Art direction, motion graphics, campaign creative, end-to-end production</p>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- MARQUEE -->
-  <div class="marquee">
-    <div class="marquee-track">
-      <div class="marquee-item">AI that disappears into your workflow<span class="sep">◆</span></div>
-      <div class="marquee-item">Apps built for real industries<span class="sep">◆</span></div>
-      <div class="marquee-item">Media that moves the needle<span class="sep">◆</span></div>
-      <div class="marquee-item">15 years of shipping products<span class="sep">◆</span></div>
-      <div class="marquee-item">From IBM to your local business<span class="sep">◆</span></div>
-      <div class="marquee-item">Strategy you can actually execute<span class="sep">◆</span></div>
-      <div class="marquee-item">AI that disappears into your workflow<span class="sep">◆</span></div>
-      <div class="marquee-item">Apps built for real industries<span class="sep">◆</span></div>
-      <div class="marquee-item">Media that moves the needle<span class="sep">◆</span></div>
-      <div class="marquee-item">15 years of shipping products<span class="sep">◆</span></div>
-      <div class="marquee-item">From IBM to your local business<span class="sep">◆</span></div>
-      <div class="marquee-item">Strategy you can actually execute<span class="sep">◆</span></div>
+  <!-- HOW WE WORK -->
+  <div class="how-we-work">
+    <div class="container">
+      <div class="how-we-work-grid">
+        <div class="how-we-work-step">
+          <div class="how-we-work-num">01</div>
+          <h3>Start with an idea or a pain point</h3>
+          <p>You don't need a spec. Bring a problem, a half-formed idea, or a goal.</p>
+        </div>
+        <div class="how-we-work-step">
+          <div class="how-we-work-num">02</div>
+          <h3>We spin up a project and start building</h3>
+          <p>App, media, AI integration — we scope fast and ship within days.</p>
+        </div>
+        <div class="how-we-work-step">
+          <div class="how-we-work-num">03</div>
+          <h3>Agent + human teams move fast</h3>
+          <p>AI tooling with experienced builders. Weeks of work done in days.</p>
+        </div>
+        <div class="how-we-work-step">
+          <div class="how-we-work-num">04</div>
+          <h3>Hand off or keep building</h3>
+          <p>Your call. We hand over a finished product or stay on as build partner.</p>
+        </div>
+        <div class="how-we-work-step">
+          <div class="how-we-work-num">05</div>
+          <h3>Runs securely in production</h3>
+          <p>Monitoring, analytics, infrastructure. Operationalized and maintained.</p>
+        </div>
+      </div>
     </div>
   </div>
-
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <div class="container">
-      <div class="section-tag">About Us</div>
-      <div class="section-title reveal">Fifteen years of building<br>things that matter.</div>
-
-      <div class="about-split">
-        <div class="about-narrative reveal">
-          <p>Prompt Engines was born from a straightforward observation: <strong>most businesses don't need more technology — they need the right technology, applied well.</strong></p>
-          <p>We've spent over 15 years in consulting and product development, working with organizations ranging from <strong>IBM</strong> and <strong>Stability AI</strong> to local startups and small businesses. That range gives us a rare perspective — we understand enterprise rigor and startup speed.</p>
-          <p>Today we focus on three things: <strong>AI consulting</strong> that identifies where you're leaving money on the table, <strong>custom applications</strong> built for your specific industry, and <strong>media production</strong> — from marketing videos to brand photography to campaign ads — that actually converts.</p>
-          <p>We don't hand you a strategy deck and walk away. We build the thing. We ship it. We stick around until it works.</p>
-        </div>
-
-        <div class="timeline reveal">
-          <div class="timeline-item">
-            <div class="timeline-year">THE EARLY DAYS</div>
-            <div class="timeline-title">Enterprise Consulting</div>
-            <div class="timeline-desc">Years of product development and consulting at scale, including work with IBM — building the operational muscle for complex projects.</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">THE AI ERA</div>
-            <div class="timeline-title">Generative AI &amp; Stability AI</div>
-            <div class="timeline-desc">Deep work in image generation, video production, and AI pipelines. Built tools and workflows at the frontier of what's possible.</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">TODAY</div>
-            <div class="timeline-title">Prompt Engines</div>
-            <div class="timeline-desc">Bringing 15 years of experience to small businesses — AI strategy, custom apps, and media production. From a roofing app to an ESL tutoring platform in Pakistan.</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">WHAT'S NEXT</div>
-            <div class="timeline-title">Scaling Impact</div>
-            <div class="timeline-desc">Deploying more products, expanding our app portfolio, and helping more businesses discover what AI can actually do for them.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="trusted reveal">
-        <div class="trusted-label">Worked With</div>
-        <div class="trusted-sep"></div>
-        <div class="trusted-names">
-          <div class="trusted-name">IBM</div>
-          <div class="trusted-name">Stability AI</div>
-          <div class="trusted-name">Gizri School</div>
-          <div class="trusted-name">Startups &amp; SMBs</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- SERVICES -->
   <section class="offerings" id="offerings">
     <div class="container">
       <div class="section-tag">What We Do</div>
-      <div class="section-title reveal">Everything you need.<br>Nothing you don't.</div>
-      <div class="section-desc reveal">We keep it focused: AI strategy, software, and media. Three capabilities that cover the full spectrum of what small businesses actually need to grow.</div>
+      <div class="section-title reveal">What we build.<br>What we run.</div>
+      <div class="section-desc reveal">Products, consulting, and media. We build our own ventures and help others build theirs.</div>
 
       <div class="offering-grid stagger">
         <div class="offering-card">

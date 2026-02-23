@@ -247,17 +247,6 @@
       text-shadow: 0 0 20px var(--green-mid);
     }
 
-    .hero-sub {
-      font-size: 15px;
-      color: var(--text);
-      max-width: 560px;
-      line-height: 1.8;
-      margin-bottom: 40px;
-      opacity: 0;
-      transform: translateY(16px);
-      animation: fadeUp 0.7s ease forwards 0.6s;
-    }
-
     .hero-actions {
       display: flex;
       gap: 16px;
@@ -308,35 +297,145 @@
       box-shadow: 0 0 16px var(--green-dim);
     }
 
-    /* ── SYSTEM STATUS BAR ── */
-    .status-bar {
+    /* hero grid + project cards */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards 0.7s;
+    }
+    .project-card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      padding: 20px 16px;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .project-card[href]:hover {
+      border-color: var(--green-mid);
+      box-shadow: 0 0 20px var(--green-dim);
+    }
+    .project-card:not([href]) { cursor: default; }
+    .project-card h3 {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--green);
+      text-shadow: 0 0 8px var(--green-dim);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .project-card h3 .arrow {
+      font-size: 13px;
+      color: var(--bright);
+      transition: transform 0.3s;
+    }
+    .project-card[href]:hover h3 .arrow { transform: translateX(4px); }
+    .project-card p {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── HOW WE WORK ── */
+    .how-we-work {
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 14px 0;
-      overflow: hidden;
-      background: var(--dark);
+      padding: 80px 0;
+      background: var(--black);
+      position: relative;
     }
 
-    .status-track {
-      display: flex;
-      animation: scroll-status 30s linear infinite;
-      width: max-content;
-    }
-
-    .status-item {
+    .how-we-work .container > h2 {
       font-family: var(--font-mono);
       font-size: 13px;
-      white-space: nowrap;
-      padding: 0 32px;
-      color: var(--dim);
+      color: var(--green);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      text-shadow: 0 0 8px var(--green-dim);
     }
 
-    .status-item .val { color: var(--green); }
-    .status-item .sep { color: var(--border); margin: 0 8px; }
+    .how-we-work .container > h2::before {
+      content: '> ';
+      color: var(--bright);
+    }
 
-    @keyframes scroll-status {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+    .hww-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+
+    .hww-step {
+      padding: 24px 20px;
+      border: 1px solid var(--border);
+      background: var(--dark);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+
+    .hww-step:hover {
+      border-color: var(--green-mid);
+      box-shadow: 0 0 20px var(--green-dim);
+    }
+
+    .hww-step-num {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--green);
+      text-shadow: 0 0 8px var(--green-dim);
+      margin-bottom: 14px;
+      letter-spacing: 1px;
+    }
+
+    .hww-step h3 {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-bright);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .hww-step h3::before {
+      content: '$ ';
+      color: var(--bright);
+      font-weight: 400;
+    }
+
+    .hww-step p {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    @keyframes hww-flicker {
+      0%, 100% { opacity: 1; }
+      92% { opacity: 1; }
+      93% { opacity: 0.8; }
+      94% { opacity: 1; }
+      97% { opacity: 0.9; }
+      98% { opacity: 1; }
+    }
+
+    .hww-step:hover .hww-step-num {
+      animation: hww-flicker 3s infinite;
     }
 
     /* ── SECTION UTILS ── */
@@ -417,103 +516,6 @@
 
     .terminal-body {
       padding: 28px 24px;
-    }
-
-    /* ── ABOUT ── */
-    .about { padding: 100px 0; }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: start;
-      margin-top: 40px;
-    }
-
-    .about-text p {
-      font-size: 15px;
-      color: var(--text);
-      line-height: 1.9;
-      margin-bottom: 20px;
-    }
-
-    .about-text strong {
-      color: var(--green);
-      font-weight: 400;
-    }
-
-    .log-entry {
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .log-entry:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-
-    .log-timestamp {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--dim);
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-
-    .log-title {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 15px;
-      color: var(--text-bright);
-      margin-bottom: 4px;
-    }
-
-    .log-desc {
-      font-size: 13px;
-      color: var(--text);
-      line-height: 1.7;
-    }
-
-    .clients-bar {
-      margin-top: 48px;
-      padding: 24px;
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-
-    .clients-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--dim);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      flex-shrink: 0;
-    }
-
-    .clients-sep {
-      width: 1px;
-      height: 24px;
-      background: var(--border);
-      flex-shrink: 0;
-    }
-
-    .clients-names {
-      display: flex;
-      gap: 28px;
-      flex-wrap: wrap;
-    }
-
-    .client-name {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      color: var(--dim);
-      transition: color 0.3s, text-shadow 0.3s;
-      cursor: default;
-    }
-
-    .client-name:hover {
-      color: var(--green);
-      text-shadow: 0 0 8px var(--green-dim);
     }
 
     /* ── SERVICES ── */
@@ -824,23 +826,25 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .project-grid { grid-template-columns: repeat(3, 1fr); }
       .services-grid { grid-template-columns: 1fr; }
-      .about-grid { grid-template-columns: 1fr; gap: 32px; }
       .work-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; gap: 32px; }
       .process-grid { grid-template-columns: 1fr; gap: 16px; }
       .process-step .terminal-body { text-align: left; }
       .process-step p { margin: 0; max-width: none; }
-      .clients-bar { flex-direction: column; align-items: flex-start; }
-      .clients-sep { width: 32px; height: 1px; }
+      .hww-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
     @media (max-width: 768px) {
+      .project-grid { grid-template-columns: repeat(2, 1fr); }
       .nav-links { display: none; }
       .mobile-nav { display: block; }
       .form-row { grid-template-columns: 1fr; }
       .hero-actions { flex-direction: column; }
       footer .container { flex-direction: column; gap: 16px; text-align: center; }
+      .hww-grid { grid-template-columns: 1fr; gap: 12px; }
     }
   </style>
 </head>
@@ -859,7 +863,6 @@
     <div class="container">
       <a href="#" class="logo">PROMPT<span>ENGINES</span></a>
       <ul class="nav-links">
-        <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#work">Work</a></li>
         <li><a href="#process">Process</a></li>
@@ -872,89 +875,70 @@
   <!-- HERO -->
   <section class="hero">
     <div class="container">
-      <div class="hero-content">
-        <div class="hero-prompt"><span class="prompt-char">$</span> ./prompt-engines --deploy --target=your-business</div>
-        <h1>We build the things that make your business <em>go.</em><span class="cursor"></span></h1>
-        <p class="hero-sub">15 years of consulting and product development — now focused on helping businesses grow with AI. Strategy, custom software, and media production, all under one roof.</p>
-        <div class="hero-actions">
-          <a href="#contact" class="btn-primary">Start a Conversation &rarr;</a>
-          <a href="#work" class="btn-ghost">See Our Work</a>
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-prompt"><span class="prompt-char">$</span> ./prompt-engines --deploy --target=your-business</div>
+          <h1>We build the things that make your business <em>go.</em><span class="cursor"></span></h1>
+          <div class="hero-actions">
+            <a href="#contact" class="btn-primary">Start a Conversation &rarr;</a>
+            <a href="#work" class="btn-ghost">See Our Work</a>
+          </div>
+        </div>
+        <div class="project-grid">
+          <a href="https://consulting.promptengines.com" target="_blank" class="project-card">
+            <h3>AI Consulting <span class="arrow">&rarr;</span></h3>
+            <p>RAG chat systems, Openclaw, image &amp; media workflows, automations</p>
+          </a>
+          <a href="https://kaizen.promptengines.com" target="_blank" class="project-card">
+            <h3>Kaizen <span class="arrow">&rarr;</span></h3>
+            <p>Continuously improving educational sandbox</p>
+          </a>
+          <a href="https://storybookstudio.promptengines.com" target="_blank" class="project-card">
+            <h3>Storybook Studio <span class="arrow">&rarr;</span></h3>
+            <p>Create and ship custom children's storybooks with illustrations</p>
+          </a>
+          <a class="project-card">
+            <h3>Flow</h3>
+            <p>Adaptive AI tutoring for schools</p>
+          </a>
+          <a class="project-card">
+            <h3>Media Consulting</h3>
+            <p>Art direction, motion graphics, campaign creative, end-to-end production</p>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- STATUS BAR -->
-  <div class="status-bar">
-    <div class="status-track">
-      <div class="status-item"><span class="val">AI_STRATEGY</span><span class="sep">|</span>online</div>
-      <div class="status-item"><span class="val">CUSTOM_APPS</span><span class="sep">|</span>deploying</div>
-      <div class="status-item"><span class="val">MEDIA_PROD</span><span class="sep">|</span>rendering</div>
-      <div class="status-item"><span class="val">AUTOMATION</span><span class="sep">|</span>active</div>
-      <div class="status-item"><span class="val">COST_REDUCTION</span><span class="sep">|</span>optimizing</div>
-      <div class="status-item"><span class="val">FLOW_APP</span><span class="sep">|</span>live</div>
-      <div class="status-item"><span class="val">KAIZEN_APP</span><span class="sep">|</span>live</div>
-      <div class="status-item"><span class="val">STORYBOOK_STUDIO</span><span class="sep">|</span>live</div>
-      <div class="status-item"><span class="val">AI_STRATEGY</span><span class="sep">|</span>online</div>
-      <div class="status-item"><span class="val">CUSTOM_APPS</span><span class="sep">|</span>deploying</div>
-      <div class="status-item"><span class="val">MEDIA_PROD</span><span class="sep">|</span>rendering</div>
-      <div class="status-item"><span class="val">AUTOMATION</span><span class="sep">|</span>active</div>
-      <div class="status-item"><span class="val">COST_REDUCTION</span><span class="sep">|</span>optimizing</div>
-      <div class="status-item"><span class="val">FLOW_APP</span><span class="sep">|</span>live</div>
-      <div class="status-item"><span class="val">KAIZEN_APP</span><span class="sep">|</span>live</div>
-      <div class="status-item"><span class="val">STORYBOOK_STUDIO</span><span class="sep">|</span>live</div>
-    </div>
-  </div>
-
-  <!-- ABOUT -->
-  <section class="about" id="about">
+  <!-- HOW WE WORK -->
+  <section class="how-we-work">
     <div class="container">
-      <div class="section-tag">cat about.txt</div>
-      <div class="section-title reveal">Fifteen years of building<br>things that matter.</div>
-
-      <div class="about-grid">
-        <div class="about-text reveal">
-          <p>Prompt Engines was born from a straightforward observation: <strong>most businesses don't need more technology — they need the right technology, applied well.</strong></p>
-          <p>We've spent over 15 years in consulting and product development, working with organizations ranging from <strong>IBM</strong> and <strong>Stability AI</strong> to local startups and small businesses. That range gives us a rare perspective — we understand enterprise rigor and startup speed.</p>
-          <p>Today we focus on three things: <strong>AI consulting</strong> that identifies where you're leaving money on the table, <strong>custom applications</strong> built for your specific industry, and <strong>media production</strong> — from marketing videos to brand photography to campaign ads — that actually converts.</p>
-          <p>We don't hand you a strategy deck and walk away. We build the thing. We ship it. We stick around until it works.</p>
+      <h2>how_we_work</h2>
+      <div class="hww-grid stagger">
+        <div class="hww-step">
+          <div class="hww-step-num">[01]</div>
+          <h3>Start with an idea or a pain point</h3>
+          <p>You don't need a spec. Bring a problem, a half-formed idea, or a goal.</p>
         </div>
-
-        <div class="terminal reveal">
-          <div class="terminal-bar">
-            <div class="terminal-dot r"></div>
-            <div class="terminal-dot y"></div>
-            <div class="terminal-dot g"></div>
-            <span class="terminal-title">history.log</span>
-          </div>
-          <div class="terminal-body">
-            <div class="log-entry">
-              <div class="log-timestamp">[PHASE_01]</div>
-              <div class="log-title">Enterprise Consulting</div>
-              <div class="log-desc">Years of product development and consulting at scale, including work with IBM — building the operational muscle for complex projects.</div>
-            </div>
-            <div class="log-entry">
-              <div class="log-timestamp">[PHASE_02]</div>
-              <div class="log-title">Generative AI &amp; Stability AI</div>
-              <div class="log-desc">Deep work in image generation, video production, and AI pipelines. Built tools and workflows at the frontier of what's possible.</div>
-            </div>
-            <div class="log-entry">
-              <div class="log-timestamp">[PHASE_03]</div>
-              <div class="log-title">Prompt Engines</div>
-              <div class="log-desc">Bringing 15 years of experience to businesses — AI strategy, custom apps, and media production. From a roofing app to an ESL tutoring platform in Pakistan.</div>
-            </div>
-          </div>
+        <div class="hww-step">
+          <div class="hww-step-num">[02]</div>
+          <h3>We spin up a project and start building</h3>
+          <p>App, media, AI integration &mdash; we scope fast and ship within days.</p>
         </div>
-      </div>
-
-      <div class="clients-bar terminal reveal">
-        <div class="clients-label">Connections</div>
-        <div class="clients-sep"></div>
-        <div class="clients-names">
-          <div class="client-name">IBM</div>
-          <div class="client-name">Stability AI</div>
-          <div class="client-name">Gizri School</div>
-          <div class="client-name">Startups &amp; SMBs</div>
+        <div class="hww-step">
+          <div class="hww-step-num">[03]</div>
+          <h3>Agent + human teams move fast</h3>
+          <p>AI tooling with experienced builders. Weeks of work done in days.</p>
+        </div>
+        <div class="hww-step">
+          <div class="hww-step-num">[04]</div>
+          <h3>Hand off or keep building</h3>
+          <p>Your call. We hand over a finished product or stay on as build partner.</p>
+        </div>
+        <div class="hww-step">
+          <div class="hww-step-num">[05]</div>
+          <h3>Runs securely in production</h3>
+          <p>Monitoring, analytics, infrastructure. Operationalized and maintained.</p>
         </div>
       </div>
     </div>
@@ -964,8 +948,8 @@
   <section class="services" id="services">
     <div class="container">
       <div class="section-tag">ls services/</div>
-      <div class="section-title reveal">Everything you need.<br>Nothing you don't.</div>
-      <div class="section-desc reveal">Three capabilities that cover the full spectrum of what businesses actually need to grow.</div>
+      <div class="section-title reveal">What we build.<br>What we run.</div>
+      <div class="section-desc reveal">Products, consulting, and media. We build our own ventures and help others build theirs.</div>
 
       <div class="services-grid stagger">
         <div class="service-card terminal">

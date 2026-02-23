@@ -209,18 +209,6 @@
       color: var(--red);
     }
 
-    .hero-sub {
-      font-family: var(--font-body);
-      font-size: 19px;
-      color: var(--muted);
-      line-height: 1.8;
-      max-width: 540px;
-      margin-bottom: 48px;
-      opacity: 0;
-      transform: translateY(16px);
-      animation: fadeUp 0.7s ease forwards 0.55s;
-    }
-
     .hero-actions {
       display: flex;
       gap: 16px;
@@ -267,41 +255,172 @@
       border-color: var(--ink);
     }
 
+    /* hero grid + project cards */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 24px 20px;
+      text-decoration: none;
+      display: block;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+    .project-card[href]:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      border-color: var(--red);
+    }
+    .project-card:not([href]) { cursor: default; }
+    .project-card h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--ink);
+      letter-spacing: -0.3px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .project-card h3 .arrow {
+      font-size: 14px;
+      color: var(--red);
+      transition: transform 0.3s;
+    }
+    .project-card[href]:hover h3 .arrow { transform: translateX(4px); }
+    .project-card p {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-    /* ── MARQUEE ── */
-    .marquee {
+    /* ── HOW WE WORK FLOW ── */
+    .how-flow {
+      padding: 80px 0;
       border-top: 1px solid var(--rule);
       border-bottom: 1px solid var(--rule);
-      padding: 16px 0;
-      overflow: hidden;
+      background: var(--surface);
     }
 
-    .marquee-track {
-      display: flex;
-      animation: marquee 35s linear infinite;
-      width: max-content;
+    .how-flow-header {
+      text-align: center;
+      margin-bottom: 56px;
     }
 
-    .marquee-item {
+    .how-flow-header .section-tag {
+      justify-content: center;
+    }
+
+    .how-flow-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+    }
+
+    .how-flow-step {
+      padding: 0 28px;
+      border-right: 1px solid var(--rule);
+      position: relative;
+    }
+
+    .how-flow-step:first-child {
+      padding-left: 0;
+    }
+
+    .how-flow-step:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+
+    .how-flow-num {
       font-family: var(--font-display);
-      font-weight: 400;
-      font-style: italic;
-      font-size: 15px;
-      white-space: nowrap;
-      padding: 0 40px;
-      color: var(--muted);
-    }
-
-    .marquee-item .sep {
+      font-weight: 900;
+      font-size: 42px;
       color: var(--red);
-      margin: 0 12px;
-      font-style: normal;
-      font-size: 8px;
-      vertical-align: middle;
+      line-height: 1;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
     }
 
-    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .how-flow-step h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--ink);
+      line-height: 1.35;
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+
+    .how-flow-step p {
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    @media (max-width: 1024px) {
+      .how-flow-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 36px 0;
+      }
+      .how-flow-step:nth-child(3) {
+        border-right: none;
+      }
+      .how-flow-step:nth-child(4) {
+        padding-left: 0;
+      }
+      .how-flow-step:nth-child(4),
+      .how-flow-step:nth-child(5) {
+        padding-top: 36px;
+        border-top: 1px solid var(--rule);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .how-flow-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .how-flow-step {
+        border-right: none;
+        border-bottom: 1px solid var(--rule);
+        padding: 28px 0;
+      }
+      .how-flow-step:first-child {
+        padding-top: 0;
+      }
+      .how-flow-step:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .how-flow-step:nth-child(3) {
+        border-right: none;
+      }
+      .how-flow-step:nth-child(4),
+      .how-flow-step:nth-child(5) {
+        padding-top: 28px;
+        border-top: none;
+      }
+    }
 
     /* ── SECTION UTILITIES ── */
     .section-tag {
@@ -362,139 +481,6 @@
     .stagger.vis > *:nth-child(6) { transition-delay: 0.4s; }
     .stagger.vis > *:nth-child(7) { transition-delay: 0.48s; }
     .stagger.vis > * { opacity: 1; transform: translateY(0); }
-
-    /* ── ABOUT ── */
-    .about {
-      padding: 140px 0 120px;
-      border-top: 1px solid var(--rule);
-    }
-
-    .about-split {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 80px;
-      align-items: start;
-      margin-top: 56px;
-    }
-
-    .about-narrative p {
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.9;
-      margin-bottom: 28px;
-    }
-
-    .about-narrative p:first-of-type::first-letter {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: 64px;
-      float: left;
-      line-height: 0.8;
-      margin-right: 12px;
-      margin-top: 6px;
-      color: var(--ink);
-    }
-
-    .about-narrative strong {
-      color: var(--ink);
-      font-weight: 600;
-    }
-
-    .timeline {
-      position: relative;
-      padding-left: 28px;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      bottom: 8px;
-      width: 1px;
-      background: var(--rule);
-    }
-
-    .timeline-item {
-      margin-bottom: 36px;
-      position: relative;
-    }
-
-    .timeline-item:last-child { margin-bottom: 0; }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -32px;
-      top: 8px;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--red);
-    }
-
-    .timeline-year {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--red);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .timeline-title {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 18px;
-      margin-bottom: 6px;
-      color: var(--ink);
-    }
-
-    .timeline-desc {
-      font-size: 15px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    /* trusted strip */
-    .trusted {
-      margin-top: 72px;
-      padding: 28px 0;
-      border-top: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-      display: flex;
-      align-items: center;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-
-    .trusted-label {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      flex-shrink: 0;
-    }
-
-    .trusted-sep { width: 1px; height: 28px; background: var(--rule); flex-shrink: 0; }
-
-    .trusted-names {
-      display: flex;
-      gap: 36px;
-      flex-wrap: wrap;
-    }
-
-    .trusted-name {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 17px;
-      color: var(--rule);
-      letter-spacing: -0.3px;
-      transition: color 0.3s;
-    }
-
-    .trusted-name:hover { color: var(--ink); }
 
     /* ── OFFERINGS ── */
     .offerings {
@@ -867,16 +853,16 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-      .about-split { grid-template-columns: 1fr; gap: 48px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .project-grid { grid-template-columns: repeat(3, 1fr); }
       .offering-grid { grid-template-columns: 1fr; }
       .whatif-grid { grid-template-columns: 1fr; }
       .work-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; gap: 48px; }
-      .trusted { flex-direction: column; align-items: flex-start; }
-      .trusted-sep { width: 40px; height: 1px; }
     }
 
     @media (max-width: 768px) {
+      .project-grid { grid-template-columns: repeat(2, 1fr); }
       .nav-links { display: none; }
       .mobile-nav { display: block; }
       .process-track { grid-template-columns: 1fr; gap: 40px; }
@@ -902,7 +888,6 @@
     <div class="container">
       <a href="#" class="logo">Prompt Engines</a>
       <ul class="nav-links">
-        <li><a href="#about">About</a></li>
         <li><a href="#offerings">Services</a></li>
         <li><a href="#work">Work</a></li>
         <li><a href="#whatif">Ideas</a></li>
@@ -915,82 +900,72 @@
   <!-- HERO -->
   <section class="hero">
     <div class="container">
-      <div class="hero-inner">
-        <div class="hero-eyebrow">AI Consulting &middot; Applications &middot; Media Production</div>
-        <h1>We build the things that make your business <em>go.</em></h1>
-        <p class="hero-sub">Fifteen years of consulting and product development — now focused on helping businesses grow with AI. Strategy, custom software, and media production, all under one roof.</p>
-        <div class="hero-actions">
-          <a href="#contact" class="btn btn-red">Start a Conversation <span>&rarr;</span></a>
-          <a href="#work" class="btn btn-ghost">See Our Work</a>
+      <div class="hero-grid">
+        <div class="hero-inner">
+          <div class="hero-eyebrow">AI Consulting &middot; Applications &middot; Media Production</div>
+          <h1>We build the things that make your business <em>go.</em></h1>
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-red">Start a Conversation <span>&rarr;</span></a>
+            <a href="#work" class="btn btn-ghost">See Our Work</a>
+          </div>
+        </div>
+        <div class="project-grid">
+          <a href="https://consulting.promptengines.com" target="_blank" class="project-card">
+            <h3>AI Consulting <span class="arrow">&rarr;</span></h3>
+            <p>RAG chat systems, Openclaw, image &amp; media workflows, automations</p>
+          </a>
+          <a href="https://kaizen.promptengines.com" target="_blank" class="project-card">
+            <h3>Kaizen <span class="arrow">&rarr;</span></h3>
+            <p>Continuously improving educational sandbox</p>
+          </a>
+          <a href="https://storybookstudio.promptengines.com" target="_blank" class="project-card">
+            <h3>Storybook Studio <span class="arrow">&rarr;</span></h3>
+            <p>Create and ship custom children's storybooks with illustrations</p>
+          </a>
+          <a class="project-card">
+            <h3>Flow</h3>
+            <p>Adaptive AI tutoring for schools</p>
+          </a>
+          <a class="project-card">
+            <h3>Media Consulting</h3>
+            <p>Art direction, motion graphics, campaign creative, end-to-end production</p>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- MARQUEE -->
-  <div class="marquee">
-    <div class="marquee-track">
-      <div class="marquee-item">AI that disappears into your workflow<span class="sep">&#9670;</span></div>
-      <div class="marquee-item">Apps built for real industries<span class="sep">&#9670;</span></div>
-      <div class="marquee-item">Media that moves the needle<span class="sep">&#9670;</span></div>
-      <div class="marquee-item">15 years of shipping products<span class="sep">&#9670;</span></div>
-      <div class="marquee-item">From IBM to your local business<span class="sep">&#9670;</span></div>
-      <div class="marquee-item">Strategy you can actually execute<span class="sep">&#9670;</span></div>
-      <div class="marquee-item">AI that disappears into your workflow<span class="sep">&#9670;</span></div>
-      <div class="marquee-item">Apps built for real industries<span class="sep">&#9670;</span></div>
-      <div class="marquee-item">Media that moves the needle<span class="sep">&#9670;</span></div>
-      <div class="marquee-item">15 years of shipping products<span class="sep">&#9670;</span></div>
-      <div class="marquee-item">From IBM to your local business<span class="sep">&#9670;</span></div>
-      <div class="marquee-item">Strategy you can actually execute<span class="sep">&#9670;</span></div>
-    </div>
-  </div>
-
-  <!-- ABOUT -->
-  <section class="about" id="about">
+  <!-- HOW WE WORK -->
+  <section class="how-flow">
     <div class="container">
-      <div class="section-tag">About Us</div>
-      <div class="section-title reveal">Fifteen years of building<br>things that matter.</div>
-
-      <div class="about-split">
-        <div class="about-narrative reveal">
-          <p>Prompt Engines was born from a straightforward observation: <strong>most businesses don't need more technology — they need the right technology, applied well.</strong></p>
-          <p>We've spent over 15 years in consulting and product development, working with organizations ranging from <strong>IBM</strong> and <strong>Stability AI</strong> to local startups and small businesses. That range gives us a rare perspective — we understand enterprise rigor and startup speed.</p>
-          <p>Today we focus on three things: <strong>AI consulting</strong> that identifies where you're leaving money on the table, <strong>custom applications</strong> built for your specific industry, and <strong>media production</strong> — from marketing videos to brand photography to campaign ads — that actually converts.</p>
-          <p>We don't hand you a strategy deck and walk away. We build the thing. We ship it. We stick around until it works.</p>
-        </div>
-
-        <div class="timeline reveal">
-          <div class="timeline-item">
-            <div class="timeline-year">The Early Days</div>
-            <div class="timeline-title">Enterprise Consulting</div>
-            <div class="timeline-desc">Years of product development and consulting at scale, including work with IBM — building the operational muscle for complex projects.</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">The AI Era</div>
-            <div class="timeline-title">Generative AI &amp; Stability AI</div>
-            <div class="timeline-desc">Deep work in image generation, video production, and AI pipelines. Built tools and workflows at the frontier of what's possible.</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">Today</div>
-            <div class="timeline-title">Prompt Engines</div>
-            <div class="timeline-desc">Bringing 15 years of experience to small businesses — AI strategy, custom apps, and media production. From a roofing app to an ESL tutoring platform in Pakistan.</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">What's Next</div>
-            <div class="timeline-title">Scaling Impact</div>
-            <div class="timeline-desc">Deploying more products, expanding our app portfolio, and helping more businesses discover what AI can actually do for them.</div>
-          </div>
-        </div>
+      <div class="how-flow-header">
+        <div class="section-tag">How We Work</div>
       </div>
-
-      <div class="trusted reveal">
-        <div class="trusted-label">Worked With</div>
-        <div class="trusted-sep"></div>
-        <div class="trusted-names">
-          <div class="trusted-name">IBM</div>
-          <div class="trusted-name">Stability AI</div>
-          <div class="trusted-name">Gizri School</div>
-          <div class="trusted-name">Startups &amp; SMBs</div>
+      <div class="how-flow-grid stagger">
+        <div class="how-flow-step">
+          <div class="how-flow-num">I</div>
+          <h3>Start with an idea or a pain point</h3>
+          <p>You don't need a spec. Bring a problem, a half-formed idea, or a goal.</p>
+        </div>
+        <div class="how-flow-step">
+          <div class="how-flow-num">II</div>
+          <h3>We spin up a project and start building</h3>
+          <p>App, media, AI integration — we scope fast and ship within days.</p>
+        </div>
+        <div class="how-flow-step">
+          <div class="how-flow-num">III</div>
+          <h3>Agent + human teams move fast</h3>
+          <p>AI tooling with experienced builders. Weeks of work done in days.</p>
+        </div>
+        <div class="how-flow-step">
+          <div class="how-flow-num">IV</div>
+          <h3>Hand off or keep building</h3>
+          <p>Your call. We hand over a finished product or stay on as build partner.</p>
+        </div>
+        <div class="how-flow-step">
+          <div class="how-flow-num">V</div>
+          <h3>Runs securely in production</h3>
+          <p>Monitoring, analytics, infrastructure. Operationalized and maintained.</p>
         </div>
       </div>
     </div>
@@ -1000,8 +975,8 @@
   <section class="offerings" id="offerings">
     <div class="container">
       <div class="section-tag">What We Do</div>
-      <div class="section-title reveal">Everything you need.<br>Nothing you don't.</div>
-      <div class="section-desc reveal">We keep it focused: AI strategy, software, and media. Three capabilities that cover the full spectrum of what small businesses actually need to grow.</div>
+      <div class="section-title reveal">What we build.<br>What we run.</div>
+      <div class="section-desc reveal">Products, consulting, and media. We build our own ventures and help others build theirs.</div>
 
       <div class="offering-grid stagger">
         <div class="offering-card">
