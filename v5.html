@@ -1,1303 +1,1208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prompt Engines — AI Consulting &amp; Media Production</title>
-  <meta name="description" content="15+ years of consulting and product development. We help businesses grow revenue and cut costs through AI strategy, custom apps, and media production.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt Engines — Applied AI Lab</title>
+  <meta
+    name="description"
+    content="Prompt Engines is a small applied AI lab building practical software, experiments, and systems shipped weekly."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
   <style>
     :root {
-      --black: #0a0a0a;
-      --dark: #0d1117;
-      --surface: #111820;
-      --border: #1a2332;
-      --green: #00FF41;
-      --green-dim: #00ff4115;
-      --green-mid: #00ff4133;
-      --green-glow: #00ff4166;
-      --bright: #33ff66;
-      --amber: #ffb000;
-      --dim: #3a5a3a;
-      --dim2: #2a3a2a;
-      --text: #b0d0b0;
-      --text-bright: #d0f0d0;
-      --font-display: 'Outfit', sans-serif;
-      --font-mono: 'IBM Plex Mono', monospace;
+      --ink: #0b1220;
+      --deep: #111a2b;
+      --panel: #162238;
+      --panel-2: #1b2a43;
+      --line: #2a3b59;
+      --text: #e8edf7;
+      --muted: #9fb0cb;
+      --accent: #f17a4a;
+      --accent-soft: rgba(241, 122, 74, 0.18);
+      --signal: #5dd9b8;
+      --font-display: "Fraunces", serif;
+      --font-mono: "IBM Plex Mono", monospace;
+      --font-sans: "Manrope", sans-serif;
+      --shadow: 0 20px 70px rgba(4, 10, 20, 0.45);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--green) var(--black); }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
-      background: var(--black);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(93, 217, 184, 0.08), transparent 45%),
+        radial-gradient(circle at 88% 8%, rgba(241, 122, 74, 0.12), transparent 40%),
+        linear-gradient(170deg, var(--ink), #0e1524 55%, #0b1220);
       color: var(--text);
-      font-family: var(--font-mono);
-      font-weight: 400;
-      line-height: 1.6;
+      font-family: var(--font-sans);
+      line-height: 1.5;
       overflow-x: hidden;
     }
 
-    /* ── MATRIX RAIN CANVAS ── */
-    #matrix-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.08;
-    }
-
-    /* ── CRT EFFECTS ── */
-    body::before {
-      content: '';
+    .diagram-bg {
       position: fixed;
       inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,255,65,0.015) 2px,
-        rgba(0,255,65,0.015) 4px
-      );
       pointer-events: none;
-      z-index: 9998;
+      z-index: 0;
+      opacity: 0.22;
+      background-image:
+        linear-gradient(rgba(93, 217, 184, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(93, 217, 184, 0.08) 1px, transparent 1px),
+        linear-gradient(30deg, rgba(241, 122, 74, 0.06), transparent 42%);
+      background-size: 42px 42px, 42px 42px, 100% 100%;
+      animation: diagramDrift 28s linear infinite;
+    }
+
+    .diagram-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(93, 217, 184, 0.16), transparent 35%);
+      animation: pulseGlow 6s ease-in-out infinite;
     }
 
     body::after {
-      content: '';
+      content: "";
       position: fixed;
       inset: 0;
-      background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.4) 100%);
       pointer-events: none;
-      z-index: 9997;
+      z-index: 1;
+      opacity: 0.12;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.3'/%3E%3C/svg%3E");
     }
 
-    section, footer, nav { position: relative; z-index: 1; }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
-
-    /* ── VIEW SWITCHER BAR ── */
-    .view-switcher {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 200;
-      background: rgba(10, 10, 10, 0.95);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 40px;
+    .site {
+      position: relative;
+      z-index: 2;
     }
 
-    .view-switcher a {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      letter-spacing: 1px;
-      color: var(--dim);
-      text-decoration: none;
+    .container {
+      width: min(1160px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .weekly-chip {
+      position: static;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 18px;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      transition: all 0.3s;
+      gap: 10px;
+      border: 1px solid var(--line);
+      background: rgba(11, 18, 32, 0.88);
+      backdrop-filter: blur(12px);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      width: fit-content;
+      align-self: flex-end;
     }
 
-    .view-switcher a:hover {
-      color: var(--green);
-      border-color: var(--green-mid);
-      background: var(--green-dim);
-      box-shadow: 0 0 12px var(--green-dim);
+    .weekly-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--signal);
+      box-shadow: 0 0 0 0 rgba(93, 217, 184, 0.6);
+      animation: ping 2s infinite;
     }
 
-    .view-switcher a span {
-      display: inline-block;
-      transition: transform 0.4s ease;
-    }
-
-    .view-switcher a:hover span {
-      transform: rotate(180deg);
-    }
-
-    /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 40px;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 14px 0;
-      background: rgba(10, 10, 10, 0.92);
-      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(11, 18, 32, 0.78);
+      backdrop-filter: blur(16px);
     }
 
-    nav .container { display: flex; justify-content: space-between; align-items: center; }
+    .nav-inner {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
 
-    .logo {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--green);
+    .brand {
+      color: var(--text);
       text-decoration: none;
-      text-shadow: 0 0 10px var(--green-dim);
-      letter-spacing: 1px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 22px;
     }
 
-    .logo span { color: var(--dim); }
+    .brand span {
+      color: var(--accent);
+      font-style: italic;
+      font-weight: 600;
+    }
 
-    .nav-links { display: flex; gap: 28px; align-items: center; list-style: none; }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
 
     .nav-links a {
       font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+      color: var(--muted);
       text-decoration: none;
-      transition: color 0.3s, text-shadow 0.3s;
+      transition: color 0.25s ease;
     }
 
     .nav-links a:hover {
-      color: var(--green);
-      text-shadow: 0 0 8px var(--green-dim);
+      color: var(--accent);
     }
 
-    .nav-cta {
-      color: var(--black) !important;
-      background: var(--green) !important;
-      padding: 8px 20px;
-      text-shadow: none !important;
-      transition: box-shadow 0.3s !important;
+    .hero {
+      padding: 104px 0 74px;
     }
 
-    .nav-cta:hover {
-      box-shadow: 0 0 20px var(--green-mid), 0 0 40px var(--green-dim) !important;
+    .hero-grid {
+      display: grid;
+      gap: 38px;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      align-items: start;
     }
 
-    .mobile-nav {
-      display: none;
-      background: var(--green);
-      border: none;
-      color: var(--black);
-      padding: 8px 18px;
-      cursor: pointer;
+    .hero-rail {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .eyebrow {
+      color: var(--signal);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      font-size: 11px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(42px, 7vw, 84px);
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      max-width: 10.5ch;
+      margin-bottom: 24px;
+      text-wrap: balance;
+    }
+
+    .hero-lead {
+      color: var(--muted);
+      max-width: 48ch;
+      font-size: clamp(17px, 2.1vw, 21px);
+      margin-bottom: 24px;
+    }
+
+    .rotator-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--line);
+      background: rgba(22, 34, 56, 0.6);
+      border-radius: 999px;
+      padding: 10px 16px;
       font-family: var(--font-mono);
       font-size: 12px;
-      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin-bottom: 30px;
     }
 
-    /* ── TYPING CURSOR ── */
-    .cursor {
+    .rotator-value {
+      color: var(--accent);
+      min-width: 120px;
       display: inline-block;
-      width: 10px;
-      height: 1.2em;
-      background: var(--green);
-      margin-left: 4px;
-      animation: blink-cursor 1s step-end infinite;
-      vertical-align: text-bottom;
-    }
-
-    @keyframes blink-cursor {
-      50% { opacity: 0; }
-    }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 180px 0 100px;
-      position: relative;
-    }
-
-    .hero-content { max-width: 800px; }
-
-    .hero-prompt {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      color: var(--green);
-      margin-bottom: 20px;
-      opacity: 0;
-      transform: translateY(16px);
-      animation: fadeUp 0.6s ease forwards 0.2s;
-    }
-
-    .hero-prompt .prompt-char { color: var(--bright); }
-
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: clamp(48px, 8vw, 100px);
-      font-weight: 700;
-      line-height: 1.05;
-      letter-spacing: -1px;
-      color: var(--green);
-      text-shadow: 0 0 30px var(--green-dim), 0 0 60px rgba(0,255,65,0.05);
-      margin-bottom: 28px;
-      opacity: 0;
-      transform: translateY(24px);
-      animation: fadeUp 0.8s ease forwards 0.4s;
-    }
-
-    .hero h1 em {
-      font-style: normal;
-      color: var(--bright);
-      text-shadow: 0 0 20px var(--green-mid);
+      transition: opacity 0.25s ease;
     }
 
     .hero-actions {
       display: flex;
-      gap: 16px;
+      align-items: center;
+      gap: 14px;
       flex-wrap: wrap;
-      opacity: 0;
-      transform: translateY(16px);
-      animation: fadeUp 0.7s ease forwards 0.8s;
+    }
+
+    .btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 12px;
+      padding: 13px 22px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      transition: transform 0.18s ease, border-color 0.22s ease, background 0.22s ease;
     }
 
     .btn-primary {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      background: var(--green);
-      color: var(--black);
-      padding: 14px 28px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      transition: box-shadow 0.3s, transform 0.2s;
+      background: var(--accent);
+      color: #121212;
+      font-weight: 600;
     }
 
-    .btn-primary:hover {
+    .btn-secondary {
+      border-color: var(--line);
+      color: var(--text);
+      background: rgba(22, 34, 56, 0.55);
+    }
+
+    .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 0 24px var(--green-mid), 0 0 48px var(--green-dim);
     }
 
-    .btn-ghost {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      background: transparent;
-      color: var(--green);
-      padding: 14px 28px;
-      border: 1px solid var(--green-mid);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: background 0.3s, box-shadow 0.3s;
+    .hero-terminal {
+      background: linear-gradient(160deg, rgba(27, 42, 67, 0.9), rgba(16, 25, 39, 0.9));
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      min-height: 322px;
     }
 
-    .btn-ghost:hover {
-      background: var(--green-dim);
-      box-shadow: 0 0 16px var(--green-dim);
-    }
-
-    /* hero grid + project cards */
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 60px;
-      align-items: center;
-    }
-
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s ease forwards 0.7s;
-    }
-    .project-card {
-      background: var(--dark);
-      border: 1px solid var(--border);
-      padding: 20px 16px;
-      text-decoration: none;
-      display: block;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    .project-card[href]:hover {
-      border-color: var(--green-mid);
-      box-shadow: 0 0 20px var(--green-dim);
-    }
-    .project-card:not([href]) { cursor: default; }
-    .project-card h3 {
-      font-family: var(--font-mono);
-      font-weight: 600;
-      font-size: 14px;
-      color: var(--green);
-      text-shadow: 0 0 8px var(--green-dim);
-      margin-bottom: 6px;
+    .terminal-head {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
       display: flex;
-      align-items: center;
       justify-content: space-between;
-    }
-    .project-card h3 .arrow {
-      font-size: 13px;
-      color: var(--bright);
-      transition: transform 0.3s;
-    }
-    .project-card[href]:hover h3 .arrow { transform: translateX(4px); }
-    .project-card p {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    /* ── HOW WE WORK ── */
-    .how-we-work {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 80px 0;
-      background: var(--black);
-      position: relative;
-    }
-
-    .how-we-work .container > h2 {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--green);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 40px;
-      text-shadow: 0 0 8px var(--green-dim);
-    }
-
-    .how-we-work .container > h2::before {
-      content: '> ';
-      color: var(--bright);
-    }
-
-    .hww-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 20px;
-    }
-
-    .hww-step {
-      padding: 24px 20px;
-      border: 1px solid var(--border);
-      background: var(--dark);
-      transition: border-color 0.3s, box-shadow 0.3s;
-      position: relative;
-    }
-
-    .hww-step:hover {
-      border-color: var(--green-mid);
-      box-shadow: 0 0 20px var(--green-dim);
-    }
-
-    .hww-step-num {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--green);
-      text-shadow: 0 0 8px var(--green-dim);
-      margin-bottom: 14px;
-      letter-spacing: 1px;
-    }
-
-    .hww-step h3 {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-bright);
-      line-height: 1.5;
-      margin-bottom: 10px;
-    }
-
-    .hww-step h3::before {
-      content: '$ ';
-      color: var(--bright);
-      font-weight: 400;
-    }
-
-    .hww-step p {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--text);
-      line-height: 1.7;
-    }
-
-    @keyframes hww-flicker {
-      0%, 100% { opacity: 1; }
-      92% { opacity: 1; }
-      93% { opacity: 0.8; }
-      94% { opacity: 1; }
-      97% { opacity: 0.9; }
-      98% { opacity: 1; }
-    }
-
-    .hww-step:hover .hww-step-num {
-      animation: hww-flicker 3s infinite;
-    }
-
-    /* ── SECTION UTILS ── */
-    .section-tag {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--green);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-      display: flex;
       align-items: center;
-      gap: 10px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 10px;
+      color: var(--muted);
+      background: rgba(10, 17, 30, 0.8);
     }
 
-    .section-tag::before {
-      content: '>';
-      color: var(--bright);
+    .terminal-dots {
+      display: inline-flex;
+      gap: 6px;
+    }
+
+    .terminal-dots i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: block;
+      background: var(--muted);
+      opacity: 0.5;
+    }
+
+    .terminal-log {
+      padding: 16px;
+      min-height: 260px;
+      max-height: 260px;
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #9adbc7;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .terminal-line {
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(6px);
+      animation: logIn 0.35s ease forwards;
+    }
+
+    section {
+      padding: 84px 0;
+      border-top: 1px solid rgba(42, 59, 89, 0.55);
+    }
+
+    .section-head {
+      margin-bottom: 28px;
+    }
+
+    .section-tag {
+      color: var(--signal);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
     }
 
     .section-title {
       font-family: var(--font-display);
-      font-size: clamp(32px, 5vw, 56px);
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      line-height: 1.15;
-      margin-bottom: 16px;
-      color: var(--green);
-      text-shadow: 0 0 16px var(--green-dim);
-    }
-
-    .section-desc {
-      font-size: 15px;
-      color: var(--text);
-      max-width: 540px;
-      line-height: 1.8;
-    }
-
-    /* ── TERMINAL CARDS ── */
-    .terminal {
-      background: var(--dark);
-      border: 1px solid var(--border);
-      overflow: hidden;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-
-    .terminal:hover {
-      border-color: var(--green-mid);
-      box-shadow: 0 0 20px var(--green-dim);
-    }
-
-    .terminal-bar {
-      background: var(--surface);
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .terminal-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-
-    .terminal-dot.r { background: #ff5f57; }
-    .terminal-dot.y { background: #febc2e; }
-    .terminal-dot.g { background: #28c840; }
-
-    .terminal-title {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--dim);
-      margin-left: 8px;
-      letter-spacing: 1px;
-    }
-
-    .terminal-body {
-      padding: 28px 24px;
-    }
-
-    /* ── SERVICES ── */
-    .services { padding: 100px 0; }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 40px;
-    }
-
-    .service-card .terminal-body h3 {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 17px;
-      color: var(--green);
+      font-size: clamp(30px, 4.5vw, 52px);
+      letter-spacing: -0.03em;
+      line-height: 0.98;
       margin-bottom: 12px;
-      text-shadow: 0 0 8px var(--green-dim);
+      text-wrap: balance;
     }
 
-    .service-card .terminal-body p {
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.8;
-      margin-bottom: 16px;
-    }
-
-    .service-list {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--dim);
-      line-height: 2.2;
-    }
-
-    .service-list .arrow { color: var(--green); margin-right: 6px; }
-
-    /* ── WORK ── */
-    .work { padding: 100px 0; }
-
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin-top: 40px;
-    }
-
-    .work-card .terminal-body .work-category {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--amber);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .work-card .terminal-body h3 {
-      font-family: var(--font-display);
-      font-weight: 600;
+    .section-copy {
+      color: var(--muted);
+      max-width: 66ch;
       font-size: 18px;
-      color: var(--text-bright);
-      margin-bottom: 10px;
     }
 
-    .work-card .terminal-body p {
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.8;
-      margin-bottom: 16px;
-    }
-
-    .work-tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-
-    .work-tag {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--green);
-      padding: 3px 8px;
-      border: 1px solid var(--green-mid);
-      letter-spacing: 0.5px;
-    }
-
-    .work-link {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--green);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: text-shadow 0.3s, gap 0.3s;
-    }
-
-    .work-link:hover {
-      text-shadow: 0 0 10px var(--green-dim);
-      gap: 10px;
-    }
-
-    /* ── PROCESS ── */
-    .process { padding: 100px 0; }
-
-    .process-grid {
+    .activity-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 40px;
+      gap: 14px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .process-step .terminal-body { text-align: center; }
-
-    .step-num {
-      font-family: var(--font-display);
-      font-size: 64px;
-      color: var(--border);
-      line-height: 1;
-      margin-bottom: 12px;
-      transition: color 0.3s, text-shadow 0.3s;
-    }
-
-    .terminal:hover .step-num {
-      color: var(--green-mid);
-      text-shadow: 0 0 20px var(--green-dim);
-    }
-
-    .process-step h3 {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 18px;
-      color: var(--text-bright);
-      margin-bottom: 10px;
-    }
-
-    .process-step p {
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.8;
-      max-width: 280px;
-      margin: 0 auto;
-    }
-
-    /* ── CTA ── */
-    .cta {
-      padding: 120px 0;
-      text-align: center;
-      position: relative;
-    }
-
-    .cta::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 40% 40% at 50% 60%, var(--green-dim), transparent);
-      pointer-events: none;
-    }
-
-    .cta .section-tag { justify-content: center; }
-    .cta .section-title { max-width: 600px; margin: 0 auto 16px; }
-    .cta .section-desc { max-width: 460px; margin: 0 auto 40px; text-align: center; }
-
-    /* ── CONTACT ── */
-    .contact { padding: 100px 0; }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: start;
-    }
-
-    .contact-left h3 {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 20px;
-      color: var(--text-bright);
-      margin-bottom: 14px;
-    }
-
-    .contact-left p {
-      color: var(--text);
-      font-size: 15px;
-      line-height: 1.8;
-      margin-bottom: 28px;
-    }
-
-    .contact-email {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--green);
+    .activity-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
       text-decoration: none;
-      padding: 12px 20px;
-      border: 1px solid var(--green-mid);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: background 0.3s, box-shadow 0.3s;
+      color: inherit;
+      background: linear-gradient(150deg, rgba(27, 42, 67, 0.58), rgba(18, 30, 50, 0.45));
+      transition: border-color 0.22s ease, transform 0.18s ease, box-shadow 0.22s ease;
     }
 
-    .contact-email:hover {
-      background: var(--green-dim);
-      box-shadow: 0 0 16px var(--green-dim);
+    .activity-card:hover {
+      border-color: rgba(241, 122, 74, 0.52);
+      transform: translateY(-2px);
+      box-shadow: 0 16px 42px rgba(9, 14, 25, 0.36);
     }
 
-    .form-group { margin-bottom: 18px; }
-
-    .form-group label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--dim);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      background: var(--dark);
-      border: 1px solid var(--border);
-      padding: 12px 14px;
-      color: var(--text-bright);
-      font-family: var(--font-mono);
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-      border-color: var(--green-mid);
-      box-shadow: 0 0 12px var(--green-dim);
-    }
-
-    .form-group textarea { min-height: 100px; resize: vertical; }
-
-    .form-group select {
-      appearance: none;
-      cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%233a5a3a' stroke-width='1.5'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-    }
-
-    .form-group select option { background: var(--dark); color: var(--text-bright); }
-
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 0;
-      background: var(--dark);
-    }
-
-    footer .container {
+    .activity-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-
-    .footer-left {
+      margin-bottom: 10px;
+      color: var(--muted);
       font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
     }
 
-    .footer-links { display: flex; gap: 24px; }
+    .activity-title {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .activity-desc {
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .lab-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .artifact {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(160deg, rgba(22, 34, 56, 0.8), rgba(13, 21, 35, 0.85));
+      min-height: 168px;
+      padding: 12px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.22s ease, transform 0.18s ease;
+    }
+
+    .artifact:hover {
+      border-color: rgba(93, 217, 184, 0.65);
+      transform: translateY(-2px);
+    }
+
+    .artifact-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+    }
+
+    .artifact-body {
+      border: 1px solid rgba(42, 59, 89, 0.7);
+      border-radius: 8px;
+      height: 110px;
+      padding: 10px;
+      display: grid;
+      align-items: end;
+      background: rgba(10, 17, 30, 0.46);
+    }
+
+    .artifact-code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #8ed7c1;
+      line-height: 1.4;
+      white-space: pre-line;
+    }
+
+    .artifact-bars {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      align-items: end;
+      gap: 5px;
+      height: 100%;
+    }
+
+    .artifact-bars i {
+      display: block;
+      border-radius: 4px 4px 2px 2px;
+      background: linear-gradient(180deg, rgba(241, 122, 74, 0.95), rgba(93, 217, 184, 0.7));
+    }
+
+    .artifact-diagram {
+      width: 100%;
+      height: 100%;
+      border-radius: 6px;
+      border: 1px dashed rgba(93, 217, 184, 0.45);
+      position: relative;
+    }
+
+    .artifact-diagram::before,
+    .artifact-diagram::after {
+      content: "";
+      position: absolute;
+      background: rgba(93, 217, 184, 0.6);
+    }
+
+    .artifact-diagram::before {
+      top: 50%;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+    }
+
+    .artifact-diagram::after {
+      left: 50%;
+      top: 12%;
+      bottom: 12%;
+      width: 1px;
+    }
+
+    .artifact-hover {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, transparent, rgba(11, 18, 32, 0.96));
+      color: var(--text);
+      font-size: 13px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .artifact:hover .artifact-hover {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .notes-column {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(22, 34, 56, 0.8), rgba(13, 22, 35, 0.85));
+      border-radius: 14px;
+      padding: 16px;
+      position: sticky;
+      top: 94px;
+    }
+
+    .notes-column h3 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .note-item {
+      border-top: 1px solid rgba(42, 59, 89, 0.55);
+      padding: 12px 0;
+    }
+
+    .note-item:first-of-type {
+      border-top: none;
+      padding-top: 4px;
+    }
+
+    .note-item h4 {
+      font-size: 16px;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .note-item p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .social-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .social-chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(22, 34, 56, 0.5);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .project-link {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      text-decoration: none;
+      color: inherit;
+      padding: 16px;
+      background: linear-gradient(160deg, rgba(26, 42, 67, 0.5), rgba(16, 25, 38, 0.55));
+      transition: transform 0.18s ease, border-color 0.22s ease;
+      display: block;
+    }
+
+    .project-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(241, 122, 74, 0.5);
+    }
+
+    .project-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+    }
+
+    .project-link h4 {
+      font-size: 22px;
+      font-family: var(--font-display);
+      line-height: 1;
+      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+    }
+
+    .project-link p {
+      color: var(--muted);
+    }
+
+    .follow {
+      border-top: 1px solid rgba(42, 59, 89, 0.55);
+      border-bottom: 1px solid rgba(42, 59, 89, 0.55);
+      background: linear-gradient(180deg, rgba(14, 23, 38, 0.65), rgba(11, 18, 32, 0.75));
+    }
+
+    .follow-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(22, 34, 56, 0.75);
+      padding: 22px;
+      display: grid;
+      gap: 16px;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+      align-items: center;
+    }
+
+    .follow-card h3 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4.4vw, 44px);
+      letter-spacing: -0.03em;
+      line-height: 0.95;
+      margin-bottom: 8px;
+    }
+
+    .follow-card p {
+      color: var(--muted);
+      max-width: 48ch;
+    }
+
+    .follow-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+    }
+
+    .follow-form input {
+      background: rgba(11, 18, 32, 0.75);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--text);
+      padding: 12px 12px;
+      font-family: var(--font-sans);
+      font-size: 15px;
+    }
+
+    .follow-form button {
+      border: none;
+      border-radius: 10px;
+      background: var(--signal);
+      color: #0e1b2a;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 0 16px;
+      cursor: pointer;
+    }
+
+    .follow-links {
+      margin-top: 8px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .follow-links a {
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .follow-links a:hover {
+      color: var(--accent);
+      border-color: rgba(241, 122, 74, 0.55);
+    }
+
+    footer {
+      padding: 38px 0 54px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
 
     .footer-links a {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--dim);
+      color: var(--muted);
       text-decoration: none;
-      transition: color 0.3s;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
-    .footer-links a:hover { color: var(--green); }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+    .footer-links a:hover {
+      color: var(--accent);
     }
 
-    .reveal.vis { opacity: 1; transform: translateY(0); }
-
-    .stagger > * {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .stagger.vis > *:nth-child(1) { transition-delay: 0s; }
-    .stagger.vis > *:nth-child(2) { transition-delay: 0.08s; }
-    .stagger.vis > *:nth-child(3) { transition-delay: 0.16s; }
-    .stagger.vis > *:nth-child(4) { transition-delay: 0.24s; }
-    .stagger.vis > *:nth-child(5) { transition-delay: 0.32s; }
-    .stagger.vis > * { opacity: 1; transform: translateY(0); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
-      .project-grid { grid-template-columns: repeat(3, 1fr); }
-      .services-grid { grid-template-columns: 1fr; }
-      .work-grid { grid-template-columns: 1fr; }
-      .contact-grid { grid-template-columns: 1fr; gap: 32px; }
-      .process-grid { grid-template-columns: 1fr; gap: 16px; }
-      .process-step .terminal-body { text-align: left; }
-      .process-step p { margin: 0; max-width: none; }
-      .hww-grid { grid-template-columns: repeat(3, 1fr); }
+    @keyframes diagramDrift {
+      0% { transform: translate3d(0, 0, 0); }
+      50% { transform: translate3d(-20px, -12px, 0); }
+      100% { transform: translate3d(0, 0, 0); }
     }
 
-    @media (max-width: 768px) {
-      .project-grid { grid-template-columns: repeat(2, 1fr); }
-      .nav-links { display: none; }
-      .mobile-nav { display: block; }
-      .form-row { grid-template-columns: 1fr; }
-      .hero-actions { flex-direction: column; }
-      footer .container { flex-direction: column; gap: 16px; text-align: center; }
-      .hww-grid { grid-template-columns: 1fr; gap: 12px; }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.85; }
     }
-  </style>
-</head>
-<body>
 
-  <!-- MATRIX RAIN -->
-  <canvas id="matrix-canvas"></canvas>
-
-  <!-- VIEW SWITCHER -->
-  <div class="view-switcher">
-    <a href="v6.html"><span>&#x25D0;</span> Switch Perspective</a>
-  </div>
-
-  <!-- NAV -->
-  <nav>
-    <div class="container">
-      <a href="#" class="logo">PROMPT<span>ENGINES</span></a>
-      <ul class="nav-links">
-        <li><a href="#services">Services</a></li>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#process">Process</a></li>
-        <li><a href="#contact" class="nav-cta">Get Started</a></li>
-      </ul>
-      <button class="mobile-nav" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-grid">
-        <div class="hero-content">
-          <div class="hero-prompt"><span class="prompt-char">$</span> ./prompt-engines --deploy --target=your-business</div>
-          <h1>We build the things that make your business <em>go.</em><span class="cursor"></span></h1>
-          <div class="hero-actions">
-            <a href="#contact" class="btn-primary">Start a Conversation &rarr;</a>
-            <a href="#work" class="btn-ghost">See Our Work</a>
-          </div>
-        </div>
-        <div class="project-grid">
-          <a href="https://consulting.promptengines.com" target="_blank" class="project-card">
-            <h3>AI Consulting <span class="arrow">&rarr;</span></h3>
-            <p>RAG chat systems, Openclaw, image &amp; media workflows, automations</p>
-          </a>
-          <a href="https://kaizen.promptengines.com" target="_blank" class="project-card">
-            <h3>Kaizen <span class="arrow">&rarr;</span></h3>
-            <p>Continuously improving educational sandbox</p>
-          </a>
-          <a href="https://storybookstudio.promptengines.com" target="_blank" class="project-card">
-            <h3>Storybook Studio <span class="arrow">&rarr;</span></h3>
-            <p>Create and ship custom children's storybooks with illustrations</p>
-          </a>
-          <a class="project-card">
-            <h3>Flow</h3>
-            <p>Adaptive AI tutoring for schools</p>
-          </a>
-          <a class="project-card">
-            <h3>Media Consulting</h3>
-            <p>Art direction, motion graphics, campaign creative, end-to-end production</p>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW WE WORK -->
-  <section class="how-we-work">
-    <div class="container">
-      <h2>how_we_work</h2>
-      <div class="hww-grid stagger">
-        <div class="hww-step">
-          <div class="hww-step-num">[01]</div>
-          <h3>Start with an idea or a pain point</h3>
-          <p>You don't need a spec. Bring a problem, a half-formed idea, or a goal.</p>
-        </div>
-        <div class="hww-step">
-          <div class="hww-step-num">[02]</div>
-          <h3>We spin up a project and start building</h3>
-          <p>App, media, AI integration &mdash; we scope fast and ship within days.</p>
-        </div>
-        <div class="hww-step">
-          <div class="hww-step-num">[03]</div>
-          <h3>Agent + human teams move fast</h3>
-          <p>AI tooling with experienced builders. Weeks of work done in days.</p>
-        </div>
-        <div class="hww-step">
-          <div class="hww-step-num">[04]</div>
-          <h3>Hand off or keep building</h3>
-          <p>Your call. We hand over a finished product or stay on as build partner.</p>
-        </div>
-        <div class="hww-step">
-          <div class="hww-step-num">[05]</div>
-          <h3>Runs securely in production</h3>
-          <p>Monitoring, analytics, infrastructure. Operationalized and maintained.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section class="services" id="services">
-    <div class="container">
-      <div class="section-tag">ls services/</div>
-      <div class="section-title reveal">What we build.<br>What we run.</div>
-      <div class="section-desc reveal">Products, consulting, and media. We build our own ventures and help others build theirs.</div>
-
-      <div class="services-grid stagger">
-        <div class="service-card terminal">
-          <div class="terminal-bar">
-            <div class="terminal-dot r"></div>
-            <div class="terminal-dot y"></div>
-            <div class="terminal-dot g"></div>
-            <span class="terminal-title">ai-consulting.sh</span>
-          </div>
-          <div class="terminal-body">
-            <h3>AI Consulting</h3>
-            <p>We find the highest-impact places where AI can save you money, make you money, or free up your team — then we build and deploy the solution.</p>
-            <div class="service-list">
-              <span class="arrow">&gt;</span> Process automation<br>
-              <span class="arrow">&gt;</span> Cost reduction audits<br>
-              <span class="arrow">&gt;</span> Revenue opportunity mapping<br>
-              <span class="arrow">&gt;</span> AI tool selection &amp; deployment
-            </div>
-          </div>
-        </div>
-        <div class="service-card terminal">
-          <div class="terminal-bar">
-            <div class="terminal-dot r"></div>
-            <div class="terminal-dot y"></div>
-            <div class="terminal-dot g"></div>
-            <span class="terminal-title">custom-apps.sh</span>
-          </div>
-          <div class="terminal-body">
-            <h3>Custom Applications</h3>
-            <p>Full-stack apps built for your specific industry and workflow. AI-native from the ground up — not bolted on as an afterthought.</p>
-            <div class="service-list">
-              <span class="arrow">&gt;</span> Industry-specific SaaS<br>
-              <span class="arrow">&gt;</span> AI tutoring platforms<br>
-              <span class="arrow">&gt;</span> Image &amp; video generation tools<br>
-              <span class="arrow">&gt;</span> Internal business tools
-            </div>
-          </div>
-        </div>
-        <div class="service-card terminal">
-          <div class="terminal-bar">
-            <div class="terminal-dot r"></div>
-            <div class="terminal-dot y"></div>
-            <div class="terminal-dot g"></div>
-            <span class="terminal-title">media-prod.sh</span>
-          </div>
-          <div class="terminal-body">
-            <h3>Media Production</h3>
-            <p>End-to-end creative services — from concept to final cut. Marketing media that gets attention, builds your brand, and drives results.</p>
-            <div class="service-list">
-              <span class="arrow">&gt;</span> Campaign ads &amp; viral videos<br>
-              <span class="arrow">&gt;</span> Professional photography<br>
-              <span class="arrow">&gt;</span> Brand identity &amp; design<br>
-              <span class="arrow">&gt;</span> Video editing &amp; post-production
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WORK -->
-  <section class="work" id="work">
-    <div class="container">
-      <div class="section-tag">ls -la products/</div>
-      <div class="section-title reveal">Built. Shipped. Running.</div>
-      <div class="section-desc reveal">Products and projects across industries — from enterprise AI to creative apps to full media campaigns.</div>
-
-      <div class="work-grid stagger">
-        <div class="work-card terminal">
-          <div class="terminal-bar">
-            <div class="terminal-dot r"></div>
-            <div class="terminal-dot y"></div>
-            <div class="terminal-dot g"></div>
-            <span class="terminal-title">flow.process</span>
-          </div>
-          <div class="terminal-body">
-            <div class="work-category">Education &middot; Live</div>
-            <h3>Flow — AI Tutoring</h3>
-            <p>An AI-powered tutoring platform for homeschooling and schools. Currently deployed for ESL instruction at Gizri School in Pakistan — personalized learning that adapts to each student.</p>
-            <div class="work-tags">
-              <span class="work-tag">EdTech</span>
-              <span class="work-tag">ESL</span>
-              <span class="work-tag">AI Tutoring</span>
-            </div>
-            <a href="https://flow.promptengines.com" class="work-link">flow.promptengines.com &rarr;</a>
-          </div>
-        </div>
-
-        <div class="work-card terminal">
-          <div class="terminal-bar">
-            <div class="terminal-dot r"></div>
-            <div class="terminal-dot y"></div>
-            <div class="terminal-dot g"></div>
-            <span class="terminal-title">kaizen.process</span>
-          </div>
-          <div class="terminal-body">
-            <div class="work-category">Kids &middot; Live</div>
-            <h3>Kaizen — Creative Learning</h3>
-            <p>A creative learning platform for young children. AI-generated coloring pages, cartoons, and interactive activities on iPad — plus structured lessons in typing, letters, numbers, early math, and language. Fresh content every session, powered by AI.</p>
-            <div class="work-tags">
-              <span class="work-tag">iPad</span>
-              <span class="work-tag">Image Gen</span>
-              <span class="work-tag">Early Learning</span>
-            </div>
-            <a href="https://kaizen.promptengines.com" class="work-link">kaizen.promptengines.com &rarr;</a>
-          </div>
-        </div>
-
-        <div class="work-card terminal">
-          <div class="terminal-bar">
-            <div class="terminal-dot r"></div>
-            <div class="terminal-dot y"></div>
-            <div class="terminal-dot g"></div>
-            <span class="terminal-title">storybook.process</span>
-          </div>
-          <div class="terminal-body">
-            <div class="work-category">Kids &middot; Live</div>
-            <h3>Storybook Studio — AI Storybooks</h3>
-            <p>An app that lets families create personalized children's storybooks with AI. Choose characters, settings, and themes — then watch as beautiful illustrated stories come to life. Every book is unique, printable, and made to spark a child's imagination.</p>
-            <div class="work-tags">
-              <span class="work-tag">AI Storytelling</span>
-              <span class="work-tag">Image Gen</span>
-              <span class="work-tag">Kids</span>
-            </div>
-            <a href="https://storybookstudio.promptengines.com" class="work-link">storybookstudio.promptengines.com &rarr;</a>
-          </div>
-        </div>
-
-        <div class="work-card terminal">
-          <div class="terminal-bar">
-            <div class="terminal-dot r"></div>
-            <div class="terminal-dot y"></div>
-            <div class="terminal-dot g"></div>
-            <span class="terminal-title">media.process</span>
-          </div>
-          <div class="terminal-body">
-            <div class="work-category">Media &middot; Ongoing</div>
-            <h3>Campaign &amp; Brand Media</h3>
-            <p>End-to-end media production for businesses — campaign ads, viral video content, internal brand assets, professional and personal photography, poster design, and video editing.</p>
-            <div class="work-tags">
-              <span class="work-tag">Video</span>
-              <span class="work-tag">Photography</span>
-              <span class="work-tag">Branding</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="work-card terminal">
-          <div class="terminal-bar">
-            <div class="terminal-dot r"></div>
-            <div class="terminal-dot y"></div>
-            <div class="terminal-dot g"></div>
-            <span class="terminal-title">enterprise.process</span>
-          </div>
-          <div class="terminal-body">
-            <div class="work-category">Enterprise &middot; Consulting</div>
-            <h3>AI Strategy &amp; Custom Apps</h3>
-            <p>Consulting and product development with IBM and Stability AI. Custom applications for industries like roofing — identifying where AI creates real value and building the tools to capture it.</p>
-            <div class="work-tags">
-              <span class="work-tag">IBM</span>
-              <span class="work-tag">Stability AI</span>
-              <span class="work-tag">Custom Apps</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROCESS -->
-  <section class="process" id="process">
-    <div class="container">
-      <div class="section-tag">cat process.md</div>
-      <div class="section-title reveal">Simple process.<br>Serious results.</div>
-
-      <div class="process-grid stagger">
-        <div class="process-step terminal">
-          <div class="terminal-bar">
-            <div class="terminal-dot r"></div>
-            <div class="terminal-dot y"></div>
-            <div class="terminal-dot g"></div>
-            <span class="terminal-title">step_01</span>
-          </div>
-          <div class="terminal-body">
-            <div class="step-num">01</div>
-            <h3>Discover</h3>
-            <p>We learn your business inside and out. Pain points, goals, opportunities. We figure out where AI and smart tooling will make the biggest difference.</p>
-          </div>
-        </div>
-        <div class="process-step terminal">
-          <div class="terminal-bar">
-            <div class="terminal-dot r"></div>
-            <div class="terminal-dot y"></div>
-            <div class="terminal-dot g"></div>
-            <span class="terminal-title">step_02</span>
-          </div>
-          <div class="terminal-body">
-            <div class="step-num">02</div>
-            <h3>Build</h3>
-            <p>No drawn-out timelines. We design and ship fast — apps, automations, media assets, campaigns. You see real work, not proposals.</p>
-          </div>
-        </div>
-        <div class="process-step terminal">
-          <div class="terminal-bar">
-            <div class="terminal-dot r"></div>
-            <div class="terminal-dot y"></div>
-            <div class="terminal-dot g"></div>
-            <span class="terminal-title">step_03</span>
-          </div>
-          <div class="terminal-body">
-            <div class="step-num">03</div>
-            <h3>Deliver</h3>
-            <p>We measure success in outcomes. Revenue generated, costs cut, media that converts. We stay engaged until the results speak for themselves.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta">
-    <div class="container">
-      <div class="section-tag">sudo start</div>
-      <div class="section-title reveal">Let's figure out what<br>AI can do for you.</div>
-      <div class="section-desc reveal">Free consultation. No pressure. Just a conversation about your business and where the biggest opportunities are.</div>
-      <a href="#contact" class="btn-primary">Start a Conversation &rarr;</a>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <div class="container">
-      <div class="section-tag">ssh contact@promptengines</div>
-      <div class="section-title reveal">Let's talk.</div>
-
-      <div class="contact-grid">
-        <div class="contact-left reveal">
-          <h3>Tell us what you're working on.</h3>
-          <p>Whether it's an AI strategy, a custom app, a media campaign, or something you haven't fully figured out yet — we'd love to hear about it. Free consultation, no commitment.</p>
-          <a href="mailto:promptengines@gmail.com" class="contact-email">
-            <span>&rarr;</span> promptengines@gmail.com
-          </a>
-        </div>
-
-        <form class="reveal" action="https://formsubmit.co/promptengines@gmail.com" method="POST">
-          <input type="hidden" name="_subject" value="New Inquiry from PromptEngines.com">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_next" value="https://promptengines.com#contact">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" placeholder="Your name" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="you@company.com" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="interest">What are you looking for?</label>
-            <select id="interest" name="interest">
-              <option value="">Select a service</option>
-              <option value="ai-consulting">AI Consulting &amp; Strategy</option>
-              <option value="app-development">Custom App Development</option>
-              <option value="media-production">Media &amp; Video Production</option>
-              <option value="marketing">Marketing &amp; Campaign Ads</option>
-              <option value="automation">Process Automation</option>
-              <option value="other">Something Else</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="message">Tell us about your project</label>
-            <textarea id="message" name="message" placeholder="What are you building, what's the challenge, what does success look like?"></textarea>
-          </div>
-          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Send It &rarr;</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-left">&copy; 2026 Prompt Engines. All rights reserved.</div>
-      <div class="footer-links">
-        <a href="mailto:promptengines@gmail.com">Contact</a>
-        <a href="#services">Services</a>
-        <a href="#work">Work</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // ── MATRIX RAIN ──
-    const canvas = document.getElementById('matrix-canvas');
-    const ctx = canvas.getContext('2d');
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    @keyframes ping {
+      0% { box-shadow: 0 0 0 0 rgba(93, 217, 184, 0.7); }
+      100% { box-shadow: 0 0 0 10px rgba(93, 217, 184, 0); }
     }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
 
-    const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF';
-    const fontSize = 14;
-    let columns = Math.floor(canvas.width / fontSize);
-    let drops = Array(columns).fill(1);
-
-    function drawMatrix() {
-      ctx.fillStyle = 'rgba(10, 10, 10, 0.06)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#00FF41';
-      ctx.font = fontSize + 'px monospace';
-
-      for (let i = 0; i < drops.length; i++) {
-        const char = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
+    @keyframes logIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
-    setInterval(drawMatrix, 50);
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .lab-layout,
+      .follow-card {
+        grid-template-columns: 1fr;
+      }
 
-    window.addEventListener('resize', () => {
-      columns = Math.floor(canvas.width / fontSize);
-      drops = Array(columns).fill(1);
-    });
+      .notes-column {
+        position: static;
+      }
 
-    // ── SCROLL REVEAL ──
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
-    }, { threshold: 0.1 });
+      .weekly-chip {
+        align-self: flex-start;
+      }
+    }
 
-    document.querySelectorAll('.reveal, .stagger').forEach(el => obs.observe(el));
+    @media (max-width: 900px) {
+      .activity-grid,
+      .artifact-grid,
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
 
-    // ── SMOOTH SCROLL ──
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        const t = document.querySelector(a.getAttribute('href'));
-        if (t) t.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 0;
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .hero {
+        padding-top: 74px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        width: min(1160px, calc(100% - 32px));
+      }
+
+      .follow-form {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+  <body>
+  <div class="diagram-bg" aria-hidden="true"></div>
+
+  <div class="site">
+    <nav>
+      <div class="container nav-inner">
+        <a class="brand" href="#top">Prompt <span>Engines</span></a>
+        <ul class="nav-links">
+          <li><a href="#lab">Lab</a></li>
+          <li><a href="#activity">Experiments</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#notes">Writing</a></li>
+          <li><a href="https://consulting.promptengines.com" target="_blank" rel="noopener noreferrer">Consulting</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <header id="top" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Applied AI Lab</div>
+          <h1>Working on the parts of AI people actually use.</h1>
+          <p class="hero-lead">
+            Prompt Engines is a small lab prototyping practical software, media systems, and internal tools.
+            We ship constantly, document what works, and keep the surface close to the work.
+          </p>
+          <div class="rotator-line" aria-live="polite">
+            <span>Track:</span>
+            <span class="rotator-value" id="rotator-value">tools</span>
+          </div>
+          <div class="hero-actions">
+            <a href="#activity" class="btn btn-primary">Enter the Lab</a>
+            <a href="#projects" class="btn btn-secondary">See Active Builds</a>
+          </div>
+        </div>
+
+        <div class="hero-rail">
+          <div class="weekly-chip" aria-label="site freshness">
+            <span class="weekly-dot"></span>
+            <span>Updated weekly</span>
+            <span>|</span>
+            <span id="last-updated">Last update: --</span>
+          </div>
+          <aside class="hero-terminal" aria-label="live lab output">
+            <div class="terminal-head">
+              <span>live telemetry</span>
+              <span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            </div>
+            <div class="terminal-log" id="terminal-log">
+              <div class="terminal-line">[09:12] agent.run school-copilot --env=pilot</div>
+              <div class="terminal-line">[09:18] build.storybook.v5 deployed in 2m 41s</div>
+              <div class="terminal-line">[09:32] workflow.video.render queue size: 3</div>
+              <div class="terminal-line">[09:41] tutoring.llm latency p95: 620ms</div>
+              <div class="terminal-line">[09:55] inference.batch status: stable</div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </header>
+
+    <section id="activity">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-tag">Recently at Prompt Engines</div>
+          <h2 class="section-title">A running stream, not a static brochure.</h2>
+          <p class="section-copy">
+            The lab moves weekly. Every card points to a real artifact, release, or active line of exploration.
+          </p>
+        </div>
+
+        <div class="activity-grid">
+          <a class="activity-card" href="https://consulting.promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="activity-meta"><span>2 days ago</span><span>School Systems</span></div>
+            <div class="activity-title">Built an internal copilot for a school</div>
+            <div class="activity-desc">Automated repetitive staff workflows and operational support requests.</div>
+          </a>
+
+          <a class="activity-card" href="https://flow.promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="activity-meta"><span>4 days ago</span><span>Agents</span></div>
+            <div class="activity-title">Tested real-time agent orchestration</div>
+            <div class="activity-desc">Chained tutoring and workflow tasks with tighter guardrails and handoffs.</div>
+          </a>
+
+          <a class="activity-card" href="https://storybookstudio.promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="activity-meta"><span>6 days ago</span><span>Product Release</span></div>
+            <div class="activity-title">Released a children’s story generator</div>
+            <div class="activity-desc">Shipped new story creation and publishing path for families and classrooms.</div>
+          </a>
+
+          <a class="activity-card" href="https://kaizen.promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="activity-meta"><span>8 days ago</span><span>Inference</span></div>
+            <div class="activity-title">Exploring fast inference for tutoring systems</div>
+            <div class="activity-desc">Stress-tested response quality vs. latency across classroom scenarios.</div>
+          </a>
+
+          <a class="activity-card" href="https://consulting.promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="activity-meta"><span>9 days ago</span><span>Automation</span></div>
+            <div class="activity-title">Prototyping automated video workflows</div>
+            <div class="activity-desc">Built draft-to-export pipelines for short-form production teams.</div>
+          </a>
+
+          <a class="activity-card" href="https://dashboard.promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="activity-meta"><span>11 days ago</span><span>Data</span></div>
+            <div class="activity-title">Unified telemetry across active products</div>
+            <div class="activity-desc">Merged app metrics into a single operating dashboard for weekly review.</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="lab">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-tag">Lab Surface</div>
+          <h2 class="section-title">Evidence over claims.</h2>
+          <p class="section-copy">
+            Visual previews tied directly to the current notes from the lab.
+            Same topics, same order.
+          </p>
+        </div>
+
+        <div class="lab-layout">
+          <div class="artifact-grid">
+            <article class="artifact">
+              <div class="artifact-head"><span>Deployment Matrix</span><span>agents</span></div>
+              <div class="artifact-body">
+                <div class="artifact-code">engine         task_fit   ops_load
+nanoclaw       medium     low
+openclaw       high       medium
+
+decision_rule:
+if team_size < 4 -> nanoclaw
+else -> openclaw</div>
+              </div>
+              <div class="artifact-hover">Nanoclaw vs Openclaw: which one to deploy for your agent system.</div>
+            </article>
+
+            <article class="artifact">
+              <div class="artifact-head"><span>Code Interface</span><span>opencode</span></div>
+              <div class="artifact-body">
+                <div class="artifact-code">$ opencode init workspace
+plugins: fs, git, terminal
+policy: local-first
+cost_mode: predictable
+
+status: OSS alternative
+to claude-code style flows</div>
+              </div>
+              <div class="artifact-hover">Opencode: an open alternative to Claude Code workflows.</div>
+            </article>
+
+            <article class="artifact">
+              <div class="artifact-head"><span>Model Eval</span><span>core build</span></div>
+              <div class="artifact-body">
+                <div class="artifact-bars" aria-hidden="true">
+                  <i style="height:42%"></i><i style="height:68%"></i><i style="height:75%"></i><i style="height:58%"></i>
+                  <i style="height:49%"></i><i style="height:72%"></i><i style="height:64%"></i><i style="height:78%"></i>
+                </div>
+              </div>
+              <div class="artifact-hover">Reviewing ChatGPT Codex 5.3 vs Claude Opus 4.6 for core build work.</div>
+            </article>
+
+            <article class="artifact">
+              <div class="artifact-head"><span>RAG Guardrails</span><span>docs-only</span></div>
+              <div class="artifact-body">
+                <div class="artifact-diagram" aria-hidden="true"></div>
+              </div>
+              <div class="artifact-hover">RAG without hallucination: answer from official docs and nothing else.</div>
+            </article>
+
+            <article class="artifact">
+              <div class="artifact-head"><span>Aesthetic Scoring</span><span>early childhood</span></div>
+              <div class="artifact-body" style="background:
+                radial-gradient(circle at 24% 26%, rgba(93,217,184,0.3), transparent 32%),
+                radial-gradient(circle at 74% 38%, rgba(241,122,74,0.34), transparent 38%),
+                linear-gradient(155deg, rgba(14,25,40,0.8), rgba(24,38,61,0.78));"></div>
+              <div class="artifact-hover">Image models and prompts reviewed for early-childhood aesthetic quality.</div>
+            </article>
+          </div>
+
+          <aside class="notes-column" id="notes">
+            <h3>Notes from the lab</h3>
+
+            <article class="note-item">
+              <h4>Nanoclaw vs Openclaw: Which one should you deploy for your agent system</h4>
+              <p>A practical selection framework based on team size, control requirements, and maintenance overhead in production.</p>
+            </article>
+
+            <article class="note-item">
+              <h4>Opencode: An open alternative to Claude Code</h4>
+              <p>Where open tooling is already sufficient, where it breaks, and what you gain by owning the runtime surface.</p>
+            </article>
+
+            <article class="note-item">
+              <h4>Reviewing ChatGPT Codex 5.3 vs Claude Opus 4.6 for core build</h4>
+              <p>A side-by-side review of reliability, edit quality, and iteration speed in real coding and debugging sessions.</p>
+            </article>
+
+            <article class="note-item">
+              <h4>RAG without hallucination: How to answer from your official documents and nothing else</h4>
+              <p>Strict retrieval and citation guardrails that reduce drift while keeping answer quality usable for operations.</p>
+            </article>
+
+            <article class="note-item">
+              <h4>Aesthetic scoring for early childhood: Image models and prompts reviewed</h4>
+              <p>A structured review approach for visual clarity, emotional tone, and age-appropriate composition in generated assets.</p>
+            </article>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-tag">In Conversation With</div>
+        <h2 class="section-title">Researchers. Founders. Educators. Operators.</h2>
+        <p class="section-copy">Used in classrooms, startups, and internal teams that need systems which hold up after launch.</p>
+        <div class="social-row">
+          <span class="social-chip">Applied Research</span>
+          <span class="social-chip">Education Teams</span>
+          <span class="social-chip">Startup Operators</span>
+          <span class="social-chip">Product Builders</span>
+          <span class="social-chip">Internal Tooling</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-tag">Projects & Consulting</div>
+          <h2 class="section-title">Enter through the work that matches your angle.</h2>
+        </div>
+
+        <div class="projects-grid">
+          <a class="project-link" href="https://consulting.promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="project-top"><span>Services</span><span>Open</span></div>
+            <h4>Consulting</h4>
+            <p>Applied AI strategy, implementation, and custom build support for teams operating in the real world.</p>
+          </a>
+
+          <a class="project-link" href="https://flow.promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="project-top"><span>Education</span><span>Live</span></div>
+            <h4>Flow</h4>
+            <p>AI tutoring workflows focused on practical classroom outcomes and personalized learning loops.</p>
+          </a>
+
+          <a class="project-link" href="https://kaizen.promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="project-top"><span>Kids Product</span><span>Live</span></div>
+            <h4>Kaizen</h4>
+            <p>Interactive creative learning with generated content and playful progression systems.</p>
+          </a>
+
+          <a class="project-link" href="https://storybookstudio.promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="project-top"><span>Creator Tool</span><span>Live</span></div>
+            <h4>Storybook Studio</h4>
+            <p>Personalized story generation pipeline that moves from draft to readable publishable output.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="follow" id="follow">
+      <div class="container">
+        <div class="follow-card">
+          <div>
+            <h3>Follow ongoing builds.</h3>
+            <p>
+              Join the lab notes to track weekly releases, experiments, and operating lessons as they happen.
+            </p>
+          </div>
+
+          <div>
+            <form class="follow-form" action="mailto:hello@promptengines.com" method="post" enctype="text/plain">
+              <input type="email" name="email" placeholder="you@company.com" required />
+              <button type="submit">Join</button>
+            </form>
+            <div class="follow-links">
+              <a href="https://dashboard.promptengines.com" target="_blank" rel="noopener noreferrer">Metrics</a>
+              <a href="https://consulting.promptengines.com" target="_blank" rel="noopener noreferrer">Consulting</a>
+              <a href="mailto:hello@promptengines.com">Direct Contact</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container footer-row">
+        <div>© 2026 Prompt Engines</div>
+        <div class="footer-links">
+          <a href="#lab">Lab</a>
+          <a href="#activity">Experiments</a>
+          <a href="#projects">Projects</a>
+          <a href="#notes">Writing</a>
+          <a href="https://consulting.promptengines.com" target="_blank" rel="noopener noreferrer">Consulting</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const rotator = document.getElementById("rotator-value");
+      const values = ["tools", "media", "systems", "experiments"];
+      let idx = 0;
+
+      function tick() {
+        if (!rotator) return;
+        rotator.style.opacity = "0";
+        window.setTimeout(function () {
+          idx = (idx + 1) % values.length;
+          rotator.textContent = values[idx];
+          rotator.style.opacity = "1";
+        }, 180);
+      }
+
+      window.setInterval(tick, 2100);
+
+      const updatedEl = document.getElementById("last-updated");
+      if (updatedEl) {
+        const now = new Date();
+        const formatted = now.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric"
+        });
+        updatedEl.textContent = "Last update: " + formatted;
+      }
+
+      const terminal = document.getElementById("terminal-log");
+      const stream = [
+        "[10:03] notes.publish thesis: ops over demos",
+        "[10:11] activity.push storybook parser update",
+        "[10:17] system.check tutoring routes: healthy",
+        "[10:24] experiment.rank fast-inference batch=passed",
+        "[10:30] build.video-pipeline segment export complete",
+        "[10:37] dashboard.sync app telemetry merged"
+      ];
+
+      if (terminal) {
+        let pointer = 0;
+        window.setInterval(function () {
+          const line = document.createElement("div");
+          line.className = "terminal-line";
+          line.textContent = stream[pointer % stream.length];
+          pointer += 1;
+          terminal.appendChild(line);
+
+          while (terminal.children.length > 10) {
+            terminal.removeChild(terminal.firstChild);
+          }
+        }, 1700);
+      }
+    })();
   </script>
 </body>
 </html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nanoclaw vs Openclaw — Prompt Engines Lab Notes</title>
+  <meta name="description" content="How to choose Nanoclaw vs Openclaw for an agent system based on operational reality." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../index.html">All Notes</a>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>Feb 24, 2026</span><span>7 min read</span><span>Agents</span></div>
+      <h1>Nanoclaw vs Openclaw: Which one should you deploy for your agent system</h1>
+      <p class="dek">For most teams this is not a model question. It is an operational shape question: who maintains it, who observes it, and who gets paged when it fails.</p>
+
+      <article class="content">
+        <p>We tested Nanoclaw and Openclaw in the same agent pipeline: one intake step, one planner, one execution chain, and one audit output. Both can deliver solid demos. The separation appears once traffic rises and exceptions become normal.</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">runtime      setup_time   control_surface   default_overhead
+nanoclaw    low          medium            low
+openclaw    medium       high              medium</div>
+          <figcaption>Visual 1. Operational profile snapshot from comparable deployments.</figcaption>
+        </figure>
+
+        <h2>Where Nanoclaw wins</h2>
+        <p>Nanoclaw fits small teams that need predictable behavior quickly. It has fewer knobs and less policy scaffolding, which is useful when there is one builder and limited SRE support. If your goal is to ship a bounded internal workflow in one sprint, Nanoclaw is usually faster.</p>
+
+        <h2>Where Openclaw wins</h2>
+        <p>Openclaw is better when policy boundaries and traceability matter more than setup speed. We found it easier to enforce explicit step contracts and to expose debugging metadata at each handoff. If your team expects multiple contributors touching agent behavior weekly, Openclaw scales better organizationally.</p>
+
+        <figure class="figure">
+          <div class="visual visual-diagram"></div>
+          <figcaption>Visual 2. Agent handoff map with explicit state checkpoints.</figcaption>
+        </figure>
+
+        <h2>Decision rule we now use</h2>
+        <ul>
+          <li>If team size is under four and use-cases are narrow, start with Nanoclaw.</li>
+          <li>If auditability, safety policy, or multi-team collaboration is core, start with Openclaw.</li>
+          <li>If uncertain, run both in parallel on one workflow for two weeks and compare incident cost, not only latency.</li>
+        </ul>
+
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:44%"></i><i style="height:62%"></i><i style="height:70%"></i><i style="height:56%"></i>
+            <i style="height:80%"></i><i style="height:68%"></i><i style="height:59%"></i><i style="height:74%"></i>
+          </div>
+          <figcaption>Visual 3. Relative operational burden trend after week two.</figcaption>
+        </figure>
+
+        <p>Bottom line: choose based on the failure mode your team can absorb. If your organization cannot tolerate opaque incidents, optimize for clarity first. If your constraint is immediate delivery, optimize for minimal setup and tight scope.</p>
+      </article>
+
+      <nav class="article-nav">
+        <a href="../index.html">← Back to all notes</a>
+        <a href="./opencode-open-alternative.html">Next note →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+</body>
+</html>
