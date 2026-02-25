@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aesthetic scoring for early childhood — Prompt Engines Lab Notes</title>
+  <meta name="description" content="A practical framework for scoring image model outputs for early-childhood learning contexts." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../index.html">All Notes</a>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>Feb 20, 2026</span><span>6 min read</span><span>Image Models</span></div>
+      <h1>Aesthetic scoring for early childhood: Image models and prompts reviewed</h1>
+      <p class="dek">For early-childhood visuals, "looks good" is not enough. Outputs must be calm, legible, emotionally safe, and instructionally clear. We tested prompt patterns and model behavior against that standard.</p>
+
+      <article class="content">
+        <p>We reviewed generated assets intended for ages three to seven across story scenes, flash cards, and emotion-learning prompts. The common failure mode was visual overload: too many micro-details, sharp contrast, and ambiguous character expressions.</p>
+
+        <figure class="figure">
+          <div class="visual visual-gradient"></div>
+          <figcaption>Visual 1. Target rendering profile: soft transitions, moderate contrast, and simple shape hierarchy.</figcaption>
+        </figure>
+
+        <h2>Scoring rubric we used</h2>
+        <ul>
+          <li>Clarity: can a child identify the core subject in under two seconds?</li>
+          <li>Emotional safety: are expressions and colors non-threatening?</li>
+          <li>Instructional fit: does the image support the learning objective without distraction?</li>
+          <li>Consistency: do repeated characters remain stable across scenes?</li>
+        </ul>
+
+        <p>Each dimension was scored 1 to 5 and reviewed by two adults with early-learning design experience. We used disagreement checks to prevent one reviewer from over-indexing on personal style preference.</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">dimension           model_a   model_b   model_c
+clarity             4.6       3.9       4.2
+emotional safety    4.8       3.7       4.1
+instructional fit   4.4       3.8       4.0
+consistency         4.2       3.5       3.9</div>
+          <figcaption>Visual 2. Average rubric scores from controlled prompt runs.</figcaption>
+        </figure>
+
+        <h2>Prompt patterns that improved results</h2>
+        <p>Better outputs came from concise scene instructions with explicit emotional tone and background simplicity constraints. "One subject, one action, soft palette, no high-detail textures" consistently improved clarity.</p>
+        <p>We also found that specifying camera distance reduced chaos. Framing as "medium shot, centered subject" prevented busy compositions that dilute educational intent.</p>
+
+        <figure class="figure">
+          <div class="visual visual-code">prompt template:
+"friendly illustration for ages 4-6,
+one clear subject, soft warm palette,
+minimal background detail,
+centered composition, calm facial expression"</div>
+          <figcaption>Visual 3. Baseline prompt template used to improve age-appropriate consistency.</figcaption>
+        </figure>
+
+        <p>Takeaway: the best model is the one that reliably produces calm, readable, purposeful images. In early-childhood contexts, predictability and emotional safety are more valuable than visual spectacle.</p>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./rag-without-hallucination.html">← Previous note</a>
+        <a href="../index.html">Back to all notes →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+</body>
+</html>

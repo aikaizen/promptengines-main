@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Openclaw security and deployment with Docker — Prompt Engines Lab Notes</title>
+  <meta name="description" content="How we deploy Openclaw agents in airgapped Docker containers with hardened networking, pinned images, and zero outbound access." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../index.html">All Notes</a>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>Feb 25, 2026</span><span>9 min read</span><span>Security</span></div>
+      <h1>Openclaw: security and deployment best practices with Docker</h1>
+      <p class="dek">Agent systems that can execute code, call APIs, and touch production data need hard boundaries. We deploy Openclaw inside airgapped Docker containers and treat the network perimeter as the first line of defense.</p>
+
+      <article class="content">
+        <p>The moment your agent runtime can reach the open internet, your threat surface expands to everything the model can be prompted to do. For Openclaw deployments that handle real workflows, real credentials, and real user data, that is not an acceptable default. We containerize every agent process and keep the entire execution environment airgapped from day one.</p>
+
+        <h2>Why Docker for Openclaw</h2>
+        <p>Docker gives us three things that matter for agent security: process isolation, network policy enforcement, and reproducible builds. Every Openclaw worker runs as a single-purpose container. It cannot see the host filesystem, cannot reach other containers unless explicitly networked, and cannot install new packages at runtime.</p>
+        <p>This is not about convenience. It is about making it structurally difficult for a compromised or misaligned agent to cause damage beyond its container boundary.</p>
+
+        <figure class="figure">
+          <div class="visual visual-code">services:
+  openclaw-worker:
+    image: registry.internal/openclaw:2.4.1-pinned
+    read_only: true
+    tmpfs:
+      - /tmp:noexec,nosuid,size=128m
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    security_opt:
+      - no-new-privileges:true
+    user: "1001:1001"
+    networks:
+      - agent-internal
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: "1.5"</div>
+          <figcaption>Compose snippet for a hardened Openclaw worker. Read-only root, all capabilities dropped, non-root user, resource-capped.</figcaption>
+        </figure>
+
+        <h2>Airgapped by default</h2>
+        <p>Our Openclaw containers have no outbound internet access. The Docker network they run on is internal-only. If the agent needs to call an LLM API, that request goes through a dedicated proxy container that whitelists exactly one endpoint and enforces rate limits. Everything else is dropped at the network level.</p>
+        <p>This matters because agent prompts can be manipulated. If an attacker or a malformed input can convince the agent to make an HTTP request, the airgap ensures that request goes nowhere. The proxy is the only exit, and it only speaks to the inference endpoint.</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">container          network         outbound_access
+openclaw-worker    agent-internal  none
+llm-proxy          agent-internal  api.provider.com:443 only
+redis              agent-internal  none
+postgres           agent-internal  none
+monitor            agent-internal  none
+
+iptables rule: DROP all FORWARD from agent-internal
+              except llm-proxy → api.provider.com</div>
+          <figcaption>Network topology. Only the LLM proxy can reach the internet, and only to a single whitelisted host.</figcaption>
+        </figure>
+
+        <h2>Container hardening checklist</h2>
+        <p>We apply the same hardening pattern to every container in the agent stack. This is not negotiable and not environment-specific. Dev, staging, and production all run the same security posture.</p>
+        <ul>
+          <li><strong>Read-only filesystem.</strong> The root filesystem is mounted read-only. Temporary writes go to a size-limited tmpfs with noexec. The agent cannot persist anything to disk outside its allocated scratch space.</li>
+          <li><strong>All capabilities dropped.</strong> We start with <code>cap_drop: ALL</code> and add back only what is strictly required. Most Openclaw workers need zero Linux capabilities.</li>
+          <li><strong>Non-root user.</strong> Containers run as UID 1001. The Dockerfile creates a dedicated user and the compose file enforces it. Root inside the container is never available.</li>
+          <li><strong>No privilege escalation.</strong> The <code>no-new-privileges</code> security option prevents any process inside the container from gaining additional privileges through setuid binaries or other mechanisms.</li>
+          <li><strong>Resource limits.</strong> Memory and CPU are hard-capped. A runaway agent process hits the limit and gets OOM-killed rather than consuming host resources.</li>
+          <li><strong>Pinned images.</strong> We never pull <code>:latest</code>. Every image is pinned to a specific digest and stored in our internal registry. Supply chain attacks via tag mutation are eliminated.</li>
+        </ul>
+
+        <h2>Secrets management</h2>
+        <p>API keys and credentials are never baked into images or passed as environment variables in compose files. We use Docker secrets mounted as read-only files at a known path. The agent reads the key once at startup and the file is accessible only to the container's non-root user.</p>
+        <p>For the LLM API key specifically, the key lives only in the proxy container. The Openclaw worker never sees the raw API key. It sends requests to the proxy over the internal network, and the proxy injects the authentication header before forwarding to the inference endpoint.</p>
+
+        <figure class="figure">
+          <div class="visual visual-code">openclaw-worker → POST /v1/chat (internal)
+                       ↓
+llm-proxy        → injects Authorization header
+                 → validates request shape
+                 → enforces rate limit (40 req/min)
+                 → forwards to api.provider.com
+                       ↓
+response         → stripped of internal headers
+                 → returned to openclaw-worker</div>
+          <figcaption>Request flow. The worker never holds the API key. The proxy handles auth, validation, and rate limiting.</figcaption>
+        </figure>
+
+        <h2>Image supply chain</h2>
+        <p>We build Openclaw images from a known base in CI. The build pipeline pins the base image by digest, runs a vulnerability scan, signs the resulting image, and pushes it to our internal registry. Production nodes only pull from the internal registry. There is no path from Docker Hub to production.</p>
+        <ul>
+          <li>Base image pinned by sha256 digest, not tag.</li>
+          <li>Trivy scan runs in CI. Any critical or high severity CVE blocks the build.</li>
+          <li>Signed with cosign. The deployment pipeline verifies the signature before pulling.</li>
+          <li>Internal registry is the only source for production. External registries are unreachable from the deployment network.</li>
+        </ul>
+
+        <h2>Monitoring without opening the perimeter</h2>
+        <p>Airgapped does not mean unobservable. We run a monitoring sidecar on the agent-internal network that collects metrics and logs from each container. The sidecar writes to a volume that is read by a separate metrics collector on a different network segment. There is no inbound connection to the agent containers and no outbound connection from them.</p>
+        <p>This gives us full visibility into agent behavior, token usage, error rates, and execution timing without compromising the network boundary.</p>
+
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:35%"></i><i style="height:58%"></i><i style="height:72%"></i><i style="height:85%"></i>
+            <i style="height:64%"></i><i style="height:91%"></i><i style="height:78%"></i><i style="height:53%"></i>
+          </div>
+          <figcaption>Relative security posture improvement across eight deployment hardening steps, measured by internal audit scoring.</figcaption>
+        </figure>
+
+        <h2>What this costs</h2>
+        <p>The overhead is real but manageable. Initial setup takes roughly two additional days compared to a naive deployment. The proxy adds 2-4ms of latency per LLM call. Image build cycles take longer because of scanning and signing. None of this matters when weighed against the alternative: an agent runtime that can be prompt-injected into exfiltrating data or reaching internal services.</p>
+        <p>We treat agent containers the way we would treat any process that executes untrusted input. Because that is exactly what they are.</p>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./nanoclaw-vs-openclaw.html">← Previous note</a>
+        <a href="./tutor-architecture.html">Next note →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+</body>
+</html>

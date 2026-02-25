@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Opencode: An open alternative to Claude Code — Prompt Engines Lab Notes</title>
+  <meta name="description" content="What Opencode does well as an open coding assistant and where managed systems still have advantages." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../index.html">All Notes</a>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>Feb 23, 2026</span><span>6 min read</span><span>Tooling</span></div>
+      <h1>Opencode: An open alternative to Claude Code</h1>
+      <p class="dek">Open coding agents are now viable for teams that need control over runtime and extensions. The key question is not whether they work. It is whether you can support them in production.</p>
+
+      <article class="content">
+        <p>Opencode has matured quickly. In our tests it handled common coding workflows well: repository context loading, structured patch generation, shell execution, and iterative fix loops. Setup took longer than managed assistants, but the control surface was better for teams with internal platform capacity.</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">setup_step        opencode   managed_assistant
+repo index        manual     automatic
+tool permissions  explicit   policy default
+telemetry hooks   custom     built-in</div>
+          <figcaption>Visual 1. Setup and operations comparison from our internal evaluation checklist.</figcaption>
+        </figure>
+
+        <h2>Where Opencode performs strongly</h2>
+        <p>The extension layer is the differentiator. We were able to bind custom tools for deployment checks, incident lookups, and documentation gates with less friction than expected. That made Opencode useful for real workflows instead of only greenfield coding sessions.</p>
+        <p>Another strong area is runtime visibility. Logs and command traces are easier to integrate into existing observability pipelines because you own the full loop. For security-sensitive environments, this can outweigh the convenience of managed services.</p>
+
+        <figure class="figure">
+          <div class="visual visual-code">[08:12] tool.bind ci.check
+[08:13] tool.bind docs.verify
+[08:15] patch.apply src/api/router.ts
+[08:16] test.run smoke-suite
+[08:17] result: pass (42/42)</div>
+          <figcaption>Visual 2. Typical Opencode run loop with custom tool bindings and verification gates.</figcaption>
+        </figure>
+
+        <h2>Where managed assistants still win</h2>
+        <p>Managed tools remain better for fast onboarding and predictable default behavior across mixed-skill teams. If your organization needs immediate, low-maintenance productivity gains, managed systems still reduce operational drag.</p>
+        <p>We also saw better recovery handling in edge-case conversations from managed tools. Opencode can match this, but only after deliberate prompt and policy tuning. Teams without a dedicated owner for the coding assistant will feel that cost.</p>
+
+        <h2>Decision framework</h2>
+        <ul>
+          <li>Choose Opencode when control, extensibility, and telemetry integration are required.</li>
+          <li>Choose managed assistants when speed to adoption and lower maintenance matter most.</li>
+          <li>Hybrid approach: use managed tools for general development and Opencode for regulated or high-control workflows.</li>
+        </ul>
+
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:52%"></i><i style="height:66%"></i><i style="height:74%"></i><i style="height:58%"></i>
+            <i style="height:81%"></i><i style="height:69%"></i><i style="height:63%"></i><i style="height:77%"></i>
+          </div>
+          <figcaption>Visual 3. Relative effort curve: initial setup versus long-term customization value.</figcaption>
+        </figure>
+
+        <p>Current recommendation: Opencode is production-usable when owned by a team that can maintain guardrails and tooling. Without that ownership, managed assistants still deliver better net output over the first two quarters.</p>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./nanoclaw-vs-openclaw.html">← Previous note</a>
+        <a href="./codex53-vs-opus46.html">Next note →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+</body>
+</html>

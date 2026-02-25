@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutor architecture: how we structure AI tutoring systems — Prompt Engines Lab Notes</title>
+  <meta name="description" content="The architecture behind our AI tutoring systems: session management, knowledge routing, and adaptive response pipelines." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../index.html">All Notes</a>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>Feb 25, 2026</span><span>10 min read</span><span>Architecture</span></div>
+      <h1>Tutor architecture: how we structure AI tutoring systems</h1>
+      <p class="dek">A walkthrough of how our tutoring systems are built, from session handling to knowledge routing to adaptive response generation. Architecture diagram included.</p>
+
+      <article class="content">
+        <p>Building a tutoring system that works in real classrooms requires more than a chat wrapper around an LLM. The architecture has to handle concurrent sessions, route to the right knowledge source, adapt difficulty in real time, and keep the student engaged without hallucinating answers outside the curriculum.</p>
+        <p>This note walks through the architecture we use across our tutoring deployments. The diagram below shows the full system. The rest of the article explains each layer and why it exists.</p>
+
+        <!-- ════════════════════════════════════════
+             ARCHITECTURE DIAGRAM PLACEHOLDER
+             User will provide the diagram to insert here
+             ════════════════════════════════════════ -->
+        <figure class="figure">
+          <div class="visual visual-diagram" style="min-height: 320px; display: flex; align-items: center; justify-content: center;">
+            <span style="color: var(--dim); font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;">Architecture diagram — pending</span>
+          </div>
+          <figcaption>Figure 1. Full tutor system architecture. Session layer, knowledge router, response pipeline, and feedback loop.</figcaption>
+        </figure>
+
+        <h2>Session layer</h2>
+        <p>Every student interaction starts at the session layer. This handles authentication, session persistence, and conversation state. We store session context in Redis with a TTL tied to the class period length. When a session expires, the context is flushed to long-term storage for analytics but is no longer available to the model.</p>
+        <p>This prevents stale context from leaking across sessions and keeps the model's working memory scoped to what is currently relevant.</p>
+
+        <h2>Knowledge router</h2>
+        <p>The knowledge router sits between the student's question and the LLM. Its job is to determine which knowledge source should ground the response: the curriculum document set, the worked examples bank, the misconception library, or a general fallback. The router uses a lightweight classifier trained on historical tutor interactions to make this decision in under 20ms.</p>
+        <p>This is where the system avoids hallucination. The LLM never generates freely. It always responds within the context of the selected knowledge source, and the source is always traceable.</p>
+
+        <figure class="figure">
+          <div class="visual visual-code">student_input: "I don't understand why x = -3 works here"
+
+router_decision:
+  source: misconception_library
+  topic:  negative_solutions_quadratic
+  confidence: 0.91
+
+grounding_docs: 2 chunks retrieved
+  → misconception_card_0412.md
+  → worked_example_quad_07.md
+
+response_constraint:
+  cite_source: required
+  max_new_information: none
+  tone: encouraging, step-by-step</div>
+          <figcaption>Knowledge routing trace. The router selects the misconception library and retrieves specific grounding documents before the LLM generates.</figcaption>
+        </figure>
+
+        <h2>Response pipeline</h2>
+        <p>The response pipeline takes the routed context and generates a response in three stages. First, a planner selects the pedagogical strategy: direct explanation, Socratic questioning, worked example walkthrough, or hint progression. Second, the LLM generates within the selected strategy and grounding documents. Third, a validator checks that the response stays within the curriculum scope and does not introduce information outside the retrieved context.</p>
+        <p>If the validator rejects the response, the pipeline retries with tighter constraints. In practice, the first generation passes validation around 88% of the time. The retry rate is low but catching the 12% matters for trust.</p>
+
+        <h2>Adaptive difficulty</h2>
+        <p>The system tracks correctness, response time, and hint usage across a session. When a student answers correctly and quickly, the system increases complexity by selecting harder worked examples or removing scaffolding from explanations. When a student struggles, it drops back to simpler representations and adds more intermediate steps.</p>
+        <p>This is not a separate model. It is a scoring function that adjusts parameters passed to the response pipeline. Keeping it simple and deterministic means it is auditable and predictable, which matters for classroom adoption.</p>
+
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:30%"></i><i style="height:42%"></i><i style="height:55%"></i><i style="height:68%"></i>
+            <i style="height:60%"></i><i style="height:75%"></i><i style="height:82%"></i><i style="height:90%"></i>
+          </div>
+          <figcaption>Difficulty progression across an 8-interaction session. The system ramps complexity as the student demonstrates mastery.</figcaption>
+        </figure>
+
+        <h2>Feedback loop</h2>
+        <p>Every session produces a structured log: questions asked, knowledge sources hit, strategies selected, validation outcomes, and difficulty adjustments. This feeds back into the router classifier and the misconception library. When we see the same misconception surfacing repeatedly, we add a targeted card to the library. When the router misclassifies consistently, we retrain on the new examples.</p>
+        <p>The system gets better per school, per subject, and per cohort. But the improvement is always grounded in observed data, not in the model learning on its own. We control the feedback loop explicitly.</p>
+
+        <h2>Deployment notes</h2>
+        <p>The full stack runs in Docker following the same airgapped pattern described in our Openclaw security note. The LLM calls go through a rate-limited proxy. Student data never leaves the deployment network. Session logs are encrypted at rest and access-controlled per teacher account.</p>
+        <p>Current latency budget: 1.2 seconds end-to-end from student input to rendered response. The knowledge router adds 18ms. The validator adds 40ms. The rest is inference time.</p>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./openclaw-docker-security.html">← Previous note</a>
+        <a href="./opencode-open-alternative.html">Next note →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+</body>
+</html>

@@ -423,15 +423,16 @@
 
     .lab-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 330px;
+      grid-template-columns: minmax(0, 1fr) 332px;
       gap: 24px;
-      align-items: start;
+      align-items: stretch;
     }
 
     .artifact-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
+      align-content: start;
     }
 
     .artifact {
@@ -443,6 +444,12 @@
       position: relative;
       overflow: hidden;
       transition: border-color 0.22s ease, transform 0.18s ease;
+    }
+
+    .artifact-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
     }
 
     .artifact:hover {
@@ -546,38 +553,110 @@
       border: 1px solid var(--line);
       background: linear-gradient(180deg, rgba(22, 34, 56, 0.8), rgba(13, 22, 35, 0.85));
       border-radius: 14px;
-      padding: 16px;
-      position: sticky;
-      top: 94px;
+      padding: 14px;
+      height: 350px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
 
     .notes-column h3 {
       font-family: var(--font-display);
-      font-size: 28px;
+      font-size: 26px;
       letter-spacing: -0.03em;
-      margin-bottom: 12px;
+      margin-bottom: 4px;
       line-height: 1;
     }
 
-    .note-item {
-      border-top: 1px solid rgba(42, 59, 89, 0.55);
-      padding: 12px 0;
+    .notes-sub {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
     }
 
-    .note-item:first-of-type {
-      border-top: none;
-      padding-top: 4px;
+    .notes-stack {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      perspective: 980px;
+    }
+
+    .note-item {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      border: 1px solid rgba(42, 59, 89, 0.58);
+      border-radius: 10px;
+      padding: 11px 11px 10px;
+      background: linear-gradient(160deg, rgba(16, 25, 40, 0.92), rgba(11, 19, 32, 0.9));
+      transition:
+        transform 0.42s cubic-bezier(0.2, 0.68, 0.2, 1),
+        opacity 0.3s ease,
+        filter 0.3s ease,
+        border-color 0.28s ease;
+      transform-origin: 50% 0%;
     }
 
     .note-item h4 {
-      font-size: 16px;
-      margin-bottom: 6px;
+      font-size: 15px;
+      margin-bottom: 5px;
       line-height: 1.2;
     }
 
+    .note-item h4 a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .note-item h4 a:hover {
+      color: var(--accent);
+      border-color: rgba(241, 122, 74, 0.45);
+    }
+
     .note-item p {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--muted);
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .note-item.is-active {
+      transform: translateY(0) scale(1) rotateX(0deg);
+      opacity: 1;
+      z-index: 3;
+      border-color: rgba(93, 217, 184, 0.55);
+      filter: none;
+    }
+
+    .note-item.is-next {
+      transform: translateY(84px) scale(0.97) rotateX(2deg);
+      opacity: 0.9;
+      z-index: 2;
+      filter: saturate(0.94);
+    }
+
+    .note-item.is-third {
+      transform: translateY(164px) scale(0.94) rotateX(4deg);
+      opacity: 0.72;
+      z-index: 1;
+      filter: saturate(0.82);
+    }
+
+    .note-item.is-hidden {
+      transform: translateY(230px) scale(0.9) rotateX(7deg);
+      opacity: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .notes-stack.is-spinning .note-item {
+      transition-duration: 0.3s;
     }
 
     .social-row {
@@ -798,7 +877,25 @@
       }
 
       .notes-column {
-        position: static;
+        height: auto;
+      }
+
+      .notes-stack {
+        display: grid;
+        gap: 10px;
+        perspective: none;
+      }
+
+      .note-item {
+        position: relative;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+        pointer-events: auto;
+      }
+
+      .note-item.is-hidden {
+        display: block;
       }
 
       .weekly-chip {
@@ -971,7 +1068,7 @@
 
         <div class="lab-layout">
           <div class="artifact-grid">
-            <article class="artifact">
+            <a class="artifact artifact-link" data-note="nanoclaw-openclaw" href="https://labnotes.promptengines.com/articles/nanoclaw-vs-openclaw.html" target="_blank" rel="noopener noreferrer">
               <div class="artifact-head"><span>Deployment Matrix</span><span>agents</span></div>
               <div class="artifact-body">
                 <div class="artifact-code">engine         task_fit   ops_load
@@ -983,9 +1080,9 @@ if team_size < 4 -> nanoclaw
 else -> openclaw</div>
               </div>
               <div class="artifact-hover">Nanoclaw vs Openclaw: which one to deploy for your agent system.</div>
-            </article>
+            </a>
 
-            <article class="artifact">
+            <a class="artifact artifact-link" data-note="opencode-open" href="https://labnotes.promptengines.com/articles/opencode-open-alternative.html" target="_blank" rel="noopener noreferrer">
               <div class="artifact-head"><span>Code Interface</span><span>opencode</span></div>
               <div class="artifact-body">
                 <div class="artifact-code">$ opencode init workspace
@@ -997,9 +1094,9 @@ status: OSS alternative
 to claude-code style flows</div>
               </div>
               <div class="artifact-hover">Opencode: an open alternative to Claude Code workflows.</div>
-            </article>
+            </a>
 
-            <article class="artifact">
+            <a class="artifact artifact-link" data-note="codex-opus" href="https://labnotes.promptengines.com/articles/codex53-vs-opus46.html" target="_blank" rel="noopener noreferrer">
               <div class="artifact-head"><span>Model Eval</span><span>core build</span></div>
               <div class="artifact-body">
                 <div class="artifact-bars" aria-hidden="true">
@@ -1008,53 +1105,56 @@ to claude-code style flows</div>
                 </div>
               </div>
               <div class="artifact-hover">Reviewing ChatGPT Codex 5.3 vs Claude Opus 4.6 for core build work.</div>
-            </article>
+            </a>
 
-            <article class="artifact">
+            <a class="artifact artifact-link" data-note="rag-grounded" href="https://labnotes.promptengines.com/articles/rag-without-hallucination.html" target="_blank" rel="noopener noreferrer">
               <div class="artifact-head"><span>RAG Guardrails</span><span>docs-only</span></div>
               <div class="artifact-body">
                 <div class="artifact-diagram" aria-hidden="true"></div>
               </div>
               <div class="artifact-hover">RAG without hallucination: answer from official docs and nothing else.</div>
-            </article>
+            </a>
 
-            <article class="artifact">
+            <a class="artifact artifact-link" data-note="aesthetic-early" href="https://labnotes.promptengines.com/articles/aesthetic-scoring-early-childhood.html" target="_blank" rel="noopener noreferrer">
               <div class="artifact-head"><span>Aesthetic Scoring</span><span>early childhood</span></div>
               <div class="artifact-body" style="background:
                 radial-gradient(circle at 24% 26%, rgba(93,217,184,0.3), transparent 32%),
                 radial-gradient(circle at 74% 38%, rgba(241,122,74,0.34), transparent 38%),
                 linear-gradient(155deg, rgba(14,25,40,0.8), rgba(24,38,61,0.78));"></div>
               <div class="artifact-hover">Image models and prompts reviewed for early-childhood aesthetic quality.</div>
-            </article>
+            </a>
           </div>
 
           <aside class="notes-column" id="notes">
             <h3>Notes from the lab</h3>
+            <p class="notes-sub">Hover a card to surface its related note.</p>
 
-            <article class="note-item">
-              <h4>Nanoclaw vs Openclaw: Which one should you deploy for your agent system</h4>
-              <p>A practical selection framework based on team size, control requirements, and maintenance overhead in production.</p>
-            </article>
+            <div class="notes-stack" id="notes-stack" aria-live="polite">
+              <article class="note-item is-active" data-note="nanoclaw-openclaw">
+                <h4><a href="https://labnotes.promptengines.com/articles/nanoclaw-vs-openclaw.html" target="_blank" rel="noopener noreferrer">Nanoclaw vs Openclaw: Which one should you deploy for your agent system</a></h4>
+                <p>A practical selection framework based on team size, control requirements, and maintenance overhead in production.</p>
+              </article>
 
-            <article class="note-item">
-              <h4>Opencode: An open alternative to Claude Code</h4>
-              <p>Where open tooling is already sufficient, where it breaks, and what you gain by owning the runtime surface.</p>
-            </article>
+              <article class="note-item is-next" data-note="opencode-open">
+                <h4><a href="https://labnotes.promptengines.com/articles/opencode-open-alternative.html" target="_blank" rel="noopener noreferrer">Opencode: An open alternative to Claude Code</a></h4>
+                <p>Where open tooling is already sufficient, where it breaks, and what you gain by owning the runtime surface.</p>
+              </article>
 
-            <article class="note-item">
-              <h4>Reviewing ChatGPT Codex 5.3 vs Claude Opus 4.6 for core build</h4>
-              <p>A side-by-side review of reliability, edit quality, and iteration speed in real coding and debugging sessions.</p>
-            </article>
+              <article class="note-item is-third" data-note="codex-opus">
+                <h4><a href="https://labnotes.promptengines.com/articles/codex53-vs-opus46.html" target="_blank" rel="noopener noreferrer">Reviewing ChatGPT Codex 5.3 vs Claude Opus 4.6 for core build</a></h4>
+                <p>A side-by-side review of reliability, edit quality, and iteration speed in real coding and debugging sessions.</p>
+              </article>
 
-            <article class="note-item">
-              <h4>RAG without hallucination: How to answer from your official documents and nothing else</h4>
-              <p>Strict retrieval and citation guardrails that reduce drift while keeping answer quality usable for operations.</p>
-            </article>
+              <article class="note-item is-hidden" data-note="rag-grounded">
+                <h4><a href="https://labnotes.promptengines.com/articles/rag-without-hallucination.html" target="_blank" rel="noopener noreferrer">RAG without hallucination: How to answer from your official documents and nothing else</a></h4>
+                <p>Strict retrieval and citation guardrails that reduce drift while keeping answer quality usable for operations.</p>
+              </article>
 
-            <article class="note-item">
-              <h4>Aesthetic scoring for early childhood: Image models and prompts reviewed</h4>
-              <p>A structured review approach for visual clarity, emotional tone, and age-appropriate composition in generated assets.</p>
-            </article>
+              <article class="note-item is-hidden" data-note="aesthetic-early">
+                <h4><a href="https://labnotes.promptengines.com/articles/aesthetic-scoring-early-childhood.html" target="_blank" rel="noopener noreferrer">Aesthetic scoring for early childhood: Image models and prompts reviewed</a></h4>
+                <p>A structured review approach for visual clarity, emotional tone, and age-appropriate composition in generated assets.</p>
+              </article>
+            </div>
           </aside>
         </div>
       </div>
@@ -1176,6 +1276,54 @@ to claude-code style flows</div>
           year: "numeric"
         });
         updatedEl.textContent = "Last update: " + formatted;
+      }
+
+      const notesStack = document.getElementById("notes-stack");
+      const noteCards = notesStack
+        ? Array.from(notesStack.querySelectorAll(".note-item[data-note]"))
+        : [];
+      const artifactCards = Array.from(document.querySelectorAll(".artifact[data-note]"));
+
+      if (notesStack && noteCards.length > 0 && artifactCards.length > 0) {
+        let activeIndex = noteCards.findIndex(function (card) {
+          return card.classList.contains("is-active");
+        });
+        if (activeIndex < 0) activeIndex = 0;
+        let spinTimer = null;
+
+        function spinToNote(noteKey) {
+          const targetIndex = noteCards.findIndex(function (card) {
+            return card.dataset.note === noteKey;
+          });
+          if (targetIndex < 0 || targetIndex === activeIndex) return;
+
+          notesStack.classList.add("is-spinning");
+          noteCards.forEach(function (card, index) {
+            const offset = (index - targetIndex + noteCards.length) % noteCards.length;
+            card.classList.remove("is-active", "is-next", "is-third", "is-hidden");
+            if (offset === 0) card.classList.add("is-active");
+            else if (offset === 1) card.classList.add("is-next");
+            else if (offset === 2) card.classList.add("is-third");
+            else card.classList.add("is-hidden");
+          });
+
+          activeIndex = targetIndex;
+          if (spinTimer) window.clearTimeout(spinTimer);
+          spinTimer = window.setTimeout(function () {
+            notesStack.classList.remove("is-spinning");
+          }, 320);
+        }
+
+        artifactCards.forEach(function (artifact) {
+          const noteKey = artifact.dataset.note;
+          if (!noteKey) return;
+          artifact.addEventListener("mouseenter", function () {
+            spinToNote(noteKey);
+          });
+          artifact.addEventListener("focusin", function () {
+            spinToNote(noteKey);
+          });
+        });
       }
 
       const terminal = document.getElementById("terminal-log");

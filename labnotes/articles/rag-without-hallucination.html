@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAG without hallucination — Prompt Engines Lab Notes</title>
+  <meta name="description" content="How to design retrieval systems that answer only from approved documentation with explicit citations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../index.html">All Notes</a>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>Feb 21, 2026</span><span>7 min read</span><span>RAG</span></div>
+      <h1>RAG without hallucination: How to answer from your official documents and nothing else</h1>
+      <p class="dek">Most RAG failures come from weak boundaries, not weak retrieval. If your policy is "official docs only," the system must enforce that at every stage of generation.</p>
+
+      <article class="content">
+        <p>Teams often say they want strict document-grounded answers, then allow model priors to fill gaps. That is where hallucinations return. We rebuilt our retrieval stack with one hard rule: if support is missing in the corpus, the assistant must abstain and ask for clarification.</p>
+
+        <figure class="figure">
+          <div class="visual visual-diagram"></div>
+          <figcaption>Visual 1. Retrieval-only answer path with mandatory evidence checkpoint before output.</figcaption>
+        </figure>
+
+        <h2>Guardrails that actually matter</h2>
+        <p>First, constrain generation to quoted or tightly summarized retrieved chunks. Second, require citation IDs in the final answer object. Third, enforce confidence thresholds that block free-form responses when evidence is thin.</p>
+        <p>We also added an unsupported-claim detector that scans draft responses for entities and numbers not present in the retrieved passages. If it finds any, the answer is rewritten or refused.</p>
+
+        <figure class="figure">
+          <div class="visual visual-code">query: "What is the retention policy for student records?"
+retrieved_docs: policy_v4.pdf#12, handbook.md#88
+evidence_score: 0.91
+draft_check: pass (0 unsupported claims)
+response_mode: grounded</div>
+          <figcaption>Visual 2. Validation trace from a grounded response pipeline.</figcaption>
+        </figure>
+
+        <h2>Prompting pattern for strict mode</h2>
+        <ul>
+          <li>Instruct the model to answer only from provided context.</li>
+          <li>Require explicit citation markers for each claim.</li>
+          <li>Define a mandatory fallback sentence when citations are insufficient.</li>
+          <li>Block speculative language in post-processing checks.</li>
+        </ul>
+
+        <h2>Results after hardening</h2>
+        <p>In offline evaluation, unsupported claims dropped sharply and refusal quality improved. Users accepted abstentions when the system explained what source was missing. That is a better experience than confident incorrect answers.</p>
+
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:78%"></i><i style="height:64%"></i><i style="height:53%"></i><i style="height:69%"></i>
+            <i style="height:46%"></i><i style="height:58%"></i><i style="height:41%"></i><i style="height:55%"></i>
+          </div>
+          <figcaption>Visual 3. Unsupported-claim rate decline after strict retrieval and citation enforcement.</figcaption>
+        </figure>
+
+        <p>Recommendation: treat retrieval fidelity as a product requirement, not a prompt trick. If trust matters, refusal behavior and citation rigor are core features, not optional polish.</p>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./codex53-vs-opus46.html">← Previous note</a>
+        <a href="./aesthetic-scoring-early-childhood.html">Next note →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+</body>
+</html>

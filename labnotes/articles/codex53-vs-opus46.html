@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reviewing ChatGPT Codex 5.3 vs Claude Opus 4.6 — Prompt Engines Lab Notes</title>
+  <meta name="description" content="Comparison of Codex 5.3 and Opus 4.6 for core engineering workflows and production build tasks." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../index.html">All Notes</a>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>Feb 22, 2026</span><span>8 min read</span><span>Evaluation</span></div>
+      <h1>Reviewing ChatGPT Codex 5.3 vs Claude Opus 4.6 for core build</h1>
+      <p class="dek">We compared both models on real engineering tasks: architecture edits, bug isolation, and constrained refactors. The differences are less about raw intelligence and more about how each model behaves under pressure.</p>
+
+      <article class="content">
+        <p>Our test set included twelve tasks pulled from current projects: API boundary redesign, failing test triage, migration scripts, and UI consistency fixes across related templates. Each task used the same repo snapshot and acceptance criteria.</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">task_type             codex_5_3   opus_4_6
+large refactor         strong      strong
+bug root-cause         very strong strong
+instruction adherence  strong      very strong
+recovery after drift   very strong medium</div>
+          <figcaption>Visual 1. Relative performance profile from standardized task runs.</figcaption>
+        </figure>
+
+        <h2>Codex 5.3 strengths</h2>
+        <p>Codex 5.3 performed best on iterative repair loops. When a first patch failed, it recovered quickly with targeted edits rather than broad rewrites. This reduced review time and made it easier to accept partial progress without destabilizing adjacent modules.</p>
+        <p>It also showed strong behavior in shell-driven workflows where commands and code changes need to stay synchronized. For teams running continuous integration checks frequently, this is a practical advantage.</p>
+
+        <figure class="figure">
+          <div class="visual visual-code">task: ui alignment regression
+attempt_1: failed visual snapshot
+attempt_2: patch footer token spacing
+attempt_3: update responsive breakpoint
+final: all checks passed, no regressions</div>
+          <figcaption>Visual 2. Typical multi-attempt correction pattern with localized edits.</figcaption>
+        </figure>
+
+        <h2>Opus 4.6 strengths</h2>
+        <p>Opus 4.6 excelled in high-clarity instruction following and generated consistently readable code comments and rationale. In tasks where stakeholder communication mattered as much as the patch itself, Opus produced cleaner human-facing output.</p>
+        <p>It was especially good for design-sensitive frontend changes, where tone, structure, and semantics had to stay aligned with an existing style system.</p>
+
+        <h2>Where they diverge operationally</h2>
+        <ul>
+          <li>Codex 5.3 is stronger when fast correction and command-level execution discipline are required.</li>
+          <li>Opus 4.6 is stronger when instruction fidelity and communication polish are the top priorities.</li>
+          <li>Both benefit from explicit acceptance checks and constrained file scopes.</li>
+        </ul>
+
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:68%"></i><i style="height:76%"></i><i style="height:71%"></i><i style="height:63%"></i>
+            <i style="height:79%"></i><i style="height:66%"></i><i style="height:74%"></i><i style="height:61%"></i>
+          </div>
+          <figcaption>Visual 3. Composite score trend across correction speed, adherence, and edit locality.</figcaption>
+        </figure>
+
+        <p>Recommendation for core build pipelines: use Codex 5.3 where execution flow and repair speed dominate. Use Opus 4.6 where review readability and instruction precision are the limiting factors. The best teams keep both and route tasks intentionally.</p>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./opencode-open-alternative.html">← Previous note</a>
+        <a href="./rag-without-hallucination.html">Next note →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+</body>
+</html>
