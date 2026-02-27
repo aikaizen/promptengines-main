@@ -1,0 +1,27 @@
+{
+  "name": "promptengines",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-feed": "node scripts/generate-feed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aikaizen/promptengines-main.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aikaizen/promptengines-main/issues"
+  },
+  "homepage": "https://github.com/aikaizen/promptengines-main#readme",
+  "dependencies": {
+    "@octokit/rest": "^22.0.1"
+  }
+}

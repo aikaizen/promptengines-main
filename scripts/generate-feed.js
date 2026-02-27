@@ -1,0 +1,231 @@
+#!/usr/bin/env node
+
+/**
+ * generate-feed.js
+ *
+ * Fetches recent commits from the aikaizen GitHub account and injects
+ * activity-card HTML into the PromptEngines site pages.
+ *
+ * Required env: GITHUB_TOKEN
+ */
+
+const fs = require("fs");
+const path = require("path");
+const { Octokit } = require("@octokit/rest");
+
+// ---------------------------------------------------------------------------
+// Config
+// ---------------------------------------------------------------------------
+
+const OWNER = "aikaizen";
+const COMMITS_PER_REPO = 5;
+const MAX_CARDS = 6;
+const BODY_MAX_LENGTH = 120;
+
+const TARGET_FILES = [
+  "index.html",
+  "v1.html",
+  "v2.html",
+  "v3.html",
+  "v4.html",
+  "v5.html",
+  "v6.html",
+];
+
+const PRODUCT_URLS = {
+  kaizen: "https://kaizen.promptengines.com",
+  "storybook-studio": "https://storybookstudio.promptengines.com",
+  flow: "https://flow.promptengines.com",
+  consulting: "https://consulting.promptengines.com",
+  dashboard: "https://dashboard.promptengines.com",
+};
+
+const ROOT_DIR = path.resolve(__dirname, "..");
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+/** HTML-escape user content to prevent XSS. */
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/** Convert a date string to a human-friendly relative time label. */
+function relativeTime(dateStr) {
+  const now = new Date();
+  const then = new Date(dateStr);
+  const diffMs = now - then;
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) return "today";
+  if (diffDays === 1) return "1 day ago";
+  if (diffDays < 7) return `${diffDays} days ago`;
+
+  const diffWeeks = Math.floor(diffDays / 7);
+  if (diffWeeks === 1) return "1 week ago";
+  if (diffWeeks < 4) return `${diffWeeks} weeks ago`;
+
+  const diffMonths = Math.floor(diffDays / 30);
+  if (diffMonths === 1) return "1 month ago";
+  return `${diffMonths} months ago`;
+}
+
+/**
+ * Parse a commit message into { title, body }.
+ * Title = first line. Body = everything after the first blank line,
+ * truncated to BODY_MAX_LENGTH characters.
+ */
+function parseMessage(message) {
+  const lines = message.split("\n");
+  const title = lines[0].trim();
+
+  // Find first blank line
+  let blankIdx = -1;
+  for (let i = 1; i < lines.length; i++) {
+    if (lines[i].trim() === "") {
+      blankIdx = i;
+      break;
+    }
+  }
+
+  let body = "";
+  if (blankIdx !== -1 && blankIdx + 1 < lines.length) {
+    body = lines
+      .slice(blankIdx + 1)
+      .join(" ")
+      .trim();
+    if (body.length > BODY_MAX_LENGTH) {
+      body = body.slice(0, BODY_MAX_LENGTH).trimEnd() + "...";
+    }
+  }
+
+  return { title, body };
+}
+
+/** Build the activity-card anchor HTML for a single commit. */
+function buildCard(commit) {
+  const url = PRODUCT_URLS[commit.repo] || commit.htmlUrl;
+  const time = relativeTime(commit.date);
+
+  let html = "";
+  html += `          <a class="activity-card" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">\n`;
+  html += `            <div class="activity-meta"><span>${escapeHtml(time)}</span><span>${escapeHtml(commit.repo)}</span></div>\n`;
+  html += `            <div class="activity-title">${escapeHtml(commit.title)}</div>\n`;
+  if (commit.body) {
+    html += `            <div class="activity-desc">${escapeHtml(commit.body)}</div>\n`;
+  }
+  html += `          </a>`;
+
+  return html;
+}
+
+// ---------------------------------------------------------------------------
+// Main
+// ---------------------------------------------------------------------------
+
+async function main() {
+  // 1. Validate token
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) {
+    console.error("Error: GITHUB_TOKEN environment variable is required.");
+    process.exit(1);
+  }
+
+  const octokit = new Octokit({ auth: token });
+
+  // 2. Fetch repos (aikaizen is a user account, not an org)
+  console.log(`Fetching repos for user "${OWNER}"...`);
+  const repos = await octokit.paginate(octokit.rest.repos.listForAuthenticatedUser, {
+    per_page: 100,
+    sort: "updated",
+    direction: "desc",
+  });
+  console.log(`Found ${repos.length} repos.`);
+
+  // 3. Fetch recent commits from each repo
+  const allCommits = [];
+
+  for (const repo of repos) {
+    try {
+      const { data: commits } = await octokit.rest.repos.listCommits({
+        owner: repo.owner.login,
+        repo: repo.name,
+        sha: repo.default_branch,
+        per_page: COMMITS_PER_REPO,
+      });
+
+      for (const c of commits) {
+        const message = (c.commit && c.commit.message) || "";
+        if (!message.trim()) continue;
+
+        const { title, body } = parseMessage(message);
+
+        // Skip merge commits
+        if (title.startsWith("Merge ")) continue;
+
+        allCommits.push({
+          repo: repo.name,
+          title,
+          body,
+          date: c.commit.author.date,
+          htmlUrl: c.html_url,
+        });
+      }
+    } catch (err) {
+      // Some repos may be empty or inaccessible; log and continue
+      console.warn(`  Skipping ${repo.name}: ${err.message}`);
+    }
+  }
+
+  console.log(`Collected ${allCommits.length} commits (after filtering).`);
+
+  if (allCommits.length === 0) {
+    console.error("Error: No commits found. Exiting.");
+    process.exit(1);
+  }
+
+  // 4. Sort by date descending and take top MAX_CARDS
+  allCommits.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const topCommits = allCommits.slice(0, MAX_CARDS);
+
+  console.log(`Using top ${topCommits.length} commits for feed.`);
+
+  // 5. Build HTML cards
+  const cardsHtml = topCommits.map(buildCard).join("\n");
+
+  // 6. Inject into HTML files
+  const feedRegex = /<!-- FEED:START -->[\s\S]*?<!-- FEED:END -->/;
+  const replacement = `<!-- FEED:START -->\n${cardsHtml}\n          <!-- FEED:END -->`;
+
+  for (const file of TARGET_FILES) {
+    const filePath = path.join(ROOT_DIR, file);
+
+    if (!fs.existsSync(filePath)) {
+      console.warn(`  File not found, skipping: ${file}`);
+      continue;
+    }
+
+    const content = fs.readFileSync(filePath, "utf-8");
+
+    if (!feedRegex.test(content)) {
+      console.warn(`  No FEED markers found in ${file}, skipping.`);
+      continue;
+    }
+
+    const updated = content.replace(feedRegex, replacement);
+    fs.writeFileSync(filePath, updated, "utf-8");
+    console.log(`  Updated: ${file}`);
+  }
+
+  console.log(`\nDone. Injected ${topCommits.length} activity cards.`);
+}
+
+main().catch((err) => {
+  console.error("Fatal error:", err);
+  process.exit(1);
+});
