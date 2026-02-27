@@ -1291,11 +1291,13 @@
               <span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span>
             </div>
             <div class="terminal-log" id="terminal-log">
-              <div class="terminal-line">[09:12] agent.run school-copilot --env=pilot</div>
-              <div class="terminal-line">[09:18] build.storybook.v5 deployed in 2m 41s</div>
-              <div class="terminal-line">[09:32] workflow.video.render queue size: 3</div>
-              <div class="terminal-line">[09:41] tutoring.llm latency p95: 620ms</div>
-              <div class="terminal-line">[09:55] inference.batch status: stable</div>
+              <!-- TELEMETRY:START -->
+              <div class="terminal-line">[12:31] promptengines-main: Add GitHub Action to auto-regenerate activity f...</div>
+              <div class="terminal-line">[12:24] promptengines-main: Add product launcher buttons, GitHub activity f...</div>
+              <div class="terminal-line">[10:22] kaizen: fix: add missing Battle button to Numbers game ...</div>
+              <div class="terminal-line">[21:45] kaizen: docs: add v0.8.0 changelog, update README archi...</div>
+              <div class="terminal-line">[21:39] kaizen: refactor: unified HUD shell + game modularity</div>
+              <!-- TELEMETRY:END -->
             </div>
           </aside>
         </div>
@@ -1314,6 +1316,16 @@
 
         <div class="activity-grid">
           <!-- FEED:START -->
+          <a class="activity-card" href="https://github.com/aikaizen/promptengines-main/commit/f42f1c1b1e3d364f588dd06485ea2b6094aacaa3" target="_blank" rel="noopener noreferrer">
+            <div class="activity-meta"><span>today</span><span>promptengines-main</span></div>
+            <div class="activity-title">Add GitHub Action to auto-regenerate activity feed every 6 hours</div>
+            <div class="activity-desc">Runs generate-feed.js on a cron schedule and commits updated HTML if the feed content changed. Requires FEED_GITHUB_TOKE...</div>
+          </a>
+          <a class="activity-card" href="https://github.com/aikaizen/promptengines-main/commit/1c878611409969a18a90bf093d64c680d8dc9293" target="_blank" rel="noopener noreferrer">
+            <div class="activity-meta"><span>today</span><span>promptengines-main</span></div>
+            <div class="activity-title">Add product launcher buttons, GitHub activity feed, and realtime updates</div>
+            <div class="activity-desc">- Replace hero CTAs with 5 pill-style product buttons (Kaizen,   Storybook Studio, Flow, Lab, Consulting) linking to sub...</div>
+          </a>
           <a class="activity-card" href="https://kaizen.promptengines.com" target="_blank" rel="noopener noreferrer">
             <div class="activity-meta"><span>today</span><span>kaizen</span></div>
             <div class="activity-title">fix: add missing Battle button to Numbers game mode selector</div>
@@ -1333,16 +1345,6 @@
             <div class="activity-meta"><span>today</span><span>flow</span></div>
             <div class="activity-title">fix: disable agentic nudges and suppress early challenge cards</div>
             <div class="activity-desc">- Remove nudge system that injected &quot;mission block&quot; messages every 3 turns - Remove block tracker from drawer (too agent...</div>
-          </a>
-          <a class="activity-card" href="https://flow.promptengines.com" target="_blank" rel="noopener noreferrer">
-            <div class="activity-meta"><span>today</span><span>flow</span></div>
-            <div class="activity-title">fix: route students to home page so all 20 lessons are visible</div>
-            <div class="activity-desc">Students were landing on the chat view (#/student -&gt; StudentTutors) instead of the home page with lesson cards. Now #/st...</div>
-          </a>
-          <a class="activity-card" href="https://flow.promptengines.com" target="_blank" rel="noopener noreferrer">
-            <div class="activity-meta"><span>today</span><span>flow</span></div>
-            <div class="activity-title">feat: improve learning state, teacher settings, and flow context</div>
-            <div class="activity-desc">- Expand learning-state endpoint with better lesson tracking - Update teacher settings curriculum display - Enhance flow...</div>
           </a>
           <!-- FEED:END -->
         </div>
@@ -1677,14 +1679,16 @@ to claude-code style flows</div>
       }
 
       const terminal = document.getElementById("terminal-log");
+      // STREAM:START
       const stream = [
-        "[10:03] notes.publish thesis: ops over demos",
-        "[10:11] activity.push storybook parser update",
-        "[10:17] system.check tutoring routes: healthy",
-        "[10:24] experiment.rank fast-inference batch=passed",
-        "[10:30] build.video-pipeline segment export complete",
-        "[10:37] dashboard.sync app telemetry merged"
+        "[21:15] flow: fix: disable agentic nudges and suppress early ...",
+        "[19:55] flow: fix: route students to home page so all 20 less...",
+        "[19:26] flow: feat: improve learning state, teacher settings,...",
+        "[16:48] kaizen: fix: add missing game data files, fix .gitignor...",
+        "[16:40] kaizen: docs: add v0.7.0 changelog — MathBattle, video ...",
+        "[16:31] flow: feat: restructure pre-K curriculum to 5 plans w..."
       ];
+      // STREAM:END
 
       if (terminal) {
         let pointer = 0;

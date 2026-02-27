@@ -107,6 +107,17 @@ function parseMessage(message) {
   return { title, body };
 }
 
+/** Build a terminal-line string for the telemetry widget. */
+function buildTerminalLine(commit) {
+  const d = new Date(commit.date);
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mm = String(d.getMinutes()).padStart(2, "0");
+  const shortTitle = commit.title.length > 50
+    ? commit.title.slice(0, 47) + "..."
+    : commit.title;
+  return `[${hh}:${mm}] ${commit.repo}: ${shortTitle}`;
+}
+
 /** Build the activity-card anchor HTML for a single commit. */
 function buildCard(commit) {
   const url = PRODUCT_URLS[commit.repo] || commit.htmlUrl;
@@ -198,9 +209,27 @@ async function main() {
   // 5. Build HTML cards
   const cardsHtml = topCommits.map(buildCard).join("\n");
 
-  // 6. Inject into HTML files
+  // 6. Build telemetry terminal lines (initial HTML + JS stream array)
+  const telemetryCommits = allCommits.slice(0, 5);
+  const streamCommits = allCommits.slice(5, 11);
+
+  const telemetryHtml = telemetryCommits
+    .map((c) => `              <div class="terminal-line">${escapeHtml(buildTerminalLine(c))}</div>`)
+    .join("\n");
+
+  const streamJs = streamCommits
+    .map((c) => `        "${buildTerminalLine(c).replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`)
+    .join(",\n");
+
+  // 7. Inject into HTML files
   const feedRegex = /<!-- FEED:START -->[\s\S]*?<!-- FEED:END -->/;
-  const replacement = `<!-- FEED:START -->\n${cardsHtml}\n          <!-- FEED:END -->`;
+  const feedReplacement = `<!-- FEED:START -->\n${cardsHtml}\n          <!-- FEED:END -->`;
+
+  const telemetryRegex = /<!-- TELEMETRY:START -->[\s\S]*?<!-- TELEMETRY:END -->/;
+  const telemetryReplacement = `<!-- TELEMETRY:START -->\n${telemetryHtml}\n              <!-- TELEMETRY:END -->`;
+
+  const streamRegex = /\/\/ STREAM:START[\s\S]*?\/\/ STREAM:END/;
+  const streamReplacement = `// STREAM:START\n      const stream = [\n${streamJs}\n      ];\n      // STREAM:END`;
 
   for (const file of TARGET_FILES) {
     const filePath = path.join(ROOT_DIR, file);
@@ -210,19 +239,31 @@ async function main() {
       continue;
     }
 
-    const content = fs.readFileSync(filePath, "utf-8");
+    let content = fs.readFileSync(filePath, "utf-8");
 
-    if (!feedRegex.test(content)) {
-      console.warn(`  No FEED markers found in ${file}, skipping.`);
-      continue;
+    if (feedRegex.test(content)) {
+      content = content.replace(feedRegex, feedReplacement);
+    } else {
+      console.warn(`  No FEED markers in ${file}`);
     }
 
-    const updated = content.replace(feedRegex, replacement);
-    fs.writeFileSync(filePath, updated, "utf-8");
+    if (telemetryRegex.test(content)) {
+      content = content.replace(telemetryRegex, telemetryReplacement);
+    } else {
+      console.warn(`  No TELEMETRY markers in ${file}`);
+    }
+
+    if (streamRegex.test(content)) {
+      content = content.replace(streamRegex, streamReplacement);
+    } else {
+      console.warn(`  No STREAM markers in ${file}`);
+    }
+
+    fs.writeFileSync(filePath, content, "utf-8");
     console.log(`  Updated: ${file}`);
   }
 
-  console.log(`\nDone. Injected ${topCommits.length} activity cards.`);
+  console.log(`\nDone. Injected ${topCommits.length} activity cards + telemetry from real commits.`);
 }
 
 main().catch((err) => {
