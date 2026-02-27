@@ -260,7 +260,6 @@
       align-items: center;
       gap: 14px;
       flex-wrap: wrap;
-      justify-content: center;
     }
 
     .btn {
@@ -406,44 +405,79 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .activity-card {
+    .app-card {
       border: 1px solid var(--line);
       border-radius: 12px;
-      padding: 16px;
       text-decoration: none;
       color: inherit;
       background: linear-gradient(150deg, rgba(27, 42, 67, 0.58), rgba(18, 30, 50, 0.45));
       transition: border-color 0.22s ease, transform 0.18s ease, box-shadow 0.22s ease;
+      display: block;
+      overflow: hidden;
     }
 
-    .activity-card:hover {
+    .app-card:hover {
       border-color: rgba(241, 122, 74, 0.52);
       transform: translateY(-2px);
       box-shadow: 0 16px 42px rgba(9, 14, 25, 0.36);
     }
 
-    .activity-meta {
+    .app-card-head {
+      padding: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
-      color: var(--muted);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
     }
 
-    .activity-title {
+    .app-card-name {
       font-size: 17px;
       font-weight: 600;
-      margin-bottom: 6px;
       color: var(--text);
     }
 
-    .activity-desc {
-      font-size: 15px;
+    .app-card-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent);
+      background: rgba(241, 122, 74, 0.12);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .app-card-commits {
+      border-top: 1px solid var(--line);
+    }
+
+    .commit-line {
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+    }
+
+    .commit-line:last-child {
+      border-bottom: none;
+    }
+
+    .commit-time {
+      font-family: var(--font-mono);
+      font-size: 10px;
       color: var(--muted);
+      white-space: nowrap;
+      min-width: 62px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .commit-msg {
+      font-size: 13px;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .lab-layout {
@@ -1105,7 +1139,7 @@
     body.theme-terminal .btn-primary { color: #080808; }
     body.theme-terminal .btn-secondary { border-color: rgba(0, 232, 123, 0.4); }
 
-    body.theme-terminal .activity-card:hover,
+    body.theme-terminal .app-card:hover,
     body.theme-terminal .project-link:hover,
     body.theme-terminal .artifact:hover {
       border-color: rgba(0, 232, 123, 0.55);
@@ -1151,7 +1185,7 @@
     body.theme-military .btn-primary { color: #000; }
     body.theme-military .btn-secondary { border-color: rgba(255, 140, 0, 0.4); }
 
-    body.theme-military .activity-card:hover,
+    body.theme-military .app-card:hover,
     body.theme-military .project-link:hover,
     body.theme-military .artifact:hover {
       border-color: rgba(255, 140, 0, 0.55);
@@ -1200,7 +1234,7 @@
     body.theme-hacker .btn-primary { color: #0a0a0a; box-shadow: 0 0 20px rgba(0, 255, 65, 0.25); }
     body.theme-hacker .btn-secondary { border-color: rgba(0, 255, 65, 0.35); }
 
-    body.theme-hacker .activity-card:hover,
+    body.theme-hacker .app-card:hover,
     body.theme-hacker .project-link:hover,
     body.theme-hacker .artifact:hover {
       border-color: rgba(0, 255, 65, 0.5);
@@ -1260,9 +1294,9 @@
       <div class="container hero-grid">
         <div>
           <div class="eyebrow">Applied AI Lab</div>
-          <h1>Building with AI.</h1>
+          <h1>We Build.</h1>
           <p class="hero-lead">
-            Prompt Engines is a small lab prototyping practical software, media systems, and internal tools.
+            Prompt Engines is a lab of humans and agents, prototyping and deploying practical software, media systems, and internal tools.
             We ship constantly, document what works, and keep the surface close to the work.
           </p>
           <div class="rotator-line" aria-live="polite">
@@ -1270,11 +1304,11 @@
             <span class="rotator-value" id="rotator-value">tools</span>
           </div>
           <div class="hero-actions">
-            <a href="https://kaizen.promptengines.com" class="btn btn-product" target="_blank">Kaizen</a>
-            <a href="https://storybookstudio.promptengines.com" class="btn btn-product" target="_blank">Storybook Studio</a>
-            <a href="https://flow.promptengines.com" class="btn btn-product" target="_blank">Flow</a>
-            <a href="https://lab.promptengines.com" class="btn btn-product" target="_blank">Lab</a>
-            <a href="https://consulting.promptengines.com" class="btn btn-product" target="_blank">Consulting</a>
+            <a href="https://kaizen.promptengines.com" class="btn btn-product" target="_blank" data-track="Kaizen">Kaizen</a>
+            <a href="https://storybookstudio.promptengines.com" class="btn btn-product" target="_blank" data-track="Storybook Studio">Storybook Studio</a>
+            <a href="https://flow.promptengines.com" class="btn btn-product" target="_blank" data-track="Flow">Flow</a>
+            <a href="https://lab.promptengines.com" class="btn btn-product" target="_blank" data-track="Lab">Lab</a>
+            <a href="https://consulting.promptengines.com" class="btn btn-product" target="_blank" data-track="Consulting">Consulting</a>
           </div>
         </div>
 
@@ -1292,11 +1326,11 @@
             </div>
             <div class="terminal-log" id="terminal-log">
               <!-- TELEMETRY:START -->
+              <div class="terminal-line">[12:36] promptengines-main: Replace fake telemetry with real GitHub commit ...</div>
               <div class="terminal-line">[12:31] promptengines-main: Add GitHub Action to auto-regenerate activity f...</div>
               <div class="terminal-line">[12:24] promptengines-main: Add product launcher buttons, GitHub activity f...</div>
               <div class="terminal-line">[10:22] kaizen: fix: add missing Battle button to Numbers game ...</div>
               <div class="terminal-line">[21:45] kaizen: docs: add v0.8.0 changelog, update README archi...</div>
-              <div class="terminal-line">[21:39] kaizen: refactor: unified HUD shell + game modularity</div>
               <!-- TELEMETRY:END -->
             </div>
           </aside>
@@ -1307,44 +1341,58 @@
     <section id="activity">
       <div class="container">
         <div class="section-head">
-          <div class="section-tag">Recently at Prompt Engines</div>
-          <h2 class="section-title">A running stream, not a static brochure.</h2>
+          <div class="section-tag">Live from the lab</div>
+          <h2 class="section-title">Streaming experiments.</h2>
           <p class="section-copy">
-            The lab moves weekly. Every card points to a real artifact, release, or active line of exploration.
+            We are building live and pushing changes to production while you read this. Each app below shows its most recent commits.
           </p>
         </div>
 
         <div class="activity-grid">
           <!-- FEED:START -->
-          <a class="activity-card" href="https://github.com/aikaizen/promptengines-main/commit/f42f1c1b1e3d364f588dd06485ea2b6094aacaa3" target="_blank" rel="noopener noreferrer">
-            <div class="activity-meta"><span>today</span><span>promptengines-main</span></div>
-            <div class="activity-title">Add GitHub Action to auto-regenerate activity feed every 6 hours</div>
-            <div class="activity-desc">Runs generate-feed.js on a cron schedule and commits updated HTML if the feed content changed. Requires FEED_GITHUB_TOKE...</div>
+          <a class="app-card" href="https://promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="app-card-head">
+              <span class="app-card-name">Prompt Engines</span>
+              <span class="app-card-tag">Platform</span>
+            </div>
+            <div class="app-card-commits">
+              <div class="commit-line"><span class="commit-time">today</span><span class="commit-msg">Replace fake telemetry with real GitHub commit data</span></div>
+              <div class="commit-line"><span class="commit-time">today</span><span class="commit-msg">Add GitHub Action to auto-regenerate activity feed every ...</span></div>
+              <div class="commit-line"><span class="commit-time">today</span><span class="commit-msg">Add product launcher buttons, GitHub activity feed, and r...</span></div>
+            </div>
           </a>
-          <a class="activity-card" href="https://github.com/aikaizen/promptengines-main/commit/1c878611409969a18a90bf093d64c680d8dc9293" target="_blank" rel="noopener noreferrer">
-            <div class="activity-meta"><span>today</span><span>promptengines-main</span></div>
-            <div class="activity-title">Add product launcher buttons, GitHub activity feed, and realtime updates</div>
-            <div class="activity-desc">- Replace hero CTAs with 5 pill-style product buttons (Kaizen,   Storybook Studio, Flow, Lab, Consulting) linking to sub...</div>
+          <a class="app-card" href="https://flow.promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="app-card-head">
+              <span class="app-card-name">Flow</span>
+              <span class="app-card-tag">Education</span>
+            </div>
+            <div class="app-card-commits">
+              <div class="commit-line"><span class="commit-time">today</span><span class="commit-msg">fix: disable agentic nudges and suppress early challenge ...</span></div>
+              <div class="commit-line"><span class="commit-time">today</span><span class="commit-msg">fix: route students to home page so all 20 lessons are vi...</span></div>
+              <div class="commit-line"><span class="commit-time">today</span><span class="commit-msg">feat: improve learning state, teacher settings, and flow ...</span></div>
+            </div>
           </a>
-          <a class="activity-card" href="https://kaizen.promptengines.com" target="_blank" rel="noopener noreferrer">
-            <div class="activity-meta"><span>today</span><span>kaizen</span></div>
-            <div class="activity-title">fix: add missing Battle button to Numbers game mode selector</div>
-            <div class="activity-desc">The Battle button was lost during the game extraction — the old components/NumbersTeacher had an onStartBattle callback,...</div>
+          <a class="app-card" href="https://kaizen.promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="app-card-head">
+              <span class="app-card-name">Kaizen</span>
+              <span class="app-card-tag">Kids</span>
+            </div>
+            <div class="app-card-commits">
+              <div class="commit-line"><span class="commit-time">today</span><span class="commit-msg">fix: add missing Battle button to Numbers game mode selector</span></div>
+              <div class="commit-line"><span class="commit-time">today</span><span class="commit-msg">docs: add v0.8.0 changelog, update README architecture, a...</span></div>
+              <div class="commit-line"><span class="commit-time">today</span><span class="commit-msg">refactor: unified HUD shell + game modularity</span></div>
+            </div>
           </a>
-          <a class="activity-card" href="https://kaizen.promptengines.com" target="_blank" rel="noopener noreferrer">
-            <div class="activity-meta"><span>today</span><span>kaizen</span></div>
-            <div class="activity-title">docs: add v0.8.0 changelog, update README architecture, add HUD shell design doc</div>
-            <div class="activity-desc">- CHANGELOG: v0.8.0 with AppShell, GameHost, ImagineTab, deleted duplicates - README: add game features, update architec...</div>
-          </a>
-          <a class="activity-card" href="https://kaizen.promptengines.com" target="_blank" rel="noopener noreferrer">
-            <div class="activity-meta"><span>today</span><span>kaizen</span></div>
-            <div class="activity-title">refactor: unified HUD shell + game modularity</div>
-            <div class="activity-desc">Create AppShell wrapper that renders SideNav, TabBar, and ProfileBadge once, eliminating duplicate nav chrome from all t...</div>
-          </a>
-          <a class="activity-card" href="https://flow.promptengines.com" target="_blank" rel="noopener noreferrer">
-            <div class="activity-meta"><span>today</span><span>flow</span></div>
-            <div class="activity-title">fix: disable agentic nudges and suppress early challenge cards</div>
-            <div class="activity-desc">- Remove nudge system that injected &quot;mission block&quot; messages every 3 turns - Remove block tracker from drawer (too agent...</div>
+          <a class="app-card" href="https://storybookstudio.promptengines.com" target="_blank" rel="noopener noreferrer">
+            <div class="app-card-head">
+              <span class="app-card-name">Storybook Studio</span>
+              <span class="app-card-tag">Creator Tool</span>
+            </div>
+            <div class="app-card-commits">
+              <div class="commit-line"><span class="commit-time">1 day ago</span><span class="commit-msg">docs: update TODO — mark shipping bugs fixed, add provide...</span></div>
+              <div class="commit-line"><span class="commit-time">1 day ago</span><span class="commit-msg">fix: shipping pipeline bugs + provider toggle for Lulu/Ge...</span></div>
+              <div class="commit-line"><span class="commit-time">3 days ago</span><span class="commit-msg">fix: merge print API into single endpoint to stay within ...</span></div>
+            </div>
           </a>
           <!-- FEED:END -->
         </div>
@@ -1604,11 +1652,12 @@ to claude-code style flows</div>
   <script>
     (function () {
       const rotator = document.getElementById("rotator-value");
-      const values = ["tools", "media", "systems", "experiments"];
+      const values = ["Kaizen", "Storybook Studio", "Flow", "Lab", "Consulting"];
       let idx = 0;
+      let hovered = false;
 
       function tick() {
-        if (!rotator) return;
+        if (!rotator || hovered) return;
         rotator.style.opacity = "0";
         window.setTimeout(function () {
           idx = (idx + 1) % values.length;
@@ -1618,6 +1667,21 @@ to claude-code style flows</div>
       }
 
       window.setInterval(tick, 2100);
+
+      document.querySelectorAll(".btn-product[data-track]").forEach(function (btn) {
+        btn.addEventListener("mouseenter", function () {
+          hovered = true;
+          if (!rotator) return;
+          rotator.style.opacity = "0";
+          window.setTimeout(function () {
+            rotator.textContent = btn.dataset.track;
+            rotator.style.opacity = "1";
+          }, 120);
+        });
+        btn.addEventListener("mouseleave", function () {
+          hovered = false;
+        });
+      });
 
       const updatedEl = document.getElementById("last-updated");
       if (updatedEl) {
@@ -1681,12 +1745,12 @@ to claude-code style flows</div>
       const terminal = document.getElementById("terminal-log");
       // STREAM:START
       const stream = [
+        "[21:39] kaizen: refactor: unified HUD shell + game modularity",
         "[21:15] flow: fix: disable agentic nudges and suppress early ...",
         "[19:55] flow: fix: route students to home page so all 20 less...",
         "[19:26] flow: feat: improve learning state, teacher settings,...",
         "[16:48] kaizen: fix: add missing game data files, fix .gitignor...",
-        "[16:40] kaizen: docs: add v0.7.0 changelog — MathBattle, video ...",
-        "[16:31] flow: feat: restructure pre-K curriculum to 5 plans w..."
+        "[16:40] kaizen: docs: add v0.7.0 changelog — MathBattle, video ..."
       ];
       // STREAM:END
 

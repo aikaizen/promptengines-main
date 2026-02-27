@@ -19,7 +19,7 @@ const { Octokit } = require("@octokit/rest");
 
 const OWNER = "aikaizen";
 const COMMITS_PER_REPO = 5;
-const MAX_CARDS = 6;
+const COMMITS_PER_CARD = 3;
 const BODY_MAX_LENGTH = 120;
 
 const TARGET_FILES = [
@@ -34,11 +34,19 @@ const TARGET_FILES = [
 
 const PRODUCT_URLS = {
   kaizen: "https://kaizen.promptengines.com",
-  "storybook-studio": "https://storybookstudio.promptengines.com",
+  storybookstudio: "https://storybookstudio.promptengines.com",
   flow: "https://flow.promptengines.com",
   consulting: "https://consulting.promptengines.com",
   dashboard: "https://dashboard.promptengines.com",
+  "promptengines-main": "https://promptengines.com",
 };
+
+const FEATURED_APPS = [
+  { repo: "promptengines-main", name: "Prompt Engines", tag: "Platform" },
+  { repo: "flow", name: "Flow", tag: "Education" },
+  { repo: "kaizen", name: "Kaizen", tag: "Kids" },
+  { repo: "storybookstudio", name: "Storybook Studio", tag: "Creator Tool" },
+];
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 
@@ -118,21 +126,24 @@ function buildTerminalLine(commit) {
   return `[${hh}:${mm}] ${commit.repo}: ${shortTitle}`;
 }
 
-/** Build the activity-card anchor HTML for a single commit. */
-function buildCard(commit) {
-  const url = PRODUCT_URLS[commit.repo] || commit.htmlUrl;
-  const time = relativeTime(commit.date);
+/** Build a grouped app card with recent commits as sub-lines. */
+function buildAppCard(app, commits) {
+  const url = PRODUCT_URLS[app.repo] || `https://github.com/aikaizen/${app.repo}`;
+  const commitLines = commits.slice(0, COMMITS_PER_CARD).map(function (c) {
+    const time = relativeTime(c.date);
+    const msg = c.title.length > 60 ? c.title.slice(0, 57) + "..." : c.title;
+    return `              <div class="commit-line"><span class="commit-time">${escapeHtml(time)}</span><span class="commit-msg">${escapeHtml(msg)}</span></div>`;
+  }).join("\n");
 
-  let html = "";
-  html += `          <a class="activity-card" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">\n`;
-  html += `            <div class="activity-meta"><span>${escapeHtml(time)}</span><span>${escapeHtml(commit.repo)}</span></div>\n`;
-  html += `            <div class="activity-title">${escapeHtml(commit.title)}</div>\n`;
-  if (commit.body) {
-    html += `            <div class="activity-desc">${escapeHtml(commit.body)}</div>\n`;
-  }
-  html += `          </a>`;
-
-  return html;
+  return `          <a class="app-card" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">
+            <div class="app-card-head">
+              <span class="app-card-name">${escapeHtml(app.name)}</span>
+              <span class="app-card-tag">${escapeHtml(app.tag)}</span>
+            </div>
+            <div class="app-card-commits">
+${commitLines}
+            </div>
+          </a>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -200,16 +211,26 @@ async function main() {
     process.exit(1);
   }
 
-  // 4. Sort by date descending and take top MAX_CARDS
+  // 4. Sort all commits by date descending
   allCommits.sort((a, b) => new Date(b.date) - new Date(a.date));
-  const topCommits = allCommits.slice(0, MAX_CARDS);
 
-  console.log(`Using top ${topCommits.length} commits for feed.`);
+  // 5. Group commits by repo for featured apps
+  const commitsByRepo = {};
+  for (const c of allCommits) {
+    if (!commitsByRepo[c.repo]) commitsByRepo[c.repo] = [];
+    commitsByRepo[c.repo].push(c);
+  }
 
-  // 5. Build HTML cards
-  const cardsHtml = topCommits.map(buildCard).join("\n");
+  // 6. Build grouped app cards
+  const appCards = FEATURED_APPS
+    .filter((app) => commitsByRepo[app.repo] && commitsByRepo[app.repo].length > 0)
+    .map((app) => buildAppCard(app, commitsByRepo[app.repo]));
 
-  // 6. Build telemetry terminal lines (initial HTML + JS stream array)
+  console.log(`Built ${appCards.length} app cards.`);
+
+  const cardsHtml = appCards.join("\n");
+
+  // 7. Build telemetry terminal lines (initial HTML + JS stream array)
   const telemetryCommits = allCommits.slice(0, 5);
   const streamCommits = allCommits.slice(5, 11);
 
@@ -263,7 +284,7 @@ async function main() {
     console.log(`  Updated: ${file}`);
   }
 
-  console.log(`\nDone. Injected ${topCommits.length} activity cards + telemetry from real commits.`);
+  console.log(`\nDone. Injected ${appCards.length} app cards + telemetry from real commits.`);
 }
 
 main().catch((err) => {
