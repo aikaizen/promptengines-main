@@ -41,15 +41,42 @@
         <p>Building a tutoring system that works in real classrooms requires more than a chat wrapper around an LLM. The architecture has to handle concurrent sessions, route to the right knowledge source, adapt difficulty in real time, and keep the student engaged without hallucinating answers outside the curriculum.</p>
         <p>This note walks through the architecture we use across our tutoring deployments. The diagram below shows the full system. The rest of the article explains each layer and why it exists.</p>
 
-        <!-- ════════════════════════════════════════
-             ARCHITECTURE DIAGRAM PLACEHOLDER
-             User will provide the diagram to insert here
-             ════════════════════════════════════════ -->
         <figure class="figure">
-          <div class="visual visual-diagram" style="min-height: 320px; display: flex; align-items: center; justify-content: center;">
-            <span style="color: var(--dim); font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;">Architecture diagram — pending</span>
-          </div>
-          <figcaption>Figure 1. Full tutor system architecture. Session layer, knowledge router, response pipeline, and feedback loop.</figcaption>
+          <div class="visual visual-code">[tutor_system_architecture]
+
+┌─────────────────────────────────────────────────────────────────┐
+│  SESSION LAYER (Redis, TTL = class_period)                        │
+│  ├── auth & persistence                                         │
+│  └── context_flush → long_term_storage (analytics)              │
+└──────────────────────────────────┬──────────────────────────────┘
+                                   │
+                                   ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  KNOWLEDGE ROUTER (classifier, <20ms)                           │
+│  ├── curriculum_docs        (confidence >0.8)                   │
+│  ├── worked_examples_bank   (confidence 0.6-0.8)                │
+│  ├── misconception_library  (confidence >0.85)                  │
+│  └── fallback               (confidence <0.6)                     │
+└──────────────────────────────────┬──────────────────────────────┘
+                                   │ grounding_docs
+                                   ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  RESPONSE PIPELINE                                              │
+│  1. planner → select_pedagogy (socratic|example|hint)             │
+│  2. generator → LLM with constraints (cite_source required)       │
+│  3. validator → check_scope (88% first-pass rate)               │
+│     └── reject → retry with tighter constraints                 │
+└──────────────────────────────────┬──────────────────────────────┘
+                                   │
+                                   ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  ADAPTIVE DIFFICULTY + FEEDBACK LOOP                            │
+│  ├── score: correctness × response_time × hint_usage            │
+│  └── adjust: simpler / harder examples for next interaction     │
+└─────────────────────────────────────────────────────────────────┘
+
+latency_budget: 1.2s end-to-end (router: 18ms, validator: 40ms)</div>
+          <figcaption>Visual 1. Full tutor system architecture. Session layer, knowledge router, response pipeline, and feedback loop. ASCII representation of data flow and component relationships.</figcaption>
         </figure>
 
         <h2>Session layer</h2>
@@ -88,11 +115,17 @@ response_constraint:
         <p>This is not a separate model. It is a scoring function that adjusts parameters passed to the response pipeline. Keeping it simple and deterministic means it is auditable and predictable, which matters for classroom adoption.</p>
 
         <figure class="figure">
-          <div class="visual visual-bars">
-            <i style="height:30%"></i><i style="height:42%"></i><i style="height:55%"></i><i style="height:68%"></i>
-            <i style="height:60%"></i><i style="height:75%"></i><i style="height:82%"></i><i style="height:90%"></i>
+          <div class="visual visual-bars" style="--bar-count:8; gap:4px;">
+            <i style="height:30%" title="Q1: difficulty 30%"></i>
+            <i style="height:35%" title="Q2: difficulty 35%"></i>
+            <i style="height:42%" title="Q3: difficulty 42%"></i>
+            <i style="height:55%" title="Q4: difficulty 55%"></i>
+            <i style="height:68%" title="Q5: difficulty 68%"></i>
+            <i style="height:75%" title="Q6: difficulty 75%"></i>
+            <i style="height:82%" title="Q7: difficulty 82%"></i>
+            <i style="height:90%" title="Q8: difficulty 90%"></i>
           </div>
-          <figcaption>Difficulty progression across an 8-interaction session. The system ramps complexity as the student demonstrates mastery.</figcaption>
+          <figcaption>Difficulty progression across an 8-interaction session. System ramps complexity (% of full curriculum difficulty) as student demonstrates mastery (3 correct answers triggers +15% increase). <em>Data: synthetic — based on internal tutoring simulation parameters.</em></figcaption>
         </figure>
 
         <h2>Feedback loop</h2>

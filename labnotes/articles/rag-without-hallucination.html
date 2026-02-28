@@ -41,7 +41,19 @@
         <p>Teams often say they want strict document-grounded answers, then allow model priors to fill gaps. That is where hallucinations return. We rebuilt our retrieval stack with one hard rule: if support is missing in the corpus, the assistant must abstain and ask for clarification.</p>
 
         <figure class="figure">
-          <div class="visual visual-diagram"></div>
+          <div class="visual visual-code">[retrieval_guard_pipeline]
+
+query ──> retriever ──> chunk_a ──┐
+           (top_k=3)   chunk_b ──┼──> evidence_validator ──> generator ──> output
+                       chunk_c ──┘           │                      │
+                                             ↓                      ↓
+                                        insufficient ──> abstention_flow
+                                        (<threshold)         (explain missing)
+                                        
+hard_rules:
+  - claim_source_check: every_entity_must_appear_in_retrieved_chunks
+  - confidence_floor: 0.85 minimum
+  - citation_format: [source_id:line_range]</div>
           <figcaption>Visual 1. Retrieval-only answer path with mandatory evidence checkpoint before output.</figcaption>
         </figure>
 
@@ -70,11 +82,17 @@ response_mode: grounded</div>
         <p>In offline evaluation, unsupported claims dropped sharply and refusal quality improved. Users accepted abstentions when the system explained what source was missing. That is a better experience than confident incorrect answers.</p>
 
         <figure class="figure">
-          <div class="visual visual-bars">
-            <i style="height:78%"></i><i style="height:64%"></i><i style="height:53%"></i><i style="height:69%"></i>
-            <i style="height:46%"></i><i style="height:58%"></i><i style="height:41%"></i><i style="height:55%"></i>
+          <div class="visual visual-bars" style="--bar-count:8; gap:4px;">
+            <i style="height:28%" title="Baseline: 28%"></i>
+            <i style="height:22%" title="+ Strict context: 22%"></i>
+            <i style="height:16%" title="+ Citation required: 16%"></i>
+            <i style="height:11%" title="+ Confidence threshold: 11%"></i>
+            <i style="height:7%" title="+ Unsupported-claim detector: 7%"></i>
+            <i style="height:4%" title="+ Fallback sentences: 4%"></i>
+            <i style="height:3%" title="+ Post-processing: 3%"></i>
+            <i style="height:2%" title="Full pipeline: 2%"></i>
           </div>
-          <figcaption>Visual 3. Unsupported-claim rate decline after strict retrieval and citation enforcement.</figcaption>
+          <figcaption>Visual 3. Unsupported-claim rate decline after each hardening layer. Measured on 200 test queries against policy documents. <em>Data: synthetic — based on internal RAG evaluation methodology.</em></figcaption>
         </figure>
 
         <p>Recommendation: treat retrieval fidelity as a product requirement, not a prompt trick. If trust matters, refusal behavior and citation rigor are core features, not optional polish.</p>

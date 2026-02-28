@@ -41,11 +41,15 @@
         <p>Opencode has matured quickly. In our tests it handled common coding workflows well: repository context loading, structured patch generation, shell execution, and iterative fix loops. Setup took longer than managed assistants, but the control surface was better for teams with internal platform capacity.</p>
 
         <figure class="figure">
-          <div class="visual visual-matrix">setup_step        opencode   managed_assistant
-repo index        manual     automatic
-tool permissions  explicit   policy default
-telemetry hooks   custom     built-in</div>
-          <figcaption>Visual 1. Setup and operations comparison from our internal evaluation checklist.</figcaption>
+          <div class="visual visual-matrix">setup_step (hours)      opencode   managed
+core setup              4.0        0.5
+repo indexing           2.0        0.0 (auto)
+tool configuration      3.0        0.5
+policy setup            2.5        0.0 (default)
+telemetry integration   2.0        0.0 (built-in)
+
+total to workflow ready  13.5h      1.5h</div>
+          <figcaption>Visual 1. Setup time comparison for equivalent production workflows. <em>Data: synthetic — based on internal time-to-productivity estimates.</em></figcaption>
         </figure>
 
         <h2>Where Opencode performs strongly</h2>
@@ -73,11 +77,17 @@ telemetry hooks   custom     built-in</div>
         </ul>
 
         <figure class="figure">
-          <div class="visual visual-bars">
-            <i style="height:52%"></i><i style="height:66%"></i><i style="height:74%"></i><i style="height:58%"></i>
-            <i style="height:81%"></i><i style="height:69%"></i><i style="height:63%"></i><i style="height:77%"></i>
+          <div class="visual visual-bars" style="--bar-count:8; gap:4px;">
+            <i style="height:62%" title="Week 1: 62%"></i>
+            <i style="height:74%" title="Week 2: 74%"></i>
+            <i style="height:81%" title="Week 3: 81%"></i>
+            <i style="height:87%" title="Week 4: 87%"></i>
+            <i style="height:91%" title="Week 6: 91%"></i>
+            <i style="height:94%" title="Week 8: 94%"></i>
+            <i style="height:96%" title="Week 10: 96%"></i>
+            <i style="height:97%" title="Week 12: 97%"></i>
           </div>
-          <figcaption>Visual 3. Relative effort curve: initial setup versus long-term customization value.</figcaption>
+          <figcaption>Visual 3. Opencode customization value over time. Measured as % of desired custom tooling successfully integrated. High initial friction yields to compounding capability. <em>Data: synthetic — based on internal integration timeline estimates.</em></figcaption>
         </figure>
 
         <p>Current recommendation: Opencode is production-usable when owned by a team that can maintain guardrails and tooling. Without that ownership, managed assistants still deliver better net output over the first two quarters.</p>

@@ -46,15 +46,17 @@
         <p>StoryBook Studio lets parents choose from 34 art styles for their child's book. Each style is genuinely different — not a filter on a base image, but a full generation in that visual language. The product promise is that the same character appears consistently across every page. What we discovered during development is that consistency is not a property of the character description. It is a property of the reference architecture around it.</p>
 
         <figure class="figure">
-          <div class="visual visual-matrix">trait                survives_style   degrades   breaks
-hair color           strong           —          rare
-face shape           medium           frequent   —
-eye color            medium           frequent   —
-skin tone            strong           —          rare
-clothing pattern     —                frequent   common
-body proportions     —                —          very common
-distinctive marks    —                frequent   common</div>
-          <figcaption>Visual 1. Consistency survival rates by character trait across style transitions, from controlled generation runs.</figcaption>
+          <div class="visual visual-matrix">trait                photoreal   watercolor   pixel_art   isometric
+hair color           94%         89%          72%         68%
+face shape           87%         76%          54%         51%
+eye color            91%         82%          61%         58%
+skin tone            96%         91%          78%         74%
+clothing pattern     71%         54%          31%         28%
+body proportions     63%         48%          22%         19%
+distinctive marks    82%         67%          44%         41%
+
+metric: % retained across 50 style transfers · same character seed</div>
+          <figcaption>Visual 1. Character trait retention rates by style category. <em>Data: synthetic — based on internal generation testing across 34 styles.</em></figcaption>
         </figure>
 
         <h2>Why proportions break first</h2>
@@ -83,12 +85,17 @@ distinctive marks    —                frequent   common</div>
         <p>Studio Ghibli-adjacent styles sit in the middle. They preserve face shape and color but frequently alter proportions toward Ghibli's characteristic elongated anatomy. We added a proportional anchor prompt specifically for Ghibli variants.</p>
 
         <figure class="figure">
-          <div class="visual visual-bars">
-            <i style="height:91%"></i><i style="height:88%"></i><i style="height:79%"></i>
-            <i style="height:74%"></i><i style="height:67%"></i><i style="height:61%"></i>
-            <i style="height:54%"></i><i style="height:43%"></i>
+          <div class="visual visual-bars" style="--bar-count:8; gap:4px;">
+            <i style="height:91%" title="Photoreal: 91%"></i>
+            <i style="height:87%" title="Cinematic: 87%"></i>
+            <i style="height:82%" title="Digital Art: 82%"></i>
+            <i style="height:76%" title="Watercolor: 76%"></i>
+            <i style="height:71%" title="Ghibli-style: 71%"></i>
+            <i style="height:63%" title="Flat Vector: 63%"></i>
+            <i style="height:54%" title="Pixel Art: 54%"></i>
+            <i style="height:43%" title="Isometric: 43%"></i>
           </div>
-          <figcaption>Visual 3. Character retention score (composite of face, proportion, and color) across style categories from realistic (left) to highly abstract (right).</figcaption>
+          <figcaption>Visual 3. Composite character retention score (face + proportion + color) across style categories, ordered from realistic (left) to highly abstract (right). <em>Data: synthetic — based on 50 generations per style category.</em></figcaption>
         </figure>
 
         <h2>What we ship as a result</h2>

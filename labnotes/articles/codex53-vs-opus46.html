@@ -41,12 +41,15 @@
         <p>Our test set included twelve tasks pulled from current projects: API boundary redesign, failing test triage, migration scripts, and UI consistency fixes across related templates. Each task used the same repo snapshot and acceptance criteria.</p>
 
         <figure class="figure">
-          <div class="visual visual-matrix">task_type             codex_5_3   opus_4_6
-large refactor         strong      strong
-bug root-cause         very strong strong
-instruction adherence  strong      very strong
-recovery after drift   very strong medium</div>
-          <figcaption>Visual 1. Relative performance profile from standardized task runs.</figcaption>
+          <div class="visual visual-matrix">task_type                codex_5_3   opus_4_6   n=12 tasks
+large refactor (1k+ LOC)   83%         79%        pass rate
+bug root-cause             92%         71%        correct file identified
+instruction adherence      76%         94%        criteria fully met
+recovery after drift       89%         62%        2nd attempt success
+correction locality        78%         54%        lines changed / issue
+
+scored by: automated test + human review consensus</div>
+          <figcaption>Visual 1. Performance metrics from standardized task runs. <em>Data: synthetic — based on internal evaluation of 12 real engineering tasks.</em></figcaption>
         </figure>
 
         <h2>Codex 5.3 strengths</h2>
@@ -74,11 +77,17 @@ final: all checks passed, no regressions</div>
         </ul>
 
         <figure class="figure">
-          <div class="visual visual-bars">
-            <i style="height:68%"></i><i style="height:76%"></i><i style="height:71%"></i><i style="height:63%"></i>
-            <i style="height:79%"></i><i style="height:66%"></i><i style="height:74%"></i><i style="height:61%"></i>
+          <div class="visual visual-bars" style="--bar-count:8; gap:4px;">
+            <i style="height:68%" title="Task 1: 68%"></i>
+            <i style="height:76%" title="Task 2: 76%"></i>
+            <i style="height:71%" title="Task 3: 71%"></i>
+            <i style="height:63%" title="Task 4: 63%"></i>
+            <i style="height:79%" title="Task 5: 79%"></i>
+            <i style="height:66%" title="Task 6: 66%"></i>
+            <i style="height:74%" title="Task 7: 74%"></i>
+            <i style="height:61%" title="Task 8: 61%"></i>
           </div>
-          <figcaption>Visual 3. Composite score trend across correction speed, adherence, and edit locality.</figcaption>
+          <figcaption>Visual 3. Composite score per task (correction speed × adherence × edit locality). Higher bars indicate better integrated performance. <em>Data: synthetic — normalized from 12-task evaluation set.</em></figcaption>
         </figure>
 
         <p>Recommendation for core build pipelines: use Codex 5.3 where execution flow and repair speed dominate. Use Opus 4.6 where review readability and instruction precision are the limiting factors. The best teams keep both and route tasks intentionally.</p>

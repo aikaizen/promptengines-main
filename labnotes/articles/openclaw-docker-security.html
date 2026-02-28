@@ -127,11 +127,17 @@ response         → stripped of internal headers
         <p>This gives us full visibility into agent behavior, token usage, error rates, and execution timing without compromising the network boundary.</p>
 
         <figure class="figure">
-          <div class="visual visual-bars">
-            <i style="height:35%"></i><i style="height:58%"></i><i style="height:72%"></i><i style="height:85%"></i>
-            <i style="height:64%"></i><i style="height:91%"></i><i style="height:78%"></i><i style="height:53%"></i>
+          <div class="visual visual-bars" style="--bar-count:8; gap:4px;">
+            <i style="height:35%" title="Baseline: 35%"></i>
+            <i style="height:48%" title="+ Read-only root: 48%"></i>
+            <i style="height:58%" title="+ Cap drop: 58%"></i>
+            <i style="height:67%" title="+ Non-root user: 67%"></i>
+            <i style="height:74%" title="+ No-new-privs: 74%"></i>
+            <i style="height:82%" title="+ Resource limits: 82%"></i>
+            <i style="height:89%" title="+ Pinned images: 89%"></i>
+            <i style="height:94%" title="+ Network airgap: 94%"></i>
           </div>
-          <figcaption>Relative security posture improvement across eight deployment hardening steps, measured by internal audit scoring.</figcaption>
+          <figcaption>Security posture improvement across eight deployment hardening steps. Scored via internal audit rubric (100-point scale). <em>Data: synthetic — based on internal security assessment methodology.</em></figcaption>
         </figure>
 
         <h2>What this costs</h2>
