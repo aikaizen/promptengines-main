@@ -132,6 +132,8 @@ body::after {
 /* ── Nav dropdown ── */
 .nav-dropdown {
   position: relative;
+  display: inline-flex;
+  align-items: baseline;
 }
 
 .nav-dropdown > span {
