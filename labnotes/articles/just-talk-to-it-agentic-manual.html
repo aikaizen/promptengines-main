@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>"Just Talk To It" — An Early Manual for Agentic Engineering That Still Holds — Prompt Engines Lab Notes</title>
+  <meta name="description" content="Peter Steinberger's 2026 post on agentic engineering workflow is one of the clearest operational documents the field has produced. We annotate it against current practice with OpenClaw and Codex." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../index.html">Lab</a>
+        <div class="nav-dropdown">
+          <span>Sections</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row">
+        <span>Feb 28, 2026</span>
+        <span>9 min read</span>
+        <span>Agents</span>
+      </div>
+      <h1>"Just Talk To It" — an early manual for agentic engineering that still holds</h1>
+      <p class="dek">Peter Steinberger's post on agentic workflow is one of the clearest operational documents the field has produced. Written in 2026 at the inflection point between agentic experimentation and agentic production, most of it applies directly to working with OpenClaw today.</p>
+
+      <article class="content">
+
+        <p>Some posts arrive at exactly the right moment. <a href="https://steipete.me/posts/just-talk-to-it" target="_blank" rel="noopener noreferrer">Just Talk To It</a> by Peter Steinberger landed when the field was still arguing about whether agentic coding was real or hype. Steinberger was already running 3–8 parallel agents in a terminal grid on a 300k LOC TypeScript codebase and writing about what actually works. This is that document annotated against current practice — specifically with OpenClaw as the harness and the multi-agent workflows we run at PromptEngines.</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">principle                          steipete_2026     openclaw_2026
+blast radius thinking              ✓ core concept    ✓ maps to task scoping
+atomic commits per agent           ✓ enforced        ✓ enforced (TOOLS.md)
+parallel agents, same folder       ✓ preferred       ✓ via session spawning
+just talk, skip plan files         ✓ with codex      ~ depends on model
+screenshot context                 ✓ 50% of prompts  ✓ vision tool available
+stop freely, pick up mid-task      ✓ recommended     ✓ session continuity</div>
+          <figcaption>Visual 1. Steipete's principles mapped against current OpenClaw practice. Most transfer directly.</figcaption>
+        </figure>
+
+        <h2>Blast radius: the most useful mental model in the post</h2>
+        <p>Steinberger introduced the term "blast radius" to describe the scope of a change before you commit to it. Small blast radius: touches 2–3 files, reversible in minutes. Large blast radius: crosses module boundaries, requires migrations, hard to untangle if wrong. His rule is to run many small blasts in parallel rather than one fat one serially.</p>
+        <p>This is not just a git hygiene tip. It is a fundamental reorientation of how to think about delegating work to an agent. The question is not "can this agent do this task?" — it almost certainly can. The question is "what's the worst case if it does it wrong, and how quickly can I recover?" Small blast radius means fast recovery. That changes which tasks you delegate freely versus which ones you supervise closely.</p>
+        <p>In OpenClaw terms: scope your tasks before spawning subagents. One logical change per session. Commit before starting anything adjacent. This is why atomic commits are non-negotiable — they are the mechanism that keeps blast radius contained after the fact.</p>
+
+        <figure class="figure">
+          <div class="visual visual-code">blast_radius_assessment:
+  small (delegate freely):
+    - single file refactor
+    - add a field to a schema
+    - write a new utility function
+    - fix a specific named bug
+    - add tests for an existing feature
+
+  large (supervise or split):
+    - change a shared interface
+    - migrate a database schema
+    - restructure a folder/module
+    - update a core auth flow
+    - anything touching >5 files</div>
+          <figcaption>Visual 2. Blast radius classification applied to common development tasks. Large tasks should be split before delegation.</figcaption>
+        </figure>
+
+        <h2>Stop freely. Pick up mid-task.</h2>
+        <p>One of the most practically valuable points in the post: "Don't be afraid of stopping models mid-way, file changes are atomic and they are really good at picking up where they stopped." This was counterintuitive to many engineers in 2025 who treated agent runs as precious, all-or-nothing processes. Steinberger's point is that the model's ability to resume from partial state is a feature you should use, not a failure mode to avoid.</p>
+        <p>The interrupt-and-query pattern — stopping the agent mid-run to ask "what's the status" before deciding whether to continue, redirect, or abort — is now a standard technique in OpenClaw workflows. Sessions carry context. You can steer mid-flight. The skill is recognizing when something is drifting versus when it's just slow.</p>
+
+        <h2>Skip the elaborate plan files</h2>
+        <p>Steinberger's sharpest take: "I rarely use big plan files now with codex... I can just write 'let's discuss' or 'give me options' and it will diligently wait until I approve it. No harness charade needed. Just talk to it."</p>
+        <p>This deserves careful reading. He is not saying planning is useless. He is saying that elaborate scaffolding documents — agent personas, multi-step prompt chains, structured reasoning templates — are often compensating for model weakness rather than adding genuine value. When the model is good enough at reading a codebase and inferring intent, the overhead of maintaining a complex system prompt exceeds its benefit.</p>
+        <p>The implication for OpenClaw: SOUL.md and AGENTS.md are useful. A 400-line SYSTEM.md that tries to pre-specify every possible situation is probably context poison. Write the minimum that actually changes behavior. Prove it before adding more.</p>
+
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:82%"></i><i style="height:71%"></i><i style="height:58%"></i>
+            <i style="height:43%"></i><i style="height:31%"></i><i style="height:19%"></i>
+          </div>
+          <figcaption>Visual 3. Schematic: diminishing returns of context document length on output quality. Past a threshold, additional instructions reduce coherence rather than increase it.</figcaption>
+        </figure>
+
+        <h2>Where the post shows its age</h2>
+        <p>The post was written in the Codex vs Claude Code era, and some of the harness-specific opinions are already dated. Steinberger's preference for Codex over Claude Code is partly about 2026-era Claude Code's verbosity and compaction behavior — both of which OpenClaw and current Claude builds have improved significantly. The underlying point about model language and cognitive overhead remains valid even if the specific model preferences have shifted.</p>
+        <p>His skepticism about third-party harnesses ("I don't see them surviving long-term") has partially played out, but OpenClaw occupies a different position than the harnesses he was evaluating — it is an always-on local agent, not a code-generation wrapper. The category distinction matters.</p>
+        <p>The subagent critique — that spinning off subagents reduces visibility and control compared to separate terminal panes — is a real tradeoff that OpenClaw acknowledges. The solution is not avoiding subagents but building good observability into how you spawn and monitor them. Steinberger's instinct for control is correct; the mechanism he prefers is a style choice, not a technical requirement.</p>
+
+        <h2>What this post is</h2>
+        <p>It is a practitioner's manual written at an inflection point, when the question shifted from "does agentic coding work?" to "how do you actually run it at scale?" The answers Steinberger gives are grounded, specific, and honest about tradeoffs. That is rare in a field that defaults to either breathless promotion or reflexive skepticism.</p>
+        <p>Read it. Then read it again when you find yourself building elaborate scaffolding that your agents seem to ignore. The title is the thesis: just talk to it. The rest is operational detail about what that actually requires.</p>
+
+        <p>Original post: <a href="https://steipete.me/posts/just-talk-to-it" target="_blank" rel="noopener noreferrer">steipete.me/posts/just-talk-to-it</a> — Peter Steinberger, 2026.</p>
+
+      </article>
+
+      <nav class="article-nav">
+        <a href="./character-consistency-34-styles.html">← Previous note</a>
+        <a href="../index.html">Lab home →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+</body>
+</html>
