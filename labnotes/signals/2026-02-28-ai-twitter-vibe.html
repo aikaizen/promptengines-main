@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Twitter vibe: Feb 28, 2026 — Prompt Engines Lab Notes</title>
+  <meta name="description" content="Sentiment snapshot of AI discourse on X this week. What builders are shipping, debating, and quietly abandoning." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../index.html">All Notes</a>
+        <a href="../signals/">Signals</a>
+        <a href="../build-stream/">Build Stream</a>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row">
+        <span>Feb 28, 2026</span>
+        <span>5 min read</span>
+        <span>Signals</span>
+      </div>
+      <h1>AI Twitter vibe check: week of Feb 28, 2026</h1>
+      <p class="dek">Sentiment snapshot of AI discourse on X this week. What builders are shipping, debating, and quietly abandoning.</p>
+
+      <article class="content">
+
+        <p>Weekly read of high-signal AI builder discourse on X. Not a news summary — a vibe check. What's the room feeling, what's getting retweeted, what's being quietly walked back.</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">topic                      sentiment   volume   trend
+agent frameworks           positive    high     ↑ rising
+coding assistants          mixed       very high → stable
+context windows (long)     skeptical   medium   ↓ fading
+reasoning models           positive    high     ↑ rising
+AI-generated content       polarized   high     → stable
+local/self-hosted models   positive    medium   ↑ rising
+AI in education            positive    low      ↑ rising</div>
+          <figcaption>Visual 1. Topic sentiment across AI builder discourse on X, week of Feb 28 2026.</figcaption>
+        </figure>
+
+        <h2>What's loud this week</h2>
+        <p>Coding assistants are still the dominant topic by volume but the conversation has shifted. The "is it actually useful" debate has largely resolved in favor of yes — the new fight is about which one and for what task. Codex vs Claude Code vs OpenCode is a weekly recurring event at this point, with increasingly granular task-specific benchmarks replacing the broad "which is smarter" takes that dominated Q4 2025.</p>
+        <p>Agent frameworks are having a genuine moment. Not the hype cycle from 18 months ago — more grounded, more production-focused. People are shipping agents and talking about what broke in the first week of real use rather than what the demo looked like.</p>
+
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:91%"></i><i style="height:87%"></i><i style="height:73%"></i>
+            <i style="height:68%"></i><i style="height:54%"></i><i style="height:47%"></i>
+            <i style="height:38%"></i>
+          </div>
+          <figcaption>Visual 2. Relative discourse volume by topic: coding assistants, agents, reasoning models, context, local models, education, prediction markets.</figcaption>
+        </figure>
+
+        <h2>What's getting quieter</h2>
+        <p>Long-context hype is deflating. The dream that 1M token windows would solve retrieval has run into the reality that most models degrade past 100K in useful ways, and that structured retrieval is still cheaper and more reliable for most production workloads. The RAG-is-dead crowd has largely gone quiet.</p>
+        <p>General "AGI is coming" posts are also down in engagement. Not gone — but the audience has moved on to more specific conversations. Builder Twitter has less patience for it than it did six months ago.</p>
+
+        <h2>Signal worth watching</h2>
+        <p>Education AI is a low-volume topic that's showing consistent week-over-week growth in quality of discourse. Not teachers complaining — builders shipping. Tutoring systems, personalized curriculum, adaptive assessment. The market is moving but hasn't shown up in mainstream AI coverage yet. That gap usually closes fast.</p>
+
+        <figure class="figure">
+          <div class="visual visual-code">weekly_shift:
+  gaining_mindshare:
+    - agent observability tooling
+    - AI-native children's apps
+    - prediction market interfaces
+    - local model fine-tuning workflows
+  
+  losing_mindshare:
+    - long context as RAG replacement
+    - AGI timelines discourse
+    - no-code AI builder platforms
+    - AI art copyright debate</div>
+          <figcaption>Visual 3. Mindshare movement in AI builder discourse, week-over-week directional read.</figcaption>
+        </figure>
+
+        <p>Next signal check publishes Friday. If you want to flag something worth including, the repo is open.</p>
+
+      </article>
+
+      <nav class="article-nav">
+        <a href="../index.html">← All notes</a>
+        <a href="../signals/">More signals →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+</body>
+</html>
