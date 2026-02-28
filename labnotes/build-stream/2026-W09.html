@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build Stream: Week 9, 2026 — Prompt Engines Lab Notes</title>
+  <meta name="description" content="What we shipped, what we broke, and what we're exploring. Auto-generated from commit data across all PromptEngines repos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../index.html">All Notes</a>
+        <a href="../signals/">Signals</a>
+        <a href="../build-stream/" class="active">Build Stream</a>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row">
+        <span>Feb 28, 2026</span>
+        <span>6 min read</span>
+        <span>Build Stream</span>
+      </div>
+      <h1>Build Stream: Week 9, 2026</h1>
+      <p class="dek">Auto-generated from commit data across all PromptEngines repos. What shipped, what broke, what patterns emerged. Raw build intelligence, published weekly.</p>
+
+      <article class="content">
+
+        <p>Week 9 was the most active commit week since the lab launched. Five repos moved simultaneously. The dominant themes: print pipeline hardening in StoryBook Studio, a full architectural refactor in Kaizen, and the PromptEngines.com homepage shifting from static to live data. Here is what the commits say.</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">repo                  commits  dominant_type    hottest_area
+promptengines-main    11       feat/refactor    homepage + lab
+storybookstudio       18       feat/fix         print pipeline
+kaizen                9        refactor/feat    AppShell + games
+flow                  7        fix/feat         tutor UX
+bible                 4        feat             social features
+transcriber           1        feat             UI + models</div>
+          <figcaption>Visual 1. Commit volume and activity profile by repo, week of Feb 23–28 2026.</figcaption>
+        </figure>
+
+        <h2>What moved fastest</h2>
+        <p>StoryBook Studio had the highest commit velocity at 18 commits — almost all in the print pipeline. The Lulu integration went from scaffold to production-ready: spine width calculation, separate cover and interior PDF generation, Stripe webhook hardening, and a Lulu/Gelato provider toggle. That is a complete production feature shipped in under a week.</p>
+        <p>The promptengines-main repo had the highest concept breadth. In 11 commits it moved from a static site to a live-data homepage, introduced a 6-theme design system, launched Lab Notes, and published 7 articles. The ratio of structural change to total commits is unusually high — this repo is in rapid identity formation.</p>
+
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:61%"></i><i style="height:100%"></i><i style="height:50%"></i>
+            <i style="height:39%"></i><i style="height:22%"></i><i style="height:6%"></i>
+          </div>
+          <figcaption>Visual 2. Relative commit volume by repo: promptengines-main, storybookstudio, kaizen, flow, bible, transcriber.</figcaption>
+        </figure>
+
+        <h2>New tech introduced this week</h2>
+        <p>Three concepts appeared in commits for the first time across the ecosystem. Spine width calculation via lookup table (Kaizen + StoryBook) — a physical printing constraint bleeding into software design. Game module registries with lazy loading — Kaizen's AppShell refactor introduced a pattern that will likely propagate to other tabs. And live GitHub Action feed generation — promptengines-main now auto-regenerates its activity feed on a cron schedule, committing back to itself.</p>
+
+        <figure class="figure">
+          <div class="visual visual-code">new_concepts_week_9:
+  spine_width_lookup_table:
+    first_seen: storybookstudio
+    propagated_to: — (watch kaizen)
+  
+  game_module_registry:
+    first_seen: kaizen
+    pattern: lazy-load from registry, one file per game
+  
+  self-committing_github_action:
+    first_seen: promptengines-main
+    pattern: cron → generate → commit if changed
+  
+  provider_capability_matrix:
+    first_seen: storybookstudio
+    pattern: 218 checks, drives UI and API routing</div>
+          <figcaption>Visual 3. Net-new technical concepts introduced across repos, week 9.</figcaption>
+        </figure>
+
+        <h2>AI co-authorship rate</h2>
+        <p>49 of 50 commits across all repos were co-authored by Claude Opus 4.6. That is 98%. This is not notable for its novelty — it has been true for weeks. What is notable is the range of task types: print pipeline math, CSS design systems, database migrations, GitHub Actions YAML, and UX copy all appeared in the same week. The model is not being used as a code generator. It is being used as a co-builder with domain context carried across sessions.</p>
+
+        <h2>What to watch next week</h2>
+        <p>Kaizen's AppShell refactor opened a clean game module system. Expect new games to start appearing — the scaffolding cost is now near zero. StoryBook Studio's Gelato integration is stubbed as "coming soon" — that toggle is either going to fill in or get removed. Flow's lesson routing fix suggests the core tutoring loop is stable enough to start adding curriculum depth. Watch for new lesson types.</p>
+
+      </article>
+
+      <nav class="article-nav">
+        <a href="./index.html">← All build reports</a>
+        <a href="../index.html">Lab home →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+</body>
+</html>
