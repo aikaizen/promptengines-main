@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skills — Prompt Engines Lab Notes</title>
+  <meta name="description" content="OpenClaw skills built by the PromptEngines team. Free to install. Reviewed and production-tested." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../index.html">All Notes</a>
+        <a href="../signals/">Signals</a>
+        <a href="../build-stream/">Build Stream</a>
+        <a href="../skills/" class="active">Skills</a>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Skills</div>
+          <h1>OpenClaw skills from the PromptEngines lab.</h1>
+          <p class="hero-lead">Skills we built, tested in production, and published. Free to install. Each one has a writeup explaining what it does and why we built it.</p>
+        </div>
+        <aside class="hero-aside">
+          <div class="hero-stat">
+            <span class="hero-stat-number">2</span>
+            <span class="hero-stat-label">Published skills</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-number">Free</span>
+            <span class="hero-stat-label">Always</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Install</h2>
+        </div>
+        <div class="post-card" style="--i:0; margin-bottom: 2rem;">
+          <div class="post-meta"><span class="tag">CLI</span></div>
+          <h3>Install any skill in one command</h3>
+          <div class="visual visual-code" style="margin-top: 1rem;">npx clawhub@latest install &lt;skill-slug&gt;
+
+# or manually: copy skill folder to
+# ~/.openclaw/skills/   (global)
+# &lt;project&gt;/skills/    (workspace)</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Published skills</h2>
+          <span class="section-count">2 skills</span>
+        </div>
+
+        <div class="post-grid stagger">
+          <div class="post-card" style="--i:0">
+            <div class="post-meta">
+              <span class="tag">Content</span>
+              <span>lab-article-writer</span>
+            </div>
+            <h3>Lab Article Writer</h3>
+            <p>Writes and publishes articles for lab.promptengines.com. Enforces the Lab Notes taste profile — dark zinc aesthetic, rigor-with-vibe editorial voice, HTML/CSS charts. Includes article template, publishing workflow, and pre-publish checklist.</p>
+            <div class="visual visual-code" style="margin-top: 1rem; font-size: 0.8rem;">npx clawhub@latest install lab-article-writer</div>
+          </div>
+
+          <div class="post-card" style="--i:1">
+            <div class="post-meta">
+              <span class="tag">Marketing</span>
+              <span>marketing-manager</span>
+            </div>
+            <h3>Marketing Manager</h3>
+            <p>Full-stack marketing management for SaaS and consumer apps. Covers paid ads (Meta, TikTok, Google, Pinterest, X), SEO, email sequences, influencer outreach, in-person events, and launch campaigns. Built for the PromptEngines ecosystem but general enough for any product.</p>
+            <div class="visual visual-code" style="margin-top: 1rem; font-size: 0.8rem;">npx clawhub@latest install marketing-manager</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Coming soon</h2>
+        </div>
+        <div class="archive-list">
+          <div class="archive-item">
+            <div class="archive-meta">In progress · Build Stream</div>
+            <h3>build-stream-generator — auto-generate weekly commit intelligence reports</h3>
+          </div>
+          <div class="archive-item">
+            <div class="archive-meta">In progress · Signals</div>
+            <h3>signal-tracker — monitor X discourse, prediction markets, and price feeds</h3>
+          </div>
+          <div class="archive-item">
+            <div class="archive-meta">Planned · Dev</div>
+            <h3>print-pipeline — manage Lulu/Gelato print-on-demand order flows</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+</body>
+</html>
