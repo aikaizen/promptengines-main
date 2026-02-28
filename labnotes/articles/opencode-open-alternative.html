@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
+<div class="progress-bar" id="progress-bar"></div>
   <header class="topbar">
     <div class="container topbar-inner">
       <a class="brand" href="../index.html">Lab<span>Notes</span></a>
@@ -92,5 +93,18 @@ telemetry hooks   custom     built-in</div>
   <footer class="footer">
     <div class="container">© 2026 Prompt Engines · Lab Notes</div>
   </footer>
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
 </body>
 </html>

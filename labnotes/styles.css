@@ -727,3 +727,19 @@ body::after {
   }
   html { scroll-behavior: auto; }
 }
+
+/* ═══════════════════════════════════════════
+   READING PROGRESS BAR
+   Fixed to top, accent color, smooth fill
+   ═══════════════════════════════════════════ */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: var(--accent);
+  z-index: 200;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px var(--accent-glow);
+}
