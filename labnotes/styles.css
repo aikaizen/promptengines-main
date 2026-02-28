@@ -146,21 +146,32 @@ body::after {
   font-weight: 500;
   transition: color 0.3s var(--ease);
   user-select: none;
+  padding-bottom: 12px;
+  margin-bottom: -12px;
 }
 
 .nav-dropdown > span::after {
   content: " ▾";
   font-size: 9px;
+  transition: transform 0.2s var(--ease);
+  display: inline-block;
+}
+
+.nav-dropdown:hover > span::after,
+.nav-dropdown.is-open > span::after {
+  transform: rotate(180deg);
 }
 
 .nav-dropdown:hover > span,
-.nav-dropdown:focus-within > span { color: var(--text); }
+.nav-dropdown:focus-within > span,
+.nav-dropdown.is-open > span { color: var(--text); }
 
 .nav-dropdown-menu {
   display: none;
   position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
   min-width: 180px;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
@@ -171,11 +182,12 @@ body::after {
 }
 
 .nav-dropdown:hover .nav-dropdown-menu,
-.nav-dropdown:focus-within .nav-dropdown-menu { display: block; }
+.nav-dropdown:focus-within .nav-dropdown-menu,
+.nav-dropdown.is-open .nav-dropdown-menu { display: block; }
 
 .nav-dropdown-menu a {
   display: block;
-  padding: 8px 16px;
+  padding: 10px 16px;
   color: var(--text-3);
   text-decoration: none;
   font-family: var(--mono);
@@ -188,7 +200,7 @@ body::after {
 
 .nav-dropdown-menu a:hover {
   background: var(--accent-dim);
-  color: var(--text);
+  color: var(--accent);
 }
 
 /* ═══════════════════════════════════════════
