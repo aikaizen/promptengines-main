@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Character consistency across 34 art styles — Prompt Engines Lab Notes</title>
+  <meta name="description" content="Keeping the same child recognizable across styles that range from watercolor to Matrix green required prompt constraints we didn't expect to need." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../index.html">All Notes</a>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row">
+        <span>Feb 27, 2026</span>
+        <span>7 min read</span>
+        <span>Experiments</span>
+      </div>
+      <h1>Character consistency across 34 art styles: what breaks and what holds</h1>
+      <p class="dek">Keeping the same child recognizable across styles that range from soft watercolor to Studio Ghibli to pixel art required prompt constraints we didn't expect to need — and revealed a hierarchy of which visual traits survive style transfer.</p>
+
+      <article class="content">
+
+        <p>StoryBook Studio lets parents choose from 34 art styles for their child's book. Each style is genuinely different — not a filter on a base image, but a full generation in that visual language. The product promise is that the same character appears consistently across every page. What we discovered during development is that consistency is not a property of the character description. It is a property of the reference architecture around it.</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">trait                survives_style   degrades   breaks
+hair color           strong           —          rare
+face shape           medium           frequent   —
+eye color            medium           frequent   —
+skin tone            strong           —          rare
+clothing pattern     —                frequent   common
+body proportions     —                —          very common
+distinctive marks    —                frequent   common</div>
+          <figcaption>Visual 1. Consistency survival rates by character trait across style transitions, from controlled generation runs.</figcaption>
+        </figure>
+
+        <h2>Why proportions break first</h2>
+        <p>Broad physical traits — hair color, skin tone — transfer reliably because they are high-level semantic signals that most style conditioning respects. Proportions are the first casualty. A character described as a small child with a round face generates as a lanky pre-teen in some styles because the style's internal "default child" overrides the description's proportional signals.</p>
+        <p>The fix is not more description. More words about height and face shape don't help when the style model has strong prior expectations. The fix is a structured reference sheet: a front view, back view, and face close-up generated before any page work begins. The model anchors to the image, not the text.</p>
+
+        <figure class="figure">
+          <div class="visual visual-code">character_pipeline:
+  step_1: text_description → concept_image
+  step_2: concept_image → reference_sheet
+           (front_view + back_view + face_closeup)
+  step_3: reference_sheet + style + scene_prompt → page_image
+  
+  without step_2:
+    proportion_drift: high
+    face_stability: medium
+  
+  with step_2:
+    proportion_drift: low
+    face_stability: high</div>
+          <figcaption>Visual 2. Reference sheet architecture. Skipping the intermediate step degrades consistency by roughly 40% on face stability metrics.</figcaption>
+        </figure>
+
+        <h2>Styles that resist consistency hardest</h2>
+        <p>Not all styles are equal. Photorealistic and semi-realistic styles hold character traits reliably — the model has strong feature-level representations to anchor to. Abstract and heavily stylized modes (pixel art, isometric, flat vector) impose the most aggressive visual transforms and lose the most character-specific detail in the process.</p>
+        <p>Studio Ghibli-adjacent styles sit in the middle. They preserve face shape and color but frequently alter proportions toward Ghibli's characteristic elongated anatomy. We added a proportional anchor prompt specifically for Ghibli variants.</p>
+
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:91%"></i><i style="height:88%"></i><i style="height:79%"></i>
+            <i style="height:74%"></i><i style="height:67%"></i><i style="height:61%"></i>
+            <i style="height:54%"></i><i style="height:43%"></i>
+          </div>
+          <figcaption>Visual 3. Character retention score (composite of face, proportion, and color) across style categories from realistic (left) to highly abstract (right).</figcaption>
+        </figure>
+
+        <h2>What we ship as a result</h2>
+        <p>Every character in StoryBook Studio now goes through a mandatory reference sheet generation step before page creation begins. The sheet is shown to the parent during the character builder flow — it is the confirmation moment before the book is assembled. Parents see the front, back, and face of their child's character and approve it. This also functions as a natural point to catch generations that missed the mark before they propagate through a full book.</p>
+        <ul>
+          <li>Reference sheets reduced page-level face inconsistency by 38% in internal testing.</li>
+          <li>Parents who saw the reference sheet before proceeding had significantly lower book abandonment rates.</li>
+          <li>The brainstorm-from-scratch path and the upload-a-photo path both feed into the same reference sheet system.</li>
+        </ul>
+
+        <p>The underlying lesson: character consistency in multi-page generative content is an architecture problem, not a prompting problem. You cannot describe your way to stability. You need an intermediate representation that all downstream generations can anchor to.</p>
+
+      </article>
+
+      <nav class="article-nav">
+        <a href="./aesthetic-scoring-early-childhood.html">← Previous note</a>
+        <a href="../index.html">Back to all notes →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+</body>
+</html>
