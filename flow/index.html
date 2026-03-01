@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flow Education</title>
+  <meta http-equiv="refresh" content="0; url=/prototypes/flow-education/app/dist/">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #09090b;
+      color: #e4e4e7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    .loading {
+      font-size: 1.25rem;
+    }
+    .loading::after {
+      content: '';
+      animation: dots 1.5s infinite;
+    }
+    @keyframes dots {
+      0%, 20% { content: '.'; }
+      40% { content: '..'; }
+      60%, 100% { content: '...'; }
+    }
+    a {
+      color: #F04D26;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="loading">
+    🎒 Loading Flow Education
+    <br><br>
+    <a href="/prototypes/flow-education/app/dist/">Click here if not redirected</a>
+  </div>
+  <script>
+    window.location.replace('/prototypes/flow-education/app/dist/');
+  </script>
+</body>
+</html>
