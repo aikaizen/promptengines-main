@@ -38,7 +38,7 @@ const PRODUCT_URLS = {
   flow: "https://flow.promptengines.com",
   consulting: "https://consulting.promptengines.com",
   dashboard: "https://dashboard.promptengines.com",
-  "promptengines-main": "https://promptengines.com",
+  "promptengines-main": "https://lab.promptengines.com",
 };
 
 const FEATURED_APPS = [
@@ -230,17 +230,12 @@ async function main() {
 
   const cardsHtml = appCards.join("\n");
 
-  // 7. Build telemetry terminal lines (initial HTML + JS stream array)
-  const telemetryCommits = allCommits.slice(0, 5);
-  const streamCommits = allCommits.slice(5, 11);
+  // 7. Build telemetry terminal lines (static HTML, no JS stream)
+  const telemetryCommits = allCommits.slice(0, 10);
 
   const telemetryHtml = telemetryCommits
     .map((c) => `              <div class="terminal-line">${escapeHtml(buildTerminalLine(c))}</div>`)
     .join("\n");
-
-  const streamJs = streamCommits
-    .map((c) => `        "${buildTerminalLine(c).replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`)
-    .join(",\n");
 
   // 7. Inject into HTML files
   const feedRegex = /<!-- FEED:START -->[\s\S]*?<!-- FEED:END -->/;
@@ -248,9 +243,6 @@ async function main() {
 
   const telemetryRegex = /<!-- TELEMETRY:START -->[\s\S]*?<!-- TELEMETRY:END -->/;
   const telemetryReplacement = `<!-- TELEMETRY:START -->\n${telemetryHtml}\n              <!-- TELEMETRY:END -->`;
-
-  const streamRegex = /\/\/ STREAM:START[\s\S]*?\/\/ STREAM:END/;
-  const streamReplacement = `// STREAM:START\n      const stream = [\n${streamJs}\n      ];\n      // STREAM:END`;
 
   for (const file of TARGET_FILES) {
     const filePath = path.join(ROOT_DIR, file);
@@ -272,12 +264,6 @@ async function main() {
       content = content.replace(telemetryRegex, telemetryReplacement);
     } else {
       console.warn(`  No TELEMETRY markers in ${file}`);
-    }
-
-    if (streamRegex.test(content)) {
-      content = content.replace(streamRegex, streamReplacement);
-    } else {
-      console.warn(`  No STREAM markers in ${file}`);
     }
 
     fs.writeFileSync(filePath, content, "utf-8");
