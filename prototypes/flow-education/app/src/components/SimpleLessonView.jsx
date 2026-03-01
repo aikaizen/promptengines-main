@@ -104,6 +104,18 @@ const getEmoji = (word) => {
 }
 
 function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
+  // Safety check - ensure lesson is valid
+  if (!lesson || !lesson.title) {
+    return (
+      <div style={{ padding: '40px', textAlign: 'center', color: '#e4e4e7' }}>
+        <p>Error: Lesson data not found</p>
+        <button onClick={onExit} style={{ padding: '10px 20px', marginTop: '20px' }}>
+          Go Back
+        </button>
+      </div>
+    )
+  }
+
   const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0)
   const [showMiniCelebration, setShowMiniCelebration] = useState(false)
   const [wrongTapCount, setWrongTapCount] = useState(0)
@@ -117,7 +129,16 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
   const { playSound, playNarration } = useAudio()
   const { isTouchDevice, hapticFeedback } = useSafeTabletTouch()
   const canvasRef = useRef(null)
-  const challenges = useRef(createSimpleChallenges(lesson)).current
+  
+  // Create challenges with error handling
+  const challengesRef = useRef([])
+  try {
+    challengesRef.current = createSimpleChallenges(lesson)
+  } catch (e) {
+    console.error('Failed to create challenges:', e)
+  }
+  
+  const challenges = challengesRef.current
   const currentChallenge = challenges[currentChallengeIndex]
   
   // Auto-advance for intro/listen
@@ -217,6 +238,9 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
   
   // Render challenge
   const renderChallenge = () => {
+    if (!currentChallenge) {
+      return <div className="simple-challenge">Loading...</div>
+    }
     const { type, content } = currentChallenge
     
     switch (type) {
