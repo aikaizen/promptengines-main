@@ -2644,7 +2644,7 @@ a:focus-visible {
 }
 
 /* ============================================
-   TABLET & TOUCH OPTIMIZATIONS (Enhanced)
+   TABLET & TOUCH OPTIMIZATIONS (iOS-Safe)
    ============================================ */
 
 /* Coarse pointer = tablets/touch screens */
@@ -2678,28 +2678,12 @@ a:focus-visible {
   }
 }
 
-/* Prevent 300ms touch delay on mobile browsers */
-button, 
-a, 
-[role="button"], 
-[role="radio"],
-[role="gridcell"] {
-  touch-action: manipulation;
-}
-
-/* Disable pull-to-refresh on Chrome Android */
+/* App container - safe for all devices */
 .app {
-  overscroll-behavior-y: none;
-}
-
-/* Ensure app fills viewport on tablets */
-.app {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Handle keyboard appearance on tablets */

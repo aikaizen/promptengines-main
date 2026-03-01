@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import useAudio from '../hooks/useAudio.js'
-import { useTabletTouch } from '../hooks/useTabletTouch.js'
+import { useSafeTabletTouch } from '../hooks/useSafeTabletTouch.js'
 
 // Challenge types per Phase 0 spec
 const CHALLENGE_TYPES = {
@@ -212,7 +212,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
   const [isLocked, setIsLocked] = useState(false)
   
   const { playSound, playNarration } = useAudio()
-  const { isTouchDevice, hapticFeedback } = useTabletTouch()
+  const { isTouchDevice, hapticFeedback } = useSafeTabletTouch()
   const traceCanvasRef = useRef(null)
   const challengeStartTimeRef = useRef(Date.now())
   

@@ -3,57 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <!-- Tablet-optimized viewport: prevents zooming, sets proper scale -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <!-- Safe viewport for iOS - no deprecated attributes -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Flow Education — Kaizen Learning</title>
     <meta name="description" content="Continuous improvement in learning. Personalized tutoring that adapts in real-time." />
     
-    <!-- PWA/Tablet app-like experience -->
+    <!-- iOS PWA support -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#09090b" />
     
-    <!-- Prevent unwanted behaviors on tablets -->
-    <meta name="msapplication-tap-highlight" content="no" />
-    
-    <!-- Tablet touch optimization styles (applied immediately) -->
+    <!-- Safe base styles -->
     <style>
-      /* Prevent zoom, selection, callouts */
-      html, body {
-        touch-action: manipulation;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+      /* Safe defaults - don't break iOS */
+      * {
+        box-sizing: border-box;
         -webkit-tap-highlight-color: transparent;
       }
       
-      /* Prevent double-tap zoom on all interactive elements */
-      button, a, input, textarea, select, [role="button"] {
-        touch-action: manipulation;
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       }
       
-      /* Prevent text size adjustment on orientation change */
-      html {
-        -webkit-text-size-adjust: 100%;
-        text-size-adjust: 100%;
-      }
-      
-      /* Disable pull-to-refresh and overscroll effects */
-      body {
-        overscroll-behavior: none;
-        overflow: hidden;
-      }
-      
-      /* Ensure app fills screen on tablets */
+      /* App container - safe for all devices */
       #root {
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh; /* Dynamic viewport height for mobile browsers */
-        overflow: hidden;
+        min-height: 100vh;
+        min-height: 100dvh;
       }
     </style>
   </head>

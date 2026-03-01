@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import useAudio from '../hooks/useAudio.js'
-import { useTabletTouch } from '../hooks/useTabletTouch.js'
+import { useSafeTabletTouch } from '../hooks/useSafeTabletTouch.js'
 
 // Simplified challenge types for 4-year-olds
 const CHALLENGE_TYPES = {
@@ -115,7 +115,7 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
   const [showExitConfirm, setShowExitConfirm] = useState(false)
   
   const { playSound, playNarration } = useAudio()
-  const { isTouchDevice, hapticFeedback } = useTabletTouch()
+  const { isTouchDevice, hapticFeedback } = useSafeTabletTouch()
   const canvasRef = useRef(null)
   const challenges = useRef(createSimpleChallenges(lesson)).current
   const currentChallenge = challenges[currentChallengeIndex]
