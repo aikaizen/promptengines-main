@@ -1,0 +1,98 @@
+{
+  "lessonId": "quest-006-number-1",
+  "sequence": 6,
+  "title": "Number 1 Discovery",
+  "duration": "6 minutes",
+  "learningObjectives": [
+    "Recognize the digit 1",
+    "Count single items with one-to-one correspondence",
+    "Associate the quantity 'one' with the numeral 1",
+    "Distinguish 1 from 2 and 3"
+  ],
+  "skillsTargeted": ["number-recognition", "counting", "one-to-one-correspondence", "quantity-discrimination"],
+  "prerequisites": ["quest-001-letter-a", "quest-002-letter-b", "quest-003-letter-c", "quest-004-letter-d", "quest-005-letter-e"],
+  "assetsRequired": {
+    "images": 20,
+    "audio": 20
+  },
+  "milestone": "First math lesson — transitions from letters to numbers",
+  "domainShift": "Literacy → Numeracy",
+  "specialNotes": "Introduction to counting concepts after letter foundation",
+  "challengeSequence": [
+    {
+      "type": "intro",
+      "duration": "30s",
+      "content": "Tutor introduces counting concept"
+    },
+    {
+      "type": "listen",
+      "duration": "90s",
+      "content": "Hear 'one' examples: one apple, one ball, one cat"
+    },
+    {
+      "type": "count",
+      "duration": "120s",
+      "content": "Tap groups showing exactly ONE item"
+    },
+    {
+      "type": "trace",
+      "duration": "120s",
+      "content": "Trace the digit 1 with finger"
+    },
+    {
+      "type": "quiz",
+      "duration": "90s",
+      "content": "Identify 1 vs 2 vs 3, quantity vs numeral"
+    },
+    {
+      "type": "reward",
+      "duration": "30s",
+      "content": "Number 1 badge unlock"
+    }
+  ],
+  "targetWords": ["One", "Single", "Solo", "First"],
+  "distractors": ["Two", "Three", "Many"],
+  "assets": {
+    "numbers": {
+      "description": "Digit representations",
+      "items": ["1", "2", "3"]
+    },
+    "countingObjects": {
+      "description": "Objects for counting demonstration",
+      "items": [
+        { "single": "🍎", "double": "🍎🍎", "triple": "🍎🍎🍎", "label": "apple" },
+        { "single": "⚽", "double": "⚽⚽", "triple": "⚽⚽⚽", "label": "ball" },
+        { "single": "🐱", "double": "🐱🐱", "triple": "🐱🐱🐱", "label": "cat" }
+      ]
+    },
+    "characters": {
+      "description": "Same tutor expressions reused",
+      "reuseFrom": "quest-001-letter-a"
+    },
+    "backgrounds": {
+      "description": "Counting scenes",
+      "items": ["classroom", "counting-garden"]
+    }
+  },
+  "audio": {
+    "narration": [
+      { "id": "intro", "text": "Hello! Today we're learning about numbers! Let's start with the number ONE!" },
+      { "id": "listen-1", "text": "One! Just one! One apple." },
+      { "id": "listen-2", "text": "One ball. Just a single ball." },
+      { "id": "listen-3", "text": "One cat. Only one cat." },
+      { "id": "count-instruction", "text": "Tap the picture that shows exactly ONE item!" },
+      { "id": "trace-instruction", "text": "Draw the number 1! Start at the top and go straight down!" },
+      { "id": "quiz-instruction", "text": "Which shows ONE?" },
+      { "id": "reward", "text": "Amazing! You learned the number ONE! You can count one thing!" }
+    ],
+    "feedback": [
+      { "type": "correct", "variations": ["One! Perfect!", "Exactly right!", "That's ONE!", "You got it!", "Great counting!"] },
+      { "type": "incorrect", "variations": ["Try again!", "Count carefully!", "Look for just ONE!", "Almost! Count again!", "You can do it!"] }
+    ]
+  },
+  "adaptiveLogic": {
+    "countingHelp": "After 2 errors, items pulse one at a time to demonstrate counting",
+    "traceHelp": "After 2 failed traces, animated guide shows the path",
+    "quizHelp": "After wrong answer, show visual comparison: 1 vs 2 vs 3 side by side"
+  }
+}

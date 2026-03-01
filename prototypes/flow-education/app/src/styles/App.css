@@ -1020,6 +1020,485 @@
   color: var(--muted);
 }
 
+/* Additional Challenge Styles */
+
+/* Intro Challenge */
+.intro-challenge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+.tutor-avatar-large {
+  font-size: 8rem;
+  animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+
+.challenge-title {
+  font-size: 2rem;
+  color: var(--accent);
+}
+
+.challenge-script {
+  font-size: 1.25rem;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.timer-bar {
+  width: 200px;
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.timer-progress {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.1s linear;
+}
+
+/* Listen Challenge Updates */
+.word-card-large {
+  background: var(--bg);
+  border: 3px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+  min-width: 150px;
+}
+
+.word-emoji {
+  font-size: 3rem;
+}
+
+.word-text-large {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.timer-icon {
+  font-size: 1.5rem;
+}
+
+/* Find Challenge Updates */
+.find-item-large {
+  background: var(--bg);
+  border: 3px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.find-item-large:hover:not(:disabled) {
+  border-color: var(--accent);
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(240, 77, 38, 0.3);
+}
+
+.find-item-large.found {
+  border-color: var(--success);
+  background: rgba(34, 197, 94, 0.15);
+  opacity: 0.6;
+}
+
+.item-emoji-large {
+  font-size: 3rem;
+}
+
+.progress-pill {
+  background: var(--accent);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.hint-large {
+  background: rgba(240, 77, 38, 0.2);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 1.25rem 2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  animation: pulse-hint 1.5s ease infinite;
+}
+
+@keyframes pulse-hint {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(240, 77, 38, 0.4); }
+  50% { transform: scale(1.02); box-shadow: 0 0 20px 10px rgba(240, 77, 38, 0.1); }
+}
+
+/* Counting Challenge */
+.counting-item {
+  background: var(--bg);
+  border: 3px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.counting-item:hover {
+  border-color: var(--accent);
+  transform: scale(1.05);
+}
+
+.counting-emoji {
+  font-size: 3rem;
+}
+
+.counting-label {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* Trace Challenge Updates */
+.trace-area {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.letter-background {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.3;
+}
+
+.trace-number {
+  font-size: 12rem;
+  font-weight: 900;
+  color: var(--accent);
+}
+
+.trace-canvas {
+  position: relative;
+  z-index: 10;
+  border: 3px dashed var(--border);
+  border-radius: 16px;
+  cursor: crosshair;
+  background: transparent;
+}
+
+.trace-canvas:active {
+  border-color: var(--accent);
+}
+
+.trace-dots {
+  display: flex;
+  gap: 1rem;
+  font-size: 2rem;
+}
+
+.trace-dot {
+  color: var(--border);
+  transition: color 0.3s;
+}
+
+.trace-dot.completed {
+  color: var(--success);
+}
+
+.trace-instruction-large {
+  font-size: 1.25rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Quiz Challenge Updates */
+.quiz-questions-large {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.quiz-question-active {
+  background: var(--bg);
+  border: 3px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.question-number {
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.question-text-large {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.quiz-options-large {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.quiz-option-large {
+  background: var(--card);
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 700;
+}
+
+.quiz-option-large:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: rgba(240, 77, 38, 0.1);
+  transform: translateY(-2px);
+}
+
+.quiz-option-large.correct {
+  border-color: var(--success);
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.quiz-option-large.incorrect {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.quiz-progress {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.quiz-dot {
+  font-size: 1.5rem;
+  color: var(--border);
+}
+
+.quiz-dot.correct {
+  color: var(--success);
+}
+
+.quiz-dot.incorrect {
+  color: #ef4444;
+}
+
+/* Review Needed */
+.review-needed-large {
+  text-align: center;
+  padding: 2rem;
+}
+
+.review-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: rotate-slow 3s linear infinite;
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.review-message {
+  color: var(--accent);
+  font-size: 1.25rem;
+  margin: 1rem 0;
+}
+
+.review-btn-large {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 1.25rem 2.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 1rem;
+}
+
+.review-btn-large:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(240, 77, 38, 0.4);
+}
+
+/* Reward Challenge */
+.reward-challenge {
+  position: relative;
+  text-align: center;
+}
+
+.reward-challenge.celebrating {
+  animation: celebrate 0.5s ease;
+}
+
+@keyframes celebrate {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.badge-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+
+.badge-large {
+  font-size: 8rem;
+  animation: badge-bounce 1s ease infinite;
+}
+
+@keyframes badge-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.badge-letter {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--accent);
+  text-shadow: 2px 2px 0 var(--bg);
+}
+
+.reward-title {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.reward-script {
+  font-size: 1.25rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: confetti-fall 3s ease-out forwards;
+}
+
+@keyframes confetti-fall {
+  0% { 
+    transform: translateY(-100%) rotate(0deg); 
+    opacity: 1;
+  }
+  100% { 
+    transform: translateY(500px) rotate(720deg); 
+    opacity: 0;
+  }
+}
+
+/* Outro Challenge */
+.outro-challenge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+.tutor-avatar-wave {
+  font-size: 8rem;
+  animation: wave-goodbye 2s ease-in-out infinite;
+}
+
+@keyframes wave-goodbye {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25% { transform: rotate(-15deg) translateY(-5px); }
+  75% { transform: rotate(15deg) translateY(-5px); }
+}
+
+.outro-title {
+  font-size: 2.5rem;
+  color: var(--accent);
+}
+
+.outro-script {
+  font-size: 1.25rem;
+  max-width: 600px;
+}
+
+/* Feedback Updates */
+.feedback-large {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem;
+  border-radius: 16px;
+}
+
+.feedback-icon {
+  font-size: 5rem;
+}
+
+.feedback-text {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+/* Unknown Challenge */
+.unknown-challenge {
+  color: #ef4444;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .app-header {
