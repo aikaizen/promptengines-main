@@ -33,14 +33,24 @@ function App() {
     return null // null = not selected yet
   })
   const [studentProgress, setStudentProgress] = useState(() => {
-    // Load from localStorage on init
-    const saved = localStorage.getItem(STORAGE_KEY)
-    if (saved) {
-      try {
-        return JSON.parse(saved)
-      } catch (e) {
-        console.error('Failed to load progress:', e)
+    // Load from localStorage on init safely
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        // Validate required fields
+        if (parsed && typeof parsed === 'object') {
+          return {
+            completedLessons: parsed.completedLessons || [],
+            currentLesson: parsed.currentLesson || null,
+            masteryScores: parsed.masteryScores || {},
+            totalTimeSpent: parsed.totalTimeSpent || 0,
+            lastAccessed: parsed.lastAccessed || null
+          }
+        }
       }
+    } catch (e) {
+      console.error('Failed to load progress:', e)
     }
     return {
       completedLessons: [],
@@ -53,8 +63,22 @@ function App() {
 
   // Persist to localStorage whenever progress changes
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(studentProgress))
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(studentProgress))
+    } catch (e) {
+      console.error('Failed to save progress:', e)
+    }
   }, [studentProgress])
+  
+  // Debug: Log current state
+  useEffect(() => {
+    console.log('Flow Education State:', {
+      ageMode,
+      currentView,
+      hasActiveLesson: !!activeLesson,
+      progressLessons: studentProgress?.completedLessons?.length || 0
+    })
+  }, [ageMode, currentView, activeLesson, studentProgress])
 
   const handleStartLesson = useCallback((lesson) => {
     setActiveLesson(lesson)
@@ -107,9 +131,16 @@ function App() {
   }, [])
 
   const handleSelectMode = useCallback((mode) => {
-    setAgeMode(mode)
-    localStorage.setItem(MODE_KEY, mode)
-    setCurrentView('home')
+    try {
+      setAgeMode(mode)
+      localStorage.setItem(MODE_KEY, mode)
+      setCurrentView('home')
+    } catch (e) {
+      console.error('Failed to save mode:', e)
+      // Still switch mode even if storage fails
+      setAgeMode(mode)
+      setCurrentView('home')
+    }
   }, [])
 
   const handleChangeMode = useCallback(() => {
@@ -117,44 +148,81 @@ function App() {
   }, [])
 
   // Mode selector (shown on first launch or when changing modes)
-  if (!ageMode || currentView === 'mode-select') {
+  const showModeSelector = !ageMode || currentView === 'mode-select'
+  
+  if (showModeSelector) {
     return (
-      <div className="app mode-selector">
-        <div className="mode-select-container">
-          <div className="mode-select-title">Choose Your Adventure!</div>
+      <div style={{
+        minHeight: '100vh',
+        background: '#09090b',
+        color: '#e4e4e7',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px',
+        fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif'
+      }}>
+        <div style={{ textAlign: 'center', maxWidth: '500px' }}>
+          <h1 style={{ 
+            fontSize: '2.5rem', 
+            color: '#F04D26', 
+            marginBottom: '2rem',
+            fontWeight: '800'
+          }}>
+            Choose Your Adventure!
+          </h1>
           
-          <div className="mode-options">
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: '1fr 1fr', 
+            gap: '1.5rem',
+            marginBottom: '2rem'
+          }}>
             <button 
-              className="mode-option simple"
               onClick={() => handleSelectMode('4yo')}
+              style={{
+                background: 'linear-gradient(135deg, rgba(34,197,94,0.1) 0%, #18181b 100%)',
+                border: '4px solid #27272a',
+                borderRadius: '24px',
+                padding: '2rem 1rem',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '0.75rem',
+                color: '#e4e4e7'
+              }}
             >
-              <div className="mode-emoji">🧒</div>
-              <div className="mode-label">I'm 4!</div>
-              <div className="mode-desc">Super simple & fun</div>
-              <div className="mode-features">
-                <span>🎯</span>
-                <span>🎉</span>
-                <span>⭐</span>
+              <div style={{ fontSize: '5rem' }}>🧒</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: '800' }}>I'm 4!</div>
+              <div style={{ color: '#71717a' }}>Super simple & fun</div>
+              <div style={{ display: 'flex', gap: '0.5rem', fontSize: '1.5rem' }}>
+                <span>🎯</span><span>🎉</span><span>⭐</span>
               </div>
             </button>
             
             <button 
-              className="mode-option normal"
               onClick={() => handleSelectMode('5-6')}
+              style={{
+                background: 'linear-gradient(135deg, rgba(59,130,246,0.1) 0%, #18181b 100%)',
+                border: '4px solid #27272a',
+                borderRadius: '24px',
+                padding: '2rem 1rem',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '0.75rem',
+                color: '#e4e4e7'
+              }}
             >
-              <div className="mode-emoji">🎒</div>
-              <div className="mode-label">I'm 5 or 6!</div>
-              <div className="mode-desc">More challenges</div>
-              <div className="mode-features">
-                <span>📚</span>
-                <span>✏️</span>
-                <span>🏆</span>
+              <div style={{ fontSize: '5rem' }}>🎒</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: '800' }}>I'm 5 or 6!</div>
+              <div style={{ color: '#71717a' }}>More challenges</div>
+              <div style={{ display: 'flex', gap: '0.5rem', fontSize: '1.5rem' }}>
+                <span>📚</span><span>✏️</span><span>🏆</span>
               </div>
             </button>
-          </div>
-          
-          <div className="mode-hint">
-            Parents: Tap and hold top-right corner for 3 seconds to change mode later
           </div>
         </div>
       </div>
