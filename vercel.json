@@ -14,23 +14,19 @@
     },
     {
       "src": "/prototypes",
-      "dest": "/projects/promptengines/experiments/prototypes/index.html"
+      "dest": "/prototypes/index.html"
     },
     {
       "src": "/prototypes/(.*)",
-      "dest": "/projects/promptengines/experiments/prototypes/$1"
+      "dest": "/prototypes/$1"
     },
     {
       "src": "/floweducation",
-      "dest": "/projects/promptengines/experiments/prototypes/flow-education/index.html"
+      "dest": "/prototypes/flow-education/index.html"
     },
     {
       "src": "/floweducation/(.*)",
-      "dest": "/projects/promptengines/experiments/prototypes/flow-education/$1"
-    },
-    {
-      "src": "/experiments/prototypes/(.*)",
-      "dest": "/projects/promptengines/experiments/prototypes/$1"
+      "dest": "/prototypes/flow-education/$1"
     }
   ],
   "github": {
