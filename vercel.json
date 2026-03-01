@@ -13,8 +13,12 @@
       "dest": "/index.html"
     },
     {
-      "src": "/flow",
+      "src": "/flow/?$",
       "dest": "/prototypes/flow-education/app/dist/index.html"
+    },
+    {
+      "src": "/flow/assets/(.*)",
+      "dest": "/prototypes/flow-education/app/dist/assets/$1"
     },
     {
       "src": "/flow/(.*)",
