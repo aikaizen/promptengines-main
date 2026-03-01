@@ -326,7 +326,14 @@
 | Testing | 5% | 0% | 0% |
 | **TOTAL** | **100%** | | **91.75%** |
 
-**Verdict:** **PRODUCTION-READY MVP** with full audio system, kid-friendly pre-reader UI, and emoji-based visuals. Ready for pilot testing once real image assets are added.
+**Verdict:** **PRODUCTION-READY MVP** with full audio system, dual age modes (4YO + 5-6), kid-friendly pre-reader UI, and emoji-based visuals. Ready for pilot testing once real image assets are added.
+
+### Age Mode System
+
+| Mode | Age | Duration | Challenges | Key Features |
+|------|-----|----------|------------|--------------|
+| **4YO Mode** | 3-4 years | 3.5 min | 4 (no quiz) | Connect dots, auto-correct, instant rewards |
+| **5-6 Mode** | 5-6 years | 7 min | 7 (with quiz) | Full tracing, assessment, review loop |
 
 ### Pre-Reader Optimizations
 The app has been redesigned specifically for kindergarteners who cannot read:
