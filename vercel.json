@@ -13,6 +13,14 @@
       "dest": "/index.html"
     },
     {
+      "src": "/flow",
+      "dest": "/prototypes/flow-education/app/dist/index.html"
+    },
+    {
+      "src": "/flow/(.*)",
+      "dest": "/prototypes/flow-education/app/dist/$1"
+    },
+    {
       "src": "/prototypes",
       "dest": "/prototypes/index.html"
     },
