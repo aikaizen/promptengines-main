@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homegrown in Austin — The StoryBook Studio Story</title>
+  <meta name="description" content="We're not a faceless tech company. We're a small team in Austin building personalized children's books with Texas care. Meet us at Texas Book Festival and SXSW." />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+    <nav class="nav">
+      <a href="../team/">Team</a>
+      <a href="../purpose/">Purpose</a>
+      <div class="nav-dropdown">
+        <span>Labnotes</span>
+        <div class="nav-dropdown-menu">
+          <a href="../articles/">Articles</a>
+          <a href="../signals/">Signals</a>
+          <a href="../build-stream/">Build Stream</a>
+          <a href="../skills/">Skills</a>
+          <a href="../about/">About</a>
+        </div>
+      </div>
+      <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article">
+  <div class="container">
+    <div class="meta-row">
+      <span>Mar 1, 2026</span>
+      <span>6 min read</span>
+      <span>Story</span>
+    </div>
+    <h1>Homegrown in Austin</h1>
+    <p class="dek">We're not a faceless tech company shipping digital slop from San Francisco. We're a small team in Austin building something we actually want our own kids to use.</p>
+
+    <article class="content">
+
+      <h2>The Texas approach</h2>
+      <p>There's a way of building things in Texas that doesn't translate well to pitch decks. You don't lead with hockey-stick growth projections. You lead with whether the product actually works. Whether you'd use it yourself. Whether you'd put your own name on it.</p>
+      <p>StoryBook Studio started with a simple test: would we buy this for our own kids? The answer was no — not the existing options. Wonderbly and the others were fine, but fine wasn't good enough. The characters didn't look like our kids. The stories were generic templates. The printing quality was acceptable but not keepable.</p>
+      <p>So we built what we actually wanted. Character consistency that survives style transfers. Stories you can customize at the sentence level. Print quality that won't yellow in ten years. And we built it here, in Austin, with local printers and local suppliers.</p>
+
+      <h2>Why local matters</h2>
+      <p>Every book ships from a facility within 200 miles of the order. For Texas orders, that's often same-day printing. For everyone else, it means faster shipping and lower carbon footprint. We know the people running the printers. We can drive there when something goes wrong.</p>
+      <p>More importantly: Texas customers can meet us. We're not a customer service ticket. We're at the Texas Book Festival. We're hosting SXSW side events. We're in partnership discussions with BookPeople. You can see the books before you buy. You can ask questions in person.</p>
+      <p>This is how commerce worked before everything became intermediated by platforms. Direct relationship, mutual accountability, real community.</p>
+
+      <h2>The events</h2>
+      <p><strong>Texas Book Festival, November 2026.</strong> We'll have a booth. 40,000 attendees. You can watch us generate a book live, hold the physical result, decide if it's worth your money. No hiding behind a website.</p>
+      <p><strong>SXSW, March 2026.</strong> Side event during the main conference. Demo sessions, founder Q&A, early access to new features. SXSW is chaos but it's also where the early adopters are. People who don't need explaining that AI can be used well.</p>
+      <p><strong>BookPeople.</strong> Austin's iconic independent bookstore. Partnership discussions ongoing. The goal: physical display space, local author events, community integration.</p>
+
+      <h2>What's different</h2>
+      <p>Most AI product companies have a content mill strategy. Generate fast, rank for keywords, optimize conversion funnels, scale spend. We took the opposite approach. Optimize for keepability. A book that survives childhood and becomes an artifact.</p>
+      <p>The difference is visible in the details. Character consistency across pages. Cover stock weight. Binding that survives repeated readings. These are physical objects meant to last decades, not digital ephemera.</p>
+      <p>This is slower. Harder to scale. Lower margins. But it's the only way to build something you aren't embarrassed by in five years.</p>
+
+      <h2>Where to find us</h2>
+      <p>Online: storybookstudio.ai</p>
+      <p>In person: Texas Book Festival, SXSW, BookPeople (soon)</p>
+      <p>Social: @storybookstudio on TikTok and Instagram</p>
+      <p>Email: hello@storybookstudio.ai</p>
+
+      <p>If you're in Austin, reach out. We're friendly and we actually reply.</p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="../articles/">← All articles</a>
+      <a href="https://storybookstudio.ai" target="_blank">Visit StoryBook Studio →</a>
+    </nav>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+</footer>
+
+<script>
+  (function() {
+    var bar = document.getElementById('progress-bar');
+    function update() {
+      var s = document.documentElement;
+      var scrolled = s.scrollTop || document.body.scrollTop;
+      var total = s.scrollHeight - s.clientHeight;
+      bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+</body>
+</html>
