@@ -1,18 +1,25 @@
 import { useState, useEffect, useCallback } from 'react'
 import LessonPlanList from './components/LessonPlanList'
 import LessonView from './components/LessonView'
+import SimpleLessonView from './components/SimpleLessonView'
 import ProgressTracker from './components/ProgressTracker'
 import './styles/App.css'
 
 // Import lesson plan data
 import lessonPlan001 from './data/lessonPlan001.json'
 
-// Progress storage key
+// Progress storage keys
 const STORAGE_KEY = 'flow-education-progress'
+const MODE_KEY = 'flow-education-mode'
 
 function App() {
-  const [currentView, setCurrentView] = useState('home') // home, lesson, progress
+  const [currentView, setCurrentView] = useState('home') // home, lesson, progress, mode-select
   const [activeLesson, setActiveLesson] = useState(null)
+  const [ageMode, setAgeMode] = useState(() => {
+    // Load mode preference
+    const savedMode = localStorage.getItem(MODE_KEY)
+    return savedMode || null // null = not selected yet
+  })
   const [studentProgress, setStudentProgress] = useState(() => {
     // Load from localStorage on init
     const saved = localStorage.getItem(STORAGE_KEY)
@@ -87,6 +94,61 @@ function App() {
     }
   }, [])
 
+  const handleSelectMode = useCallback((mode) => {
+    setAgeMode(mode)
+    localStorage.setItem(MODE_KEY, mode)
+    setCurrentView('home')
+  }, [])
+
+  const handleChangeMode = useCallback(() => {
+    setCurrentView('mode-select')
+  }, [])
+
+  // Mode selector (shown on first launch or when changing modes)
+  if (!ageMode || currentView === 'mode-select') {
+    return (
+      <div className="app mode-selector">
+        <div className="mode-select-container">
+          <div className="mode-select-title">Choose Your Adventure!</div>
+          
+          <div className="mode-options">
+            <button 
+              className="mode-option simple"
+              onClick={() => handleSelectMode('4yo')}
+            >
+              <div className="mode-emoji">🧒</div>
+              <div className="mode-label">I'm 4!</div>
+              <div className="mode-desc">Super simple & fun</div>
+              <div className="mode-features">
+                <span>🎯</span>
+                <span>🎉</span>
+                <span>⭐</span>
+              </div>
+            </button>
+            
+            <button 
+              className="mode-option normal"
+              onClick={() => handleSelectMode('5-6')}
+            >
+              <div className="mode-emoji">🎒</div>
+              <div className="mode-label">I'm 5 or 6!</div>
+              <div className="mode-desc">More challenges</div>
+              <div className="mode-features">
+                <span>📚</span>
+                <span>✏️</span>
+                <span>🏆</span>
+              </div>
+            </button>
+          </div>
+          
+          <div className="mode-hint">
+            Parents: Tap and hold top-right corner for 3 seconds to change mode later
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="app">
       <header className="app-header">
@@ -127,12 +189,21 @@ function App() {
         )}
         
         {currentView === 'lesson' && activeLesson && (
-          <LessonView 
-            lesson={activeLesson}
-            lessonPlan={lessonPlan001}
-            onComplete={handleCompleteLesson}
-            onExit={handleExitLesson}
-          />
+          ageMode === '4yo' ? (
+            <SimpleLessonView 
+              lesson={activeLesson}
+              lessonPlan={lessonPlan001}
+              onComplete={handleCompleteLesson}
+              onExit={handleExitLesson}
+            />
+          ) : (
+            <LessonView 
+              lesson={activeLesson}
+              lessonPlan={lessonPlan001}
+              onComplete={handleCompleteLesson}
+              onExit={handleExitLesson}
+            />
+          )
         )}
         
         {currentView === 'progress' && (
