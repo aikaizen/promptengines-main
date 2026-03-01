@@ -91,23 +91,27 @@ function App() {
     <div className="app">
       <header className="app-header">
         <div className="brand">
-          <span className="brand-name">Flow Education</span>
-          <span className="brand-tagline">Kaizen Learning</span>
+          <span className="brand-icon" aria-hidden="true">🎒</span>
+          <span className="brand-name">Flow</span>
         </div>
-        <nav className="nav" role="navigation" aria-label="Main navigation">
+        <nav className="nav kid-nav" role="navigation" aria-label="Main navigation">
           <button 
-            className={currentView === 'home' ? 'active' : ''}
+            className={`nav-btn ${currentView === 'home' ? 'active' : ''}`}
             onClick={() => setCurrentView('home')}
             aria-pressed={currentView === 'home'}
+            title="Lessons"
           >
-            Lessons
+            <span className="nav-icon" aria-hidden="true">📚</span>
+            <span className="nav-label">Learn</span>
           </button>
           <button 
-            className={currentView === 'progress' ? 'active' : ''}
+            className={`nav-btn ${currentView === 'progress' ? 'active' : ''}`}
             onClick={() => setCurrentView('progress')}
             aria-pressed={currentView === 'progress'}
+            title="Progress"
           >
-            Progress
+            <span className="nav-icon" aria-hidden="true">🏆</span>
+            <span className="nav-label">Stars</span>
           </button>
         </nav>
       </header>
@@ -139,9 +143,9 @@ function App() {
         )}
       </main>
 
-      <footer className="app-footer">
-        <p>Flow Education — A PromptEngines Experiment</p>
-        <p className="kaizen-tagline">改善 — Continuous Improvement</p>
+      <footer className="app-footer kid-footer">
+        <span className="kid-footer-icon" aria-hidden="true">✨</span>
+        <span className="kid-footer-text">Keep learning!</span>
       </footer>
     </div>
   )

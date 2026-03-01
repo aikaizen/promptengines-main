@@ -860,23 +860,46 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
         )
         
       case CHALLENGE_TYPES.QUIZ:
+        // Narrate the question when it appears
+        useEffect(() => {
+          const currentQuestion = currentChallenge.questions[quizAnswers.filter(a => a !== undefined).length]
+          if (currentQuestion && !quizAnswers[quizAnswers.length - 1]) {
+            playNarration(currentQuestion.question)
+          }
+        }, [quizAnswers.length])
+        
         return (
-          <div className="quiz-challenge">
+          <div className="quiz-challenge kid-quiz">
             {needsReview ? (
               <div className="review-needed-large">
                 <div className="review-icon">🔄</div>
-                <h3>Let's Practice More!</h3>
-                <p>You got {quizAnswers.filter(a => a?.correct).length} out of {currentChallenge.questions.length}.</p>
-                <p className="review-message">No problem! Let's practice again!</p>
+                <div className="kid-review-visual">
+                  <span className="kid-review-emoji">💪</span>
+                  <span className="kid-review-text">Practice Time!</span>
+                </div>
                 <button 
-                  className="review-btn-large"
+                  className="review-btn-large kid-btn"
                   onClick={handleReview}
                 >
-                  Practice Again
+                  <span className="kid-btn-icon">🎯</span>
+                  <span>Try Again!</span>
                 </button>
               </div>
             ) : (
-              <div className="quiz-questions-large">
+              <div className="quiz-questions-large kid-questions">
+                {/* Visual progress dots instead of text */}
+                <div className="kid-quiz-progress" role="img" aria-label={`Question ${quizAnswers.filter(a => a !== undefined).length + 1} of ${currentChallenge.questions.length}`}>
+                  {currentChallenge.questions.map((_, i) => (
+                    <span 
+                      key={i} 
+                      className={`kid-progress-dot ${quizAnswers[i] ? (quizAnswers[i].correct ? 'correct' : 'wrong') : ''} ${i === quizAnswers.filter(a => a !== undefined).length ? 'current' : ''}`}
+                      aria-hidden="true"
+                    >
+                      {quizAnswers[i] ? (quizAnswers[i].correct ? '✅' : '❌') : i === quizAnswers.filter(a => a !== undefined).length ? '⭕' : '⚪'}
+                    </span>
+                  ))}
+                </div>
+                
                 {currentChallenge.questions.map((q, qIndex) => {
                   const answered = quizAnswers[qIndex]
                   const showQuestion = !answered || qIndex === quizAnswers.findIndex(a => !a)
@@ -884,9 +907,12 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
                   if (!showQuestion) return null
                   
                   return (
-                    <div key={qIndex} className="quiz-question-active">
-                      <div className="question-number">Question {qIndex + 1} of {currentChallenge.questions.length}</div>
-                      <h3 className="question-text-large">{q.question}</h3>
+                    <div key={qIndex} className="quiz-question-active kid-question">
+                      {/* Visual question prompt - minimal text */}
+                      <div className="kid-question-prompt">
+                        <span className="kid-prompt-icon">👆</span>
+                        <span className="kid-prompt-letter">{lesson.title.match(/Letter (.)/)?.[1] || lesson.title.match(/Number (\d)/)?.[1]}</span>
+                      </div>
                       <div className="quiz-options-large" role="radiogroup" aria-label={q.question}>
                         {q.options.map((option, oIndex) => (
                           <button
