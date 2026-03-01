@@ -9,10 +9,6 @@
   ],
   "routes": [
     {
-      "src": "/",
-      "dest": "/index.html"
-    },
-    {
       "src": "/flow$",
       "dest": "/flow/index.html"
     },
@@ -21,8 +17,12 @@
       "dest": "/flow/$1"
     },
     {
-      "src": "/prototypes",
-      "dest": "/prototypes/index.html"
+      "src": "/prototypes/flow-education/app/dist/assets/(.*)",
+      "dest": "/prototypes/flow-education/app/dist/assets/$1"
+    },
+    {
+      "src": "/prototypes/flow-education/app/dist/(.*)",
+      "dest": "/prototypes/flow-education/app/dist/$1"
     },
     {
       "src": "/prototypes/(.*)",
@@ -35,6 +35,10 @@
     {
       "src": "/floweducation/(.*)",
       "dest": "/prototypes/flow-education/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ],
   "github": {
