@@ -2,6 +2,23 @@
 
 Detects and prevents low-signal, hype-driven, or generic AI-generated prose. Enforces Lab Notes editorial standards.
 
+## Use With
+
+**Exceptional Education Skill** — For any educational content, combine both skills. Exceptional Education defines what "best" looks like. Anti-Slop prevents "mediocre" from slipping in.
+
+---
+
+## Marketing Copy Checklist
+
+Before publishing any marketing content:
+
+1. [ ] Run through Anti-Slop patterns (below)
+2. [ ] Run through Exceptional Education principles (if ed-related)
+3. [ ] Verify every claim is falsifiable or marked as opinion/pending
+4. [ ] Check that no fabricated testimonials exist
+5. [ ] Confirm pricing/feature claims match reality
+6. [ ] Ensure tone is parent-respecting, not parent-manipulating
+
 ## Slop Patterns to Reject
 
 ### 1. The Denial of Commerce
