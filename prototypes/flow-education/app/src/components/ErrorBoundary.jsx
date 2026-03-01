@@ -54,7 +54,9 @@ class ErrorBoundary extends React.Component {
           </button>
           <button 
             onClick={() => {
-              localStorage.clear()
+              try {
+                localStorage.clear()
+              } catch (e) {}
               window.location.reload()
             }}
             style={{
@@ -67,8 +69,14 @@ class ErrorBoundary extends React.Component {
               cursor: 'pointer'
             }}
           >
-            🧹 Clear & Restart
+            🧹 Clear Data & Restart
           </button>
+          <p style={{ fontSize: '0.8rem', color: '#555', marginTop: '20px' }}>
+            If this keeps happening, try the direct link:<br/>
+            <a href="/prototypes/flow-education/app/dist/" style={{ color: '#F04D26' }}>
+              promptengines.com/prototypes/flow-education/app/dist/
+            </a>
+          </p>
         </div>
       )
     }
