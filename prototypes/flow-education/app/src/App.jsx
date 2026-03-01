@@ -5,7 +5,7 @@ import ProgressTracker from './components/ProgressTracker'
 import './styles/App.css'
 
 // Import lesson plan data
-import lessonPlan001 from '../data/lessonPlan001.json'
+import lessonPlan001 from './data/lessonPlan001.json'
 
 // Progress storage key
 const STORAGE_KEY = 'flow-education-progress'

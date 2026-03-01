@@ -477,7 +477,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       'Cat': '🐱', 'Car': '🚗', 'Cookie': '🍪', 'Cup': '☕', 'Carrot': '🥕',
       'Dog': '🐕', 'Duck': '🦆', 'Dinosaur': '🦕', 'Donut': '🍩', 'Door': '🚪',
       'Elephant': '🐘', 'Egg': '🥚', 'Eagle': '🦅', 'Elbow': '💪', 'Engine': '🚂',
-      'Balloon': '🎈', 'Book': '📚', 'Bird': '🐦', 'Bus': '🚌', 'Balloon': '🎈'
+      'Balloon': '🎈', 'Book': '📚', 'Bird': '🐦', 'Bus': '🚌'
     }
     return emojis[word] || '⭐'
   }
