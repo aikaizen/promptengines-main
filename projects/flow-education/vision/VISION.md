@@ -1,320 +1,424 @@
-# Flow Education — VISION.md
+# Flow Education — VISION
 
-*Chrome Tablet Learning System for Independent Student Engagement*  
-*Target: Kindergarten (expanding to K-5)*  
-*Platform: Android/Chrome OS Tablets*  
-*Status: MVP Definition*
-
----
-
-## 🎯 The One-Sentence Mission
-
-**A tutor-in-a-tablet that keeps kindergarteners productively learning for 1 hour without adult supervision through challenges, quests, and adaptive lessons.**
+*The Complete Vision: From MVP to Agentic Knowledge Graphs*  
+*Target: K-12 Education | Platform: Android/Chrome Tablets*  
+*Status: Phase 0 Active Development*
 
 ---
 
-## 🏫 The Deployment Context
+## 🎯 The North Star
 
-**Hardware**: Chrome tablets (Android/Chrome OS)  
-**Environment**: School setting, starting with kindergarten  
-**Supervision**: Minimal — goal is independent engagement  
-**Duration**: 1 hour continuous learning sessions  
-**Connectivity**: Assume online (school WiFi), but design for graceful offline fallback
+**Every student has a personal tutor that knows what they know, what they don't, and exactly how to bridge the gap.**
+
+Not edutainment. Not gamified drills. Actual teaching. At scale. For every child.
 
 ---
 
-## ⚡ The Critical Requirement
+## 🏛️ The Manifesto (In Brief)
 
-### The 1-Hour Independent Engagement Standard
+**We Refuse**:
+- Edutainment (90% play, 10% learning)
+- Gamification addiction (points, badges, manipulation)
+- Passive consumption (videos that play while kids stare)
+- One-size-fits-all (same lesson for every child)
+- Teacher replacement (instead of empowerment)
 
-**Success = Child remains in educational activity for 60 minutes without:**
-- Adult intervention
-- Getting "stuck" and giving up
-- Switching to non-educational apps
-- Needing 1-on-1 reading assistance
+**We Build**:
+- Tutor-centric experiences (actual teaching, not games)
+- Continuous testing (micro-assessment, not grades)
+- Continuous improvement (real-time adaptation)
+- Teacher sovereignty (teachers control curriculum, tutors deliver)
+- Offline capability (school WiFi is unreliable)
 
-**Why this matters**: Teachers have 25+ students. If the app requires constant handling, it fails.
-
----
-
-## 🧠 Pedagogical Manifesto
-
-### Alpha School Principles (Our Foundation)
-1. **Continuous Testing** — Not grades, constant micro-assessment
-2. **Continuous Improvement** — Lessons adapt in real-time
-3. **Adaptive Lessons** — Pace and difficulty adjust to individual
-
-### Flow Education Additions
-4. **Tutor-Centric** — Not "gamified edutainment," actual teaching
-5. **Challenge/Quest Based** — Clear goals, progress, achievement
-6. **Self-Sufficient** — Voice narration, visual cues, no reading required initially
+**The 60-Minute Standard**: A child can use Flow Education for 60 minutes without asking a teacher for help, getting stuck and giving up, or needing someone to read to them.
 
 ---
 
-## 👶 Target User: Kindergartener
+## 📍 The Four Phases
 
-### Developmental Realities (Age 5-6)
-- **Attention span**: 10-15 minutes per activity (needs variety)
-- **Reading level**: Pre-reader to early reader (needs audio support)
-- **Motor skills**: Touch interfaces, basic drag-and-drop
-- **Cognitive**: Concrete thinkers, need visual examples, step-by-step
-- **Emotional**: Need encouragement, can't handle frustration for long
+### Phase 0 — MVP Pilot (NOW)
+**Kindergarten Chrome Tablets, Fixed Curriculum, Basic Adaptive Logic**
 
-### Success Indicators
-- Child asks to use the tablet
-- Teacher reports "they stay engaged"
-- Measurable learning gains (letter recognition, number sense, etc.)
+#### Goal
+Validate the 60-minute independent engagement standard with real children.
 
----
+#### Scope
+- **10 quests** (approximately 60 minutes of content)
+- **Fixed curriculum**: Letters A, B, C, D, E and basic numbers/shapes
+- **Basic adaptive logic**: Easier/harder based on error rate, not advanced AI
+- **Static assets**: Pre-generated images and audio, not real-time generation
+- **Offline capable**: Full content cached locally
 
-## 🎮 What This Is NOT
+#### Technical Approach
+- Android/Chrome OS tablets
+- Pre-generated assets (images via Fireworks AI, audio via ElevenLabs/TTS)
+- Simple adaptive algorithm (rule-based, not ML)
+- Local storage for progress tracking
+- No cloud dependency for core experience
 
-### Competitor Weaknesses We're Avoiding
+#### Success Criteria
+- 80% of pilot children complete 60-minute session
+- Teacher intervention required <2 times per session
+- Measurable learning gains (letter/number recognition)
+- Teacher satisfaction 4+/5
 
-| App Type | Why They Fail the 1-Hour Test |
-|----------|------------------------------|
-| **Khan Academy Kids** | Too passive, videos get boring, lacks challenge progression |
-| **Toc Toc Kids** | Entertainment-focused, minimal learning depth |
-| **Duolingo ABC** | Narrow scope (just letters), repetitive gets boring |
-| **LEGO DUPLO** | Pure play, no structured learning progression |
-| **Generic "learning games"** | Points/badges manipulation, no actual knowledge building |
-
-**Pattern**: They entertain for 10 minutes, not educate for 60.
-
----
-
-## 🎓 What This IS: The Tutor-Centric Model
-
-### The Virtual Tutor Experience
-
-**Not a game with learning sprinkled in.**  
-**A tutor that happens to be digital.**
-
-#### Tutor Behaviors
-- **Speaks to child** — Full voice narration (text-to-speech)
-- **Explains concepts** — "See how the 'A' has this shape? Like an upside-down V."
-- **Asks questions** — Socratic method, checks understanding
-- **Adjusts difficulty** — Easier if struggling, harder if bored
-- **Encourages** — Specific praise, not generic "good job!"
-- **Tracks progress** — Knows what child has mastered
-
-#### Challenge/Quest Structure
-```
-QUEST: Learn the letter "B"
-├── Challenge 1: Hear the sound (listen, repeat)
-├── Challenge 2: Find the "B" (visual recognition, 5 items)
-├── Challenge 3: Trace the "B" (motor skill, 3 attempts)
-├── Challenge 4: What starts with "B"? (conceptual, 3 correct)
-├── Boss Challenge: Write a "B" from memory (assessment)
-└── Reward: Unlock "B" themed storybook (StoryBook Studio integration)
-```
-
-**Each challenge**: 3-5 minutes, clear completion criteria, immediate feedback.
+#### Timeline
+- **Week 1-2**: Asset generation, first 3 quests built
+- **Week 3-4**: Complete 10 quests, adaptive logic implemented
+- **Week 5-6**: Internal testing, iteration
+- **Week 7-8**: Pilot school deployment
 
 ---
 
-## 📚 Curriculum Scope (Kindergarten MVP)
+### Phase 1 — Teacher Tools (Month 3-6)
+**Lesson Creation Platform + Middle School Expansion**
 
-### Core Domains
+#### Goal
+Empower teachers to create lessons, control curriculum, and extend to older students.
 
-#### 1. Literacy (40% of time)
-- **Phonics**: Letter sounds, blending CVC words
-- **Sight words**: 50 most common (the, and, a, to, etc.)
-- **Concepts of print**: Left-to-right, word boundaries
-- **Listening comprehension**: Simple stories, recall questions
+#### New Capabilities
+- **Teacher lesson creation tools**: Upload assets, sequence quests, build quizzes
+- **Chat-based tutors**: LLM-powered tutoring (GPT-4/Claude), but deterministic and teacher-controlled
+- **Middle school pilot**: More complex subjects, longer attention spans, text-based interactions
+- **Asset marketplace**: Teachers share and reuse assets across classrooms
+- **Lesson plans**: Teacher-facing interface for curriculum mapping
 
-#### 2. Math (30% of time)
-- **Number sense**: 0-20 recognition, counting, one-to-one
-- **Basic operations**: Addition/subtraction within 10 (concrete)
-- **Patterns**: AB, AAB, ABC patterns
-- **Shapes**: 2D and basic 3D
+#### Technical Architecture
+- Web-based teacher dashboard
+- Deterministic lesson scripting (teacher defines flow, tutor executes)
+- LLM integration for chat tutoring (with constraints/safety rails)
+- Cloud storage for teacher-created content
+- Version control for lessons (track changes, revert if needed)
 
-#### 3. Knowledge/World (20% of time)
-- **Science**: Seasons, animals, plants, weather
-- **Social studies**: Community helpers, basic geography
-- **Arts**: Music appreciation, basic art concepts
+#### Key Principles
+- **Teacher sovereignty**: Teachers create lessons, own curriculum, control sequencing
+- **Tutor as delivery mechanism**: The LLM delivers content, doesn't invent it
+- **Deterministic lessons**: Same input = same output (reproducible, testable)
+- **Safety first**: Content filters, teacher approval required for all AI-generated text
 
-#### 4. Social-Emotional (10% of time)
-- **Following directions**: Multi-step instructions
-- **Persistence**: Encouragement through frustration
-- **Self-regulation**: Breaks, breathing exercises if needed
-
----
-
-## 🏗️ Technical Architecture
-
-### MVP Approach (Phase 1)
-**Static Assets + Adaptive Logic**
-- Pre-recorded audio for all instructions
-- Pre-created lesson sequences
-- Adaptive algorithm adjusts which lessons shown, not generating new content
-- Offline-capable (download curriculum package)
-
-### Future Vision (Phase 2+)
-**Agentic Tutors**
-- AI-generated explanations based on specific student misconceptions
-- Dynamic challenge creation
-- Real-time curriculum adjustment
-- Personalized story generation (StoryBook Studio integration)
-
-### Platform Requirements
-- **Android/Chrome OS**: Primary target
-- **Touch interface**: No keyboard required
-- **Audio output**: Essential (headphone jack or speakers)
-- **Storage**: 2-4GB for curriculum assets
-- **RAM**: Runs on basic Chrome tablets (4GB+ RAM)
+#### Success Criteria
+- 50 teachers actively creating lessons
+- 1,000 lessons created by teachers (not just pre-made)
+- Middle school pilot shows engagement + learning gains
+- Teachers report time savings (less hand-holding needed)
 
 ---
 
-## 📱 The 1-Hour Flow (User Journey)
+### Phase 2 — Agentic Tutors (Month 6-12)
+**Intelligent Asset Surfacing + Student Data System**
 
-### Minute 0-5: Warm-Up & Assessment
-- Child logs in (or taps their avatar)
-- Quick "temperature check": How are you feeling? (emotional check)
-- Yesterday's review: 2-3 rapid-fire questions
-- Today's quest preview: "Today you're going to master the letter 'M'!"
+#### Goal
+Tutors become agentic—surfacing assets, scoring students, recommending review, building longitudinal understanding.
 
-### Minute 5-25: Core Learning Block 1
-- **Focus**: Literacy (phonics focus)
-- **Structure**: 3-4 challenges, ~5 min each
-- **Variety**: Mix of listen, touch, speak, trace
-- **Checkpoints**: Every 10 min, tutor asks "Ready for more?"
+#### New Capabilities
+- **Agentic asset surfacing**: Tutor decides which image, which audio, which challenge to show based on student state
+- **Scoring and recommendations**: "Retry this challenge" or "You're ready for the next quest" based on performance patterns
+- **Student data system**: Longitudinal tracking, knowledge state, mastery progression
+- **Adaptive lesson paths**: Tutor can adjust sequencing in real-time (within teacher-defined bounds)
+- **Early warning system**: Flag students who are struggling before they fail
 
-### Minute 25-30: Break & Transition
-- **Stretch break**: Animated guide leads 1-min movement
-- **Reward check**: See progress on quest map
-- **Bathroom/drink**: Child can pause (auto-pause after 30 sec inactivity)
+#### Technical Architecture
+- Knowledge state representation (what does this student know?)
+- Recommendation engine (what should they do next?)
+- Student data warehouse (longitudinal analytics)
+- Teacher dashboard v2 (see class overview, individual trajectories)
+- API for SIS (Student Information System) integration
 
-### Minute 30-50: Core Learning Block 2
-- **Focus**: Math or Knowledge (alternates)
-- **Structure**: 3-4 challenges
-- **Difficulty adjustment**: If Block 1 was easy, increase challenge
+#### Key Principles
+- **Lessons still teacher-created**: Assets and curriculum from Phase 1, but delivery optimized by AI
+- **Transparent decision-making**: Teachers can see why tutor recommended X
+- **Override capability**: Teachers can always override tutor recommendations
+- **Privacy by design**: Student data encrypted, COPPA/FERPA compliant
 
-### Minute 50-55: Creative/Choice Time
-- **Options**: Draw, listen to story, free exploration
-- **Purpose**: Autonomy, wind-down, positive association
-
-### Minute 55-60: Cool Down & Exit
-- **Summary**: "Today you learned 'M'! You found 5 M-words and wrote it 3 times!"
-- **Preview**: "Tomorrow we'll learn 'N'!"
-- **Log out**: Simple tap, returns to login screen for next child
-
----
-
-## 🎯 Success Metrics (MVP)
-
-### Engagement Metrics
-- **Session completion**: 80% of kids complete 60 min
-- **Active time**: >50 min of active interaction (not idle)
-- **Challenge completion**: 70%+ of challenges attempted
-- **Return rate**: Kids ask to use again
-
-### Learning Metrics
-- **Letter recognition**: 80% of target letters mastered in 4 weeks
-- **Number sense**: Count to 20, basic addition within 10
-- **Pre/post assessment**: Measurable gains vs. control group
-
-### Teacher Metrics
-- **Intervention frequency**: <2 per session (teacher helps only twice)
-- **Setup time**: <2 minutes to get child started
-- **Satisfaction**: Teacher survey 4+/5 stars
+#### Success Criteria
+- Measurable learning gains vs. Phase 0 (control group)
+- Teachers trust tutor recommendations (use them 80%+ of time)
+- Student data shows clear knowledge progression
+- Early warning system catches at-risk students
 
 ---
 
-## 🚫 Anti-Patterns (What We're NOT Building)
+### Phase 3 — Knowledge Graphs (Year 2+)
+**Full Curriculums K-12 + Agentic Asset Creation**
 
-### Slop to Refuse
-- **Gamification addiction**: Points, badges, fake rewards
-- **Passive video watching**: "Learning" that requires no thinking
-- **Endless scrolling**: Infinite content with no progression
-- **Generic praise**: "Good job!" instead of specific feedback
-- **One-size-fits-all**: Same lesson for every child
-- **Requires reading**: App assumes child can read instructions
-- **No offline mode**: Fails when WiFi drops
+#### Goal
+Complete K-12 curriculum coverage with knowledge graphs mapping concept dependencies, plus agentic asset creation.
 
-### Competitor Mistakes to Avoid
-- **Khan Academy Kids**: Too passive, no challenge arc
-- **ABCmouse**: Overwhelming, manipulative rewards
-- **Duolingo**: Repetitive drills, no tutor presence
-- **YouTube Kids**: No learning structure at all
+#### New Capabilities
+- **STEM + English curriculums**: Complete scope and sequence for all grades K-12
+- **Knowledge graphs**: Interconnected concepts, prerequisite mapping, gap identification
+- **Agentic asset creation**: Tutors generate relevant images, quizzes, explanations on demand
+- **Complex games and simulations**: Interactive experiences for advanced subjects
+- **Cross-curricular connections**: "You're learning fractions in math—here's how they relate to music"
 
----
+#### Technical Architecture
+- Knowledge graph database (Neo4j or similar)
+- Curriculum mapping (standards alignment: Common Core, TEKS, etc.)
+- Real-time asset generation (Stable Diffusion, GPT-4 for text)
+- Complex interactive engine (games, simulations, virtual labs)
+- Multi-tenant architecture (schools, districts)
 
-## 🔮 Future Roadmap (Post-MVP)
+#### Key Principles
+- **Standards alignment**: Maps to state/national standards (but exceeds them)
+- **Gap identification**: Knows exactly what prerequisite knowledge is missing
+- **Personalization at scale**: Every student has unique path through knowledge graph
+- **Teacher as curator**: Teachers guide, approve, override—but AI handles personalization
 
-### Phase 2: Grade 1-2 Expansion (Months 3-6)
-- Reading comprehension passages
-- More complex math (regrouping, time, money)
-- Writing prompts and voice-to-text
-- Science experiments (virtual)
-
-### Phase 3: Agentic Tutors (Months 6-12)
-- AI-generated explanations
-- Dynamic challenge creation
-- Real-time misconception detection
-- Personalized curriculum paths
-
-### Phase 4: StoryBook Studio Integration (Ongoing)
-- Generated stories at child's reading level
-- Child as protagonist in learning adventures
-- "Write your own ending" challenges
-
-### Phase 5: Home Version (Year 2)
-- Parent dashboard
-- Home/school connection
-- Subscription model
+#### Success Criteria
+- Comprehensive K-12 coverage
+- Demonstrated learning gains across all subjects
+- Schools adopt as core curriculum supplement (not just enrichment)
+- Sustainable business model (B2B SaaS)
 
 ---
 
-## 📝 MVP Definition of Done
+## 🧩 The Architecture Layers
 
-### Must Have (P0)
-- [ ] 60 min of curriculum content (10+ quests, 40+ challenges)
-- [ ] Full voice narration for all instructions
-- [ ] Adaptive difficulty (easier/harder based on performance)
-- [ ] Offline mode (works without internet)
-- [ ] Progress tracking (what child has mastered)
-- [ ] Teacher dashboard (class overview, individual progress)
-- [ ] Runs on Chrome tablets (Android app or PWA)
+Across all phases, the system has consistent layers:
 
-### Should Have (P1)
-- [ ] StoryBook Studio integration (reward stories)
-- [ ] Parent notifications (weekly progress email)
-- [ ] Multiple children per tablet (login switching)
-- [ ] Basic analytics (time on task, completion rates)
+### Layer 1: Content (Teacher-Created)
+- **Lessons**: Quests, challenges, sequences
+- **Assets**: Images, audio, videos
+- **Assessments**: Quizzes, checkpoints, mastery tests
+- **Standards alignment**: Maps to curriculum requirements
 
-### Nice to Have (P2)
-- [ ] Agentic tutor (AI-generated responses)
-- [ ] Multi-language support
-- [ ] Accessibility features (vision/hearing impaired)
-- [ ] AR components (camera-based activities)
+### Layer 2: Tutor (AI-Powered)
+- **Phase 0**: Rule-based adaptive logic
+- **Phase 1**: LLM chat, deterministic delivery
+- **Phase 2**: Agentic surfacing, recommendations
+- **Phase 3**: Real-time asset generation, complex reasoning
 
----
+### Layer 3: Student Model (Data-Driven)
+- **Phase 0**: Simple progress tracking (quest completion)
+- **Phase 1**: Skill mastery tracking (can they do X?)
+- **Phase 2**: Knowledge state representation
+- **Phase 3**: Full knowledge graph traversal
 
-## 🏁 Immediate Next Steps
-
-1. **Curriculum mapping**: Break down K standards into 60 min quest sequences
-2. **Audio asset plan**: What needs recording? TTS vs. human voice?
-3. **Tech stack decision**: Native Android vs. PWA vs. Flutter?
-4. **Pilot school partnership**: Identify 1-2 kindergarten classrooms
-5. **Content creation**: Build first 3 quests (15 challenges) as proof of concept
+### Layer 4: Teacher Interface (Control)
+- **Phase 0**: Minimal (view progress, basic controls)
+- **Phase 1**: Lesson creation tools
+- **Phase 2**: Analytics dashboard, override capabilities
+- **Phase 3**: Curriculum planning, cross-class insights
 
 ---
 
-## 💡 Key Differentiators
+## 🎯 Phase-Specific Success Metrics
 
-| Feature | Competitors | Flow Education |
-|---------|-------------|----------------|
-| 1-hour engagement | ❌ 10-20 min | ✅ 60 min design |
-| Tutor voice | ❌ Text only | ✅ Full narration |
-| Challenge/quest structure | ❌ Mini-games | ✅ Coherent learning arcs |
-| Adaptive (not just leveled) | ❌ Static content | ✅ Real-time adjustment |
-| No reading required | ❌ Assumes literacy | ✅ Pre-reader friendly |
-| Alpha school principles | ❌ Generic content | ✅ Continuous testing/improvement |
-| Offline capable | ❌ Cloud dependent | ✅ Works without WiFi |
+### Phase 0 (Month 1-2)
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| Session completion | 80% | % of kids who complete 60 min |
+| Teacher interventions | <2 per session | Count of "help me" calls |
+| Learning gains | +20% letter recognition | Pre/post test |
+| Teacher satisfaction | 4+/5 | Survey |
+| Engagement | >50 min active time | Analytics |
+
+### Phase 1 (Month 3-6)
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| Active teachers | 50 | Creating lessons monthly |
+| Lessons created | 1,000 | By teachers (not pre-made) |
+| Middle school engagement | 70% complete 45 min | Session completion |
+| Asset reuse | 5x average | Marketplace metrics |
+| Teacher time savings | 30 min/day | Survey |
+
+### Phase 2 (Month 6-12)
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| Learning gains vs. control | +15% | Standardized test |
+| Recommendation trust | 80% | Teachers accept tutor rec |
+| Early warning accuracy | 85% precision | Caught struggling students |
+| Knowledge state coverage | 100 K-5 skills | Mapped and tracked |
+| Data completeness | 95% | Students with full profiles |
+
+### Phase 3 (Year 2+)
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| Curriculum coverage | 100% K-12 | All subjects, all grades |
+| School adoption | 100 schools | Using as core supplement |
+| Student outcomes | Top quartile | vs. district/state |
+| Sustainability | Profitable | Unit economics positive |
 
 ---
 
-**Bottom line**: Build a tutor, not a game. One hour of real learning, no babysitter required.
+## 🛠️ Technical Stack (Evolves by Phase)
 
-*Vision document complete. Ready for MVP specification.*
+### Phase 0 — MVP
+- **Frontend**: React Native (Android/Chrome OS)
+- **Assets**: Pre-generated (Fireworks AI + ElevenLabs)
+- **Storage**: Local SQLite (offline-first)
+- **Logic**: Rule-based adaptive algorithm (TypeScript/Python)
+- **Backend**: Minimal (Firebase for optional sync)
+
+### Phase 1 — Teacher Tools
+- **Frontend**: React web app (teacher dashboard)
+- **Tutors**: GPT-4/Claude API with safety constraints
+- **Storage**: PostgreSQL + S3 (cloud-based)
+- **Lessons**: JSON schema with validation
+- **Marketplace**: Basic (browse, download, upload)
+
+### Phase 2 — Agentic + Data
+- **Student model**: Custom knowledge representation
+- **Recommendations**: ML-based (scikit-learn / TensorFlow)
+- **Data warehouse**: BigQuery / Snowflake
+- **API**: GraphQL for complex queries
+- **SIS integration**: Clever, ClassLink APIs
+
+### Phase 3 — Knowledge Graphs
+- **Graph DB**: Neo4j or Amazon Neptune
+- **Asset generation**: Stable Diffusion API, GPT-4
+- **Game engine**: Unity or Godot (complex simulations)
+- **Scale**: Kubernetes, multi-tenant architecture
+
+---
+
+## 📚 Content Strategy
+
+### Phase 0: Foundational (K)
+- **Literacy**: 100 Lessons methodology (Engelmann), phonics, sight words
+- **Math**: Number sense 0-20, basic operations, patterns
+- **Knowledge**: Seasons, animals, community helpers
+- **Format**: Short quests, 5-min challenges, heavy scaffolding
+
+### Phase 1: Expanding (K-5, then middle school)
+- **Literacy**: Comprehension, vocabulary, writing prompts
+- **Math**: Multi-digit operations, fractions, geometry
+- **Science**: Experiments (virtual), biology, physics basics
+- **Social Studies**: History, geography, civics
+- **Format**: Longer quests, text-based interactions, open-ended challenges
+
+### Phase 2: Deepening (K-8)
+- **Critical thinking**: Logic, reasoning, problem-solving
+- **Interdisciplinary**: STEM projects, art integration
+- **Personalization**: Interest-based paths, pace adjustment
+- **Format**: Complex multi-quest arcs, real-world applications
+
+### Phase 3: Comprehensive (K-12)
+- **Advanced math**: Algebra, geometry, calculus
+- **Literature**: Analysis, rhetoric, creative writing
+- **Lab sciences**: Virtual labs, simulations
+- **World languages**: Immersion-based learning
+- **Format**: Full courses, semester-long progressions, portfolio assessment
+
+---
+
+## 🚫 Anti-Patterns (Never Violate)
+
+1. **Never require internet**: Design for offline-first, sync when available
+2. **Never manipulate children**: No addiction mechanics, no dark patterns
+3. **Never replace teachers**: Augment, empower, but teachers remain sovereign
+4. **Never ship slop**: Every asset, every line, every interaction is high-signal
+5. **Never fake data**: Honest about what's AI-generated vs. teacher-created
+6. **Never violate privacy**: COPPA, FERPA, encryption by default
+7. **Never one-size-fits-all**: True personalization, not just "level 3"
+
+---
+
+## 🤝 Partnerships & Deployment
+
+### Phase 0
+- 1-2 pilot kindergarten classrooms
+- Austin-area schools (local, accessible)
+- Chrome tablets provided (or BYOD if school has)
+
+### Phase 1
+- Expand to 10-20 classrooms
+- Include middle school (grade 6-8)
+- Teacher champions who create content
+
+### Phase 2
+- District-level pilots (whole schools)
+- SIS integration partnerships
+- Research partnerships (validate learning gains)
+
+### Phase 3
+- National scaling
+- Publisher partnerships (content licensing)
+- Government/NGO partnerships (underserved schools)
+
+---
+
+## 💰 Business Model (Phase 3+)
+
+### B2B SaaS for Schools
+- **Per-student pricing**: $10-20/year (competitive with IXL, Khan Academy Districts)
+- **Teacher tools**: Included at base price
+- **Premium features**: Advanced analytics, custom content, priority support
+- **Implementation fee**: One-time setup/training (optional)
+
+### Alternative Models
+- **Freemium**: Basic free, premium for schools (like Duolingo)
+- **Grants**: NGO/government funding for underserved schools
+- **Home version**: Direct-to-parent subscription (supplemental income)
+
+---
+
+## 🎓 The Alpha School Connection
+
+Flow Education embodies Alpha School principles:
+
+1. **Continuous Testing**: Every interaction is assessment
+2. **Continuous Improvement**: System adapts in real-time
+3. **Adaptive Lessons**: Pace and path adjust to individual
+
+Plus our additions:
+4. **Teacher Sovereignty**: Teachers create, AI delivers
+5. **60-Minute Independence**: Real classroom usability
+6. **Slop-Free**: No edutainment, no manipulation, just teaching
+
+---
+
+## 🏁 Immediate Next Steps (Phase 0)
+
+### This Week
+- [ ] Configure API keys (Fireworks, ElevenLabs)
+- [ ] Generate Quest 001 assets (Letter A)
+- [ ] Review outputs, iterate on prompts
+- [ ] Begin Quest 002-010 manifests
+
+### Next 2 Weeks
+- [ ] Complete all 10 quest asset manifests
+- [ ] Build React Native app skeleton
+- [ ] Implement quest navigation + challenge types
+- [ ] Integrate audio playback
+
+### Month 2
+- [ ] Complete adaptive logic
+- [ ] Internal testing (adult "fake kids")
+- [ ] Pilot with 3 real kindergarteners
+- [ ] Iterate based on feedback
+
+### Month 2-3
+- [ ] Deploy to pilot school
+- [ ] Daily usage, daily feedback
+- [ ] Bug fixes, polish
+- [ ] Document learnings for Phase 1
+
+---
+
+## 📝 Notes
+
+**Why kindergarten first?**
+- Hardest test (shortest attention span, pre-readers)
+- If we solve K, older grades are easier
+- High impact (early literacy is critical)
+- Teachers desperate for solutions
+
+**Why tablets, not web?**
+- Touch interfaces are natural for young kids
+- Offline capability (school WiFi unreliable)
+- Dedicated device = fewer distractions
+- Can hand to child and walk away
+
+**Why 60 minutes?**
+- Standard classroom block (reading/math centers)
+- Long enough to matter, short enough to be realistic
+- Differentiator (competitors fail at 20 min)
+- Proof of true engagement, not just novelty
+
+---
+
+**This is the plan. Phase 0 now, foundation for the future. Build the 60-minute standard, then scale.**
+
+*Last updated: March 2026*  
+*Next review: After Phase 0 pilot results*
