@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptEngines Prototypes</title>
+  <style>
+    :root {
+      --bg: #09090b;
+      --fg: #e4e4e7;
+      --accent: #F04D26;
+      --muted: #71717a;
+      --border: #27272a;
+      --card: #18181b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem; }
+    h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .subtitle { color: var(--muted); font-size: 1.125rem; margin-bottom: 3rem; }
+    .prototype {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .prototype h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .prototype h2 a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .prototype h2 a:hover {
+      text-decoration: underline;
+    }
+    .prototype p {
+      color: var(--muted);
+      font-size: 0.9375rem;
+    }
+    .meta {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      font-size: 0.75rem;
+    }
+    .meta span {
+      background: var(--bg);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      color: var(--muted);
+    }
+    .status-active {
+      background: rgba(34, 197, 94, 0.2) !important;
+      color: #22c55e !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>PromptEngines Prototypes</h1>
+    <p class="subtitle">Active experiments and proof-of-concepts</p>
+
+    <div class="prototype">
+      <h2><a href="flow-education/index.html">Flow Education</a></h2>
+      <p>Kindergarten tablet learning system. 60-minute independent engagement. Letters A-E, numbers 1-3, shapes, colors. Tutor-centric, not edutainment.</p>
+      <div class="meta">
+        <span class="status-active">ACTIVE</span>
+        <span>MVP Phase 0</span>
+        <span>Chrome Tablets</span>
+        <span>5/10 Quests Complete</span>
+      </div>
+    </div>
+
+    <!-- Add more prototypes here as they are created -->
+
+  </div>
+</body>
+</html>
