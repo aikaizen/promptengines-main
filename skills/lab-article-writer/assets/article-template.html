@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{TITLE}} — Prompt Engines Lab Notes</title>
+  <meta name="description" content="{{META_DESCRIPTION}}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../index.html">All Notes</a>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row">
+        <span>{{DATE}}</span>
+        <span>{{READ_TIME}} min read</span>
+        <span>{{CATEGORY}}</span>
+      </div>
+      <h1>{{H1}}</h1>
+      <p class="dek">{{DEK}}</p>
+
+      <article class="content">
+
+        <p>{{OPENING_PARAGRAPH}}</p>
+
+        <!-- Visual 1 — usually matrix or code trace -->
+        <figure class="figure">
+          <div class="visual visual-matrix">{{VISUAL_1_CONTENT}}</div>
+          <figcaption>Visual 1. {{VISUAL_1_CAPTION}}</figcaption>
+        </figure>
+
+        <h2>{{H2_1}}</h2>
+        <p>{{SECTION_1_P1}}</p>
+        <p>{{SECTION_1_P2}}</p>
+
+        <!-- Visual 2 — usually code trace or bars -->
+        <figure class="figure">
+          <div class="visual visual-code">{{VISUAL_2_CONTENT}}</div>
+          <figcaption>Visual 2. {{VISUAL_2_CAPTION}}</figcaption>
+        </figure>
+
+        <h2>{{H2_2}}</h2>
+        <p>{{SECTION_2_P1}}</p>
+        <p>{{SECTION_2_P2}}</p>
+
+        <h2>{{H2_3}}</h2>
+        <p>{{SECTION_3_P1}}</p>
+        <ul>
+          <li>{{LIST_ITEM_1}}</li>
+          <li>{{LIST_ITEM_2}}</li>
+          <li>{{LIST_ITEM_3}}</li>
+        </ul>
+
+        <!-- Visual 3 — usually bars -->
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:{{BAR_1}}%"></i><i style="height:{{BAR_2}}%"></i>
+            <i style="height:{{BAR_3}}%"></i><i style="height:{{BAR_4}}%"></i>
+            <i style="height:{{BAR_5}}%"></i><i style="height:{{BAR_6}}%"></i>
+            <i style="height:{{BAR_7}}%"></i><i style="height:{{BAR_8}}%"></i>
+          </div>
+          <figcaption>Visual 3. {{VISUAL_3_CAPTION}}</figcaption>
+        </figure>
+
+        <p>{{CLOSING_RECOMMENDATION}}</p>
+
+      </article>
+
+      <nav class="article-nav">
+        <a href="{{PREV_ARTICLE}}">← Previous note</a>
+        <a href="{{NEXT_ARTICLE}}">Next note →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+</body>
+</html>

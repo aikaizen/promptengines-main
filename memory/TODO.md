@@ -8,6 +8,9 @@
 ## 🔴 URGENT - Security & Domain
 
 - [ ] **BUY DOMAIN**: storybookstudio.ai (or .io/.app) — TOMORROW MORNING PRIORITY
+- [ ] **SET UP DOMAIN**: Configure DNS, connect to hosting, set up redirects
+- [ ] **EMAIL SETUP**: Create hello@, press@, partnerships@ addresses
+- [ ] **GIVE ANDY CONTROL**: Provide credentials/access so I can manage domain, email, hosting without asking each time
 - [ ] **Rotate BOTH GitHub PATs** exposed in plaintext chat (Feb 27 & Feb 28)
   - Go to: github.com/settings/tokens
   - Current tokens: `[REMOVED]` (Feb 27)
