@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptEngines — AI-Native Product Studio</title>
+  <meta name="description" content="PromptEngines is an AI-native product studio. Experiments: StoryBook Studio, Flow Education. Building real businesses, not demos.">
+  <style>
+    :root {
+      --bg: #09090b;
+      --fg: #e4e4e7;
+      --accent: #F04D26;
+      --muted: #71717a;
+      --border: #27272a;
+      --card: #18181b;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .hero .brand {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+    
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    
+    .experiment {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    
+    .experiment:hover {
+      border-color: var(--accent);
+    }
+    
+    .experiment h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .experiment h3 a {
+      color: var(--fg);
+      text-decoration: none;
+    }
+    
+    .experiment h3 a:hover {
+      color: var(--accent);
+    }
+    
+    .experiment p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    
+    .meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.75rem;
+      flex-wrap: wrap;
+    }
+    
+    .meta span {
+      background: var(--bg);
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      color: var(--muted);
+    }
+    
+    .status-production {
+      background: rgba(168, 85, 247, 0.2) !important;
+      color: #a855f7 !important;
+    }
+    
+    .status-experiment {
+      background: rgba(59, 130, 246, 0.2) !important;
+      color: #3b82f6 !important;
+    }
+    
+    .status-prototype {
+      background: rgba(34, 197, 94, 0.2) !important;
+      color: #22c55e !important;
+    }
+    
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .link-card {
+      background: var(--card);
+      padding: 1.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    
+    .link-card h4 {
+      color: var(--accent);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .link-card a {
+      color: var(--fg);
+      text-decoration: none;
+      display: block;
+      padding: 0.25rem 0;
+    }
+    
+    .link-card a:hover {
+      color: var(--accent);
+    }
+    
+    .pathway {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .pathway h3 {
+      color: var(--accent);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .pathway pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+    
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="brand">PromptEngines</div>
+    <h1>AI-Native Product Studio</h1>
+    <p>Building real businesses, not demos. Experiments graduate from prototypes to products.</p>
+  </div>
+
+  <div class="container">
+
+    <div class="pathway">
+      <h3>How We Work</h3>
+      <pre>🔬 Prototypes      → experiments in /prototypes
+       ↓ (proves value)
+🧪 Experiments     → subdomain (e.g., storybookstudio.promptengines.com)
+       ↓ (product-market fit)
+🚀 Products        → standalone domain (e.g., storybookstudio.com)</pre>
+    </div>
+
+    <h2>Active Experiments</h2>
+
+    <div class="experiment">
+      <h3><a href="https://storybookstudio.promptengines.com">StoryBook Studio</a></h3>
+      <p>AI personalized children's storybooks. 34+ art styles, character builder, digital + print. Freemium: 100 free credits on signup.</p>
+      <div class="meta">
+        <span class="status-experiment">EXPERIMENT</span>
+        <span>Pre-Launch</span>
+        <span>AI Storybooks</span>
+        <span>Print-on-Demand</span>
+      </div>
+    </div>
+
+    <div class="experiment">
+      <h3><a href="experiments/prototypes/flow-education/index.html">Flow Education</a></h3>
+      <p>Kindergarten tablet learning system. 60-minute independent engagement. Lesson Plan 001: Letters A-E & Number 1. Tutor-centric, not edutainment.</p>
+      <div class="meta">
+        <span class="status-prototype">PROTOTYPE</span>
+        <span>MVP Phase 0</span>
+        <span>Chrome Tablets</span>
+        <span>Lesson Plan 001</span>
+      </div>
+    </div>
+
+    <h2>Quick Links</h2>
+
+    <div class="links-grid">
+      <div class="link-card">
+        <h4>StoryBook Studio</h4>
+        <a href="https://storybookstudio.promptengines.com">Live Site →</a>
+        <a href="https://storybookstudio.promptengines.com/MARKETING-STRATEGY-2026.md">Marketing Strategy</a>
+        <a href="https://storybookstudio.promptengines.com/SEO-KEYWORDS.md">SEO Keywords</a>
+      </div>
+      
+      <div class="link-card">
+        <h4>Flow Education</h4>
+        <a href="experiments/prototypes/flow-education/index.html">Overview →</a>
+        <a href="experiments/prototypes/flow-education/lesson-plans.html">Lesson Plans</a>
+        <a href="experiments/prototypes/flow-education/MANIFESTO.html">Manifesto</a>
+        <a href="experiments/prototypes/flow-education/tools.html">Tools</a>
+      </div>
+      
+      <div class="link-card">
+        <h4>Lab Notes</h4>
+        <a href="https://lab.promptengines.com">Technical Blog →</a>
+        <a href="https://lab.promptengines.com/articles/">Articles</a>
+        <a href="https://lab.promptengines.com/build-stream/">Build Stream</a>
+        <a href="https://lab.promptengines.com/skills/">Skills</a>
+      </div>
+      
+      <div class="link-card">
+        <h4>Development</h4>
+        <a href="https://github.com/aikaizen/promptengines">GitHub →</a>
+        <a href="https://lab.promptengines.com/team/">Team</a>
+        <a href="https://lab.promptengines.com/purpose/">Purpose</a>
+      </div>
+    </div>
+
+    <h2>From the Lab</h2>
+
+    <div class="experiment">
+      <h3><a href="https://lab.promptengines.com">Lab Notes</a></h3>
+      <p>Technical writing on agentic engineering, AI tools evaluation, and building in public. Home to the anti-slop manifesto.</p>
+      <div class="meta">
+        <span class="status-experiment">ACTIVE</span>
+        <span>Technical Blog</span>
+        <span>Agentic Engineering</span>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>
+      PromptEngines — Building with AI, for humans.<br>
+      Austin, Texas
+    </p>
+    <p style="margin-top: 1rem;">
+      <a href="https://lab.promptengines.com">Lab</a> · 
+      <a href="https://github.com/aikaizen/promptengines">GitHub</a> · 
+      <a href="experiments/prototypes/index.html">Prototypes</a>
+    </p>
+  </footer>
+</body>
+</html>
