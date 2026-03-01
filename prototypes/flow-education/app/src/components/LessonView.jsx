@@ -1,20 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-
-// Audio hook for managing sounds
-const useAudio = () => {
-  const playSound = useCallback((type) => {
-    // Placeholder for audio integration
-    // In production: use Howler.js or Web Audio API
-    console.log(`Playing sound: ${type}`)
-  }, [])
-
-  const playNarration = useCallback((text) => {
-    // Placeholder for TTS or pre-recorded audio
-    console.log(`Narrating: ${text}`)
-  }, [])
-
-  return { playSound, playNarration }
-}
+import useAudio from '../hooks/useAudio.js'
 
 // Challenge types per Phase 0 spec
 const CHALLENGE_TYPES = {
@@ -219,12 +204,35 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
   const [isTracing, setIsTracing] = useState(false)
   const [tracePath, setTracePath] = useState([])
   const [celebrationActive, setCelebrationActive] = useState(false)
+  const [showTraceGuide, setShowTraceGuide] = useState(false)
+  const [frustrationTimer, setFrustrationTimer] = useState(null)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const [streakCount, setStreakCount] = useState(0)
+  const [isLocked, setIsLocked] = useState(false)
   
   const { playSound, playNarration } = useAudio()
   const traceCanvasRef = useRef(null)
+  const challengeStartTimeRef = useRef(Date.now())
   
   const challenges = useRef(createChallenges(lesson)).current
   const currentChallenge = challenges[currentChallengeIndex]
+  
+  // Check for reduced motion preference
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setPrefersReducedMotion(mediaQuery.matches)
+    
+    const handler = (e) => setPrefersReducedMotion(e.matches)
+    mediaQuery.addEventListener('change', handler)
+    return () => mediaQuery.removeEventListener('change', handler)
+  }, [])
+  
+  // Reset challenge start time when challenge changes
+  useEffect(() => {
+    challengeStartTimeRef.current = Date.now()
+    setStreakCount(0)
+    setIsLocked(false)
+  }, [currentChallengeIndex])
   
   // Timer for auto-advance (Intro, Listen, Reward, Outro)
   useEffect(() => {
@@ -261,6 +269,33 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       return () => clearTimeout(timeout)
     }
   }, [errorCount, showHint, playSound])
+  
+  // Frustration detection: auto-highlight after 30 seconds of no progress
+  useEffect(() => {
+    if (currentChallenge?.type === CHALLENGE_TYPES.FIND && !showHint) {
+      const timer = setTimeout(() => {
+        if (foundItems.size === 0) {
+          setShowHint(true)
+          setFeedbackType('hint')
+          setShowFeedback(true)
+          playSound('hint')
+          setTimeout(() => setShowFeedback(false), 3000)
+        }
+      }, 30000) // 30 seconds
+      
+      return () => clearTimeout(timer)
+    }
+  }, [currentChallenge, foundItems.size, showHint, playSound])
+  
+  // Trace guide: show after 2 failed traces
+  useEffect(() => {
+    if (currentChallenge?.type === CHALLENGE_TYPES.TRACE && traceCount === 0) {
+      const failedAttempts = Math.floor(errorCount / 2) // Each failed trace adds ~2 errors
+      if (failedAttempts >= 2 && !showTraceGuide) {
+        setShowTraceGuide(true)
+      }
+    }
+  }, [currentChallenge, traceCount, errorCount, showTraceGuide])
   
   const advanceToNextChallenge = useCallback(() => {
     if (currentChallengeIndex < challenges.length - 1) {
@@ -378,15 +413,22 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
     if (!isTracing) return
     setIsTracing(false)
     
-    // Calculate trace accuracy (simplified)
-    const accuracy = calculateTraceAccuracy(tracePath, currentChallenge.letter)
+    // Calculate trace accuracy with enhanced algorithm
+    const accuracy = calculateTraceAccuracy(
+      tracePath, 
+      currentChallenge.letter,
+      currentChallenge.isNumber
+    )
     
-    if (accuracy > 50) { // Lower threshold for kids
+    // PRD target: 70% accuracy, but we use 55% for MVP to be more forgiving
+    const threshold = 55
+    
+    if (accuracy >= threshold) {
       const newCount = traceCount + 1
       setTraceCount(newCount)
       
       if (newCount >= currentChallenge.requiredTraces) {
-        handleAnswer(true, 'trace-complete')
+        handleAnswer(true, `trace-complete-${accuracy}%`)
       } else {
         playSound('trace-progress')
         setFeedbackType('correct')
@@ -396,7 +438,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       }
     } else {
       playSound('trace-fail')
-      setErrorCount(prev => prev + 1)
+      setErrorCount(prev => prev + 2) // 2 errors per failed trace
       setFeedbackType('incorrect')
       setShowFeedback(true)
       setTimeout(() => {
@@ -406,19 +448,125 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
     }
   }, [isTracing, tracePath, currentChallenge, traceCount, handleAnswer, playSound])
   
-  // Simplified trace accuracy check
-  const calculateTraceAccuracy = (path, letter) => {
-    if (path.length < 5) return 0
-    // In production: proper path-to-letter comparison
-    // For MVP: check if path has reasonable length and direction changes
+  // Enhanced trace accuracy with letter-specific path detection
+  const calculateTraceAccuracy = (path, letter, isNumber = false) => {
+    if (path.length < 10) return 0 // Need enough points
+    
+    const canvas = traceCanvasRef.current
+    if (!canvas) return 0
+    
+    const canvasWidth = canvas.width
+    const canvasHeight = canvas.height
+    const centerX = canvasWidth / 2
+    const centerY = canvasHeight / 2
+    
+    // Define expected paths for letters and numbers
+    const getExpectedPath = (char, isNum) => {
+      if (isNum) {
+        // Number 1: straight vertical line from top to bottom
+        return [
+          { x: centerX, y: centerY - 80 },
+          { x: centerX, y: centerY + 80 }
+        ]
+      }
+      
+      // Letter paths (simplified strokes)
+      switch (char) {
+        case 'A':
+        case 'a':
+          // A: diagonal up, diagonal down, horizontal middle
+          return [
+            { x: centerX - 50, y: centerY + 60 },
+            { x: centerX, y: centerY - 60 },
+            { x: centerX + 50, y: centerY + 60 },
+            { x: centerX - 25, y: centerY },
+            { x: centerX + 25, y: centerY }
+          ]
+        case 'B':
+        case 'b':
+          // B: vertical, top curve, bottom curve
+          return [
+            { x: centerX - 40, y: centerY - 70 },
+            { x: centerX - 40, y: centerY + 70 },
+            { x: centerX + 30, y: centerY - 35 },
+            { x: centerX - 40, y: centerY },
+            { x: centerX + 30, y: centerY + 35 }
+          ]
+        case 'C':
+        case 'c':
+          // C: curve from top right, around to bottom right
+          return [
+            { x: centerX + 40, y: centerY - 50 },
+            { x: centerX - 20, y: centerY - 70 },
+            { x: centerX - 50, y: centerY },
+            { x: centerX - 20, y: centerY + 70 },
+            { x: centerX + 40, y: centerY + 50 }
+          ]
+        case 'D':
+        case 'd':
+          // D: vertical, curve right
+          return [
+            { x: centerX - 40, y: centerY - 70 },
+            { x: centerX - 40, y: centerY + 70 },
+            { x: centerX + 30, y: centerY + 70 },
+            { x: centerX + 50, y: centerY },
+            { x: centerX + 30, y: centerY - 70 }
+          ]
+        case 'E':
+        case 'e':
+          // E: vertical, top, middle, bottom horizontals
+          return [
+            { x: centerX + 50, y: centerY - 70 },
+            { x: centerX - 40, y: centerY - 70 },
+            { x: centerX - 40, y: centerY + 70 },
+            { x: centerX - 40, y: centerY },
+            { x: centerX + 30, y: centerY },
+            { x: centerX - 40, y: centerY + 70 },
+            { x: centerX + 50, y: centerY + 70 }
+          ]
+        default:
+          // Generic: any reasonable vertical or diagonal stroke
+          return [
+            { x: centerX, y: centerY - 70 },
+            { x: centerX, y: centerY + 70 }
+          ]
+      }
+    }
+    
+    const expectedPath = getExpectedPath(letter, isNumber)
+    
+    // Calculate total distance traced
     const totalDistance = path.reduce((sum, point, i) => {
       if (i === 0) return 0
       const dx = point.x - path[i-1].x
       const dy = point.y - path[i-1].y
       return sum + Math.sqrt(dx*dx + dy*dy)
     }, 0)
-    // Reasonable trace should be at least 100px long
-    return totalDistance > 100 ? 80 : 40
+    
+    // Minimum distance check (100px for letters, 80px for number 1)
+    const minDistance = isNumber ? 80 : 100
+    if (totalDistance < minDistance) return 0
+    
+    // Check if traced path covers expected key points
+    let pointsCovered = 0
+    expectedPath.forEach(expectedPoint => {
+      const nearPoint = path.some(p => {
+        const dx = p.x - expectedPoint.x
+        const dy = p.y - expectedPoint.y
+        const dist = Math.sqrt(dx*dx + dy*dy)
+        return dist < 40 // Within 40px of expected point
+      })
+      if (nearPoint) pointsCovered++
+    })
+    
+    // Calculate coverage percentage
+    const coveragePercent = (pointsCovered / expectedPath.length) * 100
+    
+    // Weighted score: coverage is 70%, distance is 30%
+    const distanceScore = Math.min(100, (totalDistance / 200) * 100)
+    const finalScore = (coveragePercent * 0.7) + (distanceScore * 0.3)
+    
+    return Math.round(finalScore)
   }
   
   // Handle quiz answer
@@ -586,6 +734,31 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
         )
         
       case CHALLENGE_TYPES.TRACE:
+        // Real-time canvas drawing effect
+        useEffect(() => {
+          const canvas = traceCanvasRef.current
+          if (!canvas || tracePath.length < 2) return
+          
+          const ctx = canvas.getContext('2d')
+          ctx.clearRect(0, 0, canvas.width, canvas.height)
+          
+          // Draw the traced path
+          ctx.beginPath()
+          ctx.strokeStyle = '#F04D26'
+          ctx.lineWidth = 8
+          ctx.lineCap = 'round'
+          ctx.lineJoin = 'round'
+          
+          tracePath.forEach((point, i) => {
+            if (i === 0) {
+              ctx.moveTo(point.x, point.y)
+            } else {
+              ctx.lineTo(point.x, point.y)
+            }
+          })
+          ctx.stroke()
+        }, [tracePath])
+        
         return (
           <div className="trace-challenge">
             <div className="trace-progress" role="status" aria-label={`Completed ${traceCount} of ${currentChallenge.requiredTraces} traces`}>
@@ -596,7 +769,8 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
               </div>
             </div>
             
-            <div className="trace-area">
+            <div className="trace-area" style={{ position: 'relative' }}>
+              {/* Letter/Number background */}
               <div className="letter-background">
                 {currentChallenge.isNumber ? (
                   <span className="trace-number">{currentChallenge.letter}</span>
@@ -604,6 +778,42 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
                   <span className="trace-letter">{currentChallenge.letter}</span>
                 )}
               </div>
+              
+              {/* Animated guide overlay */}
+              {showTraceGuide && (
+                <div className="trace-guide" aria-hidden="true">
+                  <svg width="300" height="300" viewBox="0 0 300 300">
+                    {currentChallenge.isNumber ? (
+                      // Number 1 guide: vertical line from top to bottom
+                      <line 
+                        x1="150" y1="50" 
+                        x2="150" y2="250" 
+                        stroke="#F04D26" 
+                        strokeWidth="4" 
+                        strokeDasharray="10,10"
+                        opacity="0.6"
+                      >
+                        <animate 
+                          attributeName="stroke-dashoffset" 
+                          from="0" to="20" 
+                          dur="1s" 
+                          repeatCount="indefinite"
+                        />
+                      </line>
+                    ) : (
+                      // Letter guide dots
+                      <g fill="#F04D26" opacity="0.5">
+                        <circle cx="150" cy="50" r="8">
+                          <animate attributeName="r" values="6;10;6" dur="1.5s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="150" cy="250" r="8">
+                          <animate attributeName="r" values="6;10;6" dur="1.5s" begin="0.5s" repeatCount="indefinite" />
+                        </circle>
+                      </g>
+                    )}
+                  </svg>
+                </div>
+              )}
               
               <canvas
                 ref={traceCanvasRef}
@@ -617,9 +827,15 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
                 onTouchStart={handleTraceStart}
                 onTouchMove={handleTraceMove}
                 onTouchEnd={handleTraceEnd}
-                style={{ touchAction: 'none' }}
+                style={{ touchAction: 'none', position: 'relative', zIndex: 10 }}
               />
             </div>
+            
+            {showTraceGuide && (
+              <div className="trace-guide-hint" role="alert">
+                💡 Follow the dotted line with your finger!
+              </div>
+            )}
             
             <p className="trace-instruction-large">
               {currentChallenge.isNumber 
