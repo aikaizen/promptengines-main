@@ -21,9 +21,16 @@ function App() {
   const [currentView, setCurrentView] = useState('home') // home, lesson, progress, mode-select
   const [activeLesson, setActiveLesson] = useState(null)
   const [ageMode, setAgeMode] = useState(() => {
-    // Load mode preference
-    const savedMode = localStorage.getItem(MODE_KEY)
-    return savedMode || null // null = not selected yet
+    // Load mode preference safely
+    try {
+      const savedMode = localStorage.getItem(MODE_KEY)
+      if (savedMode === '4yo' || savedMode === '5-6') {
+        return savedMode
+      }
+    } catch (e) {
+      console.error('Failed to load mode:', e)
+    }
+    return null // null = not selected yet
   })
   const [studentProgress, setStudentProgress] = useState(() => {
     // Load from localStorage on init
