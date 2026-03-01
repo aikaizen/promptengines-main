@@ -107,4 +107,38 @@
 
 ---
 
+## 🎓 Educational App — New Project
+
+### Research Task: Exceptional Education Experience
+**Source**: https://x.com/clharrington024/status/2027756965506486651 (paste text/screenshot — X blocking fetches)
+
+**Core Curriculum Stack to Integrate:**
+1. **Teach Your Child to Read in 100 Lessons** (Engelmann) — ages 4-5 reading foundation
+2. **FLDOE Recommended Book Lists** — grade-leveled novels, reading + discussion + writing
+3. **Math Academy** — grade 4+ math (claims "light years ahead of any other app")
+4. **Ed Hirsch Core Knowledge** — "What Your X Grader Needs to Know" series, K-8 curriculum
+
+**Research Questions:**
+- [ ] Can we license/integrate these curricula or build alternative?
+- [ ] What does Math Academy do that others don't?
+- [ ] How to combine these four into cohesive app experience?
+- [ ] AI personalization opportunities: adaptive pacing, comprehension checks, writing prompts
+
+**Hypothesis:** Parents want "refuse slop" education — best-in-class materials, not mediocre everything-apps.
+
+**Approach:** Research first, then prototype if viable. Could be StoryBook Studio sibling or standalone product.
+
+---
+
+## 🔐 Git Access Clarification
+
+**Current State:**
+- Lab Notes repo (`promptengines-main`): I have PAT, can push to GitHub ✅
+- Marketing workspace: Local commits only, no remote configured ⚠️
+- Need: PAT for marketing repo or use `promptengines-main` for all content
+
+**Action Needed:** Provide PAT or confirm marketing files should go in `promptengines-main/labnotes/` structure
+
+---
+
 **REMINDER**: Check this TODO first thing in the morning. Prioritize security (PAT rotation) before any other work.
