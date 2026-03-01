@@ -189,6 +189,18 @@ const getPhoneticSound = (letter) => {
 }
 
 function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
+  // Safety check - ensure lesson is valid
+  if (!lesson || !lesson.title) {
+    return (
+      <div style={{ padding: '40px', textAlign: 'center', color: '#e4e4e7' }}>
+        <p>Error: Lesson data not found</p>
+        <button onClick={onExit} style={{ padding: '10px 20px', marginTop: '20px' }}>
+          Go Back
+        </button>
+      </div>
+    )
+  }
+
   const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0)
   const [score, setScore] = useState(0)
   const [answers, setAnswers] = useState([])

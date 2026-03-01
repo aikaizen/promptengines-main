@@ -188,6 +188,25 @@ function App() {
             <span className="nav-label">Stars</span>
           </button>
         </nav>
+        
+        {/* DEMO: Quick mode switcher */}
+        <button
+          onClick={() => setCurrentView('mode-select')}
+          style={{
+            background: ageMode === '4yo' ? '#22c55e' : '#3b82f6',
+            color: 'white',
+            border: 'none',
+            borderRadius: '20px',
+            padding: '6px 12px',
+            fontSize: '0.75rem',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            marginLeft: '10px'
+          }}
+          title="Switch age mode"
+        >
+          {ageMode === '4yo' ? '🧒 4YO' : '🎒 5-6'}
+        </button>
       </header>
 
       <main className="app-main" role="main">
