@@ -356,11 +356,17 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
     
     if (foundItems.has(item)) return
     
+    // Prevent rapid tapping
+    if (isLocked) return
+    setIsLocked(true)
+    setTimeout(() => setIsLocked(false), 600)
+    
     const newFound = new Set(foundItems)
     
     if (isTarget) {
       newFound.add(item)
       setFoundItems(newFound)
+      setStreakCount(prev => prev + 1)
       playSound('tap-correct')
       
       // Check if we've found enough
@@ -375,11 +381,12 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
     } else {
       playSound('tap-wrong')
       setErrorCount(prev => prev + 1)
+      setStreakCount(0) // Reset streak on error
       setFeedbackType('incorrect')
       setShowFeedback(true)
       setTimeout(() => setShowFeedback(false), 600)
     }
-  }, [foundItems, currentChallenge, handleAnswer, playSound])
+  }, [foundItems, currentChallenge, handleAnswer, playSound, isLocked])
   
   // Handle trace start
   const handleTraceStart = useCallback((e) => {
@@ -685,6 +692,12 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
                 <div className="progress-pill">
                   Found: {foundItems.size} / {currentChallenge.requiredCorrect}
                 </div>
+                {streakCount > 2 && (
+                  <div className="streak-counter" aria-label={`${streakCount} correct streak`}>
+                    <span className="streak-fire">🔥</span>
+                    <span>{streakCount}</span>
+                  </div>
+                )}
               </div>
             )}
             
@@ -906,6 +919,13 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
         )
         
       case CHALLENGE_TYPES.REWARD:
+        // Play celebration sound on mount
+        useEffect(() => {
+          setCelebrationActive(true)
+          playSound('celebration')
+          playNarration(currentChallenge.script)
+        }, [])
+        
         return (
           <div className={`reward-challenge ${celebrationActive ? 'celebrating' : ''}`}>
             <div className="badge-container">
@@ -917,12 +937,12 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
             <h2 className="reward-title">{currentChallenge.title}</h2>
             <p className="reward-script">{currentChallenge.script}</p>
             <div className="confetti" aria-hidden="true">
-              {[...Array(20)].map((_, i) => (
+              {[...Array(30)].map((_, i) => (
                 <span key={i} className="confetti-piece" style={{ 
                   left: `${Math.random() * 100}%`, 
                   animationDelay: `${Math.random() * 2}s`,
-                  backgroundColor: ['#F04D26', '#22c55e', '#3b82f6', '#f59e0b'][Math.floor(Math.random() * 4)]
-                }}>🎉</span>
+                  fontSize: `${0.5 + Math.random() * 1.5}rem`,
+                }}>{['🎉', '✨', '🌟', '🎊', '🏆'][Math.floor(Math.random() * 5)]}</span>
               ))}
             </div>
           </div>
