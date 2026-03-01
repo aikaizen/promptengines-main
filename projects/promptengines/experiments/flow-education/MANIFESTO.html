@@ -35,6 +35,30 @@
       padding: 2rem 1.5rem;
     }
     
+    .topbar {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .topbar a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+    
+    .topbar a:hover {
+      color: var(--fg);
+    }
+    
+    .topbar .nav {
+      float: right;
+    }
+    
+    .topbar .nav a {
+      margin-left: 1.5rem;
+    }
+    
     header {
       border-bottom: 1px solid var(--border);
       padding-bottom: 2rem;
@@ -227,6 +251,13 @@
   </style>
 </head>
 <body>
+  <div class="topbar">
+    <a href="index.html">← Flow Education</a>
+    <div class="nav">
+      <a href="MANIFESTO.html">Manifesto</a>
+      <a href="tools.html">Tools</a>
+    </div>
+  </div>
   <div class="container">
     <header>
       <div class="brand">Flow Education</div>

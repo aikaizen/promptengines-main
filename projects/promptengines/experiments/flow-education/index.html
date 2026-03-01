@@ -31,6 +31,7 @@
     .topbar {
       border-bottom: 1px solid var(--border);
       padding: 1rem 2rem;
+      overflow: hidden;
     }
     
     .topbar a {
@@ -41,6 +42,10 @@
     
     .topbar a:hover {
       color: var(--fg);
+    }
+    
+    .topbar .nav a {
+      margin-left: 1.5rem;
     }
     
     .hero {
@@ -241,6 +246,10 @@
 <body>
   <div class="topbar">
     <a href="https://promptengines.com">← PromptEngines.com</a>
+    <div class="nav" style="float: right;">
+      <a href="MANIFESTO.html" style="color: var(--muted); text-decoration: none; font-size: 0.875rem; margin-left: 1.5rem;">Manifesto</a>
+      <a href="tools.html" style="color: var(--accent); text-decoration: none; font-size: 0.875rem; margin-left: 1.5rem;">Tools</a>
+    </div>
   </div>
 
   <section class="hero">
@@ -327,6 +336,12 @@
           </a>
         </li>
         <li>
+          <a href="tools.html">
+            <strong>Tools</strong>
+            <span>Batch image generator, audio synthesizer, lesson assembler</span>
+          </a>
+        </li>
+        <li>
           <a href="vision/VISION.md">
             <strong>Vision Document</strong>
             <span>Four-phase roadmap, technical architecture, success metrics</span>
@@ -340,8 +355,8 @@
         </li>
         <li>
           <a href="docs/TOOLS-PLAN.md">
-            <strong>Asset Generation Tools</strong>
-            <span>Batch image and audio generation for lesson creation</span>
+            <strong>Tools Roadmap</strong>
+            <span>MVP → Teacher product evolution plan</span>
           </a>
         </li>
         <li>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools — Flow Education</title>
+  <meta name="description" content="Asset generation tools for Flow Education: batch image generation, audio synthesis, lesson assembly, and more.">
+  <style>
+    :root {
+      --bg: #09090b;
+      --fg: #e4e4e7;
+      --accent: #F04D26;
+      --muted: #71717a;
+      --border: #27272a;
+      --card: #18181b;
+      --code: #1c1c1f;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    
+    .topbar {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .topbar a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+    
+    .topbar a:hover {
+      color: var(--fg);
+    }
+    
+    .topbar .nav a {
+      margin-left: 1.5rem;
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    
+    .hero p {
+      color: var(--muted);
+      font-size: 1.125rem;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    
+    h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .tool-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .tool-card h3 {
+      margin-top: 0;
+      color: var(--fg);
+    }
+    
+    .tool-card .meta {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+    }
+    
+    .tool-card .meta span {
+      background: var(--bg);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      color: var(--muted);
+    }
+    
+    .tool-card .status {
+      background: rgba(34, 197, 94, 0.2) !important;
+      color: #22c55e !important;
+    }
+    
+    .tool-card .status-beta {
+      background: rgba(234, 179, 8, 0.2) !important;
+      color: #eab308 !important;
+    }
+    
+    .tool-card p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    
+    pre {
+      background: var(--code);
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.875rem;
+      margin: 1rem 0;
+    }
+    
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.875rem;
+      background: var(--code);
+      padding: 0.125rem 0.375rem;
+      border-radius: 3px;
+    }
+    
+    pre code {
+      background: none;
+      padding: 0;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .feature {
+      background: var(--card);
+      padding: 1.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    
+    .feature h4 {
+      color: var(--accent);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature p {
+      color: var(--muted);
+      font-size: 0.9375rem;
+    }
+    
+    ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    li {
+      margin-bottom: 0.5rem;
+    }
+    
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    .quickstart {
+      background: var(--card);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .quickstart h3 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    
+    .steps {
+      counter-reset: step;
+    }
+    
+    .step {
+      counter-increment: step;
+      margin-bottom: 1.5rem;
+      padding-left: 2.5rem;
+      position: relative;
+    }
+    
+    .step::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1.5rem;
+      height: 1.5rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="index.html">← Flow Education</a>
+    <div class="nav">
+      <a href="MANIFESTO.html">Manifesto</a>
+      <a href="tools.html">Tools</a>
+      <a href="https://github.com/aikaizen/promptengines">GitHub</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>Tools</h1>
+    <p>Asset generation and lesson creation tools for Flow Education</p>
+  </div>
+
+  <div class="container">
+    
+    <div class="quickstart">
+      <h3>🚀 Quick Start: Generate Your First Lesson</h3>
+      <div class="steps">
+        <div class="step">
+          <strong>Get API keys</strong>
+          <p>Fireworks AI for images, ElevenLabs for audio (or Amazon Polly for budget option)</p>
+        </div>
+        <div class="step">
+          <strong>Configure</strong>
+          <pre><code>cd tools/
+cp config.json.template config.json
+# Add your API keys</code></pre>
+        </div>
+        <div class="step">
+          <strong>Generate images</strong>
+          <pre><code>node image-gen/batch-generate.js --lesson quest-001-letter-a</code></pre>
+        </div>
+        <div class="step">
+          <strong>Generate audio</strong>
+          <pre><code>node audio-gen/batch-audio.js --lesson quest-001-letter-a</code></pre>
+        </div>
+        <div class="step">
+          <strong>Review outputs</strong>
+          <p>Check <code>assets/images/</code> and <code>assets/audio/</code> — iterate on prompts if needed</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>Available Tools</h2>
+
+    <div class="tool-card">
+      <h3>🔧 batch-generate.js</h3>
+      <div class="meta">
+        <span class="status">✓ Ready</span>
+        <span>Node.js</span>
+        <span>Fireworks AI</span>
+      </div>
+      <p>Batch image generation for lesson assets. Reads asset manifests and generates all images with consistent cartoon style.</p>
+      
+      <h4>Usage</h4>
+      <pre><code># Generate all images for a lesson
+node image-gen/batch-generate.js --lesson quest-001-letter-a
+
+# Force regeneration (overwrite existing)
+node image-gen/batch-generate.js --lesson quest-001-letter-a --force
+
+# Generate specific category only
+node image-gen/batch-generate.js --lesson quest-001-letter-a --category characters</code></pre>
+
+      <h4>Features</h4>
+      <ul>
+        <li>Automatic style template application (consistent cartoon look)</li>
+        <li>Organized output by lesson and category</li>
+        <li>Generation report with success/failure tracking</li>
+        <li>Resume support (skips existing files)</li>
+        <li>Transparent PNG backgrounds for characters/objects</li>
+      </ul>
+
+      <h4>Output Structure</h4>
+      <pre><code>assets/images/quest-001-letter-a/
+├── characters/
+│   ├── tutor-neutral.png
+│   ├── tutor-happy.png
+│   └── ...
+├── objects/
+│   ├── apple.png
+│   ├── ant.png
+│   └── ...
+├── letters/
+│   ├── letter-a.png
+│   └── ...
+├── backgrounds/
+│   └── classroom.png
+└── ui/
+    ├── button-play.png
+    └── ...</code></pre>
+    </div>
+
+    <div class="tool-card">
+      <h3>🔊 batch-audio.js</h3>
+      <div class="meta">
+        <span class="status">✓ Ready</span>
+        <span>Node.js</span>
+        <span>ElevenLabs / Polly</span>
+      </div>
+      <p>Batch audio generation for lesson narration and feedback. Supports ElevenLabs (high quality) or Amazon Polly (budget).</p>
+
+      <h4>Usage</h4>
+      <pre><code># Generate with ElevenLabs (recommended for MVP)
+node audio-gen/batch-audio.js --lesson quest-001-letter-a --provider elevenlabs
+
+# Generate with Polly (cheaper for scale)
+node audio-gen/batch-audio.js --lesson quest-001-letter-a --provider polly
+
+# Force regeneration
+node audio-gen/batch-audio.js --lesson quest-001-letter-a --force</code></pre>
+
+      <h4>Features</h4>
+      <ul>
+        <li>Multi-provider support (ElevenLabs, Amazon Polly)</li>
+        <li>SSML support for Polly (pauses, emphasis, intonation)</li>
+        <li>Emotion/tone tags in manifest (cheerful, encouraging, calm)</li>
+        <li>MP3 output, 64-128kbps, <10MB per lesson</li>
+        <li>Generation report tracking success/failure</li>
+      </ul>
+
+      <h4>Cost Comparison</h4>
+      <ul>
+        <li><strong>ElevenLabs</strong>: ~$2.05 per lesson (natural quality)</li>
+        <li><strong>Amazon Polly</strong>: ~$0.13 per lesson (robotic but functional)</li>
+      </ul>
+
+      <h4>Output Structure</h4>
+      <pre><code>assets/audio/quest-001-letter-a/
+├── narration/
+│   ├── intro-welcome.mp3
+│   ├── challenge-1-instruction.mp3
+│   └── ...
+└── feedback/
+    ├── correct-01.mp3
+    ├── correct-02.mp3
+    ├── encourage-01.mp3
+    └── ...</code></pre>
+    </div>
+
+    <div class="tool-card">
+      <h3>📦 lesson-assembler (Coming Soon)</h3>
+      <div class="meta">
+        <span class="status-beta">β In Development</span>
+        <span>Node.js</span>
+        <span>JSON → App Package</span>
+      </div>
+      <p>Compiles generated assets into deployable lesson packages for the Flow Education Android app.</p>
+
+      <h4>Planned Usage</h4>
+      <pre><code># Package a complete lesson
+node lesson-assembler/package.js --lesson quest-001-letter-a
+
+# Package with metadata
+node lesson-assembler/package.js --lesson quest-001-letter-a --include-manifest
+
+# Output ready for Android assets/ folder
+# Copies to: output/quest-001-letter-a/ ready for deployment</code></pre>
+
+      <h4>Planned Features</h4>
+      <ul>
+        <li>Asset validation (check all required files present)</li>
+        <li>Manifest generation (JSON for app consumption)</li>
+        <li>Size optimization (compress images/audio if needed)</li>
+        <li>Dependency resolution (prerequisite quests)</li>
+        <li>Checksum generation (verify integrity)</li>
+      </ul>
+    </div>
+
+    <div class="tool-card">
+      <h3>🧪 test-builder (Planned)</h3>
+      <div class="meta">
+        <span>Planned</span>
+        <span>AI-Powered</span>
+        <span>Phase 1+</span>
+      </div>
+      <p>AI-generated quiz questions and distractors for lessons. Creates challenging but fair assessments.</p>
+
+      <h4>Planned Features</h4>
+      <ul>
+        <li>Generate multiple-choice questions from lesson content</li>
+        <li>Plausible distractors (wrong answers that test understanding)</li>
+        <li>Difficulty calibration (easy/medium/hard variants)</li>
+        <li>Teacher review workflow (approve before use)</li>
+      </ul>
+    </div>
+
+    <h2>Configuration</h2>
+
+    <h3>config.json Template</h3>
+    <pre><code>{
+  "fireworks": {
+    "apiKey": "fw_...",
+    "model": "accounts/fireworks/models/stable-diffusion-xl-1024-v1-0",
+    "defaultSize": "1024x1024"
+  },
+  "elevenlabs": {
+    "apiKey": "sk_...",
+    "voiceId": "21m00Tcm4TlvDq8ikWAM",
+    "model": "eleven_multilingual_v2"
+  },
+  "polly": {
+    "accessKeyId": "AKIA...",
+    "secretAccessKey": "...",
+    "region": "us-east-1",
+    "voiceId": "Joanna"
+  },
+  "output": {
+    "imageDir": "../assets/images",
+    "audioDir": "../assets/audio",
+    "reportDir": "../output"
+  }
+}</code></pre>
+
+    <p><strong>Note:</strong> Never commit <code>config.json</code> with real keys. Add to <code>.gitignore</code>.</p>
+
+    <h2>Asset Manifest Format</h2>
+
+    <p>All tools read from <code>lessons/{lesson-id}/assets-manifest.json</code>:</p>
+
+    <pre><code>{
+  "lessonId": "quest-001-letter-a",
+  "title": "Letter A Adventure",
+  "duration": "6 minutes",
+  "images": {
+    "characters": [
+      {
+        "id": "tutor-happy",
+        "prompt": "Friendly cartoon tutor character, smiling...",
+        "size": "512x512"
+      }
+    ],
+    "objects": [...],
+    "letters": [...],
+    "backgrounds": [...],
+    "ui": [...]
+  },
+  "audio": {
+    "narration": [
+      {
+        "id": "intro-welcome",
+        "text": "Welcome to the Letter A Adventure!",
+        "emotion": "cheerful",
+        "pace": "normal"
+      }
+    ],
+    "feedback": [...]
+  }
+}</code></pre>
+
+    <h2>Style Guidelines</h2>
+
+    <div class="grid">
+      <div class="feature">
+        <h4>Visual Style</h4>
+        <p>2D cartoon, friendly and warm, simple shapes, bold outlines, flat colors, no gradients, educational style, high contrast, cheerful, transparent backgrounds</p>
+      </div>
+      <div class="feature">
+        <h4>Audio Style</h4>
+        <p>Clear, warm, encouraging, age-appropriate pacing, specific praise over generic "good job", emotion-matched to context</p>
+      </div>
+      <div class="feature">
+        <h4>File Formats</h4>
+        <p>Images: PNG (characters/objects with transparency), JPG (backgrounds). Audio: MP3, 64-128kbps. Max 200MB per lesson.</p>
+      </div>
+      <div class="feature">
+        <h4>Naming Convention</h4>
+        <p>kebab-case, descriptive, category-prefixed: <code>tutor-happy.png</code>, <code>apple.png</code>, <code>intro-welcome.mp3</code></p>
+      </div>
+    </div>
+
+    <h2>Repository Structure</h2>
+
+    <pre><code>projects/promptengines/experiments/flow-education/
+├── README.md                    # System overview
+├── QUICKSTART.md               # 10-minute setup guide
+├── MANIFESTO.html              # Philosophy & standards
+├── index.html                  # This site
+├── tools/
+│   ├── config.json.template    # API key template
+│   ├── image-gen/
+│   │   └── batch-generate.js   # ✅ Ready
+│   └── audio-gen/
+│       └── batch-audio.js      # ✅ Ready
+├── lessons/
+│   └── quest-001-letter-a/
+│       └── assets-manifest.json # Asset specifications
+├── assets/                      # Generated outputs
+│   ├── images/
+│   └── audio/
+└── output/                      # Assembled lessons</code></pre>
+
+    <h2>Contributing</h2>
+
+    <p>These tools are open source. To contribute:</p>
+
+    <ol>
+      <li>Fork <a href="https://github.com/aikaizen/promptengines">github.com/aikaizen/promptengines</a></li>
+      <li>Make atomic commits with explicit paths</li>
+      <li>Follow the slop-free standard (no hedging, no hype, specific and rigorous)</li>
+      <li>Test with Quest 001 before submitting</li>
+    </ol>
+
+    <h2>Support</h2>
+
+    <p>
+      Questions? Issues? <a href="mailto:hello@promptengines.com">hello@promptengines.com</a><br>
+      Follow development: <a href="https://lab.promptengines.com">lab.promptengines.com</a>
+    </p>
+
+  </div>
+
+  <footer>
+    <p>
+      Flow Education — A <a href="https://promptengines.com">PromptEngines</a> Experiment<br>
+      Built in Austin, Texas
+    </p>
+  </footer>
+</body>
+</html>
