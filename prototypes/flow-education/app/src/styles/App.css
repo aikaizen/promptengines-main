@@ -2642,3 +2642,151 @@ a:focus-visible {
     font-size: 4rem;
   }
 }
+
+/* ============================================
+   TABLET & TOUCH OPTIMIZATIONS (Enhanced)
+   ============================================ */
+
+/* Coarse pointer = tablets/touch screens */
+@media (pointer: coarse) {
+  /* Larger touch targets for tablets/touch */
+  button, 
+  .find-item, 
+  .quiz-option, 
+  .nav-btn,
+  .mode-option,
+  .simple-find-item,
+  .connect-dot {
+    min-height: 80px;
+    min-width: 80px;
+  }
+  
+  /* More spacing between touch targets */
+  .kid-lessons-grid,
+  .simple-find-grid,
+  .quiz-options-large {
+    gap: 20px;
+  }
+  
+  /* Larger icons for touch */
+  .nav-icon {
+    font-size: 2rem;
+  }
+  
+  .kid-emoji-large {
+    font-size: 5rem;
+  }
+}
+
+/* Prevent 300ms touch delay on mobile browsers */
+button, 
+a, 
+[role="button"], 
+[role="radio"],
+[role="gridcell"] {
+  touch-action: manipulation;
+}
+
+/* Disable pull-to-refresh on Chrome Android */
+.app {
+  overscroll-behavior-y: none;
+}
+
+/* Ensure app fills viewport on tablets */
+.app {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+/* Handle keyboard appearance on tablets */
+@media (max-height: 500px) {
+  .app-header {
+    padding: 0.5rem;
+  }
+  
+  .kid-header {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .simple-progress {
+    padding: 10px;
+  }
+}
+
+/* Landscape tablet optimizations */
+@media (orientation: landscape) and (max-height: 600px) {
+  .kid-lessons-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .simple-find-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .mode-options {
+    flex-direction: row;
+  }
+}
+
+/* Specific iPad optimizations */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+  
+  .kid-lesson-card {
+    padding: 2rem;
+  }
+  
+  .simple-find-item {
+    min-width: 160px;
+    min-height: 160px;
+  }
+}
+
+/* Chrome tablet specific */
+@media screen and (min-width: 600px) and (pointer: coarse) {
+  .simple-challenge {
+    max-width: 600px;
+  }
+  
+  .word-emoji-big {
+    font-size: 10rem;
+  }
+  
+  .tutor-big {
+    font-size: 10rem;
+  }
+}
+
+/* Prevent hover effects on touch (they get stuck) */
+@media (hover: none) {
+  button:hover,
+  .find-item:hover,
+  .quiz-option:hover,
+  .nav-btn:hover {
+    transform: none;
+  }
+  
+  button:active,
+  .find-item:active,
+  .quiz-option:active,
+  .nav-btn:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+/* High-DPI tablet screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .trace-canvas,
+  .connect-dots-area {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}

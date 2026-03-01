@@ -3,6 +3,7 @@ import LessonPlanList from './components/LessonPlanList'
 import LessonView from './components/LessonView'
 import SimpleLessonView from './components/SimpleLessonView'
 import ProgressTracker from './components/ProgressTracker'
+import { useTabletTouch, usePreventZoom } from './hooks/useTabletTouch.js'
 import './styles/App.css'
 
 // Import lesson plan data
@@ -13,6 +14,10 @@ const STORAGE_KEY = 'flow-education-progress'
 const MODE_KEY = 'flow-education-mode'
 
 function App() {
+  // Initialize tablet optimizations
+  const { isTouchDevice, orientation, hapticFeedback } = useTabletTouch()
+  usePreventZoom()
+  
   const [currentView, setCurrentView] = useState('home') // home, lesson, progress, mode-select
   const [activeLesson, setActiveLesson] = useState(null)
   const [ageMode, setAgeMode] = useState(() => {

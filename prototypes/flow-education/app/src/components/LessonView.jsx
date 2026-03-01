@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import useAudio from '../hooks/useAudio.js'
+import { useTabletTouch } from '../hooks/useTabletTouch.js'
 
 // Challenge types per Phase 0 spec
 const CHALLENGE_TYPES = {
@@ -211,6 +212,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
   const [isLocked, setIsLocked] = useState(false)
   
   const { playSound, playNarration } = useAudio()
+  const { isTouchDevice, hapticFeedback } = useTabletTouch()
   const traceCanvasRef = useRef(null)
   const challengeStartTimeRef = useRef(Date.now())
   
@@ -325,6 +327,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       setFeedbackType('correct')
       setErrorCount(0)
       playSound('correct')
+      hapticFeedback('success') // Tablet haptic feedback
       
       if (currentChallenge.type === CHALLENGE_TYPES.REWARD) {
         setCelebrationActive(true)
@@ -333,6 +336,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       setErrorCount(prev => prev + 1)
       setFeedbackType('incorrect')
       playSound('incorrect')
+      hapticFeedback('error') // Tablet haptic feedback
     }
     
     setShowFeedback(true)
@@ -343,7 +347,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
         advanceToNextChallenge()
       }
     }, 1500)
-  }, [answers, currentChallengeIndex, currentChallenge, playSound, advanceToNextChallenge])
+  }, [answers, currentChallengeIndex, currentChallenge, playSound, advanceToNextChallenge, hapticFeedback])
   
   // Handle Find/Tap challenge
   const handleFindTap = useCallback((item, isTarget) => {
@@ -368,6 +372,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       setFoundItems(newFound)
       setStreakCount(prev => prev + 1)
       playSound('tap-correct')
+      hapticFeedback('light') // Subtle haptic for each correct tap
       
       // Check if we've found enough
       if (newFound.size >= currentChallenge.requiredCorrect) {
@@ -384,9 +389,10 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       setStreakCount(0) // Reset streak on error
       setFeedbackType('incorrect')
       setShowFeedback(true)
+      hapticFeedback('error') // Error haptic feedback
       setTimeout(() => setShowFeedback(false), 600)
     }
-  }, [foundItems, currentChallenge, handleAnswer, playSound, isLocked])
+  }, [foundItems, currentChallenge, handleAnswer, playSound, isLocked, hapticFeedback])
   
   // Handle trace start
   const handleTraceStart = useCallback((e) => {

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import useAudio from '../hooks/useAudio.js'
+import { useTabletTouch } from '../hooks/useTabletTouch.js'
 
 // Simplified challenge types for 4-year-olds
 const CHALLENGE_TYPES = {
@@ -114,6 +115,7 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
   const [showExitConfirm, setShowExitConfirm] = useState(false)
   
   const { playSound, playNarration } = useAudio()
+  const { isTouchDevice, hapticFeedback } = useTabletTouch()
   const canvasRef = useRef(null)
   const challenges = useRef(createSimpleChallenges(lesson)).current
   const currentChallenge = challenges[currentChallengeIndex]
@@ -137,12 +139,13 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
     }
   }, [currentChallengeIndex])
   
-  // Play mini-celebration sound
+  // Play mini-celebration sound with haptic
   const celebrate = useCallback(() => {
     setShowMiniCelebration(true)
     playSound('correct')
+    hapticFeedback('success') // Success haptic for 4YO
     setTimeout(() => setShowMiniCelebration(false), 800)
-  }, [playSound])
+  }, [playSound, hapticFeedback])
   
   const advanceToNext = useCallback(() => {
     if (currentChallengeIndex < challenges.length - 1) {
@@ -164,6 +167,7 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
       setTimeout(() => advanceToNext(), 1000)
     } else {
       playSound('incorrect')
+      hapticFeedback('error') // Error haptic for wrong tap
       const newWrongCount = wrongTapCount + 1
       setWrongTapCount(newWrongCount)
       
@@ -177,7 +181,7 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
         }, 1500)
       }
     }
-  }, [wrongTapCount, celebrate, playSound, advanceToNext])
+  }, [wrongTapCount, celebrate, playSound, advanceToNext, hapticFeedback])
   
   // Handle connect-the-dots tracing
   const handleDotTap = useCallback((dotIndex) => {
