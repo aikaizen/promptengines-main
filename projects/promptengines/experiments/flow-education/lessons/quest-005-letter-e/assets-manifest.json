@@ -1,0 +1,68 @@
+{
+  "lessonId": "quest-005-letter-e",
+  "title": "Letter E Adventure",
+  "description": "Explore the letter E with elephant, egg, and eagle",
+  "duration": "6 minutes",
+  "difficulty": "beginner",
+  "prerequisites": ["quest-001-letter-a", "quest-002-letter-b", "quest-003-letter-c", "quest-004-letter-d"],
+  "learningObjectives": [
+    "Recognize uppercase and lowercase E",
+    "Associate E sound with /e/",
+    "Identify E-words: elephant, egg, eagle, elbow, engine"
+  ],
+  "images": {
+    "characters": [
+      { "id": "tutor-neutral", "prompt": "Friendly cartoon tutor character, neutral expression, simple 2D style, transparent background", "size": "512x512" },
+      { "id": "tutor-happy", "prompt": "Friendly cartoon tutor character, happy smiling expression, simple 2D style, transparent background", "size": "512x512" },
+      { "id": "tutor-thinking", "prompt": "Friendly cartoon tutor character, thinking expression, simple 2D style, transparent background", "size": "512x512" },
+      { "id": "tutor-encouraging", "prompt": "Friendly cartoon tutor character, encouraging expression, thumbs up, simple 2D style, transparent background", "size": "512x512" },
+      { "id": "tutor-waving", "prompt": "Friendly cartoon tutor character, waving hand, simple 2D style, transparent background", "size": "512x512" }
+    ],
+    "objects": [
+      { "id": "elephant", "prompt": "Cute cartoon gray elephant, big ears, trunk up, simple 2D style, transparent background", "size": "512x512" },
+      { "id": "egg", "prompt": "Cartoon white egg with small cracks, simple 2D style, transparent background", "size": "512x512" },
+      { "id": "eagle", "prompt": "Cartoon majestic eagle, brown and white, wings spread, simple 2D style, transparent background", "size": "512x512" },
+      { "id": "elbow", "prompt": "Cartoon arm showing elbow bend, simple anatomical illustration, transparent background", "size": "512x512" },
+      { "id": "engine", "prompt": "Cartoon train engine, steam locomotive, simple 2D style, transparent background", "size": "512x512" }
+    ],
+    "letters": [
+      { "id": "letter-e-upper", "prompt": "Cartoon uppercase letter E, red color, playful 3D-ish style, bold outlines, transparent background", "size": "512x512" },
+      { "id": "letter-e-lower", "prompt": "Cartoon lowercase letter e, red color, playful rounded style, transparent background", "size": "512x512" }
+    ],
+    "backgrounds": [
+      { "id": "classroom", "prompt": "Warm kindergarten classroom interior, soft pastel colors, flat illustration style", "size": "1024x1024" },
+      { "id": "savanna", "prompt": "African savanna landscape with elephants, acacia trees, warm sunset colors, flat cartoon style", "size": "1024x1024" },
+      { "id": "nest", "prompt": "Eagle nest high on mountain cliff, blue sky, clouds, flat cartoon style", "size": "1024x1024" }
+    ],
+    "ui": [
+      { "id": "button-play", "prompt": "Green play button, rounded rectangle, white triangle icon, transparent background", "size": "256x256" },
+      { "id": "button-next", "prompt": "Orange next button, rounded rectangle, white arrow, transparent background", "size": "256x256" },
+      { "id": "star-filled", "prompt": "Filled yellow star, achievement indicator, transparent background", "size": "128x128" },
+      { "id": "progress-bar", "prompt": "Horizontal progress bar UI, red fill, rounded ends, transparent background", "size": "512x64" },
+      { "id": "checkmark", "prompt": "Green checkmark, success indicator, transparent background", "size": "128x128" }
+    ]
+  },
+  "audio": {
+    "narration": [
+      { "id": "intro-welcome", "text": "Excellent! You're here! Ready to meet the letter E?", "emotion": "cheerful", "pace": "normal" },
+      { "id": "intro-letter-e", "text": "This is the letter E. It says eh-eh-eh like elephant!", "emotion": "demonstrating", "pace": "slow" },
+      { "id": "challenge-1-elephant", "text": "Elephant! E-e-elephant! Big and strong!", "emotion": "enthusiastic", "pace": "normal" },
+      { "id": "challenge-1-egg", "text": "Egg! E-e-egg! Crack it open!", "emotion": "playful", "pace": "normal" },
+      { "id": "challenge-1-eagle", "text": "Eagle! E-e-eagle! Flying high!", "emotion": "enthusiastic", "pace": "normal" },
+      { "id": "challenge-2-instruction", "text": "Excellent finding! Look for E things!", "emotion": "cheerful", "pace": "normal" },
+      { "id": "outro", "text": "Extraordinary! You know five letters! A, B, C, D, and E! You're a letter superstar!", "emotion": "celebrating", "pace": "excited" }
+    ],
+    "feedback": [
+      { "id": "correct-01", "text": "Excellent! That's E!", "emotion": "celebrating" },
+      { "id": "correct-02", "text": "E for excellent work!", "emotion": "celebrating" },
+      { "id": "encourage-01", "text": "Almost! E says eh like egg.", "emotion": "gentle" }
+    ]
+  },
+  "challenges": [
+    { "id": "challenge-1-listen", "type": "listening", "title": "Hear the E Sound", "duration": 90 },
+    { "id": "challenge-2-find", "type": "identification", "title": "Find E Things", "duration": 120 },
+    { "id": "challenge-3-trace", "type": "tracing", "title": "Write Letter E", "duration": 120 },
+    { "id": "boss-challenge", "type": "quiz", "title": "E Challenge", "duration": 90 }
+  ],
+  "metadata": { "createdAt": "2026-03-01", "author": "Flow Education System", "version": "1.0.0" }
+}

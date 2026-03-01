@@ -1,0 +1,413 @@
+{
+  "lessonId": "quest-002-letter-b",
+  "title": "Letter B Adventure",
+  "description": "Learn the letter B with the butterfly, bear, and ball",
+  "duration": "6 minutes",
+  "difficulty": "beginner",
+  "prerequisites": ["quest-001-letter-a"],
+  "learningObjectives": [
+    "Recognize uppercase and lowercase B",
+    "Associate B sound with /b/",
+    "Identify B-words: butterfly, bear, ball, boat, banana"
+  ],
+  "images": {
+    "characters": [
+      {
+        "id": "tutor-neutral",
+        "prompt": "Friendly cartoon tutor character, neutral expression, standing pose, simple 2D style, bold outlines, flat colors, educational, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "tutor-happy",
+        "prompt": "Friendly cartoon tutor character, happy smiling expression, excited pose, simple 2D style, bold outlines, warm colors, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "tutor-thinking",
+        "prompt": "Friendly cartoon tutor character, thinking expression, hand on chin, curious pose, simple 2D style, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "tutor-encouraging",
+        "prompt": "Friendly cartoon tutor character, warm encouraging expression, supportive pose, thumbs up, simple 2D style, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "tutor-waving",
+        "prompt": "Friendly cartoon tutor character, waving hand, welcoming smile, simple 2D style, bold outlines, transparent background",
+        "size": "512x512"
+      }
+    ],
+    "objects": [
+      {
+        "id": "butterfly",
+        "prompt": "Cute cartoon butterfly, colorful wings, friendly face, simple 2D style, bold outlines, flying pose, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "bear",
+        "prompt": "Cute cartoon teddy bear, brown fur, friendly smiling face, simple 2D style, bold outlines, standing pose, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "ball",
+        "prompt": "Colorful cartoon ball, red and blue stripes, simple round shape, friendly style, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "boat",
+        "prompt": "Cute cartoon sailboat, white sail, blue hull, simple 2D style, floating on invisible water, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "banana",
+        "prompt": "Cartoon yellow banana, curved shape, simple 2D style, friendly face optional, bold outlines, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "distractor-apple",
+        "prompt": "Cartoon red apple, from Letter A lesson, friendly face, simple 2D style, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "distractor-cat",
+        "prompt": "Cute cartoon gray cat, sitting pose, simple 2D style, starts with C sound, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "distractor-dog",
+        "prompt": "Cute cartoon brown dog, sitting pose, friendly expression, simple 2D style, starts with D sound, transparent background",
+        "size": "512x512"
+      }
+    ],
+    "letters": [
+      {
+        "id": "letter-b-upper",
+        "prompt": "Cartoon uppercase letter B, blue color with light blue highlights, playful 3D-ish style, bold outlines, friendly, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "letter-b-lower",
+        "prompt": "Cartoon lowercase letter b, blue color, playful rounded style, bold outlines, friendly, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "letter-a-review",
+        "prompt": "Cartoon uppercase letter A, orange color (from previous lesson), review reference, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "letter-c-preview",
+        "prompt": "Cartoon uppercase letter C, green color, preview for next lesson, subtle glow, transparent background",
+        "size": "512x512"
+      }
+    ],
+    "backgrounds": [
+      {
+        "id": "classroom",
+        "prompt": "Warm kindergarten classroom interior, soft pastel colors, bookshelves, learning posters on walls, sunny window, cozy and inviting, wide angle, flat illustration style",
+        "size": "1024x1024"
+      },
+      {
+        "id": "butterfly-garden",
+        "prompt": "Colorful flower garden scene with butterflies, bright flowers, green grass, blue sky, cheerful outdoor setting, flat cartoon style, wide landscape",
+        "size": "1024x1024"
+      },
+      {
+        "id": "bear-forest",
+        "prompt": "Friendly forest scene with trees, soft green colors, woodland setting, gentle sunlight through trees, flat cartoon illustration style",
+        "size": "1024x1024"
+      }
+    ],
+    "ui": [
+      {
+        "id": "button-play",
+        "prompt": "Green play button, rounded rectangle, white triangle play icon, cartoon UI style, transparent background",
+        "size": "256x256"
+      },
+      {
+        "id": "button-home",
+        "prompt": "Blue home button, rounded rectangle, white house icon, cartoon UI style, transparent background",
+        "size": "256x256"
+      },
+      {
+        "id": "button-next",
+        "prompt": "Orange next button, rounded rectangle, white arrow pointing right, cartoon UI style, transparent background",
+        "size": "256x256"
+      },
+      {
+        "id": "star-empty",
+        "prompt": "Empty star outline, gray color, cartoon style, progress indicator, transparent background",
+        "size": "128x128"
+      },
+      {
+        "id": "star-filled",
+        "prompt": "Filled yellow star, bright golden color, cartoon style, achievement indicator, transparent background",
+        "size": "128x128"
+      },
+      {
+        "id": "progress-bar",
+        "prompt": "Horizontal progress bar UI element, blue fill, rounded ends, cartoon style, game UI element, transparent background",
+        "size": "512x64"
+      },
+      {
+        "id": "checkmark",
+        "prompt": "Green checkmark, success indicator, bold cartoon style, transparent background",
+        "size": "128x128"
+      }
+    ]
+  },
+  "audio": {
+    "narration": [
+      {
+        "id": "intro-welcome",
+        "text": "Hello again, friend! Ready for a new adventure? Today we're meeting the letter B!",
+        "emotion": "cheerful",
+        "pace": "normal"
+      },
+      {
+        "id": "intro-letter-b",
+        "text": "This is the letter B. It makes the buh-buh-buh sound. Say it with me: Buh!",
+        "emotion": "encouraging",
+        "pace": "slow"
+      },
+      {
+        "id": "challenge-1-listen",
+        "text": "First, let's listen carefully. I'm going to say some words that start with B.",
+        "emotion": "neutral",
+        "pace": "normal"
+      },
+      {
+        "id": "challenge-1-butterfly",
+        "text": "Butterfly! B-b-butterfly! See how my mouth starts with the B sound?",
+        "emotion": "demonstrating",
+        "pace": "slow"
+      },
+      {
+        "id": "challenge-1-bear",
+        "text": "Bear! B-b-bear! Big brown bear!",
+        "emotion": "playful",
+        "pace": "normal"
+      },
+      {
+        "id": "challenge-1-ball",
+        "text": "Ball! B-b-ball! Bounce, bounce, bounce!",
+        "emotion": "playful",
+        "pace": "normal"
+      },
+      {
+        "id": "challenge-1-your-turn",
+        "text": "Now you try! Listen to each word and tap the picture that starts with the B sound.",
+        "emotion": "encouraging",
+        "pace": "normal"
+      },
+      {
+        "id": "challenge-2-instruction",
+        "text": "Great listening! Now let's find all the B things. Look at each picture. Does it start with B? Tap the B ones!",
+        "emotion": "cheerful",
+        "pace": "normal"
+      },
+      {
+        "id": "challenge-2-hint",
+        "text": "Remember: Butterfly, Bear, Ball, Boat, Banana. All start with buh-buh-buh!",
+        "emotion": "helpful",
+        "pace": "slow"
+      },
+      {
+        "id": "challenge-3-instruction",
+        "text": "Now let's write the letter B! Use your finger to trace the lines on the screen. Start at the top and go down, then make two bumps!",
+        "emotion": "encouraging",
+        "pace": "slow"
+      },
+      {
+        "id": "challenge-3-start-top",
+        "text": "Start at the top! Go straight down...",
+        "emotion": "guiding",
+        "pace": "slow"
+      },
+      {
+        "id": "challenge-3-first-bump",
+        "text": "Now make the first bump around to the middle...",
+        "emotion": "guiding",
+        "pace": "slow"
+      },
+      {
+        "id": "challenge-3-second-bump",
+        "text": "And another bump at the bottom! You did it! That's a B!",
+        "emotion": "excited",
+        "pace": "normal"
+      },
+      {
+        "id": "boss-challenge-intro",
+        "text": "Now for the Big B Challenge! I'm going to show you some pictures. Only tap the ones that start with the B sound. Are you ready?",
+        "emotion": "building-excitement",
+        "pace": "normal"
+      },
+      {
+        "id": "boss-challenge-question-1",
+        "text": "Which one starts with B? The butterfly or the cat?",
+        "emotion": "quiz",
+        "pace": "normal"
+      },
+      {
+        "id": "boss-challenge-question-2",
+        "text": "Which one starts with B? The ball or the apple?",
+        "emotion": "quiz",
+        "pace": "normal"
+      },
+      {
+        "id": "boss-challenge-question-3",
+        "text": "Listen: B-b-boat. Which picture is the boat?",
+        "emotion": "quiz",
+        "pace": "slow"
+      },
+      {
+        "id": "reward-unlock",
+        "text": "Amazing! You unlocked the Letter B badge! You're becoming a letter expert!",
+        "emotion": "celebrating",
+        "pace": "excited"
+      },
+      {
+        "id": "review-letter-a",
+        "text": "Let's remember our friend A for a moment. A says ahh, like apple. A and B are neighbors in the alphabet!",
+        "emotion": "connecting",
+        "pace": "normal"
+      },
+      {
+        "id": "outro",
+        "text": "Great job today! You learned the letter B! Next time we'll meet letter C. Can you guess what sound C makes? See you soon!",
+        "emotion": "warm",
+        "pace": "normal"
+      },
+      {
+        "id": "transition-break",
+        "text": "Let's take a quick stretch break! Stand up and stretch your arms up high like a bear!",
+        "emotion": "energizing",
+        "pace": "normal"
+      },
+      {
+        "id": "transition-back",
+        "text": "Great stretching! Ready to learn more?",
+        "emotion": "welcoming",
+        "pace": "normal"
+      },
+      {
+        "id": "hint-wrong-answer",
+        "text": "Listen again. This one starts with a different sound. Let's try another!",
+        "emotion": "gentle",
+        "pace": "normal"
+      },
+      {
+        "id": "hint-try-again",
+        "text": "So close! Remember the B sound: buh-buh-buh. Try again!",
+        "emotion": "encouraging",
+        "pace": "normal"
+      }
+    ],
+    "feedback": [
+      {
+        "id": "correct-01",
+        "text": "Perfect! That's the B sound!",
+        "emotion": "celebrating"
+      },
+      {
+        "id": "correct-02",
+        "text": "Yes! B for brilliant!",
+        "emotion": "celebrating"
+      },
+      {
+        "id": "correct-03",
+        "text": "Buh-buh-bingo! You got it!",
+        "emotion": "playful"
+      },
+      {
+        "id": "correct-04",
+        "text": "Excellent! That's definitely a B word!",
+        "emotion": "warm"
+      },
+      {
+        "id": "correct-05",
+        "text": "You know your B's!",
+        "emotion": "impressed"
+      },
+      {
+        "id": "encourage-01",
+        "text": "Almost! Listen for the buh sound at the beginning.",
+        "emotion": "gentle"
+      },
+      {
+        "id": "encourage-02",
+        "text": "Good try! That one starts with a different letter.",
+        "emotion": "supportive"
+      },
+      {
+        "id": "encourage-03",
+        "text": "Keep thinking! Remember: B says buh.",
+        "emotion": "encouraging"
+      },
+      {
+        "id": "encourage-04",
+        "text": "You're learning! Let's look at the next one.",
+        "emotion": "warm"
+      },
+      {
+        "id": "encourage-05",
+        "text": "Nice effort! Try saying the word out loud.",
+        "emotion": "helpful"
+      }
+    ]
+  },
+  "challenges": [
+    {
+      "id": "challenge-1-listen",
+      "type": "listening",
+      "title": "Hear the B Sound",
+      "duration": 90,
+      "instruction": "Listen to words that start with B",
+      "audioSequence": ["challenge-1-butterfly", "challenge-1-bear", "challenge-1-ball"],
+      "successCriteria": "child hears all three examples"
+    },
+    {
+      "id": "challenge-2-find",
+      "type": "identification",
+      "title": "Find the B Things",
+      "duration": 120,
+      "instruction": "Tap all pictures that start with B",
+      "targets": ["butterfly", "bear", "ball", "boat", "banana"],
+      "distractors": ["apple", "cat", "dog"],
+      "successCriteria": "identify 4 out of 5 B items"
+    },
+    {
+      "id": "challenge-3-trace",
+      "type": "tracing",
+      "title": "Write Letter B",
+      "duration": 120,
+      "instruction": "Trace the letter B with your finger",
+      "letter": "B",
+      "attemptsAllowed": 5,
+      "successCriteria": "complete trace within 3 attempts"
+    },
+    {
+      "id": "boss-challenge",
+      "type": "quiz",
+      "title": "Big B Challenge",
+      "duration": 90,
+      "instruction": "Tap the picture that starts with B",
+      "questions": [
+        {"prompt": "butterfly vs cat", "answer": "butterfly"},
+        {"prompt": "ball vs apple", "answer": "ball"},
+        {"prompt": "bear vs dog", "answer": "bear"}
+      ],
+      "successCriteria": "2 out of 3 correct"
+    }
+  ],
+  "metadata": {
+    "createdAt": "2026-03-01",
+    "author": "Flow Education System",
+    "version": "1.0.0",
+    "curriculumAlignment": {
+      "standard": "CCSS.ELA-LITERACY.RF.K.1",
+      "description": "Demonstrate understanding of the organization and basic features of print"
+    }
+  }
+}
