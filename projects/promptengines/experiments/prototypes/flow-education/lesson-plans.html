@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson Plans — Flow Education</title>
+  <meta name="description" content="Flow Education lesson plans: structured curricula for kindergarten literacy and numeracy.">
+  <style>
+    :root {
+      --bg: #09090b;
+      --fg: #e4e4e7;
+      --accent: #F04D26;
+      --muted: #71717a;
+      --border: #27272a;
+      --card: #18181b;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    
+    .topbar {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .topbar a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+    
+    .topbar a:hover {
+      color: var(--fg);
+    }
+    
+    .topbar .nav a {
+      margin-left: 1.5rem;
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    
+    .hero p {
+      color: var(--muted);
+      font-size: 1.125rem;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .breadcrumb {
+      color: var(--muted);
+      font-size: 0.875rem;
+      margin-bottom: 2rem;
+    }
+    
+    .breadcrumb a {
+      color: var(--accent);
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .structure-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    
+    .structure-box pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    
+    .lesson-plan-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    
+    .lesson-plan-card:hover {
+      border-color: var(--accent);
+    }
+    
+    .lesson-plan-card h3 {
+      margin-top: 0;
+      color: var(--fg);
+    }
+    
+    .lesson-plan-card .meta {
+      display: flex;
+      gap: 1rem;
+      margin: 0.75rem 0;
+      font-size: 0.875rem;
+      flex-wrap: wrap;
+    }
+    
+    .lesson-plan-card .meta span {
+      background: var(--bg);
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      color: var(--muted);
+    }
+    
+    .lesson-plan-card .status-mvp {
+      background: rgba(240, 77, 38, 0.2) !important;
+      color: var(--accent) !important;
+      font-weight: 600;
+    }
+    
+    .lesson-plan-card p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    
+    .lesson-list {
+      margin-top: 1rem;
+      padding-left: 1.5rem;
+    }
+    
+    .lesson-list li {
+      margin-bottom: 0.5rem;
+      color: var(--muted);
+    }
+    
+    .lesson-list li strong {
+      color: var(--fg);
+    }
+    
+    .standard-field {
+      background: var(--card);
+      border-left: 3px solid var(--accent);
+      padding: 1rem 1.5rem;
+      margin: 1rem 0;
+    }
+    
+    .standard-field h4 {
+      color: var(--accent);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .standard-field p {
+      color: var(--muted);
+      margin: 0;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.875rem;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    th {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    
+    td {
+      color: var(--muted);
+    }
+    
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="../index.html">← Prototypes</a>
+    <div class="nav">
+      <a href="MANIFESTO.html">Manifesto</a>
+      <a href="lesson-plans.html" style="color: var(--accent);">Lesson Plans</a>
+      <a href="tools.html">Tools</a>
+      <a href="https://github.com/aikaizen/promptengines">GitHub</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>Lesson Plans</h1>
+    <p>Structured curricula for kindergarten literacy and numeracy</p>
+  </div>
+
+  <div class="container">
+
+    <div class="breadcrumb">
+      <a href="index.html">Flow Education</a> / Lesson Plans
+    </div>
+
+    <h2>Structure</h2>
+    
+    <div class="structure-box">
+      <pre>📁 Flow Education Curriculum
+├── 📚 Lesson Plans (curriculum containers)
+│   └── 📦 lp-001-kindergarten-letters
+│       ├── Plan metadata (title, target age, standards)
+│       ├── Target student profile
+│       ├── Pedagogical focus
+│       └── 📖 Lessons (6 individual quests)
+│           ├── quest-001-letter-a
+│           ├── quest-002-letter-b
+│           ├── quest-003-letter-c
+│           ├── quest-004-letter-d
+│           ├── quest-005-letter-e
+│           └── quest-006-number-1
+│
+└── 📖 Individual Lessons (reusable units)
+    └── Can belong to multiple lesson plans</pre>
+    </div>
+
+    <p>
+      <strong>Lesson Plans</strong> are curriculum containers — they define the "what" and "why" for a complete learning journey. 
+      <strong>Lessons</strong> are individual learning units — they define the "how" for a single 6-minute quest.
+    </p>
+
+    <h2>Standardized Fields</h2>
+    
+    <p>Every lesson plan includes these standardized fields for consistency across all Flow Education curricula:</p>
+
+    <div class="standard-field">
+      <h4>Target Student</h4>
+      <p><strong>Age Range:</strong> 5-6 years | <strong>Grade:</strong> Kindergarten | <strong>Reading Level:</strong> Pre-reader | <strong>Prerequisites:</strong> None or specified</p>
+    </div>
+
+    <div class="standard-field">
+      <h4>Pedagogical Focus</h4>
+      <p><strong>Primary Domain:</strong> Early Literacy / Math / Science | <strong>Theory:</strong> Engelmann Direct Instruction + Adaptive Mastery | <strong>Engagement Target:</strong> 60 min independent</p>
+    </div>
+
+    <div class="standard-field">
+      <h4>Curriculum Alignment</h4>
+      <p><strong>Standards:</strong> CCSS, TEKS, or state-specific | Each lesson maps to specific learning objectives</p>
+    </div>
+
+    <div class="standard-field">
+      <h4>Assessment Strategy</h4>
+      <p><strong>Formative:</strong> Continuous in-lesson quizzes | <strong>Summative:</strong> Milestone checks | <strong>Mastery Threshold:</strong> 80% over 5+ attempts</p>
+    </div>
+
+    <div class="standard-field">
+      <h4>Adaptation Rules</h4>
+      <p><strong>Error Handling:</strong> 3 errors → reduce difficulty | <strong>Success:</strong> 5 correct → increase | <strong>Frustration:</strong> 30s stuck → hint</p>
+    </div>
+
+    <h2>Available Lesson Plans</h2>
+
+    <div class="lesson-plan-card">
+      <h3>LP-001: Kindergarten Letters A-E & Number 1</h3>
+      <div class="meta">
+        <span class="status-mvp">MVP ACTIVE</span>
+        <span>Ages 5-6</span>
+        <span>6 Lessons</span>
+        <span>36 Minutes</span>
+        <span>Phase 0</span>
+      </div>
+      <p>
+        First lesson plan for Flow Education MVP. Covers letters A through E with comprehensive 
+        phonics instruction, plus introduction to number 1. Designed for independent 60-minute engagement 
+        on Android/Chrome tablets.
+      </p>
+      <p><strong>Target:</strong> Kindergarten, pre-readers, ages 5-6</p>
+      <p><strong>Focus:</strong> Letter recognition, phonemic awareness (A-E), number sense (1)</p>
+      
+      <h4>Lessons in this Plan:</h4>
+      <ol class="lesson-list">
+        <li><strong>Quest 001:</strong> Letter A — Apple, Ant, Astronaut (6 min)</li>
+        <li><strong>Quest 002:</strong> Letter B — Butterfly, Bear, Ball (6 min)</li>
+        <li><strong>Quest 003:</strong> Letter C — Cat, Car, Cookie (6 min)</li>
+        <li><strong>Quest 004:</strong> Letter D — Dog, Duck, Dinosaur (6 min)</li>
+        <li><strong>Quest 005:</strong> Letter E — Elephant, Egg, Eagle (6 min)</li>
+        <li><strong>Quest 006:</strong> Number 1 — Counting, Recognition (6 min)</li>
+      </ol>
+
+      <p style="margin-top: 1rem;">
+        <a href="https://github.com/aikaizen/promptengines/blob/master/projects/promptengines/experiments/prototypes/flow-education/lesson-plans/lp-001-kindergarten-letters/plan.json">View Plan JSON →</a>
+      </p>
+    </div>
+
+    <h2>Lesson Plan Statuses</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Description</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span style="color: var(--muted);">●</span> Draft</td>
+          <td>In development, not ready for use</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><span style="color: var(--accent);">●</span> MVP Active</td>
+          <td>Minimum viable product, being tested</td>
+          <td>LP-001</td>
+        </tr>
+        <tr>
+          <td><span style="color: #22c55e;">●</span> Pilot</td>
+          <td>Deployed to pilot classrooms, collecting data</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><span style="color: #3b82f6;">●</span> Production</td>
+          <td>Proven effective, approved for general use</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><span style="color: #71717a;">●</span> Archived</td>
+          <td>Replaced by newer version</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Future Lesson Plans</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Target</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>LP-002</td>
+          <td>Letters F-J & Numbers 2-3</td>
+          <td>Planned</td>
+          <td>Q2 2026</td>
+        </tr>
+        <tr>
+          <td>LP-003</td>
+          <td>Letters K-O & Shapes</td>
+          <td>Planned</td>
+          <td>Q2 2026</td>
+        </tr>
+        <tr>
+          <td>LP-004</td>
+          <td>Letters P-T & Patterns</td>
+          <td>Planned</td>
+          <td>Q3 2026</td>
+        </tr>
+        <tr>
+          <td>LP-005</td>
+          <td>Letters U-Z & Review</td>
+          <td>Planned</td>
+          <td>Q3 2026</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Creating New Lesson Plans</h2>
+
+    <p>All lesson plans follow the <a href="https://github.com/aikaizen/promptengines/blob/master/projects/promptengines/experiments/prototypes/flow-education/lesson-plans/TEMPLATE.md">standardized template</a>. Required fields:</p>
+
+    <ol>
+      <li><strong>Identification:</strong> Unique ID, version, status</li>
+      <li><strong>Metadata:</strong> Title, description, author, tags</li>
+      <li><strong>Target Student:</strong> Age, grade, reading level, prerequisites</li>
+      <li><strong>Pedagogical Focus:</strong> Domain, theory, engagement target</li>
+      <li><strong>Curriculum Alignment:</strong> CCSS, TEKS, or other standards</li>
+      <li><strong>Structure:</strong> Lessons with sequence, objectives, prerequisites</li>
+      <li><strong>Assessment:</strong> Formative and summative methods</li>
+      <li><strong>Adaptation Strategy:</strong> Difficulty adjustment rules</li>
+      <li><strong>Assets:</strong> Total count, shared resources</li>
+      <li><strong>Success Metrics:</strong> Engagement, learning, usability targets</li>
+    </ol>
+
+    <h2>Template Reference</h2>
+
+    <p>
+      <a href="https://github.com/aikaizen/promptengines/blob/master/projects/promptengines/experiments/prototypes/flow-education/lesson-plans/TEMPLATE.md">View Full Template Specification →</a>
+    </p>
+
+  </div>
+
+  <footer>
+    <p>
+      Flow Education — A <a href="https://promptengines.com">PromptEngines</a> Experiment<br>
+      Built in Austin, Texas
+    </p>
+  </footer>
+</body>
+</html>

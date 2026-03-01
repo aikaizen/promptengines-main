@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PromptEngines Prototypes</title>
+  <meta name="description" content="PromptEngines prototypes — experiments that graduate to experiments and eventually to standalone apps.">
   <style>
     :root {
       --bg: #09090b;
@@ -22,7 +23,32 @@
     }
     .container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem; }
     h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .subtitle { color: var(--muted); font-size: 1.125rem; margin-bottom: 3rem; }
+    .subtitle { color: var(--muted); font-size: 1.125rem; margin-bottom: 1rem; }
+    .pathway {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .pathway h2 {
+      font-size: 1.125rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .pathway pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .pathway p {
+      color: var(--muted);
+      font-size: 0.9375rem;
+      margin-top: 1rem;
+    }
     .prototype {
       background: var(--card);
       border: 1px solid var(--border);
@@ -61,25 +87,79 @@
       background: rgba(34, 197, 94, 0.2) !important;
       color: #22c55e !important;
     }
+    .status-experiment {
+      background: rgba(59, 130, 246, 0.2) !important;
+      color: #3b82f6 !important;
+    }
+    .status-graduated {
+      background: rgba(168, 85, 247, 0.2) !important;
+      color: #a855f7 !important;
+    }
+    .topbar {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .topbar a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
   </style>
 </head>
 <body>
+  <div class="topbar">
+    <a href="https://promptengines.com">← PromptEngines.com</a>
+  </div>
+
   <div class="container">
-    <h1>PromptEngines Prototypes</h1>
-    <p class="subtitle">Active experiments and proof-of-concepts</p>
+    <h1>Prototypes</h1>
+    <p class="subtitle">Experiments that may graduate to full products</p>
+
+    <div class="pathway">
+      <h2>The Graduation Path</h2>
+      <pre>📁 promptengines.com/prototypes     ← You are here
+       ↓ (proves value, gets users)
+📁 {name}.promptengines.com         ← Experiment phase
+       ↓ (product-market fit, sustainable unit economics)
+📁 {name}.com                       ← Standalone app</pre>
+      <p>
+        <strong>Prototypes</strong> live here — rough, experimental, proving concepts.<br>
+        <strong>Experiments</strong> get their own subdomain when they show promise.<br>
+        <strong>Graduated Apps</strong> get their own domain when they're ready for the world.
+      </p>
+    </div>
+
+    <h2 style="color: var(--accent); margin-bottom: 1rem;">Active Prototypes</h2>
 
     <div class="prototype">
       <h2><a href="flow-education/index.html">Flow Education</a></h2>
-      <p>Kindergarten tablet learning system. 60-minute independent engagement. Letters A-E, numbers 1-3, shapes, colors. Tutor-centric, not edutainment.</p>
+      <p>Kindergarten tablet learning system. 60-minute independent engagement. Lesson Plan 001 covers letters A-E and number 1. Tutor-centric, not edutainment.</p>
       <div class="meta">
-        <span class="status-active">ACTIVE</span>
+        <span class="status-active">PROTOTYPE</span>
         <span>MVP Phase 0</span>
-        <span>Chrome Tablets</span>
-        <span>5/10 Quests Complete</span>
+        <span>Lesson Plan 001</span>
+        <span>5/6 Lessons Complete</span>
       </div>
     </div>
 
     <!-- Add more prototypes here as they are created -->
+
+    <h2 style="color: var(--accent); margin-top: 3rem; margin-bottom: 1rem;">Graduated to Experiments</h2>
+
+    <div class="prototype">
+      <h2><a href="https://storybookstudio.promptengines.com">StoryBook Studio</a></h2>
+      <p>AI personalized children's storybooks. 34+ art styles. Digital + print. Freemium model with 100 free credits.</p>
+      <div class="meta">
+        <span class="status-experiment">EXPERIMENT</span>
+        <span>Active Development</span>
+        <span>Pre-Launch</span>
+      </div>
+    </div>
+
+    <h2 style="color: var(--accent); margin-top: 3rem; margin-bottom: 1rem;">Graduated to Apps</h2>
+
+    <p style="color: var(--muted);">None yet — that's the goal.</p>
 
   </div>
 </body>
