@@ -1,0 +1,406 @@
+{
+  "lesson_id": "quest-001-letter-a",
+  "lesson_title": "Meet the Letter A",
+  "description": "First quest introducing uppercase letter A, sound /a/, and A-words (apple, ant, astronaut, anchor, acorn)",
+  "version": "1.0.0",
+  "generated_at": null,
+  "assets": {
+    "images": {
+      "characters": [
+        {
+          "id": "tutor-neutral",
+          "prompt": "Friendly cartoon tutor character, gender-neutral appearance, warm smile, standing pose, simple 2D style, bold black outlines, flat colors, transparent background",
+          "usage": "Default tutor appearance"
+        },
+        {
+          "id": "tutor-happy",
+          "prompt": "Friendly cartoon tutor character, excited happy expression, arms raised in celebration, simple 2D style, bold black outlines, flat colors, transparent background",
+          "usage": "Celebration, correct answers"
+        },
+        {
+          "id": "tutor-thinking",
+          "prompt": "Friendly cartoon tutor character, thoughtful expression, hand on chin, curious pose, simple 2D style, bold black outlines, flat colors, transparent background",
+          "usage": "Challenges, thinking moments"
+        },
+        {
+          "id": "tutor-encouraging",
+          "prompt": "Friendly cartoon tutor character, encouraging expression, thumbs up, supportive pose, simple 2D style, bold black outlines, flat colors, transparent background",
+          "usage": "Encouragement, try again"
+        },
+        {
+          "id": "tutor-waving",
+          "prompt": "Friendly cartoon tutor character, waving hello, welcoming expression, simple 2D style, bold black outlines, flat colors, transparent background",
+          "usage": "Introduction, greeting"
+        }
+      ],
+      "objects": [
+        {
+          "id": "apple",
+          "prompt": "Cartoon red apple with friendly face, big smile, simple 2D style, bold outlines, flat colors, warm lighting, transparent background, suitable for children",
+          "usage": "A-word example: apple",
+          "letter": "A"
+        },
+        {
+          "id": "ant",
+          "prompt": "Cute friendly cartoon ant, waving, big eyes, simple 2D style, bold outlines, flat colors, brown body, transparent background, suitable for children",
+          "usage": "A-word example: ant",
+          "letter": "A"
+        },
+        {
+          "id": "astronaut",
+          "prompt": "Cute cartoon astronaut character, friendly face in helmet, waving, white spacesuit, simple 2D style, bold outlines, flat colors, transparent background, suitable for children",
+          "usage": "A-word example: astronaut",
+          "letter": "A"
+        },
+        {
+          "id": "anchor",
+          "prompt": "Cartoon ship anchor, friendly design, simple 2D style, bold outlines, metallic gray with blue accents, flat colors, transparent background, suitable for children",
+          "usage": "A-word example: anchor",
+          "letter": "A"
+        },
+        {
+          "id": "acorn",
+          "prompt": "Cartoon acorn, cute face, brown with tan cap, simple 2D style, bold outlines, flat colors, transparent background, suitable for children",
+          "usage": "A-word example: acorn",
+          "letter": "A"
+        },
+        {
+          "id": "ball",
+          "prompt": "Cartoon red ball, bouncy, simple 2D style, bold outlines, flat colors, transparent background, suitable for children, not A-word (distractor)",
+          "usage": "Distractor: ball (B-word)",
+          "letter": "B"
+        },
+        {
+          "id": "cat",
+          "prompt": "Cute cartoon cat, sitting, friendly face, orange tabby, simple 2D style, bold outlines, flat colors, transparent background, suitable for children, not A-word (distractor)",
+          "usage": "Distractor: cat (C-word)",
+          "letter": "C"
+        },
+        {
+          "id": "dog",
+          "prompt": "Cute cartoon dog, sitting, friendly face, golden retriever style, simple 2D style, bold outlines, flat colors, transparent background, suitable for children, not A-word (distractor)",
+          "usage": "Distractor: dog (D-word)",
+          "letter": "D"
+        }
+      ],
+      "letters": [
+        {
+          "id": "letter-a-upper",
+          "prompt": "Cartoon uppercase letter A, bright orange color, playful rounded style, 3D-like depth but flat shading, bold black outline, friendly and inviting, transparent background, suitable for kindergarten",
+          "usage": "Main letter display",
+          "character": "A"
+        },
+        {
+          "id": "letter-a-lower",
+          "prompt": "Cartoon lowercase letter a, bright orange color, playful rounded style, bold black outline, friendly and inviting, transparent background, suitable for kindergarten",
+          "usage": "Secondary letter display",
+          "character": "a"
+        },
+        {
+          "id": "letter-b-upper",
+          "prompt": "Cartoon uppercase letter B, blue color, playful rounded style, bold black outline, transparent background, suitable for kindergarten",
+          "usage": "Distractor letter",
+          "character": "B"
+        },
+        {
+          "id": "letter-c-upper",
+          "prompt": "Cartoon uppercase letter C, green color, playful rounded style, bold black outline, transparent background, suitable for kindergarten",
+          "usage": "Distractor letter",
+          "character": "C"
+        },
+        {
+          "id": "letter-d-upper",
+          "prompt": "Cartoon uppercase letter D, purple color, playful rounded style, bold black outline, transparent background, suitable for kindergarten",
+          "usage": "Distractor letter",
+          "character": "D"
+        },
+        {
+          "id": "letter-e-upper",
+          "prompt": "Cartoon uppercase letter E, yellow color, playful rounded style, bold black outline, transparent background, suitable for kindergarten",
+          "usage": "Distractor letter",
+          "character": "E"
+        },
+        {
+          "id": "letter-f-upper",
+          "prompt": "Cartoon uppercase letter F, pink color, playful rounded style, bold black outline, transparent background, suitable for kindergarten",
+          "usage": "Distractor letter",
+          "character": "F"
+        }
+      ],
+      "backgrounds": [
+        {
+          "id": "bg-classroom",
+          "prompt": "Warm classroom background, soft colors, wooden floor, bookshelf, window with sunshine, simple 2D cartoon style, flat colors, no outlines, cozy and inviting, suitable for kindergarten app",
+          "usage": "Intro/outro scenes"
+        },
+        {
+          "id": "bg-space",
+          "prompt": "Friendly cartoon space background, stars, planets, nebula in soft purples and blues, simple 2D style, flat colors, not scary, suitable for children, astronaut theme",
+          "usage": "Astronaut scene, reward"
+        },
+        {
+          "id": "bg-nature",
+          "prompt": "Peaceful nature background, grass, trees, flowers, blue sky with fluffy clouds, simple 2D cartoon style, flat colors, ants and acorns on ground, suitable for kindergarten",
+          "usage": "Ant and acorn scenes"
+        }
+      ],
+      "ui": [
+        {
+          "id": "button-primary",
+          "prompt": "Game UI button, rounded rectangle, orange color with gradient, white border, simple 2D cartoon style, flat design, friendly, suitable for kids app",
+          "usage": "Primary action button"
+        },
+        {
+          "id": "button-secondary",
+          "prompt": "Game UI button, rounded rectangle, blue color with gradient, white border, simple 2D cartoon style, flat design, friendly, suitable for kids app",
+          "usage": "Secondary button"
+        },
+        {
+          "id": "progress-bar-frame",
+          "prompt": "Progress bar UI frame, rounded rectangle, gray border, empty inside for fill, simple 2D cartoon style, suitable for kids app",
+          "usage": "Quest progress indicator"
+        },
+        {
+          "id": "star-filled",
+          "prompt": "Gold star icon, filled, shiny, cartoon style, simple 2D, suitable for achievement/reward",
+          "usage": "Achievement, reward"
+        },
+        {
+          "id": "star-empty",
+          "prompt": "Gray outlined star icon, empty inside, cartoon style, simple 2D, suitable for progress indicator",
+          "usage": "Progress to fill"
+        },
+        {
+          "id": "checkmark",
+          "prompt": "Green checkmark icon, bold, cartoon style, simple 2D, transparent background, correct answer indicator",
+          "usage": "Correct feedback"
+        },
+        {
+          "id": "try-again",
+          "prompt": "Friendly "try again" indicator, circular arrow, orange color, cartoon style, simple 2D, encouraging",
+          "usage": "Incorrect feedback"
+        }
+      ]
+    },
+    "audio": {
+      "narration": [
+        {
+          "id": "intro-01",
+          "text": "Hi there! I'm excited to learn with you today. We're going on an adventure to meet a very special letter. Are you ready?",
+          "emotion": "excited, welcoming"
+        },
+        {
+          "id": "intro-02",
+          "text": "Great! Today we're going to meet... the letter A!",
+          "emotion": "excited, building anticipation"
+        },
+        {
+          "id": "intro-03",
+          "text": "This is the letter A. It makes the sound /a/... like in 'apple'! Can you say /a/?",
+          "emotion": "teaching, clear pronunciation"
+        },
+        {
+          "id": "c1-open",
+          "text": "The letter A is the first letter of the alphabet. Let me show you some things that start with A!",
+          "emotion": "friendly, informative"
+        },
+        {
+          "id": "c1-apple",
+          "text": "A is for... apple! /a/... /a/... apple!",
+          "emotion": "playful, clear sounds"
+        },
+        {
+          "id": "c1-ant",
+          "text": "A is for... ant! /a/... /a/... ant!",
+          "emotion": "playful, clear sounds"
+        },
+        {
+          "id": "c1-astronaut",
+          "text": "A is for... astronaut! /a/... /a/... astronaut!",
+          "emotion": "playful, clear sounds"
+        },
+        {
+          "id": "c1-anchor",
+          "text": "A is for... anchor! /a/... /a/... anchor!",
+          "emotion": "playful, clear sounds"
+        },
+        {
+          "id": "c1-acorn",
+          "text": "A is for... acorn! /a/... /a/... acorn!",
+          "emotion": "playful, clear sounds"
+        },
+        {
+          "id": "c2-open",
+          "text": "Look at all these letters! Some are the letter A, and some are other letters. Can you find ALL the letter A's? Tap every A you see!",
+          "emotion": "encouraging, clear instructions"
+        },
+        {
+          "id": "c2-correct",
+          "text": "Yes! That's an A!",
+          "emotion": "celebratory, positive"
+        },
+        {
+          "id": "c2-wrong-b",
+          "text": "That's a B. Look for the A!",
+          "emotion": "gentle correction"
+        },
+        {
+          "id": "c2-hint",
+          "text": "Remember, A has two slanted lines and a crossbar in the middle. Like a triangle without the bottom!",
+          "emotion": "helpful, guiding"
+        },
+        {
+          "id": "c2-complete",
+          "text": "Fantastic! You found all the A's! You're becoming an A expert!",
+          "emotion": "celebratory, proud"
+        },
+        {
+          "id": "c3-open",
+          "text": "Now let's learn to write the letter A! Use your finger to trace the dotted lines. Start at the top...",
+          "emotion": "instructional, patient"
+        },
+        {
+          "id": "c3-guidance",
+          "text": "...go down to the left... then up to the top... then down to the right... and finally, draw a line across the middle!",
+          "emotion": "step-by-step, guiding"
+        },
+        {
+          "id": "c3-success",
+          "text": "Perfect! You wrote an A! Look at that beautiful letter!",
+          "emotion": "celebratory, impressed"
+        },
+        {
+          "id": "c3-encourage",
+          "text": "You're working hard! The letter A can be tricky. Let's try one more time together...",
+          "emotion": "encouraging, supportive"
+        },
+        {
+          "id": "boss-open",
+          "text": "Now for the big challenge! Which of these pictures starts with the /a/ sound? Tap the one that starts with A!",
+          "emotion": "building excitement, challenging"
+        },
+        {
+          "id": "boss-correct-apple",
+          "text": "Yes! Apple starts with /a/!",
+          "emotion": "celebratory"
+        },
+        {
+          "id": "boss-correct-astronaut",
+          "text": "Yes! Astronaut starts with /a/!",
+          "emotion": "celebratory"
+        },
+        {
+          "id": "boss-wrong-ball",
+          "text": "Ball starts with /b/. Listen... /b/... /b/... ball. Find the /a/ sound!",
+          "emotion": "gentle correction, teaching"
+        },
+        {
+          "id": "boss-wrong-cat",
+          "text": "Cat starts with /c/. Listen... /c/... /c/... cat. Find the /a/ sound!",
+          "emotion": "gentle correction, teaching"
+        },
+        {
+          "id": "boss-complete",
+          "text": "INCREDIBLE! You found TWO things that start with A! Apple and astronaut both start with /a/! You're a true A expert now!",
+          "emotion": "very celebratory, proud"
+        },
+        {
+          "id": "reward-celebration",
+          "text": "You did it! You completed the Letter A quest! You learned the sound /a/, found A's in a crowd, wrote an A, and found A words!",
+          "emotion": "celebratory, summarizing"
+        },
+        {
+          "id": "outro",
+          "text": "Great work today! Remember: A says /a/ like apple, ant, and astronaut! See you next time!",
+          "emotion": "warm, closing, reinforcing"
+        }
+      ],
+      "feedback": [
+        {
+          "id": "correct-01",
+          "text": "That's right!",
+          "emotion": "positive"
+        },
+        {
+          "id": "correct-02",
+          "text": "Great job!",
+          "emotion": "positive"
+        },
+        {
+          "id": "correct-03",
+          "text": "Excellent!",
+          "emotion": "positive"
+        },
+        {
+          "id": "correct-04",
+          "text": "Perfect!",
+          "emotion": "positive"
+        },
+        {
+          "id": "correct-05",
+          "text": "You got it!",
+          "emotion": "positive"
+        },
+        {
+          "id": "encourage-01",
+          "text": "Keep trying!",
+          "emotion": "encouraging"
+        },
+        {
+          "id": "encourage-02",
+          "text": "Almost! Try again!",
+          "emotion": "encouraging"
+        },
+        {
+          "id": "encourage-03",
+          "text": "You can do this!",
+          "emotion": "encouraging"
+        },
+        {
+          "id": "encourage-04",
+          "text": "Good effort! Let's try again!",
+          "emotion": "encouraging"
+        },
+        {
+          "id": "encourage-05",
+          "text": "Don't give up!",
+          "emotion": "encouraging"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "tap",
+          "description": "Gentle tap sound when child touches screen",
+          "type": "ui"
+        },
+        {
+          "id": "success",
+          "description": "Pleasant chime for correct answer",
+          "type": "feedback"
+        },
+        {
+          "id": "incorrect",
+          "description": "Gentle boop for wrong answer (not harsh)",
+          "type": "feedback"
+        },
+        {
+          "id": "completion",
+          "description": "Victory fanfare when quest complete (3-4 seconds)",
+          "type": "celebration"
+        },
+        {
+          "id": "transition",
+          "description": "Smooth whoosh for screen transitions",
+          "type": "ui"
+        }
+      ]
+    }
+  },
+  "output": {
+    "total_images": 24,
+    "total_audio_narration": 28,
+    "total_audio_feedback": 10,
+    "total_sfx": 5,
+    "estimated_size_mb": 50
+  }
+}

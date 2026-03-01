@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flow Education — The Manifesto</title>
+  <meta name="description" content="We refuse edutainment. We build tutors. One hour of real learning, zero babysitting required.">
+  <style>
+    :root {
+      --bg: #09090b;
+      --fg: #e4e4e7;
+      --accent: #F04D26;
+      --muted: #71717a;
+      --border: #27272a;
+      --max-width: 720px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      font-size: 18px;
+    }
+    
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    
+    .topbar {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .topbar a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+    
+    .topbar a:hover {
+      color: var(--fg);
+    }
+    
+    .topbar .nav {
+      float: right;
+    }
+    
+    .topbar .nav a {
+      margin-left: 1.5rem;
+    }
+    
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .brand {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+    
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    
+    h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    p {
+      margin-bottom: 1.25rem;
+    }
+    
+    .lede {
+      font-size: 1.375rem;
+      line-height: 1.5;
+      color: var(--fg);
+      border-left: 3px solid var(--accent);
+      padding-left: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .principle {
+      background: rgba(240, 77, 38, 0.1);
+      border: 1px solid var(--accent);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+    
+    .principle strong {
+      color: var(--accent);
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 1.125rem;
+    }
+    
+    .phase {
+      background: var(--border);
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .phase h4 {
+      color: var(--accent);
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .phase-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    
+    ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    
+    li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    
+    .one-hour {
+      text-align: center;
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 3rem 0;
+    }
+    
+    .one-hour .number {
+      font-size: 6rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      display: block;
+    }
+    
+    .one-hour .label {
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    
+    .refuse {
+      background: repeating-linear-gradient(
+        45deg,
+        var(--bg),
+        var(--bg) 10px,
+        rgba(240, 77, 38, 0.05) 10px,
+        rgba(240, 77, 38, 0.05) 20px
+      );
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px solid var(--accent);
+    }
+    
+    .refuse h3 {
+      color: var(--accent);
+      margin-top: 0;
+    }
+    
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    
+    .comparison .them {
+      opacity: 0.5;
+    }
+    
+    .comparison .us {
+      border-left: 3px solid var(--accent);
+      padding-left: 1rem;
+    }
+    
+    footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+    
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .comparison {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="../index.html">← Prototypes</a>
+    <div class="nav">
+      <a href="MANIFESTO.html">Manifesto</a>
+      <a href="lesson-plans.html">Lesson Plans</a>
+      <a href="tools.html">Tools</a>
+    </div>
+  </div>
+  <div class="container">
+    <header>
+      <div class="brand">Flow Education</div>
+      <h1>The Manifesto</h1>
+      <p class="subtitle">We refuse edutainment. We build tutors. One hour of real learning, zero babysitting required.</p>
+    </header>
+
+    <p class="lede">
+      Teachers have 25 students and 45 minutes. Every "learning app" they've tried requires constant hand-holding. 
+      <strong>We are building the exception.</strong>
+    </p>
+
+    <div class="one-hour">
+      <span class="number">60</span>
+      <span class="label">Minutes</span>
+      <p style="margin-top: 1rem; color: var(--fg);">of independent, productive learning.<br>No adult intervention required.</p>
+    </div>
+
+    <h2>The Problem</h2>
+    
+    <p>
+      Khan Academy Kids entertains for 10 minutes, then kids zone out. Duolingo ABC drills letters until boredom sets in. 
+      ABCmouse uses points and badges to manufacture engagement—manipulating children, not teaching them.
+    </p>
+
+    <p>
+      <strong class="highlight">None of them respect the teacher's time.</strong> They require setup, troubleshooting, 
+      and constant "help me" interruptions. In a classroom of 25 kindergarteners, that's 25 interruptions. Unusable.
+    </p>
+
+    <h2>What We Refuse</h2>
+
+    <div class="refuse">
+      <h3>We Refuse Edutainment</h3>
+      <p>
+        "Learning through play" that is 90% play, 10% learning. Cartoons with math problems sprinkled in. 
+        We build <strong>tutors</strong>—not games. The engagement comes from <em>mastery</em>, not manipulation.
+      </p>
+    </div>
+
+    <div class="refuse">
+      <h3>We Refuse Gamification Addiction</h3>
+      <p>
+        Points, badges, streaks, fake currency—these are slot machine mechanics designed to addict. 
+        We refuse to exploit children's dopamine systems. Progress is measured in <em>knowledge gained</em>, 
+        not points collected.
+      </p>
+    </div>
+
+    <div class="refuse">
+      <h3>We Refuse Passive Consumption</h3>
+      <p>
+        Videos that play while children stare. "Adaptive" apps that only adapt the <em>speed</em> of content delivery, 
+        not the <em>nature</em> of instruction. Every interaction demands <strong>active thinking</strong>.
+      </p>
+    </div>
+
+    <div class="refuse">
+      <h3>We Refuse One-Size-Fits-All</h3>
+      <p>
+        Same lesson, same pace, same difficulty for every child. We build <strong>truly adaptive</strong> systems—
+        not "level 3" vs "level 4," but micro-adjustments based on real-time performance.
+      </p>
+    </div>
+
+    <h2>What We Build</h2>
+
+    <div class="principle">
+      <strong>A Tutor in a Tablet</strong>
+      <p>
+        Not a game with learning sprinkled in. An actual tutor that happens to be digital. 
+        Full voice narration. Socratic questioning. Specific feedback. Real-time adaptation.
+      </p>
+    </div>
+
+    <div class="principle">
+      <strong>Continuous Testing, Not Grades</strong>
+      <p>
+        Every tap is data. Every hesitation is signal. We assess continuously—micro-adjustments based on 
+        micro-performance. No high-stakes tests. No anxiety. Just constant calibration.
+      </p>
+    </div>
+
+    <div class="principle">
+      <strong>Continuous Improvement</strong>
+      <p>
+        The system gets better as the child learns. Not "leveling up" to new content, 
+        but <em>refining</em> the delivery, scaffolding, and challenge based on what works for <em>this</em> child.
+      </p>
+    </div>
+
+    <div class="principle">
+      <strong>Teacher Empowerment, Not Replacement</strong>
+      <p>
+        Phase 1: Teachers control the lessons, the assets, the sequencing. 
+        Phase 2: Tutors become agentic—surfacing assets, scoring students, recommending review. 
+        Phase 3: Tutors create assets in real-time. But <em>teachers remain sovereign</em>.
+      </p>
+    </div>
+
+    <h2>The Architecture: Four Phases</h2>
+
+    <div class="phase">
+      <h4>Phase 0 — Now</h4>
+      <div class="phase-title">The MVP: Kindergarten Chrome Tablets</div>
+      <ul>
+        <li><strong>10 quests, fixed curriculum</strong> — Literacy, Math, Knowledge</li>
+        <li><strong>Basic adaptive logic</strong> — Easier/harder based on error rate</li>
+        <li><strong>Full voice narration</strong> — No reading required</li>
+        <li><strong>Offline capable</strong> — School WiFi is unreliable</li>
+        <li><strong>60-minute engagement target</strong> — The critical requirement</li>
+      </ul>
+      <p>
+        <strong>Pilot school deployment.</strong> Real kids, real tablets, real results. 
+        We validate the 60-minute standard before building anything else.
+      </p>
+    </div>
+
+    <div class="phase">
+      <h4>Phase 1 — Teacher Tools</h4>
+      <div class="phase-title">Lesson Creation Platform + Middle School Pilot</div>
+      <ul>
+        <li><strong>Teacher tools for lesson creation</strong> — Asset upload, quest sequencing, quiz building</li>
+        <li><strong>Chat-based tutors</strong> — LLM-powered, but deterministic and teacher-controlled</li>
+        <li><strong>Middle school expansion</strong> — More complex subjects, longer attention spans</li>
+        <li><strong>Asset marketplace</strong> — Teachers share and reuse</li>
+      </ul>
+      <p>
+        Teachers create lessons. They own the curriculum. The tutor is the <em>delivery mechanism</em>, 
+        not the <em>content authority</em>.
+      </p>
+    </div>
+
+    <div class="phase">
+      <h4>Phase 2 — Agentic Tutors</h4>
+      <div class="phase-title">Intelligent Asset Surfacing + Student Data System</div>
+      <ul>
+        <li><strong>Tutors control the experience</strong> — Which assets to show, when to review, when to advance</li>
+        <li><strong>Scoring and recommendations</strong> — "Retry this challenge" or "You're ready for the next quest"</li>
+        <li><strong>Student data system</strong> — Longitudinal tracking, knowledge graphs emerging</li>
+        <li><strong>Lessons still teacher-created</strong> — But tutors optimize delivery in real-time</li>
+      </ul>
+      <p>
+        The tutor becomes a <em>teaching assistant</em>—knowing when to push, when to scaffold, 
+        when to celebrate, when to pause.
+      </p>
+    </div>
+
+    <div class="phase">
+      <h4>Phase 3 — Knowledge Graphs</h4>
+      <div class="phase-title">Full Curriculums K-12 + Agentic Asset Creation</div>
+      <ul>
+        <li><strong>STEM + English curriculums</strong> — Complete scope and sequence for all grades</li>
+        <li><strong>Knowledge graphs</strong> — Interconnected concepts, prerequisite mapping, gap identification</li>
+        <li><strong>Agentic asset creation</strong> — Tutors generate relevant images, quizzes, explanations on demand</li>
+        <li><strong>Games and simulations</strong> — Complex interactive experiences for older students</li>
+      </ul>
+      <p>
+        The complete vision: every student has a personal tutor that knows what they know, 
+        what they don't, and exactly how to bridge the gap.
+      </p>
+    </div>
+
+    <h2>The Comparison</h2>
+
+    <div class="comparison">
+      <div class="them">
+        <strong>Them</strong>
+        <ul>
+          <li>10-20 min engagement</li>
+          <li>Points and badges</li>
+          <li>Passive videos</li>
+          <li>Same lesson for all</li>
+          <li>Requires teacher help</li>
+          <li>Online-only</li>
+        </ul>
+      </div>
+      <div class="us">
+        <strong>Us</strong>
+        <ul>
+          <li><strong>60 min independent</strong></li>
+          <li><strong>Mastery-based</strong></li>
+          <li><strong>Active challenges</strong></li>
+          <li><strong>Truly adaptive</strong></li>
+          <li><strong>Self-sufficient</strong></li>
+          <li><strong>Offline capable</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>The Standards</h2>
+
+    <h3>The 60-Minute Standard</h3>
+    <p>
+      A child can use Flow Education for 60 minutes without:
+    </p>
+    <ul>
+      <li>Asking a teacher for help</li>
+      <li>Getting "stuck" and giving up</li>
+      <li>Switching to a different app</li>
+      <li>Needing someone to read to them</li>
+    </ul>
+    <p>
+      If it fails this test, it doesn't ship. Period.
+    </p>
+
+    <h3>The Slop-Free Standard</h3>
+    <p>
+      Every lesson, every asset, every line of code passes the anti-slop check:
+    </p>
+    <ul>
+      <li>No hedging preambles ("In today's rapidly evolving educational landscape...")</li>
+      <li>No denial-of-commerce ("This is not just another edtech product")</li>
+      <li>No vibe adjective stacks ("revolutionary, groundbreaking, transformative")</li>
+      <li>No fake urgency ("Sign up now before it's too late!")</li>
+      <li>No agentic self-reference ("As an AI language model...")</li>
+    </ul>
+    <p>
+      <strong>Specific, rigorous, honest.</strong> Every word, every image, every interaction.
+    </p>
+
+    <h3>The Teacher-Respecting Standard</h3>
+    <p>
+      We never add to a teacher's workload. We never require training. 
+      Setup time: under 2 minutes. If it takes longer, the design is wrong.
+    </p>
+
+    <h2>What Success Looks Like</h2>
+
+    <ul>
+      <li><strong>Phase 0:</strong> 80% of pilot kids complete 60 minutes. Teacher satisfaction 4+/5.</li>
+      <li><strong>Phase 1:</strong> 50 teachers creating lessons. 10,000 students using weekly.</li>
+      <li><strong>Phase 2:</strong> Measurable learning gains vs. control groups. Tutors trusted by teachers.</li>
+      <li><strong>Phase 3:</strong> Comprehensive K-12 curriculum. Every student has a personal tutor.</li>
+    </ul>
+
+    <h2>Who We Are</h2>
+
+    <p>
+      Flow Education is a <strong>PromptEngines</strong> experiment. We are not a startup seeking venture capital. 
+      We are not an "AI education company" chasing hype. We are builders who believe:
+    </p>
+
+    <ul>
+      <li>AI should <em>augment</em> teachers, not replace them</li>
+      <li>Children deserve <em>rigor</em>, not just engagement</li>
+      <li>Technology should <em>respect</em> the humans who use it</li>
+      <li>Quality matters more than scale</li>
+    </ul>
+
+    <p>
+      We are based in <strong>Austin, Texas</strong>. We pilot in real classrooms with real teachers. 
+      We iterate based on what works, not what sounds good in a pitch deck.
+    </p>
+
+    <h2>Join Us</h2>
+
+    <p>
+      <strong>Pilot Teachers:</strong> If you have Chrome tablets and 25 kindergarteners, we want you. 
+      Contact us: <a href="mailto:hello@promptengines.com">hello@promptengines.com</a>
+    </p>
+
+    <p>
+      <strong>Engineers & Designers:</strong> If you refuse slop and want to build something that matters, 
+      we're hiring. <a href="mailto:jobs@promptengines.com">jobs@promptengines.com</a>
+    </p>
+
+    <p>
+      <strong>Follow the Build:</strong> We're building in public. 
+      Follow along at <a href="https://lab.promptengines.com">lab.promptengines.com</a>.
+    </p>
+
+    <footer>
+      <p>
+        Flow Education — A PromptEngines Experiment  <br>
+        Built in Austin, Texas  <br>
+        <a href="https://promptengines.com">promptengines.com</a> | 
+        <a href="https://lab.promptengines.com">lab.promptengines.com</a>
+      </p>
+      <p style="margin-top: 1rem; font-size: 0.75rem; color: var(--muted);">
+        Last updated: March 2026  <br>
+        This manifesto is a living document. It changes as we learn.
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

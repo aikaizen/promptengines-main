@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flow Education — A PromptEngines Experiment</title>
+  <meta name="description" content="We refuse edutainment. We build tutors. One hour of real learning, zero babysitting required.">
+  <style>
+    :root {
+      --bg: #09090b;
+      --fg: #e4e4e7;
+      --accent: #F04D26;
+      --muted: #71717a;
+      --border: #27272a;
+      --card: #18181b;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    
+    .topbar {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      overflow: hidden;
+    }
+    
+    .topbar a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+    
+    .topbar a:hover {
+      color: var(--fg);
+    }
+    
+    .topbar .nav a {
+      margin-left: 1.5rem;
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 6rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .hero .brand {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+    
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 1rem 2rem;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+      transition: opacity 0.2s;
+    }
+    
+    .cta-button:hover {
+      opacity: 0.9;
+    }
+    
+    .cta-secondary {
+      display: inline-block;
+      margin-left: 1rem;
+      color: var(--fg);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    
+    .cta-secondary:hover {
+      border-color: var(--fg);
+    }
+    
+    .section {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    
+    .section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    
+    .section p {
+      margin-bottom: 1rem;
+      color: var(--fg);
+    }
+    
+    .number-block {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--card);
+      margin: 2rem 0;
+      border-radius: 8px;
+    }
+    
+    .number-block .number {
+      font-size: 6rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+    
+    .number-block .label {
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    
+    .card h3 {
+      font-size: 1rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .card p {
+      color: var(--muted);
+      font-size: 0.9375rem;
+    }
+    
+    .links {
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+    }
+    
+    .links h3 {
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    
+    .links ul {
+      list-style: none;
+      margin-left: 0;
+    }
+    
+    .links li {
+      margin-bottom: 0.75rem;
+    }
+    
+    .links a {
+      color: var(--fg);
+      text-decoration: none;
+      display: block;
+      padding: 0.5rem;
+      border-radius: 4px;
+    }
+    
+    .links a:hover {
+      background: var(--bg);
+    }
+    
+    .links a strong {
+      color: var(--accent);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    
+    .links a span {
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+    
+    footer a {
+      color: var(--muted);
+    }
+    
+    .status {
+      display: inline-block;
+      background: rgba(240, 77, 38, 0.2);
+      color: var(--accent);
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="../index.html">← Prototypes</a>
+    <div class="nav" style="float: right;">
+      <a href="MANIFESTO.html" style="color: var(--muted); text-decoration: none; font-size: 0.875rem; margin-left: 1.5rem;">Manifesto</a>
+      <a href="lesson-plans.html" style="color: var(--muted); text-decoration: none; font-size: 0.875rem; margin-left: 1.5rem;">Lesson Plans</a>
+      <a href="tools.html" style="color: var(--accent); text-decoration: none; font-size: 0.875rem; margin-left: 1.5rem;">Tools</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="status">Phase 0 — MVP Pilot Active</div>
+    <div class="brand">Flow Education</div>
+    <h1>We Refuse Edutainment</h1>
+    <p>We build tutors. One hour of real learning for kindergarteners. Zero babysitting required.</p>
+    <a href="MANIFESTO.html" class="cta-button">Read the Manifesto</a>
+    <a href="https://github.com/aikaizen/promptengines" class="cta-secondary">GitHub →</a>
+  </section>
+
+  <section class="section">
+    <div class="number-block">
+      <div class="number">60</div>
+      <div class="label">Minutes</div>
+      <p style="margin-top: 1rem; color: var(--muted);">of independent, productive learning without adult intervention</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>The Problem</h2>
+    <p>
+      Khan Academy Kids entertains for 10 minutes, then kids zone out. Duolingo ABC drills letters until boredom. 
+      ABCmouse uses slot-machine mechanics to addict children to "learning."
+    </p>
+    <p>
+      <strong style="color: var(--accent);">None of them work in real classrooms.</strong> Teachers have 25 students. 
+      If the app requires hand-holding, it's useless.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>The Four Phases</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Phase 0 — Now</h3>
+        <p>Kindergarten Chrome tablets. 10 quests. Basic adaptive logic. Validate the 60-minute standard.</p>
+      </div>
+      <div class="card">
+        <h3>Phase 1 — Tools</h3>
+        <p>Teacher lesson creation. Chat-based LLM tutors. Middle school pilot. Asset marketplace.</p>
+      </div>
+      <div class="card">
+        <h3>Phase 2 — Agentic</h3>
+        <p>Intelligent asset surfacing. Scoring and recommendations. Student data system.</p>
+      </div>
+      <div class="card">
+        <h3>Phase 3 — Knowledge</h3>
+        <p>Full K-12 curriculum. Knowledge graphs. Agentic asset creation. Every student has a personal tutor.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>What We Refuse</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Refuse: Edutainment</h3>
+        <p>90% play, 10% learning. Cartoons with math problems. Not good enough.</p>
+      </div>
+      <div class="card">
+        <h3>Refuse: Gamification</h3>
+        <p>Points, badges, streaks. Addiction mechanics exploiting dopamine. We refuse.</p>
+      </div>
+      <div class="card">
+        <h3>Refuse: Passive</h3>
+        <p>Videos that play while kids stare. Adaptive speed, not adaptive learning.</p>
+      </div>
+      <div class="card">
+        <h3>Refuse: Babysitting</h3>
+        <p>Apps that require constant teacher help. We build self-sufficient tutors.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="links">
+      <h3>Resources</h3>
+      <ul>
+        <li>
+          <a href="MANIFESTO.html">
+            <strong>The Manifesto</strong>
+            <span>Our complete philosophy, standards, and commitment</span>
+          </a>
+        </li>
+        <li>
+          <a href="lesson-plans.html">
+            <strong>Lesson Plans</strong>
+            <span>LP-001: Kindergarten Letters A-E & Number 1 — 6 lessons, 36 minutes</span>
+          </a>
+        </li>
+        <li>
+          <a href="tools.html">
+            <strong>Tools</strong>
+            <span>Batch image generator, audio synthesizer, lesson assembler</span>
+          </a>
+        </li>
+        <li>
+          <a href="MVP-QUEST-SPEC.md">
+            <strong>MVP Quest Specification</strong>
+            <span>Detailed breakdown of all 6 quests for the pilot</span>
+          </a>
+        </li>
+        <li>
+          <a href="vision/VISION.md">
+            <strong>Vision Document</strong>
+            <span>Four-phase roadmap, technical architecture, success metrics</span>
+          </a>
+        </li>
+        <li>
+          <a href="QUICKSTART.md">
+            <strong>Quick Start Guide</strong>
+            <span>Generate your first lesson in 10 minutes</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Join the Pilot</h2>
+    <p>
+      We need kindergarten classrooms with Chrome tablets. If you have 25 kindergarteners 
+      and want them to have a personal tutor, we want you.
+    </p>
+    <p style="margin-top: 1rem;">
+      <strong>Contact:</strong> <a href="mailto:hello@promptengines.com" style="color: var(--accent);">hello@promptengines.com</a>
+    </p>
+  </section>
+
+  <footer>
+    <p>
+      Flow Education — A <a href="https://promptengines.com">PromptEngines</a> Experiment<br>
+      Built in Austin, Texas
+    </p>
+    <p style="margin-top: 1rem;">
+      <a href="https://lab.promptengines.com">Lab Notes</a> · 
+      <a href="https://github.com/aikaizen/promptengines">GitHub</a>
+    </p>
+  </footer>
+</body>
+</html>

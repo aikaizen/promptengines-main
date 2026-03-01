@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools — Flow Education</title>
+  <meta name="description" content="Asset generation tools for Flow Education: batch image generation via Fireworks AI, audio synthesis via ElevenLabs, lesson assembly, and more.">
+  <style>
+    :root {
+      --bg: #09090b;
+      --fg: #e4e4e7;
+      --accent: #F04D26;
+      --muted: #71717a;
+      --border: #27272a;
+      --card: #18181b;
+      --code: #1c1c1f;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    
+    .topbar {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .topbar a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+    
+    .topbar a:hover {
+      color: var(--fg);
+    }
+    
+    .topbar .nav a {
+      margin-left: 1.5rem;
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    
+    .hero p {
+      color: var(--muted);
+      font-size: 1.125rem;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    
+    h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .tool-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .tool-card h3 {
+      margin-top: 0;
+      color: var(--fg);
+    }
+    
+    .tool-card .meta {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+    }
+    
+    .tool-card .meta span {
+      background: var(--bg);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      color: var(--muted);
+    }
+    
+    .tool-card .status {
+      background: rgba(34, 197, 94, 0.2) !important;
+      color: #22c55e !important;
+    }
+    
+    .tool-card .status-beta {
+      background: rgba(234, 179, 8, 0.2) !important;
+      color: #eab308 !important;
+    }
+    
+    .tool-card p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    
+    pre {
+      background: var(--code);
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.875rem;
+      margin: 1rem 0;
+    }
+    
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.875rem;
+      background: var(--code);
+      padding: 0.125rem 0.375rem;
+      border-radius: 3px;
+    }
+    
+    pre code {
+      background: none;
+      padding: 0;
+    }
+    
+    .download-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+      margin-top: 1rem;
+      transition: opacity 0.2s;
+    }
+    
+    .download-btn:hover {
+      opacity: 0.9;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .feature {
+      background: var(--card);
+      padding: 1.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    
+    .feature h4 {
+      color: var(--accent);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature p {
+      color: var(--muted);
+      font-size: 0.9375rem;
+    }
+    
+    ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    li {
+      margin-bottom: 0.5rem;
+    }
+    
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    .quickstart {
+      background: var(--card);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .quickstart h3 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    
+    .steps {
+      counter-reset: step;
+    }
+    
+    .step {
+      counter-increment: step;
+      margin-bottom: 1.5rem;
+      padding-left: 2.5rem;
+      position: relative;
+    }
+    
+    .step::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1.5rem;
+      height: 1.5rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    
+    .prompt-box {
+      background: rgba(240, 77, 38, 0.1);
+      border-left: 3px solid var(--accent);
+      padding: 1rem;
+      margin: 1rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+    }
+    
+    .prompt-label {
+      color: var(--accent);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="../index.html">← Prototypes</a>
+    <div class="nav">
+      <a href="MANIFESTO.html">Manifesto</a>
+      <a href="lesson-plans.html">Lesson Plans</a>
+      <a href="tools.html" style="color: var(--accent);">Tools</a>
+      <a href="https://github.com/aikaizen/promptengines">GitHub</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>Tools</h1>
+    <p>Asset generation and lesson creation tools for Flow Education</p>
+  </div>
+
+  <div class="container">
+    
+    <div class="quickstart">
+      <h3>🚀 Quick Start: Generate Your First Lesson</h3>
+      <div class="steps">
+        <div class="step">
+          <strong>Download the tools</strong>
+          <p>Get the tools from <a href="https://github.com/aikaizen/promptengines/tree/master/projects/promptengines/experiments/prototypes/flow-education/tools">GitHub</a> or use the files below</p>
+        </div>
+        <div class="step">
+          <strong>Get API keys</strong>
+          <p>Fireworks AI for images, ElevenLabs for audio (or Amazon Polly for budget)</p>
+        </div>
+        <div class="step">
+          <strong>Configure</strong>
+          <pre><code>cd tools/
+cp config.json.template config.json
+# Add your API keys</code></pre>
+        </div>
+        <div class="step">
+          <strong>Generate images</strong>
+          <pre><code>node image-gen/batch-generate.js --lesson quest-001-letter-a</code></pre>
+        </div>
+        <div class="step">
+          <strong>Generate audio</strong>
+          <pre><code>node audio-gen/batch-audio.js --lesson quest-001-letter-a</code></pre>
+        </div>
+        <div class="step">
+          <strong>Review outputs</strong>
+          <p>Check <code>assets/images/</code> and <code>assets/audio/</code> — iterate prompts if needed</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>Download Tools</h2>
+
+    <div class="tool-card">
+      <h3>🔧 batch-generate.js</h3>
+      <div class="meta">
+        <span class="status">✓ Ready</span>
+        <span>Node.js</span>
+        <span>Fireworks AI</span>
+      </div>
+      <p>Batch image generation for lesson assets. Reads asset manifests and generates all images with consistent cartoon style.</p>
+      
+      <a href="https://github.com/aikaizen/promptengines/blob/master/projects/promptengines/experiments/prototypes/flow-education/tools/image-gen/batch-generate.js" class="download-btn" target="_blank">View Source on GitHub</a>
+      
+      <h4>What It Does</h4>
+      <ul>
+        <li>Reads <code>assets-manifest.json</code> for each lesson</li>
+        <li>Generates images via Fireworks AI API (Stable Diffusion XL)</li>
+        <li>Auto-applies style template for visual consistency</li>
+        <li>Organizes outputs by category (characters, objects, letters, backgrounds, UI)</li>
+        <li>Generates report with success/failure tracking</li>
+      </ul>
+
+      <h4>Prompt Template (Auto-Applied)</h4>
+      <div class="prompt-box">
+        <div class="prompt-label">Style Template Added to Every Prompt</div>
+        "2D cartoon illustration for children, friendly and warm, simple shapes, 
+        bold outlines, flat colors, no gradients, educational style, 
+        suitable for kindergarten, high contrast, cheerful, isolated on transparent background"
+      </div>
+
+      <h4>Example: How an Apple Gets Generated</h4>
+      <p><strong>From manifest:</strong></p>
+      <pre><code>{
+  "id": "apple",
+  "prompt": "Cartoon red apple, friendly face, simple 2D style",
+  "size": "512x512"
+}</code></pre>
+      
+      <p><strong>Full prompt sent to API:</strong></p>
+      <pre><code>Cartoon red apple, friendly face, simple 2D style, 
+2D cartoon illustration for children, friendly and warm, 
+simple shapes, bold outlines, flat colors, no gradients, 
+educational style, suitable for kindergarten, high contrast, 
+cheerful, isolated on transparent background</code></pre>
+
+      <h4>Usage</h4>
+      <pre><code># Generate all images for a lesson
+node batch-generate.js --lesson quest-001-letter-a
+
+# Force regeneration (overwrite existing)
+node batch-generate.js --lesson quest-001-letter-a --force
+
+# Use custom manifest path
+node batch-generate.js --lesson quest-001-letter-a \
+  --manifest ../../lessons/quest-001-letter-a/assets-manifest.json</code></pre>
+
+      <h4>Features</h4>
+      <ul>
+        <li>Automatic style template application (consistent cartoon look)</li>
+        <li>Organized output by lesson and category</li>
+        <li>Generation report with success/failure tracking</li>
+        <li>Resume support (skips existing files, use --force to override)</li>
+        <li>Rate limiting (1 second delay between API calls)</li>
+        <li>Transparent PNG backgrounds for characters/objects</li>
+      </ul>
+
+      <h4>API Configuration</h4>
+      <pre><code>{
+  "image_api": {
+    "provider": "fireworks",
+    "api_key": "YOUR_FIREWORKS_KEY",
+    "model": "stable-diffusion-xl-1024-v1-0",
+    "default_params": {
+      "width": 1024,
+      "height": 1024,
+      "steps": 30,
+      "cfg_scale": 7.5,
+      "style_preset": "digital-art"
+    }
+  }
+}</code></pre>
+
+      <h4>Output Structure</h4>
+      <pre><code>assets/images/quest-001-letter-a/
+├── characters/
+│   ├── tutor-neutral.png
+│   ├── tutor-happy.png
+│   └── ...
+├── objects/
+│   ├── apple.png
+│   ├── ant.png
+│   └── ...
+├── letters/
+│   ├── letter-a.png
+│   └── ...
+├── backgrounds/
+│   └── classroom.png
+└── ui/
+    ├── button-play.png
+    └── ...
+
+# Plus generation-report.json with stats</code></pre>
+    </div>
+
+    <div class="tool-card">
+      <h3>🔊 batch-audio.js</h3>
+      <div class="meta">
+        <span class="status">✓ Ready</span>
+        <span>Node.js</span>
+        <span>ElevenLabs / Polly</span>
+      </div>
+      <p>Batch audio generation for lesson narration and feedback. Supports ElevenLabs (high quality) or Amazon Polly (budget).</p>
+
+      <a href="https://github.com/aikaizen/promptenginecommandes/blob/master/projects/promptengines/experiments/prototypes/flow-education/tools/audio-gen/batch-audio.js" class="download-btn" target="_blank">View Source on GitHub</a>
+
+      <h4>What It Does</h4>
+      <ul>
+        <li>Reads narration and feedback text from manifest</li>
+        <li>Generates MP3 audio via TTS API</li>
+        <li>Organizes by category (narration, feedback, sfx)</li>
+        <li>Tracks emotion/pace metadata for future use</li>
+      </ul>
+
+      <h4>Usage</h4>
+      <pre><code># Generate with ElevenLabs (recommended for MVP)
+node batch-audio.js --lesson quest-001-letter-a --provider elevenlabs
+
+# Generate with Polly (cheaper for scale)
+node batch-audio.js --lesson quest-001-letter-a --provider polly
+
+# Force regeneration
+node batch-audio.js --lesson quest-001-letter-a --force</code></pre>
+
+      <h4>Features</h4>
+      <ul>
+        <li>Multi-provider support (ElevenLabs, Amazon Polly)</li>
+        <li>Voice settings optimization (stability: 0.5, similarity_boost: 0.75)</li>
+        <li>Emotion/tone tags in manifest (cheerful, encouraging, calm)</li>
+        <li>MP3 output, 64-128kbps, <10MB per lesson</li>
+        <li>Generation report tracking success/failure</li>
+      </ul>
+
+      <h4>Cost Comparison</h4>
+      <ul>
+        <li><strong>ElevenLabs</strong>: ~$2.05 per lesson (natural quality)</li>
+        <li><strong>Amazon Polly</strong>: ~$0.13 per lesson (robotic but functional)</li>
+      </ul>
+
+      <h4>API Configuration</h4>
+      <pre><code>{
+  "audio_api": {
+    "provider": "elevenlabs",
+    "api_key": "sk_...",
+    "voice_id": "XB0fDUnXU5powFXDhCwa",
+    "model": "eleven_multilingual_v2"
+  }
+}</code></pre>
+
+      <h4>Output Structure</h4>
+      <pre><code>assets/audio/quest-001-letter-a/
+├── narration/
+│   ├── intro-welcome.mp3
+│   ├── challenge-1-instruction.mp3
+│   └── ...
+└── feedback/
+    ├── correct-01.mp3
+    ├── correct-02.mp3
+    ├── encourage-01.mp3
+    └── ...
+
+# Plus audio-report.json with stats</code></pre>
+
+      <h4>Example Manifest Entry</h4>
+      <pre><code>{
+  "audio": {
+    "narration": [
+      {
+        "id": "intro-welcome",
+        "text": "Hello! I'm excited to learn with you today!",
+        "emotion": "cheerful",
+        "pace": "normal"
+      }
+    ],
+    "feedback": [
+      {
+        "id": "correct-01",
+        "text": "That's right! Great job!",
+        "emotion": "celebrating"
+      }
+    ]
+  }
+}</code></pre>
+    </div>
+
+    <div class="tool-card">
+      <h3>📦 lesson-assembler/package.js</h3>
+      <div class="meta">
+        <span class="status">✓ Ready</span>
+        <span>Node.js</span>
+        <span>Asset Packaging</span>
+      </div>
+      <p>Compiles generated assets into deployable lesson packages for the Flow Education Android app.</p>
+
+      <a href="https://github.com/aikaizen/promptengines/blob/master/projects/promptengines/experiments/prototypes/flow-education/tools/lesson-assembler/package.js" class="download-btn" target="_blank">View Source on GitHub</a>
+
+      <h4>What It Does</h4>
+      <ul>
+        <li>Validates all required assets exist</li>
+        <li>Copies images and audio to organized output folder</li>
+        <li>Generates SHA-256 checksums for integrity verification</li>
+        <li>Calculates package size</li>
+        <li>Creates deployment manifest</li>
+      </ul>
+
+      <h4>Usage</h4>
+      <pre><code># Package a complete lesson
+node lesson-assembler/package.js --lesson quest-001-letter-a
+
+# Package with detailed manifest
+node lesson-assembler/package.js --lesson quest-001-letter-a --include-manifest
+
+# Package all lessons
+node lesson-assembler/package.js --all</code></pre>
+
+      <h4>Features</h4>
+      <ul>
+        <li>Asset validation (checks all required files present)</li>
+        <li>Manifest generation (JSON for app consumption)</li>
+        <li>Checksum generation (SHA-256, 16-char hex)</li>
+        <li>Size reporting (MB per lesson)</li>
+        <li>Dependency resolution (prerequisite quests)</li>
+        <li>Package report with success/failure tracking</li>
+      </ul>
+
+      <h4>Output Structure</h4>
+      <pre><code>output/quest-001-letter-a/
+├── images/
+│   ├── characters/
+│   ├── objects/
+│   ├── letters/
+│   ├── backgrounds/
+│   └── ui/
+├── audio/
+│   ├── narration/
+│   └── feedback/
+└── manifest.json (if --include-manifest)
+
+# Plus quest-001-letter-a-package-report.json</code></pre>
+    </div>
+
+    <div class="tool-card">
+      <h3>🧠 adaptive-logic.js</h3>
+      <div class="meta">
+        <span class="status">✓ Ready</span>
+        <span>Node.js</span>
+        <span>Rule-Based</span>
+      </div>
+      <p>Simple rule-based adaptive algorithm for Phase 0 MVP. Adjusts difficulty based on student performance in real-time. NOT machine learning — explicit rules for transparency and debugging.</p>
+
+      <a href="https://github.com/aikaizen/promptengines/blob/master/projects/promptengines/experiments/prototypes/flow-education/tools/adaptive-logic.js" class="download-btn" target="_blank">View Source on GitHub</a>
+
+      <h4>What It Does</h4>
+      <ul>
+        <li>Tracks error rates per skill</li>
+        <li>Adjusts challenge difficulty up/down</li>
+        <li>Triggers review lessons when needed</li>
+        <li>Never lets a child get stuck</li>
+      </ul>
+
+      <h4>5 Difficulty Levels</h4>
+      <pre><code>1. EASIEST   - Extra scaffolding, more hints, longer time
+2. EASY      - Standard scaffolding, extra time allowed
+3. NORMAL    - Default challenge (starting level)
+4. HARD      - Faster pace, less scaffolding, fewer hints
+5. HARDEST   - Timed, no hints, minimal scaffolding</code></pre>
+
+      <h4>Adaptation Triggers</h4>
+      <pre><code>3 consecutive errors  → Reduce difficulty (make easier)
+5 consecutive correct → Increase difficulty (make harder)
+<30% success rate      → Trigger review lesson
+>80% success rate       → Mark skill mastered
+>30 seconds stuck      → Offer hint/help</code></pre>
+
+      <h4>Usage</h4>
+      <pre><code>const { AdaptiveEngine } = require('./tools/adaptive-logic');
+
+const engine = new AdaptiveEngine('student-001');
+
+// Record an attempt
+engine.recordAttempt('letter-b-recognition', true, 3000);
+
+// Check if adaptation needed
+const adaptations = engine.shouldAdapt('letter-b-recognition');
+// Returns: [{ type: 'INCREASE_DIFFICULTY', reason: '5 consecutive correct' }]
+
+// Get session summary
+const summary = engine.getSessionSummary();
+// { durationMinutes: 6, challengesCompleted: 4, successRate: "85%" }</code></pre>
+    </div>
+
+    <div class="tool-card">
+      <h3>📊 progress-tracker.js</h3>
+      <div class="meta">
+        <span class="status">✓ Ready</span>
+        <span>Node.js</span>
+        <span>Data Tracking</span>
+      </div>
+      <p>Student session tracking and recommendations. Stores progress locally (AsyncStorage for React Native) with skill mastery, streak tracking, and next quest recommendations.</p>
+
+      <a href="https://github.com/aikaizen/promptengines/blob/master/projects/promptengines/experiments/prototypes/flow-education/tools/progress-tracker.js" class="download-btn" target="_blank">View Source on GitHub</a>
+
+      <h4>What It Does</h4>
+      <ul>
+        <li>Tracks session time and challenge completion</li>
+        <li>Records success/error rates per skill</li>
+        <li>Identifies skills needing review</li>
+        <li>Maintains daily streaks</li>
+        <li>Recommends next quest</li>
+      </ul>
+
+      <h4>Tracked Metrics</h4>
+      <pre><code>- Total sessions per student
+- Total learning time (minutes)
+- Quests completed
+- Skills mastered (80%+ over 5+ attempts)
+- Success rate per skill
+- Daily streak
+- Skills needing review (<50% success)</code></pre>
+
+      <h4>Usage</h4>
+      <pre><code>const { ProgressTracker } = require('./tools/progress-tracker');
+
+const tracker = new ProgressTracker(AsyncStorage);
+await tracker.init('student-001');
+
+// Start a quest
+await tracker.startQuest('quest-001-letter-a');
+
+// Record challenge completion
+await tracker.completeChallenge('challenge-1', true, 'letter-a', 5000);
+
+// Complete quest
+await tracker.completeQuest('quest-001-letter-a', 85);
+
+// Get recommendations
+const next = await tracker.getNextRecommendation();
+// { nextQuest: 'quest-002-letter-b', reason: 'next_in_sequence' }
+
+// Check stats
+const stats = await tracker.getStats();
+// { totalSessions: 12, completedQuests: 5, streakDays: 3, ... }</code></pre>
+    </div>
+
+    <h2>Configuration</h2>
+
+    <h3>config.json Template</h3>
+    <pre><code>{
+  "image_api": {
+    "provider": "fireworks",
+    "api_key": "fw_...",
+    "model": "accounts/fireworks/models/stable-diffusion-xl-1024-v1-0",
+    "default_params": {
+      "width": 1024,
+      "height": 1024,
+      "steps": 30,
+      "cfg_scale": 7.5,
+      "style_preset": "digital-art"
+    }
+  },
+  "audio_api": {
+    "provider": "elevenlabs",
+    "api_key": "sk_...",
+    "voice_id": "21m00Tcm4TlvDq8ikWAM",
+    "model": "eleven_multilingual_v2"
+  },
+  "polly": {
+    "accessKeyId": "AKIA...",
+    "secretAccessKey": "...",
+    "region": "us-east-1",
+    "voiceId": "Joanna"
+  },
+  "output": {
+    "imageDir": "../assets/images",
+    "audioDir": "../assets/audio",
+    "reportDir": "../output"
+  }
+}</code></pre>
+
+    <p><strong>Security:</strong> Never commit <code>config.json</code> with real keys. Add to <code>.gitignore</code>.</p>
+
+    <h2>Asset Manifest Format</h2>
+
+    <p>All tools read from <code>lessons/{lesson-id}/assets-manifest.json</code>:</p>
+
+    <pre><code>{
+  "lessonId": "quest-001-letter-a",
+  "title": "Letter A Adventure",
+  "duration": "6 minutes",
+  "images": {
+    "characters": [
+      {
+        "id": "tutor-happy",
+        "prompt": "Friendly cartoon tutor character, happy expression...",
+        "size": "512x512"
+      }
+    ],
+    "objects": [
+      {
+        "id": "apple",
+        "prompt": "Cartoon red apple, friendly face, simple 2D style",
+        "size": "512x512"
+      }
+    ],
+    "letters": [...],
+    "backgrounds": [...],
+    "ui": [...]
+  },
+  "audio": {
+    "narration": [
+      {
+        "id": "intro-welcome",
+        "text": "Welcome to the Letter A Adventure!",
+        "emotion": "cheerful",
+        "pace": "normal"
+      }
+    ],
+    "feedback": [...]
+  },
+  "challenges": [...]
+}</code></pre>
+
+    <h2>Style Guidelines</h2>
+
+    <div class="grid">
+      <div class="feature">
+        <h4>Visual Style</h4>
+        <p>2D cartoon, friendly and warm, simple shapes, bold outlines, flat colors, transparent backgrounds for characters/objects</p>
+      </div>
+      <div class="feature">
+        <h4>Audio Style</h4>
+        <p>Clear, warm, encouraging, age-appropriate pacing, specific praise over generic "good job"</p>
+      </div>
+      <div class="feature">
+        <h4>File Formats</h4>
+        <p>Images: PNG (transparency for characters), JPG (backgrounds). Audio: MP3, 64-128kbps. Max 200MB per lesson.</p>
+      </div>
+      <div class="feature">
+        <h4>Naming</h4>
+        <p>kebab-case, descriptive, category-prefixed: tutor-happy.png, apple.png, intro-welcome.mp3</p>
+      </div>
+    </div>
+
+    <h2>Repository Structure</h2>
+
+    <pre><code>projects/promptengines/experiments/prototypes/flow-education/
+├── README.md                    # System overview
+├── QUICKSTART.md               # 10-minute setup guide
+├── MANIFESTO.html              # Philosophy & standards
+├── index.html                  # This site
+├── tools.html                  # This page
+├── MVP-QUEST-SPEC.md           # 6-quest specification
+├── tools/
+│   ├── config.json.template    # API key template
+│   ├── image-gen/
+│   │   └── batch-generate.js   # ✅ Image generation
+│   ├── audio-gen/
+│   │   └── batch-audio.js      # ✅ Audio generation
+│   ├── lesson-assembler/
+│   │   └── package.js          # ✅ Asset packaging
+│   ├── adaptive-logic.js       # ✅ Difficulty adjustment
+│   └── progress-tracker.js     # ✅ Student tracking
+├── lessons/
+│   ├── quest-001-letter-a/
+│   │   └── assets-manifest.json
+│   ├── quest-002-letter-b/
+│   │   └── assets-manifest.json
+│   └── ... (5 complete)
+├── assets/                      # Generated outputs
+│   ├── images/
+│   └── audio/
+└── output/                      # Assembled lessons</code></pre>
+
+    <h2>Contributing</h2>
+
+    <p>These tools are open source. To contribute:</p>
+
+    <ol>
+      <li>Fork <a href="https://github.com/aikaizen/promptengines">github.com/aikaizen/promptengines</a></li>
+      <li>Make atomic commits with explicit paths</li>
+      <li>Follow the slop-free standard (no hedging, no hype)</li>
+      <li>Test with Quest 001 before submitting</li>
+    </ol>
+
+    <h2>Support</h2>
+
+    <p>
+      Questions? Issues? <a href="mailto:hello@promptengines.com">hello@promptengines.com</a><br>
+      Follow development: <a href="https://lab.promptengines.com">lab.promptengines.com</a>
+    </p>
+
+  </div>
+
+  <footer>
+    <p>
+      Flow Education — A <a href="https://promptengines.com">PromptEngines</a> Experiment<br>
+      Built in Austin, Texas
+    </p>
+  </footer>
+</body>
+</html>

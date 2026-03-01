@@ -1,0 +1,22 @@
+{
+  "image_api": {
+    "provider": "fireworks",
+    "api_key": "YOUR_FIREWORKS_API_KEY_HERE",
+    "model": "stable-diffusion-xl-1024-v1-0",
+    "default_params": {
+      "width": 1024,
+      "height": 1024,
+      "steps": 30,
+      "cfg_scale": 7.5
+    }
+  },
+  "audio_api": {
+    "provider": "elevenlabs",
+    "api_key": "YOUR_ELEVENLABS_API_KEY_HERE",
+    "voice_id": "XB0fDUnXU5powFXDhCwa",
+    "model": "eleven_monolingual_v1"
+  },
+  "output_quality": "high",
+  "batch_size": 5,
+  "rate_limit_ms": 1000
+}

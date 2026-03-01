@@ -1,0 +1,290 @@
+{
+  "lessonId": "quest-003-letter-c",
+  "title": "Letter C Adventure",
+  "description": "Meet the letter C with cat, car, and cookie",
+  "duration": "6 minutes",
+  "difficulty": "beginner",
+  "prerequisites": ["quest-001-letter-a", "quest-002-letter-b"],
+  "learningObjectives": [
+    "Recognize uppercase and lowercase C",
+    "Associate C sound with /k/ and /s/",
+    "Identify C-words: cat, car, cookie, cup, carrot"
+  ],
+  "images": {
+    "characters": [
+      {
+        "id": "tutor-neutral",
+        "prompt": "Friendly cartoon tutor character, neutral expression, standing pose, simple 2D style, bold outlines, flat colors, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "tutor-happy",
+        "prompt": "Friendly cartoon tutor character, happy smiling expression, excited pose, simple 2D style, bold outlines, warm colors, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "tutor-thinking",
+        "prompt": "Friendly cartoon tutor character, thinking expression, hand on chin, curious pose, simple 2D style, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "tutor-encouraging",
+        "prompt": "Friendly cartoon tutor character, warm encouraging expression, supportive pose, thumbs up, simple 2D style, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "tutor-waving",
+        "prompt": "Friendly cartoon tutor character, waving hand, welcoming smile, simple 2D style, bold outlines, transparent background",
+        "size": "512x512"
+      }
+    ],
+    "objects": [
+      {
+        "id": "cat",
+        "prompt": "Cute cartoon orange tabby cat, sitting pose, friendly face, whiskers, simple 2D style, bold outlines, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "car",
+        "prompt": "Cute cartoon red car, friendly face on windshield, simple 2D style, bold outlines, side view, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "cookie",
+        "prompt": "Cartoon chocolate chip cookie, round shape, bite taken out, friendly face, simple 2D style, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "cup",
+        "prompt": "Cartoon colorful cup or mug, steam rising, simple 2D style, bold outlines, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "carrot",
+        "prompt": "Cartoon orange carrot with green leafy top, simple 2D style, friendly face optional, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "distractor-apple",
+        "prompt": "Cartoon red apple, from Letter A lesson, friendly face, simple 2D style, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "distractor-ball",
+        "prompt": "Colorful cartoon ball, from Letter B lesson, simple 2D style, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "distractor-dog",
+        "prompt": "Cute cartoon brown dog, from Letter D (preview), sitting pose, simple 2D style, transparent background",
+        "size": "512x512"
+      }
+    ],
+    "letters": [
+      {
+        "id": "letter-c-upper",
+        "prompt": "Cartoon uppercase letter C, green color with light green highlights, playful 3D-ish style, bold outlines, friendly curve, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "letter-c-lower",
+        "prompt": "Cartoon lowercase letter c, green color, playful rounded style, bold outlines, friendly, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "letter-a-review",
+        "prompt": "Cartoon uppercase letter A, orange color, quick review reference, transparent background",
+        "size": "512x512"
+      },
+      {
+        "id": "letter-b-review",
+        "prompt": "Cartoon uppercase letter B, blue color, review reference, transparent background",
+        "size": "512x512"
+      }
+    ],
+    "backgrounds": [
+      {
+        "id": "classroom",
+        "prompt": "Warm kindergarten classroom interior, soft pastel colors, bookshelves, learning posters on walls, sunny window, cozy and inviting, wide angle, flat illustration style",
+        "size": "1024x1024"
+      },
+      {
+        "id": "cat-playground",
+        "prompt": "Colorful playground scene with cat-themed elements, yarn balls, scratching posts, soft grass, cheerful outdoor setting, flat cartoon style",
+        "size": "1024x1024"
+      },
+      {
+        "id": "cookie-kitchen",
+        "prompt": "Warm cozy kitchen scene, cookie jar on counter, baking theme, soft lighting, flat cartoon illustration, inviting atmosphere",
+        "size": "1024x1024"
+      }
+    ],
+    "ui": [
+      {
+        "id": "button-play",
+        "prompt": "Green play button, rounded rectangle, white triangle play icon, cartoon UI style, transparent background",
+        "size": "256x256"
+      },
+      {
+        "id": "button-home",
+        "prompt": "Blue home button, rounded rectangle, white house icon, cartoon UI style, transparent background",
+        "size": "256x256"
+      },
+      {
+        "id": "button-next",
+        "prompt": "Orange next button, rounded rectangle, white arrow pointing right, cartoon UI style, transparent background",
+        "size": "256x256"
+      },
+      {
+        "id": "star-empty",
+        "prompt": "Empty star outline, gray color, cartoon style, progress indicator, transparent background",
+        "size": "128x128"
+      },
+      {
+        "id": "star-filled",
+        "prompt": "Filled yellow star, bright golden color, cartoon style, achievement indicator, transparent background",
+        "size": "128x128"
+      },
+      {
+        "id": "progress-bar",
+        "prompt": "Horizontal progress bar UI element, green fill, rounded ends, cartoon style, game UI element, transparent background",
+        "size": "512x64"
+      },
+      {
+        "id": "checkmark",
+        "prompt": "Green checkmark, success indicator, bold cartoon style, transparent background",
+        "size": "128x128"
+      }
+    ]
+  },
+  "audio": {
+    "narration": [
+      {
+        "id": "intro-welcome",
+        "text": "Hello there! Welcome back! Today we're going to meet the letter C!",
+        "emotion": "cheerful",
+        "pace": "normal"
+      },
+      {
+        "id": "intro-letter-c",
+        "text": "This is the letter C. It makes two sounds! Sometimes it's cuh like cat, and sometimes it's sss like cookie. Let's start with cuh-cuh-cat!",
+        "emotion": "demonstrating",
+        "pace": "slow"
+      },
+      {
+        "id": "challenge-1-listen",
+        "text": "Let's hear some C words. Listen carefully!",
+        "emotion": "engaging",
+        "pace": "normal"
+      },
+      {
+        "id": "challenge-1-cat",
+        "text": "Cat! C-c-cat! Meow!",
+        "emotion": "playful",
+        "pace": "normal"
+      },
+      {
+        "id": "challenge-1-car",
+        "text": "Car! C-c-car! Vroom vroom!",
+        "emotion": "playful",
+        "pace": "normal"
+      },
+      {
+        "id": "challenge-1-cookie",
+        "text": "Cookie! Mmm, I love cookies! C-c-cookie!",
+        "emotion": "enthusiastic",
+        "pace": "normal"
+      },
+      {
+        "id": "challenge-2-instruction",
+        "text": "Now you find the C things! Remember: cat, car, cookie, cup, carrot. All start with cuh orsss!",
+        "emotion": "cheerful",
+        "pace": "normal"
+      },
+      {
+        "id": "challenge-3-instruction",
+        "text": "Time to write the letter C! Start at the top and curve around, like a smile!",
+        "emotion": "encouraging",
+        "pace": "slow"
+      },
+      {
+        "id": "boss-challenge-intro",
+        "text": "C Challenge time! I'll show you pictures. Tap the ones that start with C. Ready?",
+        "emotion": "building-excitement",
+        "pace": "normal"
+      },
+      {
+        "id": "outro",
+        "text": "Wonderful! You know A, B, and C now! You're on your way to reading! Next time we'll meet letter D!",
+        "emotion": "celebrating",
+        "pace": "warm"
+      }
+    ],
+    "feedback": [
+      {
+        "id": "correct-01",
+        "text": "C is for correct!",
+        "emotion": "celebrating"
+      },
+      {
+        "id": "correct-02",
+        "text": "Clever! That's a C word!",
+        "emotion": "celebrating"
+      },
+      {
+        "id": "correct-03",
+        "text": "C-c-cool! You got it!",
+        "emotion": "playful"
+      },
+      {
+        "id": "encourage-01",
+        "text": "Almost! Listen for the C sound.",
+        "emotion": "gentle"
+      },
+      {
+        "id": "encourage-02",
+        "text": "Good try! This one starts with a different letter.",
+        "emotion": "supportive"
+      }
+    ]
+  },
+  "challenges": [
+    {
+      "id": "challenge-1-listen",
+      "type": "listening",
+      "title": "Hear the C Sound",
+      "duration": 90,
+      "instruction": "Listen to C words"
+    },
+    {
+      "id": "challenge-2-find",
+      "type": "identification",
+      "title": "Find C Things",
+      "duration": 120,
+      "instruction": "Tap pictures starting with C"
+    },
+    {
+      "id": "challenge-3-trace",
+      "type": "tracing",
+      "title": "Write Letter C",
+      "duration": 120,
+      "instruction": "Trace letter C with finger"
+    },
+    {
+      "id": "boss-challenge",
+      "type": "quiz",
+      "title": "C Challenge",
+      "duration": 90,
+      "instruction": "Tap the C picture"
+    }
+  ],
+  "metadata": {
+    "createdAt": "2026-03-01",
+    "author": "Flow Education System",
+    "version": "1.0.0",
+    "curriculumAlignment": {
+      "standard": "CCSS.ELA-LITERACY.RF.K.1",
+      "description": "Demonstrate understanding of the organization and basic features of print"
+    }
+  }
+}

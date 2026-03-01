@@ -1,0 +1,252 @@
+{
+  "lessonPlanId": "lp-001-kindergarten-letters",
+  "version": "1.0.0",
+  "status": "mvp-active",
+  
+  "metadata": {
+    "title": "Kindergarten Letters A-E & Number 1",
+    "description": "First lesson plan for Flow Education MVP. Covers letters A through E and introduces number 1. Designed for independent 60-minute engagement.",
+    "author": "Flow Education",
+    "createdAt": "2026-03-01",
+    "lastUpdated": "2026-03-01",
+    "tags": ["kindergarten", "letters", "phonics", "numbers", "mvp"]
+  },
+
+  "targetStudent": {
+    "ageRange": "5-6 years",
+    "gradeLevel": "Kindergarten",
+    "readingLevel": "pre-reader",
+    "prerequisites": "None - entry level",
+    "deviceRequirements": {
+      "type": "Android/Chrome tablet",
+      "screenSize": "7-10 inches",
+      "touchInterface": true,
+      "audioRequired": true,
+      "offlineCapable": true
+    }
+  },
+
+  "pedagogicalFocus": {
+    "primaryDomain": "Early Literacy",
+    "secondaryDomains": ["Number Sense", "Fine Motor Skills", "Auditory Processing"],
+    "learningTheory": "Engelmann Direct Instruction + Adaptive Mastery",
+    "engagementTarget": "60 minutes independent use",
+    "adultSupervision": "Minimal - child self-sufficient"
+  },
+
+  "curriculumAlignment": {
+    "standards": [
+      {
+        "framework": "CCSS",
+        "code": "CCSS.ELA-LITERACY.RF.K.1",
+        "description": "Demonstrate understanding of the organization and basic features of print"
+      },
+      {
+        "framework": "CCSS",
+        "code": "CCSS.ELA-LITERACY.RF.K.3",
+        "description": "Know and apply grade-level phonics and word analysis skills"
+      },
+      {
+        "framework": "CCSS",
+        "code": "CCSS.MATH.CONTENT.K.CC.A.1",
+        "description": "Count to 100 by ones and by tens"
+      },
+      {
+        "framework": "TEKS",
+        "code": "TEKS.K.2.A",
+        "description": "Identify and isolate initial phonemes in spoken words"
+      }
+    ]
+  },
+
+  "structure": {
+    "totalDuration": "36-42 minutes",
+    "lessonCount": 6,
+    "lessons": [
+      {
+        "lessonId": "quest-001-letter-a",
+        "sequence": 1,
+        "title": "Letter A Adventure",
+        "duration": "6 minutes",
+        "learningObjectives": [
+          "Recognize uppercase and lowercase letter A",
+          "Associate A with /æ/ sound",
+          "Identify A-words: apple, ant, astronaut, anchor, acorn"
+        ],
+        "skillsTargeted": ["letter-recognition", "phonemic-awareness", "vocabulary"],
+        "prerequisites": [],
+        "assetsRequired": {
+          "images": 24,
+          "audio": 38
+        }
+      },
+      {
+        "lessonId": "quest-002-letter-b",
+        "sequence": 2,
+        "title": "Letter B Adventure",
+        "duration": "6 minutes",
+        "learningObjectives": [
+          "Recognize uppercase and lowercase letter B",
+          "Associate B with /b/ sound",
+          "Identify B-words: butterfly, bear, ball, boat, banana"
+        ],
+        "skillsTargeted": ["letter-recognition", "phonemic-awareness", "vocabulary"],
+        "prerequisites": ["quest-001-letter-a"],
+        "assetsRequired": {
+          "images": 24,
+          "audio": 38
+        }
+      },
+      {
+        "lessonId": "quest-003-letter-c",
+        "sequence": 3,
+        "title": "Letter C Adventure",
+        "duration": "6 minutes",
+        "learningObjectives": [
+          "Recognize uppercase and lowercase letter C",
+          "Associate C with /k/ and /s/ sounds",
+          "Identify C-words: cat, car, cookie, cup, carrot"
+        ],
+        "skillsTargeted": ["letter-recognition", "phonemic-awareness", "vocabulary", "sound-variation"],
+        "prerequisites": ["quest-001-letter-a", "quest-002-letter-b"],
+        "assetsRequired": {
+          "images": 24,
+          "audio": 30
+        },
+        "specialNotes": "Introduces concept of letters having multiple sounds (hard C vs soft C)"
+      },
+      {
+        "lessonId": "quest-004-letter-d",
+        "sequence": 4,
+        "title": "Letter D Adventure",
+        "duration": "6 minutes",
+        "learningObjectives": [
+          "Recognize uppercase and lowercase letter D",
+          "Associate D with /d/ sound",
+          "Identify D-words: dog, duck, dinosaur, donut, door"
+        ],
+        "skillsTargeted": ["letter-recognition", "phonemic-awareness", "vocabulary"],
+        "prerequisites": ["quest-001-letter-a", "quest-002-letter-b", "quest-003-letter-c"],
+        "assetsRequired": {
+          "images": 20,
+          "audio": 20
+        }
+      },
+      {
+        "lessonId": "quest-005-letter-e",
+        "sequence": 5,
+        "title": "Letter E Adventure",
+        "duration": "6 minutes",
+        "learningObjectives": [
+          "Recognize uppercase and lowercase letter E",
+          "Associate E with /e/ sound",
+          "Identify E-words: elephant, egg, eagle, elbow, engine"
+        ],
+        "skillsTargeted": ["letter-recognition", "phonemic-awareness", "vocabulary"],
+        "prerequisites": ["quest-001-letter-a", "quest-002-letter-b", "quest-003-letter-c", "quest-004-letter-d"],
+        "assetsRequired": {
+          "images": 20,
+          "audio": 20
+        },
+        "milestone": "Completion of first 5 letters (A-E) - major celebration"
+      },
+      {
+        "lessonId": "quest-006-number-1",
+        "sequence": 6,
+        "title": "Number 1 Discovery",
+        "duration": "6 minutes",
+        "learningObjectives": [
+          "Recognize digit 1",
+          "Count single items (one-to-one correspondence)",
+          "Associate quantity 'one' with numeral",
+          "Distinguish 1 from 2 and 3"
+        ],
+        "skillsTargeted": ["number-recognition", "counting", "one-to-one-correspondence"],
+        "prerequisites": ["quest-001-letter-a", "quest-002-letter-b", "quest-003-letter-c", "quest-004-letter-d", "quest-005-letter-e"],
+        "assetsRequired": {
+          "images": 20,
+          "audio": 20
+        },
+        "domainShift": "First math lesson after literacy foundation"
+      }
+    ]
+  },
+
+  "assessment": {
+    "formative": {
+      "type": "continuous",
+      "method": "in-lesson-quizzes",
+      "frequency": "every-quest",
+      "passThreshold": "2-out-of-3-correct"
+    },
+    "summative": {
+      "type": "milestone-check",
+      "triggers": [
+        "After lesson 3: Can child identify A, B, C?",
+        "After lesson 5: Can child recite A-E?",
+        "After lesson 6: Can child recognize digit 1?"
+      ]
+    }
+  },
+
+  "adaptationStrategy": {
+    "errorHandling": "3 consecutive errors → reduce difficulty",
+    "successHandling": "5 consecutive correct → increase difficulty",
+    "frustrationDetection": "30 seconds stuck → offer hint",
+    "masteryThreshold": "80% success over 5+ attempts",
+    "reviewTrigger": "Below 30% success rate → review lesson inserted"
+  },
+
+  "assets": {
+    "totalImages": 132,
+    "totalAudio": 166,
+    "sharedAssets": {
+      "characters": {
+        "description": "5 tutor expressions reused across all lessons",
+        "ids": ["tutor-neutral", "tutor-happy", "tutor-thinking", "tutor-encouraging", "tutor-waving"]
+      },
+      "ui": {
+        "description": "Common UI elements reused across all lessons",
+        "ids": ["button-play", "button-next", "star-empty", "star-filled", "progress-bar", "checkmark"]
+      }
+    }
+  },
+
+  "deployment": {
+    "platform": "Android/Chrome OS tablets",
+    "format": "Static asset package",
+    "offline": true,
+    "cloudSync": "optional-progress-backup",
+    "version": "phase-0-mvp",
+    "targetEnvironment": "Kindergarten classroom"
+  },
+
+  "successMetrics": {
+    "engagement": {
+      "target": "80% of children complete all 6 lessons in single session",
+      "measurement": "Session completion tracking"
+    },
+    "learning": {
+      "target": "80% letter recognition (A-E) after completion",
+      "targetNumber": "80% can identify digit 1",
+      "measurement": "In-app quiz results"
+    },
+    "usability": {
+      "target": "Teacher intervention required <2 times per session",
+      "measurement": "Observation logs"
+    }
+  },
+
+  "futureExpansion": {
+    "lessonPlan002": {
+      "title": "Letters F-J & Numbers 2-3",
+      "status": "planned",
+      "description": "Continue letter sequence, introduce counting 2-3"
+    },
+    "lessonPlan003": {
+      "title": "Letters K-O & Shapes",
+      "status": "planned",
+      "description": "Complete first half of alphabet, introduce geometric shapes"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "name": "promptengines-prototypes",
+  "builds": [
+    {
+      "src": "**/index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/projects/promptengines/experiments/prototypes/index.html"
+    },
+    {
+      "src": "/floweducation",
+      "dest": "/projects/promptengines/experiments/prototypes/flow-education/index.html"
+    },
+    {
+      "src": "/floweducation/(.*)",
+      "dest": "/projects/promptengines/experiments/prototypes/flow-education/$1"
+    }
+  ],
+  "github": {
+    "enabled": false
+  }
+}
