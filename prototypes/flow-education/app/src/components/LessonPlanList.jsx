@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 function LessonPlanList({ lessonPlan, progress, onStartLesson, onResetProgress }) {
-  const { metadata, structure, targetStudent } = lessonPlan
+  const { metadata, structure } = lessonPlan
 
   // Calculate overall progress
   const percentComplete = useMemo(() => {
@@ -19,7 +19,7 @@ function LessonPlanList({ lessonPlan, progress, onStartLesson, onResetProgress }
     <div className="lesson-plan-list">
       <div className="lesson-plan-header">
         <div className="header-top">
-          <h1>{metadata.title}</h1>
+          <h1>{lessonPlan.title}</h1>
           {progress.completedLessons.length > 0 && (
             <button 
               className="reset-btn"
@@ -32,12 +32,12 @@ function LessonPlanList({ lessonPlan, progress, onStartLesson, onResetProgress }
             </button>
           )}
         </div>
-        <p className="description">{metadata.description}</p>
-        
+        <p className="description">{lessonPlan.description}</p>
+
         <div className="meta-tags">
-          <span className="tag age">{targetStudent.ageRange}</span>
-          <span className="tag grade">{targetStudent.gradeLevel}</span>
-          <span className="tag duration">{structure.totalDuration}</span>
+          <span className="tag age">{lessonPlan.targetAgeRange}</span>
+          <span className="tag grade">{metadata.targetAge}</span>
+          <span className="tag duration">{lessonPlan.totalEstimatedDuration}</span>
         </div>
 
         {/* Progress Overview */}
@@ -64,9 +64,9 @@ function LessonPlanList({ lessonPlan, progress, onStartLesson, onResetProgress }
       <div className="lessons-section">
         <h2 className="section-title">Your Learning Path</h2>
         <div className="lessons-grid" role="list" aria-label="Lessons">
-          {structure.lessons.map((lesson, index) => {
+          {lessonPlan.lessons.map((lesson, index) => {
             const isCompleted = progress.completedLessons.includes(lesson.lessonId)
-            const prevLesson = index > 0 ? structure.lessons[index - 1] : null
+            const prevLesson = index > 0 ? lessonPlan.lessons[index - 1] : null
             const isLocked = prevLesson && !progress.completedLessons.includes(prevLesson.lessonId)
             const isCurrent = progress.currentLesson === lesson.lessonId
             const masteryScore = progress.masteryScores[lesson.lessonId]
@@ -92,7 +92,7 @@ function LessonPlanList({ lessonPlan, progress, onStartLesson, onResetProgress }
                   <h3>{lesson.title}</h3>
                   <p className="duration">⏱ {lesson.duration}</p>
                   <div className="objectives">
-                    {lesson.learningObjectives.slice(0, 2).map((obj, i) => (
+                    {(lesson.skills || []).slice(0, 2).map((obj, i) => (
                       <span key={i} className="objective" title={obj}>
                         {obj.length > 40 ? obj.substring(0, 40) + '...' : obj}
                       </span>
