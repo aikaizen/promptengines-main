@@ -5,14 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flow Education — Kaizen Learning</title>
   <meta name="description" content="Flow Education: Continuous improvement in learning. Every child progresses at their own pace with personalized tutoring that adapts in real-time.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #09090b;
-      --fg: #e4e4e7;
+      --fg: #fafafa;
+      --fg-muted: #a1a1aa;
+      --fg-subtle: #52525b;
       --accent: #F04D26;
-      --muted: #71717a;
+      --accent-glow: rgba(240, 77, 38, 0.15);
       --border: #27272a;
-      --max-width: 720px;
+      --surface: #18181b;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', -apple-system, sans-serif;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     }
     
     * {
@@ -21,443 +28,534 @@
       box-sizing: border-box;
     }
     
+    html {
+      scroll-behavior: smooth;
+    }
+    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: var(--sans);
       background: var(--bg);
       color: var(--fg);
       line-height: 1.6;
-      font-size: 18px;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
     }
     
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
-    .topbar {
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 1.5rem;
-      margin-bottom: 2rem;
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
     }
     
-    .topbar a {
-      color: var(--muted);
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .animate-in {
+      animation: fadeInUp 0.8s var(--ease-out) backwards;
+    }
+    
+    .stagger > * {
+      animation: fadeInUp 0.6s var(--ease-out) backwards;
+    }
+    
+    .stagger > *:nth-child(1) { animation-delay: 0.0s; }
+    .stagger > *:nth-child(2) { animation-delay: 0.1s; }
+    .stagger > *:nth-child(3) { animation-delay: 0.2s; }
+    .stagger > *:nth-child(4) { animation-delay: 0.3s; }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+    }
+    
+    nav a {
+      color: var(--fg-muted);
       text-decoration: none;
-      font-size: 0.875rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
     }
     
-    .topbar a:hover {
+    nav a:hover {
       color: var(--fg);
     }
     
-    .topbar .nav {
-      float: right;
+    .nav-links {
+      display: flex;
+      gap: 2rem;
     }
     
-    .topbar .nav a {
-      margin-left: 1.5rem;
-    }
-    
-    header {
-      text-align: center;
-      padding: 3rem 0;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 3rem;
-    }
-    
-    .brand {
-      font-size: 0.875rem;
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--fg-muted);
       text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-      margin-bottom: 1rem;
+      letter-spacing: 0.1em;
     }
     
-    h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-      letter-spacing: -0.02em;
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
     }
     
-    .subtitle {
-      font-size: 1.25rem;
-      color: var(--muted);
-      font-weight: 400;
-      max-width: 600px;
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+      max-width: 1200px;
       margin: 0 auto;
     }
     
-    h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-top: 3rem;
-      margin-bottom: 1rem;
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
       color: var(--accent);
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.6s var(--ease-out);
+    }
+    
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.8s var(--ease-out) 0.1s backwards;
+    }
+    
+    .hero p {
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      color: var(--fg-muted);
+      max-width: 600px;
+      line-height: 1.6;
+      animation: fadeInUp 0.8s var(--ease-out) 0.2s backwards;
+    }
+    
+    /* Sections */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    section + section {
+      border-top: 1px solid var(--border);
+    }
+    
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--fg-subtle);
+      margin-bottom: 1rem;
+    }
+    
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
     }
     
     h3 {
       font-size: 1.125rem;
       font-weight: 600;
-      margin-top: 2rem;
-      margin-bottom: 0.75rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
     }
     
     p {
       margin-bottom: 1.25rem;
+      color: var(--fg-muted);
     }
     
-    .lede {
-      font-size: 1.375rem;
-      line-height: 1.5;
-      color: var(--fg);
-      text-align: center;
-      margin: 2rem 0 3rem;
-      padding: 2rem;
-      background: linear-gradient(135deg, rgba(240, 77, 38, 0.1) 0%, transparent 100%);
+    /* Visual Code Blocks */
+    .visual-code {
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 8px;
-    }
-    
-    .kaizen-box {
-      background: var(--border);
-      border-left: 4px solid var(--accent);
-      padding: 2rem;
+      padding: 1.5rem;
       margin: 2rem 0;
-      border-radius: 0 8px 8px 0;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      line-height: 1.7;
+      overflow-x: auto;
     }
     
-    .kaizen-box h3 {
-      color: var(--accent);
-      margin-top: 0;
-      font-size: 1.25rem;
+    .visual-code .comment {
+      color: var(--fg-subtle);
     }
     
-    .kaizen-box p {
-      margin-bottom: 0;
+    .visual-code .keyword {
+      color: #c084fc;
     }
     
-    .principle {
-      background: rgba(240, 77, 38, 0.08);
-      border: 1px solid rgba(240, 77, 38, 0.3);
+    .visual-code .string {
+      color: #4ade80;
+    }
+    
+    .visual-code .number {
+      color: #fbbf24;
+    }
+    
+    .visual-code .function {
+      color: #60a5fa;
+    }
+    
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       padding: 1.5rem;
-      margin: 1.5rem 0;
-      border-radius: 8px;
+      transition: transform 0.3s var(--ease-out), border-color 0.3s;
     }
     
-    .principle strong {
-      color: var(--accent);
-      display: block;
-      margin-bottom: 0.5rem;
-      font-size: 1.125rem;
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
     }
     
-    .phase {
-      background: var(--border);
-      padding: 1.5rem;
-      margin: 1rem 0;
-      border-radius: 8px;
-      border-left: 4px solid var(--accent);
-    }
-    
-    .phase h4 {
-      color: var(--accent);
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
+    .card h4 {
+      font-size: 0.875rem;
+      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-    }
-    
-    .phase-title {
-      font-size: 1.25rem;
-      font-weight: 700;
       margin-bottom: 0.75rem;
+      color: var(--accent);
     }
     
+    .card p {
+      font-size: 0.9375rem;
+      margin: 0;
+    }
+    
+    /* Lists */
     ul {
-      margin-left: 1.5rem;
-      margin-bottom: 1.25rem;
+      list-style: none;
+      margin: 1.5rem 0;
     }
     
     li {
-      margin-bottom: 0.5rem;
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--fg-muted);
     }
     
-    .highlight {
+    li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
       color: var(--accent);
-      font-weight: 600;
     }
     
-    .one-hour {
-      text-align: center;
-      padding: 3rem 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      margin: 3rem 0;
-    }
-    
-    .one-hour .number {
-      font-size: 6rem;
-      font-weight: 900;
-      color: var(--accent);
-      line-height: 1;
-      display: block;
-    }
-    
-    .one-hour .label {
-      font-size: 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-    }
-    
-    .cta-box {
-      background: linear-gradient(135deg, rgba(240, 77, 38, 0.15) 0%, rgba(240, 77, 38, 0.05) 100%);
-      border: 2px solid var(--accent);
-      padding: 2rem;
-      margin: 2rem 0;
-      border-radius: 8px;
-      text-align: center;
-    }
-    
-    .cta-box h3 {
-      color: var(--accent);
-      margin-top: 0;
-    }
-    
-    .pillars {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    /* Buttons */
+    .button-group {
+      display: flex;
       gap: 1rem;
-      margin: 1.5rem 0;
+      flex-wrap: wrap;
+      margin-top: 2rem;
     }
     
-    .pillar {
-      background: var(--border);
-      padding: 1.5rem;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.5rem;
       border-radius: 8px;
-      text-align: center;
-    }
-    
-    .pillar .icon {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .pillar h4 {
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-    
-    footer {
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
+      font-family: var(--sans);
       font-size: 0.875rem;
-      text-align: center;
-    }
-    
-    a {
-      color: var(--accent);
+      font-weight: 600;
       text-decoration: none;
+      transition: all 0.2s var(--ease-out);
+      cursor: pointer;
+      border: none;
     }
     
-    a:hover {
-      text-decoration: underline;
+    .btn-primary {
+      background: var(--accent);
+      color: white;
     }
     
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: var(--fg);
+      border: 1px solid var(--border);
+    }
+    
+    .btn-secondary:hover {
+      border-color: var(--fg-muted);
+      background: var(--surface);
+    }
+    
+    /* Terminal Block */
+    .terminal {
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+    
+    .terminal-header {
+      background: var(--surface);
+      padding: 0.75rem 1rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .terminal-dot.red { background: #ef4444; }
+    .terminal-dot.yellow { background: #eab308; }
+    .terminal-dot.green { background: #22c55e; }
+    
+    .terminal-body {
+      padding: 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.875rem;
+      line-height: 1.7;
+    }
+    
+    .terminal-body .prompt {
+      color: var(--accent);
+    }
+    
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: var(--fg-subtle);
+      font-size: 0.875rem;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav {
+        padding: 1rem;
       }
-      .pillars {
+      
+      .nav-links {
+        gap: 1rem;
+      }
+      
+      .hero {
+        padding: 6rem 1.5rem 3rem;
+      }
+      
+      section {
+        padding: 4rem 1.5rem;
+      }
+      
+      .card-grid {
         grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <a href="../index.html">← Prototypes</a>
-    <div class="nav">
-      <a href="MANIFESTO.html">Kaizen</a>
-      <a href="lesson-plans.html">Lesson Plans</a>
+  <nav class="animate-in">
+    <a href="../">← Prototypes</a>
+    <div class="nav-links">
+      <a href="lesson-plans.html">Curriculum</a>
       <a href="tools.html">Tools</a>
+      <span class="status-badge">
+        <span class="status-dot"></span>
+        Pilot Active
+      </span>
     </div>
-  </div>
-  
-  <div class="container">
-    <header>
-      <div class="brand">Flow Education</div>
-      <h1>Kaizen Learning</h1>
-      <p class="subtitle">Continuous improvement for every child. Personalized tutoring that adapts in real-time to help each student thrive.</p>
-    </header>
+  </nav>
 
-    <p class="lede">
-      Every child learns differently. Every child progresses at their own pace. 
-      <strong>We build learning experiences that celebrate individual growth.</strong>
-    </p>
-
-    <div class="kaizen-box">
-      <h3>改善 (Kaizen)</h3>
-      <p>
-        <em>"Change for the better" — continuous, incremental improvement.</em> 
-        Every tap, every hesitation, every success is data that helps us teach better. 
-        The system learns as the child learns. Together, we improve.
-      </p>
-    </div>
-
-    <div class="one-hour">
-      <span class="number">60</span>
-      <span class="label">Minutes</span>
-      <p style="margin-top: 1rem; color: var(--fg);">of joyful, productive learning.<br>Designed for independent engagement.</p>
-    </div>
-
-    <h2>Our Philosophy</h2>
+  <header class="hero">
+    <div class="hero-label">Flow Education v1.0</div>
+    <h1>Kaizen<br>Learning</h1>
+    <p>Continuous improvement in education. Every child progresses at their own pace with a personal tutor on every tablet.</p>
     
-    <p>
-      We believe learning should be <strong>engaging</strong> and <strong>effective</strong>. 
-      Children deserve tools that spark curiosity while building real skills. 
-      Every interaction is an opportunity for growth—designed to meet each child where they are 
-      and guide them forward.
+    <div class="button-group">
+      <a href="app/dist/" class="btn btn-primary">Launch Demo →</a>
+      <a href="lesson-plans.html" class="btn btn-secondary">View Curriculum</a>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-label">01 / Philosophy</div>
+    <h2>The Kaizen Approach</h2>
+    <p>Kaizen (改善) means "continuous improvement." Small steps, compound gains, no plateaus. Applied to early education, this means:</p>
+    
+    <ul class="stagger">
+      <li>Every session builds on the last—no forgetting</li>
+      <li>Difficulty adapts to the child in real-time</li>
+      <li>Mastery, not completion, is the goal</li>
+      <li>Teachers see data; kids see progress</li>
+    </ul>
+
+    <div class="visual-code">
+<span class="comment">// The mastery loop</span>
+<span class="keyword">while</span> (child.engaged) {
+  challenge = generateAdaptiveChallenge(child.profile);
+  attempt = child.attempt(challenge);
+  
+  <span class="keyword">if</span> (attempt.accuracy > 0.8) {
+    child.progress++;
+    scheduleSpacedReview(challenge.concept);
+  } <span class="keyword">else</span> {
+    provideMicrolesson(challenge.concept);
+  }
+}
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">02 / System</div>
+    <h2>How It Works</h2>
+    <p>Flow Education combines four research-backed curricula into one adaptive system:</p>
+    
+    <div class="card-grid stagger">
+      <div class="card">
+        <h4>Engelmann Direct Instruction</h4>
+        <p>Scripted, error-corrected lessons. If a child makes a mistake, the system responds immediately with the precise correction.</p>
+      </div>
+      <div class="card">
+        <h4>FLDOE Recommended Texts</h4>
+        <p>Age-appropriate literature progression. High-quality books that build vocabulary and cultural literacy.</p>
+      </div>
+      <div class="card">
+        <h4>Math Academy Engine</h4>
+        <p>Spaced repetition and mastery-based advancement. No moving on until the concept is solid.</p>
+      </div>
+      <div class="card">
+        <h4>Core Knowledge Sequence</h4>
+        <p>Domain-specific building blocks. History, science, arts—in the right order, at the right time.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">03 / Architecture</div>
+    <h2>Built for Real Classrooms</h2>
+    <p>Most education apps are designed for homes. Flow is designed for the reality of kindergarten:</p>
+    
+    <ul>
+      <li><strong>25 students, 1 teacher.</strong> The app must work without hand-holding.</li>
+      <li><strong>Chrome tablets.</strong> Kiosk mode, locked down, distraction-free.</li>
+      <li><strong>60-minute engagement.</strong> Not 10 minutes and bored. A full hour of learning.</li>
+      <li><strong>Offline-first.</strong> Rural schools, spotty WiFi—progress syncs when connected.</li>
+    </ul>
+
+    <div class="terminal">
+      <div class="terminal-header">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+      </div>
+      <div class="terminal-body">
+        <span class="prompt">$</span> flow-education --mode=pilot --class-size=25<br>
+        <span style="color: #22c55e;">✓</span> Lesson Plan 001 loaded (Letters A-E, Number 1)<br>
+        <span style="color: #22c55e;">✓</span> Student roster imported (25 students)<br>
+        <span style="color: #22c55e;">✓</span> Kiosk mode active<br>
+        <span style="color: #22c55e;">✓</span> Progress sync: enabled<br>
+        <br>
+        <span style="color: var(--accent);">Ready for session.</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">04 / Progress</div>
+    <h2>Current Status</h2>
+    <p>Phase 0 MVP is complete and in pilot testing:</p>
+    
+    <div class="card-grid">
+      <div class="card">
+        <h4>✓ Lesson Plan 001</h4>
+        <p>6 lessons covering Letters A-E and Number 1. 36 minutes of total curriculum.</p>
+      </div>
+      <div class="card">
+        <h4>✓ Two Age Modes</h4>
+        <p>4YO mode (3.5 min, 4 challenges) and 5-6 mode (7 min, 7 challenges).</p>
+      </div>
+      <div class="card">
+        <h4>✓ Tablet Optimized</h4>
+        <p>Touch-first, Chrome OS ready, no external dependencies.</p>
+      </div>
+      <div class="card">
+        <h4>→ Phase 1</h4>
+        <p>Real backend, progress sync, parent dashboard, expanded curriculum.</p>
+      </div>
+    </div>
+    
+    <div class="button-group" style="justify-content: center; margin-top: 3rem;">
+      <a href="app/dist/" class="btn btn-primary">Try the Demo →</a>
+      <a href="../../labnotes/articles/flow-education-research.html" class="btn btn-secondary">Read Research</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Flow Education · Built with intention in Texas</p>
+    <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--fg-subtle);">
+      A Prompt Engines project · <a href="../../labnotes/team/" style="color: var(--accent);">Team</a> · <a href="../../labnotes/purpose/" style="color: var(--accent);">Purpose</a>
     </p>
-
-    <div class="pillars">
-      <div class="pillar">
-        <div class="icon">🎯</div>
-        <h4>Personalized</h4>
-        <p style="font-size: 0.9rem; color: var(--muted);">Every child follows their own path</p>
-      </div>
-      <div class="pillar">
-        <div class="icon">📊</div>
-        <h4>Data-Driven</h4>
-        <p style="font-size: 0.9rem; color: var(--muted);">Real-time adaptation to each learner</p>
-      </div>
-      <div class="pillar">
-        <div class="icon">🎮</div>
-        <h4>Engaging</h4>
-        <p style="font-size: 0.9rem; color: var(--muted);">Playful experiences that teach</p>
-      </div>
-      <div class="pillar">
-        <div class="icon">🧠</div>
-        <h4>Mastery</h4>
-        <p style="font-size: 0.9rem; color: var(--muted);">Deep understanding before moving on</p>
-      </div>
-    </div>
-
-    <h2>How We Build</h2>
-
-    <div class="principle">
-      <strong>Continuous Testing</strong>
-      <p>
-        Every interaction is an assessment. We don't wait for quizzes—we learn from every tap, 
-        every pause, every smile. The system adapts in real-time, adjusting difficulty, 
-        pacing, and approach based on what works for <em>this</em> child.
-      </p>
-    </div>
-
-    <div class="principle">
-      <strong>Continuous Improvement</strong>
-      <p>
-        The system gets better every day. Not just new content, but refined delivery, 
-        improved scaffolding, smarter hints. Like a great teacher who learns from every student, 
-        our tutors evolve.
-      </p>
-    </div>
-
-    <div class="principle">
-      <strong>Mastery Before Progression</strong>
-      <p>
-        We celebrate effort and reward understanding. Children don't advance because time passed—
-        they advance because they've <em>got it</em>. This builds confidence that lasts a lifetime.
-      </p>
-    </div>
-
-    <div class="principle">
-      <strong>Teacher-Respecting Design</strong>
-      <p>
-        Built for real classrooms. One teacher, 25 students, limited time. 
-        Setup in under 2 minutes. Works offline. No interruptions, no troubleshooting, 
-        just learning that flows.
-      </p>
-    </div>
-
-    <h2>The Journey</h2>
-
-    <div class="phase">
-      <h4>Phase 0 — MVP</h4>
-      <div class="phase-title">Prove the Concept</div>
-      <p>
-        Kindergarten letters A-E, number 1. Six 6-minute lessons. 
-        <strong>Goal:</strong> 80% of children complete 60 minutes independently. 
-        Teacher satisfaction 4+/5. Learn what works.
-      </p>
-    </div>
-
-    <div class="phase">
-      <h4>Phase 1 — Expansion</h4>
-      <div class="phase-title">Build the Curriculum</div>
-      <p>
-        Teachers create lessons. 10,000 students using weekly. Reading and math foundations. 
-        The system learns from thousands of learners, improving for everyone.
-      </p>
-    </div>
-
-    <div class="phase">
-      <h4>Phase 2 — Validation</h4>
-      <div class="phase-title">Prove the Impact</div>
-      <p>
-        Measurable learning gains vs. control groups. Tutors trusted by teachers. 
-        Data shows what we believe: personalized attention at scale works.
-      </p>
-    </div>
-
-    <div class="phase">
-      <h4>Phase 3 — Scale</h4>
-      <div class="phase-title">Every Child Deserves a Tutor</div>
-      <p>
-        Comprehensive K-12 curriculum. Reading, math, science, arts. 
-        Every child has a personal guide who knows exactly what they need.
-      </p>
-    </div>
-
-    <div class="cta-box">
-      <h3>Join the Journey</h3>
-      <p style="margin-bottom: 1.5rem;">
-        We're building in public. Following Kaizen—improving every day. 
-        Pilot teachers, engineers, designers—come shape the future of learning.
-      </p>
-      <p>
-        <a href="mailto:hello@promptengines.com">hello@promptengines.com</a> · 
-        <a href="https://lab.promptengines.com">lab.promptengines.com</a>
-      </p>
-    </div>
-
-    <h2>Who We Are</h2>
-
-    <p>
-      Flow Education is a <strong>PromptEngines</strong> experiment. We build with purpose, 
-      iterate with data, and believe technology should amplify human potential.
-    </p>
-
-    <p>
-      Based in <strong>Austin, Texas</strong>. Piloting in real classrooms with real teachers. 
-      Improving based on what works, not what sounds good.
-    </p>
-
-    <footer>
-      <p>
-        Flow Education — A PromptEngines Experiment<br>
-        Built with 💡 in Austin, Texas<br>
-        <a href="https://promptengines.com">promptengines.com</a> · 
-        <a href="https://lab.promptengines.com">lab.promptengines.com</a>
-      </p>
-      <p style="margin-top: 1rem; font-size: 0.75rem;">
-        Last updated: March 2026 · This is a living document
-      </p>
-    </footer>
-  </div>
+  </footer>
 </body>
 </html>

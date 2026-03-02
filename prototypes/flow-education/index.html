@@ -3,16 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flow Education — A PromptEngines Experiment</title>
+  <title>Flow Education — One Hour. Real Learning.</title>
   <meta name="description" content="Real learning for kindergarteners. One hour of focused, independent engagement with a personal tutor on every tablet.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #09090b;
-      --fg: #e4e4e7;
+      --fg: #fafafa;
+      --fg-muted: #a1a1aa;
+      --fg-subtle: #52525b;
       --accent: #F04D26;
-      --muted: #71717a;
+      --accent-glow: rgba(240, 77, 38, 0.15);
       --border: #27272a;
-      --card: #18181b;
+      --surface: #18181b;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', -apple-system, sans-serif;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     }
     
     * {
@@ -22,382 +29,633 @@
     }
     
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: var(--sans);
       background: var(--bg);
       color: var(--fg);
       line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
     }
     
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+    }
+    
+    .animate-in {
+      animation: fadeInUp 0.8s var(--ease-out) backwards;
+    }
+    
+    .stagger > * {
+      animation: fadeInUp 0.6s var(--ease-out) backwards;
+    }
+    
+    .stagger > *:nth-child(1) { animation-delay: 0.0s; }
+    .stagger > *:nth-child(2) { animation-delay: 0.1s; }
+    .stagger > *:nth-child(3) { animation-delay: 0.2s; }
+    .stagger > *:nth-child(4) { animation-delay: 0.3s; }
+    
+    /* Navigation */
     .topbar {
-      border-bottom: 1px solid var(--border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
       padding: 1rem 2rem;
-      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: linear-gradient(to bottom, var(--bg) 80%, transparent 100%);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    
+    .topbar.scrolled {
+      background: rgba(9, 9, 11, 0.95);
+      border-bottom-color: var(--border);
+      backdrop-filter: blur(10px);
     }
     
     .topbar a {
-      color: var(--muted);
+      color: var(--fg-muted);
       text-decoration: none;
       font-size: 0.875rem;
+      transition: color 0.2s;
     }
     
     .topbar a:hover {
       color: var(--fg);
     }
     
+    .topbar .nav {
+      display: flex;
+      gap: 2rem;
+    }
+    
     .topbar .nav a {
-      margin-left: 1.5rem;
-    }
-    
-    .hero {
-      text-align: center;
-      padding: 6rem 2rem;
-      border-bottom: 1px solid var(--border);
-    }
-    
-    .hero .brand {
-      font-size: 0.875rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.1em;
+    }
+    
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .hero-content {
+      animation: fadeInUp 0.8s var(--ease-out);
+    }
+    
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
       color: var(--accent);
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
     
     .hero h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      font-weight: 900;
-      line-height: 1.05;
-      margin-bottom: 1.5rem;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
       letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
     }
     
     .hero p {
       font-size: 1.25rem;
-      color: var(--muted);
-      max-width: 600px;
-      margin: 0 auto 2rem;
+      color: var(--fg-muted);
+      max-width: 500px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
     }
     
-    .cta-button {
-      display: inline-block;
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-family: var(--sans);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s var(--ease-out);
+      cursor: pointer;
+      border: none;
+    }
+    
+    .btn-primary {
       background: var(--accent);
       color: white;
-      padding: 1rem 2rem;
-      text-decoration: none;
-      font-weight: 600;
-      border-radius: 4px;
-      transition: opacity 0.2s;
     }
     
-    .cta-button:hover {
-      opacity: 0.9;
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--accent-glow);
     }
     
-    .cta-secondary {
-      display: inline-block;
-      margin-left: 1rem;
+    .btn-secondary {
+      background: transparent;
       color: var(--fg);
-      padding: 1rem 2rem;
-      text-decoration: none;
       border: 1px solid var(--border);
-      border-radius: 4px;
     }
     
-    .cta-secondary:hover {
-      border-color: var(--fg);
+    .btn-secondary:hover {
+      border-color: var(--fg-muted);
+      background: var(--surface);
     }
     
-    .section {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
+    /* Hero Visual */
+    .hero-visual {
+      position: relative;
+      animation: fadeInUp 0.8s var(--ease-out) 0.2s backwards;
     }
     
-    .section h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: var(--accent);
+    .demo-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
     
-    .section p {
-      margin-bottom: 1rem;
-      color: var(--fg);
+    .demo-header {
+      background: var(--bg);
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid var(--border);
     }
     
-    .number-block {
+    .demo-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    
+    .demo-dot.red { background: #ef4444; }
+    .demo-dot.yellow { background: #eab308; }
+    .demo-dot.green { background: #22c55e; }
+    
+    .demo-title {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--fg-muted);
+      margin-left: 0.5rem;
+    }
+    
+    .demo-body {
+      padding: 2rem;
       text-align: center;
-      padding: 4rem 2rem;
-      background: var(--card);
-      margin: 2rem 0;
-      border-radius: 8px;
     }
     
-    .number-block .number {
+    .demo-letter {
       font-size: 6rem;
-      font-weight: 900;
+      font-weight: 800;
       color: var(--accent);
-      line-height: 1;
+      margin-bottom: 1rem;
     }
     
-    .number-block .label {
-      font-size: 1.25rem;
+    .demo-word {
+      font-size: 1.5rem;
+      color: var(--fg);
+      margin-bottom: 2rem;
+    }
+    
+    .demo-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    
+    .demo-option {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      font-size: 2.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .demo-option:hover {
+      border-color: var(--accent);
+      transform: scale(1.02);
+    }
+    
+    .demo-option.correct {
+      border-color: #22c55e;
+      background: rgba(34, 197, 94, 0.1);
+    }
+    
+    .status-badge {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--muted);
     }
     
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-      margin: 2rem 0;
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
     }
     
-    .card {
-      background: var(--card);
-      padding: 1.5rem;
-      border-radius: 8px;
-      border: 1px solid var(--border);
+    /* Sections */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
     
-    .card h3 {
-      font-size: 1rem;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    
-    .card p {
-      color: var(--muted);
-      font-size: 0.9375rem;
-    }
-    
-    .links {
-      background: var(--card);
-      padding: 2rem;
-      border-radius: 8px;
-      margin: 2rem 0;
-    }
-    
-    .links h3 {
+      letter-spacing: 0.2em;
+      color: var(--fg-subtle);
       margin-bottom: 1rem;
-      color: var(--accent);
     }
     
-    .links ul {
-      list-style: none;
-      margin-left: 0;
+    h2 {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
     }
     
-    .links li {
+    p {
+      color: var(--fg-muted);
+      max-width: 600px;
+    }
+    
+    /* How It Works */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    
+    .feature {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s var(--ease-out);
+    }
+    
+    .feature:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+    
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .feature h3 {
+      font-size: 0.9375rem;
+      font-weight: 600;
       margin-bottom: 0.75rem;
     }
     
-    .links a {
-      color: var(--fg);
-      text-decoration: none;
-      display: block;
-      padding: 0.5rem;
-      border-radius: 4px;
+    .feature p {
+      font-size: 0.875rem;
+      margin: 0;
     }
     
-    .links a:hover {
-      background: var(--bg);
+    /* Stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
     }
     
-    .links a strong {
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
       color: var(--accent);
       display: block;
+    }
+    
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--fg-muted);
+    }
+    
+    /* Links Section */
+    .links {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    
+    .links h3 {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--fg-subtle);
+      margin-bottom: 1.5rem;
+    }
+    
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    
+    .link-card {
+      display: block;
+      padding: 1.25rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    
+    .link-card:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+    
+    .link-card strong {
+      display: block;
+      color: var(--fg);
+      font-weight: 600;
       margin-bottom: 0.25rem;
     }
     
-    .links a span {
-      color: var(--muted);
+    .link-card span {
       font-size: 0.875rem;
+      color: var(--fg-muted);
     }
     
+    /* Footer */
     footer {
-      text-align: center;
-      padding: 3rem 2rem;
       border-top: 1px solid var(--border);
-      color: var(--muted);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    
+    footer p {
+      color: var(--fg-subtle);
       font-size: 0.875rem;
+      margin-bottom: 0.5rem;
     }
     
     footer a {
-      color: var(--muted);
+      color: var(--accent);
+      text-decoration: none;
     }
     
-    .status {
-      display: inline-block;
-      background: rgba(240, 77, 38, 0.2);
-      color: var(--accent);
-      padding: 0.25rem 0.75rem;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 1rem;
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 6rem 2rem 3rem;
+      }
+      
+      .hero p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .hero-cta {
+        justify-content: center;
+      }
+      
+      .hero-visual {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .topbar {
+        padding: 1rem;
+      }
+      
+      .topbar .nav {
+        gap: 1rem;
+      }
+      
+      .hero {
+        padding: 5rem 1.5rem 2rem;
+      }
+      
+      .features {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
   <div class="topbar">
-    <a href="../index.html">← Prototypes</a>
-    <div class="nav" style="float: right;">
-      <a href="app/dist/index.html" style="color: var(--accent); font-weight: 600; text-decoration: none; font-size: 0.875rem; margin-left: 1.5rem;">🚀 Launch App</a>
-      <a href="MANIFESTO.html" style="color: var(--muted); text-decoration: none; font-size: 0.875rem; margin-left: 1.5rem;">Manifesto</a>
-      <a href="lesson-plans.html" style="color: var(--muted); text-decoration: none; font-size: 0.875rem; margin-left: 1.5rem;">Lesson Plans</a>
-      <a href="tools.html" style="color: var(--muted); text-decoration: none; font-size: 0.875rem; margin-left: 1.5rem;">Tools</a>
+    <a href="../">← Prototypes</a>
+    <div class="nav">
+      <a href="MANIFESTO.html">Manifesto</a>
+      <a href="lesson-plans.html">Curriculum</a>
+      <a href="tools.html">Tools</a>
     </div>
   </div>
 
-  <section class="hero">
-    <div class="status">Phase 0 — MVP Pilot Active</div>
-    <div class="brand">Flow Education</div>
-    <h1>One Hour. Real Learning. Zero Distractions.</h1>
-    <p>Flow Education puts a personal tutor on every tablet. Kindergarteners engage independently for a full hour—reading, writing, counting—while teachers focus on the class.</p>
-    <a href="app/dist/index.html" class="cta-button" style="background: var(--accent); color: white;">🚀 Launch App</a>
-    <a href="MANIFESTO.html" class="cta-button">Read the Manifesto</a>
-    <a href="https://github.com/aikaizen/promptengines" class="cta-secondary">GitHub →</a>
-  </section>
-
-  <section class="section">
-    <div class="number-block">
-      <div class="number">60</div>
-      <div class="label">Minutes</div>
-      <p style="margin-top: 1rem; color: var(--muted);">of independent, productive learning without adult intervention</p>
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-label">Flow Education</div>
+      <h1>One Hour.<br>Real Learning.<br>Zero Distractions.</h1>
+      <p>A personal tutor on every tablet. Kindergarteners engage independently for a full hour—reading, writing, counting—while teachers focus on the class.</p>
+      <div class="hero-cta">
+        <a href="app/dist/" class="btn btn-primary">Try the Demo →</a>
+        <a href="MANIFESTO.html" class="btn btn-secondary">Read the Manifesto</a>
+      </div>
     </div>
-  </section>
+    
+    <div class="hero-visual">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        Pilot Active
+      </div>
+      <div class="demo-card">
+        <div class="demo-header">
+          <span class="demo-dot red"></span>
+          <span class="demo-dot yellow"></span>
+          <span class="demo-dot green"></span>
+          <span class="demo-title">Lesson 001 — Letter A</span>
+        </div>
+        <div class="demo-body">
+          <div class="demo-letter">A</div>
+          <div class="demo-word">🍎 Apple</div>
+          <div class="demo-options">
+            <div class="demo-option">🍎</div>
+            <div class="demo-option">🐻</div>
+            <div class="demo-option">🍌</div>
+            <div class="demo-option correct">🍎</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
-  <section class="section">
+  <section style="border-top: 1px solid var(--border);">
+    <div class="section-label">How It Works</div>
     <h2>Built for Real Classrooms</h2>
-    <p>
-      Teachers have 25 students and no time to troubleshoot apps. Flow Education is designed for independent 
-      engagement—kids learn without hand-holding, freeing teachers to teach.
-    </p>
-    <p>
-      <strong style="color: var(--accent);">60 minutes of focused learning.</strong> No cartoons. No ads. 
-      Just a tutor, a child, and real progress.
-    </p>
-  </section>
-
-  <section class="section">
-    <h2>The Four Phases</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Phase 0 — Now</h3>
-        <p>Kindergarten Chrome tablets. 10 quests. Basic adaptive logic. Validate the 60-minute standard.</p>
-      </div>
-      <div class="card">
-        <h3>Phase 1 — Tools</h3>
-        <p>Teacher lesson creation. Chat-based LLM tutors. Middle school pilot. Asset marketplace.</p>
-      </div>
-      <div class="card">
-        <h3>Phase 2 — Agentic</h3>
-        <p>Intelligent asset surfacing. Scoring and recommendations. Student data system.</p>
-      </div>
-      <div class="card">
-        <h3>Phase 3 — Knowledge</h3>
-        <p>Full K-12 curriculum. Knowledge graphs. Agentic asset creation. Every student has a personal tutor.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <h2>How Flow Works</h2>
-    <div class="cards">
-      <div class="card">
+    <p>Teachers have 25 students and no time to troubleshoot apps. Flow Education is designed for independent engagement—kids learn without hand-holding, freeing teachers to teach.</p>
+    
+    <div class="features stagger">
+      <div class="feature">
+        <div class="feature-icon">👆</div>
         <h3>Active Engagement</h3>
-        <p>Touch, trace, listen, find. Kids do the work—tapping letters, drawing shapes, solving puzzles. Not watching videos.</p>
+        <p>Touch, trace, listen, find. Kids do the work—tapping letters, drawing shapes, solving puzzles.</p>
       </div>
-      <div class="card">
+      <div class="feature">
+        <div class="feature-icon">📈</div>
         <h3>Adaptive Path</h3>
-        <p>Stuck on a letter? Extra practice appears. Mastered it? The next challenge unlocks. Every child moves at their own pace.</p>
+        <p>Stuck on a letter? Extra practice appears. Mastered it? The next challenge unlocks.</p>
       </div>
-      <div class="card">
+      <div class="feature">
+        <div class="feature-icon">🎓</div>
         <h3>Independent by Design</h3>
-        <p>No teacher intervention required. Clear audio instructions. Visual progress cues. Kids know what to do next.</p>
+        <p>No teacher intervention required. Clear audio instructions. Visual progress cues.</p>
       </div>
-      <div class="card">
+      <div class="feature">
+        <div class="feature-icon">✓</div>
         <h3>Real Outcomes</h3>
-        <p>Recognize A-E. Count to 10. Trace letters with accuracy. Measurable skills, not just screen time.</p>
+        <p>Recognize A-E. Count to 10. Trace letters with accuracy. Measurable skills.</p>
+      </div>
+    </div>
+    
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">60</span>
+        <span class="stat-label">Minutes of engagement</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">6</span>
+        <span class="stat-label">Lessons in Plan 001</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">2</span>
+        <span class="stat-label">Age modes (4YO, 5-6)</span>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section>
     <div class="links">
-      <h3>Resources</h3>
-      <ul>
-        <li>
-          <a href="app/dist/index.html" style="border: 2px solid var(--accent); background: rgba(240, 77, 38, 0.1);">
-            <strong style="color: var(--accent);">🚀 Launch the React App</strong>
-            <span>Try the live Phase 0 MVP — 6 lessons, fully interactive</span>
-          </a>
-        </li>
-        <li>
-          <a href="MANIFESTO.html">
-            <strong>The Manifesto</strong>
-            <span>Our complete philosophy, standards, and commitment</span>
-          </a>
-        </li>
-        <li>
-          <a href="lesson-plans.html">
-            <strong>Lesson Plans</strong>
-            <span>LP-001: Kindergarten Letters A-E & Number 1 — 6 lessons, 36 minutes</span>
-          </a>
-        </li>
-        <li>
-          <a href="tools.html">
-            <strong>Tools</strong>
-            <span>Batch image generator, audio synthesizer, lesson assembler</span>
-          </a>
-        </li>
-        <li>
-          <a href="MVP-QUEST-SPEC.md">
-            <strong>MVP Quest Specification</strong>
-            <span>Detailed breakdown of all 6 quests for the pilot</span>
-          </a>
-        </li>
-        <li>
-          <a href="vision/VISION.md">
-            <strong>Vision Document</strong>
-            <span>Four-phase roadmap, technical architecture, success metrics</span>
-          </a>
-        </li>
-        <li>
-          <a href="QUICKSTART.md">
-            <strong>Quick Start Guide</strong>
-            <span>Generate your first lesson in 10 minutes</span>
-          </a>
-        </li>
-      </ul>
+      <h3>Explore</h3>
+      <div class="links-grid">
+        <a href="app/dist/" class="link-card">
+          <strong>Launch Demo</strong>
+          <span>Try the interactive prototype</span>
+        </a>
+        <a href="MANIFESTO.html" class="link-card">
+          <strong>Kaizen Manifesto</strong>
+          <span>The philosophy behind Flow</span>
+        </a>
+        <a href="lesson-plans.html" class="link-card">
+          <strong>LP-001 Curriculum</strong>
+          <span>Letters A-E, Number 1</span>
+        </a>
+        <a href="tools.html" class="link-card">
+          <strong>Development Tools</strong>
+          <span>How we build</span>
+        </a>
+        <a href="../../labnotes/articles/flow-education-research.html" class="link-card">
+          <strong>Research Base</strong>
+          <span>Engelmann, FLDOE, Math Academy, Core Knowledge</span>
+        </a>
+        <a href="../../labnotes/team/" class="link-card">
+          <strong>Who's Building This</strong>
+          <span>Team & purpose</span>
+        </a>
+      </div>
     </div>
-  </section>
-
-  <section class="section">
-    <h2>Join the Pilot</h2>
-    <p>
-      We need kindergarten classrooms with Chrome tablets. If you have 25 kindergarteners 
-      and want them to have a personal tutor, we want you.
-    </p>
-    <p style="margin-top: 1rem;">
-      <strong>Contact:</strong> <a href="mailto:hello@promptengines.com" style="color: var(--accent);">hello@promptengines.com</a>
-    </p>
   </section>
 
   <footer>
-    <p>
-      Flow Education — A <a href="https://promptengines.com">PromptEngines</a> Experiment<br>
-      Built in Austin, Texas
-    </p>
-    <p style="margin-top: 1rem;">
-      <a href="https://lab.promptengines.com">Lab Notes</a> · 
-      <a href="https://github.com/aikaizen/promptengines">GitHub</a>
-    </p>
+    <p>© 2026 Flow Education · Built with intention in Texas</p>
+    <p>A <a href="../../">Prompt Engines</a> project</p>
   </footer>
+
+  <script>
+    // Add scroll effect to topbar
+    window.addEventListener('scroll', () => {
+      const topbar = document.querySelector('.topbar');
+      if (window.scrollY > 50) {
+        topbar.classList.add('scrolled');
+      } else {
+        topbar.classList.remove('scrolled');
+      }
+    });
+  </script>
 </body>
 </html>
