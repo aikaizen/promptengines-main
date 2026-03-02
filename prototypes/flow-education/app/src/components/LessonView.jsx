@@ -13,15 +13,15 @@ const CHALLENGE_TYPES = {
   OUTRO: 'outro'
 }
 
-// Challenge durations in milliseconds
+// Challenge durations in milliseconds (max time before auto-advance)
 const CHALLENGE_DURATIONS = {
-  [CHALLENGE_TYPES.INTRO]: 30 * 1000,
-  [CHALLENGE_TYPES.LISTEN]: 90 * 1000,
+  [CHALLENGE_TYPES.INTRO]: 8 * 1000,
+  [CHALLENGE_TYPES.LISTEN]: 12 * 1000,
   [CHALLENGE_TYPES.FIND]: 120 * 1000,
   [CHALLENGE_TYPES.TRACE]: 120 * 1000,
   [CHALLENGE_TYPES.QUIZ]: 90 * 1000,
-  [CHALLENGE_TYPES.REWARD]: 30 * 1000,
-  [CHALLENGE_TYPES.OUTRO]: 30 * 1000
+  [CHALLENGE_TYPES.REWARD]: 8 * 1000,
+  [CHALLENGE_TYPES.OUTRO]: 6 * 1000
 }
 
 // Create challenge sequence based on lesson data
@@ -50,7 +50,7 @@ const createChallenges = (lesson) => {
         type: CHALLENGE_TYPES.LISTEN,
         title: `Counting with ${letter}`,
         instruction: `Listen to counting with ${letter}`,
-        words: ['One apple', 'One ball', 'One cat'],
+        words: ['Apple', 'Ball', 'Cat'],
         script: `One! Just one. One apple. One ball. One cat.`,
         autoAdvance: true
       },
@@ -672,17 +672,18 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
   const progress = ((currentChallengeIndex + 1) / challenges.length) * 100
   const formatTime = (ms) => Math.ceil(ms / 1000)
   
-  // Get emoji for word
-  const getEmoji = (word) => {
-    const emojis = {
-      'Apple': '🍎', 'Ant': '🐜', 'Astronaut': '👨‍🚀', 'Anchor': '⚓', 'Acorn': '🌰',
-      'Butterfly': '🦋', 'Bear': '🐻', 'Ball': '⚽', 'Boat': '🚢', 'Banana': '🍌',
-      'Cat': '🐱', 'Car': '🚗', 'Cookie': '🍪', 'Cup': '☕', 'Carrot': '🥕',
-      'Dog': '🐕', 'Duck': '🦆', 'Dinosaur': '🦕', 'Donut': '🍩', 'Door': '🚪',
-      'Elephant': '🐘', 'Egg': '🥚', 'Eagle': '🦅', 'Elbow': '💪', 'Engine': '🚂',
-      'Balloon': '🎈', 'Book': '📚', 'Bird': '🐦', 'Bus': '🚌'
+  const base = import.meta.env.BASE_URL
+  const getObjectImage = (word) => `${base}assets/objects/obj-${word.toLowerCase()}.png`
+  const getTutorImage = (state) => `${base}assets/characters/char-tutor-${state}.png`
+  const getBadgeImage = (badge) => {
+    if (!badge) return null
+    if (badge.startsWith('letter-')) {
+      return `${base}assets/letters/badge-letter-${badge.split('-')[1].toLowerCase()}.png`
     }
-    return emojis[word] || '⭐'
+    if (badge.startsWith('number-')) {
+      return `${base}assets/numbers/badge-number-${badge.split('-')[1]}.png`
+    }
+    return null
   }
   
   // Render different challenge types
@@ -691,40 +692,31 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       case CHALLENGE_TYPES.INTRO:
         return (
           <div className="intro-challenge">
-            <div className="tutor-avatar-large" role="img" aria-label="Friendly tutor">
-              👨‍🏫
-            </div>
+            <img className="tutor-avatar-large" src={getTutorImage('neutral')} alt="Friendly tutor" />
             <h2 className="challenge-title">{currentChallenge.title}</h2>
             <p className="challenge-script">{currentChallenge.script}</p>
             {timer !== null && (
               <div className="timer-bar">
-                <div className="timer-progress" style={{ width: `${(1 - timer / CHALLENGE_DURATIONS.INTRO) * 100}%` }}></div>
+                <div className="timer-progress" style={{ width: `${(1 - timer / CHALLENGE_DURATIONS[CHALLENGE_TYPES.INTRO]) * 100}%` }}></div>
               </div>
             )}
+            <button className="continue-btn" onClick={advanceToNextChallenge}>Continue →</button>
           </div>
         )
         
       case CHALLENGE_TYPES.LISTEN:
         return (
           <div className="listen-challenge">
-            <div className="tutor-avatar" role="img" aria-label="Friendly tutor speaking">
-              👨‍🏫
-            </div>
+            <img className="tutor-avatar" src={getTutorImage('neutral')} alt="Friendly tutor speaking" />
             <div className="words-display">
               {currentChallenge.words?.map((word, i) => (
                 <div key={word} className="word-card-large" style={{ animationDelay: `${i * 0.8}s` }}>
-                  <span className="word-emoji">{getEmoji(word)}</span>
+                  <img className="word-img" src={getObjectImage(word)} alt={word} />
                   <span className="word-text-large">{word}</span>
-                  <span className="word-sound">{lesson.title.match(/Letter (.)/)?.[1] || lesson.title.match(/Number (\d)/)?.[1]}-{word.toLowerCase()}</span>
                 </div>
               ))}
             </div>
-            {timer !== null && (
-              <div className="timer" role="timer" aria-label="Time remaining">
-                <div className="timer-icon">⏱️</div>
-                <span>{formatTime(timer)}s</span>
-              </div>
-            )}
+            <button className="continue-btn" onClick={advanceToNextChallenge}>Continue →</button>
           </div>
         )
         
@@ -758,7 +750,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
                     onClick={() => handleFindTap(item, item.count === currentChallenge.correctCount)}
                     style={{ minHeight: '120px', minWidth: '120px' }}
                   >
-                    <span className="counting-emoji">{item.emoji}</span>
+                    <img className="counting-img" src={`/assets/objects/obj-count-${item.count}.png`} alt={item.label} />
                     <span className="counting-label">{item.label}</span>
                   </button>
                 ))
@@ -776,7 +768,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
                       aria-pressed={isFound}
                       style={{ minHeight: '100px', minWidth: '100px' }}
                     >
-                      <span className="item-emoji-large">{getEmoji(item)}</span>
+                      <img className="item-img-large" src={getObjectImage(item)} alt={item} />
                       <span className="item-label">{item}</span>
                     </button>
                   )
@@ -963,38 +955,30 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
         return (
           <div className={`reward-challenge ${celebrationActive ? 'celebrating' : ''}`}>
             <div className="badge-container">
-              <div className="badge-large" role="img" aria-label="Achievement badge">
-                {currentChallenge.badge?.includes('letter') ? '🏆' : currentChallenge.badge?.includes('number') ? '🎯' : '⭐'}
-              </div>
-              <div className="badge-letter">{lesson.title.match(/Letter (.)/)?.[1] || lesson.title.match(/Number (\d)/)?.[1]}</div>
+              <img className="badge-large" src={getBadgeImage(currentChallenge.badge)} alt="Achievement badge" />
             </div>
             <h2 className="reward-title">{currentChallenge.title}</h2>
             <p className="reward-script">{currentChallenge.script}</p>
             <div className="confetti" aria-hidden="true">
               {[...Array(30)].map((_, i) => (
-                <span key={i} className="confetti-piece" style={{ 
-                  left: `${Math.random() * 100}%`, 
+                <span key={i} className="confetti-piece" style={{
+                  left: `${Math.random() * 100}%`,
                   animationDelay: `${Math.random() * 2}s`,
                   fontSize: `${0.5 + Math.random() * 1.5}rem`,
                 }}>{['🎉', '✨', '🌟', '🎊', '🏆'][Math.floor(Math.random() * 5)]}</span>
               ))}
             </div>
+            <button className="continue-btn" onClick={advanceToNextChallenge}>Continue →</button>
           </div>
         )
         
       case CHALLENGE_TYPES.OUTRO:
         return (
           <div className="outro-challenge">
-            <div className="tutor-avatar-wave" role="img" aria-label="Friendly tutor waving goodbye">
-              👋
-            </div>
+            <img className="tutor-avatar-wave" src={getTutorImage('waving')} alt="Friendly tutor waving goodbye" />
             <h2 className="outro-title">Great Job!</h2>
             <p className="outro-script">{currentChallenge.script}</p>
-            {timer !== null && (
-              <div className="timer-bar">
-                <div className="timer-progress" style={{ width: `${(1 - timer / CHALLENGE_DURATIONS.OUTRO) * 100}%` }}></div>
-              </div>
-            )}
+            <button className="continue-btn" onClick={advanceToNextChallenge}>Finish ✓</button>
           </div>
         )
         

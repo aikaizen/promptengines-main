@@ -2774,3 +2774,91 @@ a:focus-visible {
     image-rendering: crisp-edges;
   }
 }
+
+/* ── Image asset styles ───────────────────────────────────────────── */
+img.tutor-avatar-large {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  animation: wave 2s ease-in-out infinite;
+}
+
+img.tutor-avatar {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  animation: bounce 2s infinite;
+}
+
+img.tutor-avatar-wave {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  animation: wave-goodbye 2s ease-in-out infinite;
+}
+
+img.tutor-big {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+}
+
+img.word-img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+img.word-img-big {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+img.item-img-large {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+img.counting-img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+img.badge-large {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  animation: badge-bounce 1s ease infinite;
+}
+
+img.reward-badge-big {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  animation: badge-bounce 1s ease infinite;
+}
+
+/* ── Continue button on auto-advance screens ──────────────────────── */
+.continue-btn {
+  margin-top: 2rem;
+  padding: 1rem 2.5rem;
+  background: var(--accent, #F04D26);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 56px;
+  min-width: 160px;
+  transition: transform 0.1s, opacity 0.1s;
+}
+.continue-btn:active {
+  transform: scale(0.96);
+  opacity: 0.85;
+}

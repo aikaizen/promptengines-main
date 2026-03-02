@@ -67,7 +67,7 @@ function LessonPlanList({ lessonPlan, progress, onStartLesson, onResetProgress }
           {lessonPlan.lessons.map((lesson, index) => {
             const isCompleted = progress.completedLessons.includes(lesson.lessonId)
             const prevLesson = index > 0 ? lessonPlan.lessons[index - 1] : null
-            const isLocked = prevLesson && !progress.completedLessons.includes(prevLesson.lessonId)
+            const isLocked = false
             const isCurrent = progress.currentLesson === lesson.lessonId
             const masteryScore = progress.masteryScores[lesson.lessonId]
             

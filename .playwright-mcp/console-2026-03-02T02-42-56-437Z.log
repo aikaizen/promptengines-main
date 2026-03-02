@@ -1,0 +1,24 @@
+[     853ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.promptengines.com/vite.svg:0
+[   19934ms] [ERROR] TypeError: Cannot read properties of undefined (reading 'ageRange')
+    at y0 (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:9:38214)
+    at ii (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:47983)
+    at ji (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:70768)
+    at lr (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:81101)
+    at _r (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:116825)
+    at dh (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:115871)
+    at $i (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:115703)
+    at zr (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:112501)
+    at Kr (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:124406)
+    at Rn (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:122955) @ https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:7
+[   19934ms] [ERROR] App crashed: TypeError: Cannot read properties of undefined (reading 'ageRange')
+    at y0 (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:9:38214)
+    at ii (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:47983)
+    at ji (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:70768)
+    at lr (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:81101)
+    at _r (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:116825)
+    at dh (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:115871)
+    at $i (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:115703)
+    at zr (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:112501)
+    at Kr (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:124406)
+    at Rn (https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8:122955) {componentStack: 
+    at y0 (https://www.promptengines.com/prototyp…cation/app/dist/assets/index-DhlVKHbO.js:9:85345)} @ https://www.promptengines.com/prototypes/flow-education/app/dist/assets/index-DhlVKHbO.js:8
