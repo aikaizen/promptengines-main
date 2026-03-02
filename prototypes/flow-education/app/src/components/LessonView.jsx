@@ -31,21 +31,10 @@ const createChallenges = (lesson) => {
   
   const isNumberLesson = lesson.title.includes('Number')
   
-  const words = lesson.learningObjectives[2]?.match(/[A-Za-z]+/g) || 
-                ['Apple', 'Ant', 'Astronaut', 'Anchor', 'Acorn']
-  const targetWords = words.slice(0, 5)
-  
-  const distractors = isNumberLesson 
+  const targetWords = lesson.targetWords || ['Apple', 'Ant', 'Astronaut', 'Anchor', 'Acorn']
+  const distractors = isNumberLesson
     ? ['Two', 'Three', 'Four']
-    : lesson.lessonId === 'quest-001-letter-a' 
-      ? ['Ball', 'Cat', 'Dog']
-      : lesson.lessonId === 'quest-002-letter-b'
-        ? ['Apple', 'Cat', 'Dog']
-        : lesson.lessonId === 'quest-003-letter-c'
-          ? ['Apple', 'Ball', 'Dog']
-          : lesson.lessonId === 'quest-004-letter-d'
-            ? ['Apple', 'Ball', 'Cat']
-            : ['Apple', 'Ball', 'Cat', 'Dog'].slice(0, 4)
+    : lesson.distractors || ['Ball', 'Cat', 'Dog']
   
   if (isNumberLesson) {
     // Number lessons have different structure
@@ -310,7 +299,48 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       }
     }
   }, [currentChallenge, traceCount, errorCount, showTraceGuide])
-  
+
+  // Draw trace path on canvas (moved from renderChallenge switch case)
+  useEffect(() => {
+    if (currentChallenge?.type !== CHALLENGE_TYPES.TRACE) return
+    const canvas = traceCanvasRef.current
+    if (!canvas || tracePath.length < 2) return
+
+    const ctx = canvas.getContext('2d')
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.beginPath()
+    ctx.strokeStyle = '#F04D26'
+    ctx.lineWidth = 8
+    ctx.lineCap = 'round'
+    ctx.lineJoin = 'round'
+
+    tracePath.forEach((point, i) => {
+      if (i === 0) {
+        ctx.moveTo(point.x, point.y)
+      } else {
+        ctx.lineTo(point.x, point.y)
+      }
+    })
+    ctx.stroke()
+  }, [tracePath, currentChallenge])
+
+  // Narrate quiz question (moved from renderChallenge switch case)
+  useEffect(() => {
+    if (currentChallenge?.type !== CHALLENGE_TYPES.QUIZ) return
+    const currentQuestion = currentChallenge.questions[quizAnswers.filter(a => a !== undefined).length]
+    if (currentQuestion && !quizAnswers[quizAnswers.length - 1]) {
+      playNarration(currentQuestion.question)
+    }
+  }, [quizAnswers.length, currentChallenge, playNarration])
+
+  // Play celebration sound on reward challenge (moved from renderChallenge switch case)
+  useEffect(() => {
+    if (currentChallenge?.type !== CHALLENGE_TYPES.REWARD) return
+    setCelebrationActive(true)
+    playSound('celebration')
+    playNarration(currentChallenge.script)
+  }, [currentChallengeIndex, currentChallenge, playSound, playNarration])
+
   const advanceToNextChallenge = useCallback(() => {
     if (currentChallengeIndex < challenges.length - 1) {
       setCurrentChallengeIndex(prev => prev + 1)
@@ -765,31 +795,6 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
         )
         
       case CHALLENGE_TYPES.TRACE:
-        // Real-time canvas drawing effect
-        useEffect(() => {
-          const canvas = traceCanvasRef.current
-          if (!canvas || tracePath.length < 2) return
-          
-          const ctx = canvas.getContext('2d')
-          ctx.clearRect(0, 0, canvas.width, canvas.height)
-          
-          // Draw the traced path
-          ctx.beginPath()
-          ctx.strokeStyle = '#F04D26'
-          ctx.lineWidth = 8
-          ctx.lineCap = 'round'
-          ctx.lineJoin = 'round'
-          
-          tracePath.forEach((point, i) => {
-            if (i === 0) {
-              ctx.moveTo(point.x, point.y)
-            } else {
-              ctx.lineTo(point.x, point.y)
-            }
-          })
-          ctx.stroke()
-        }, [tracePath])
-        
         return (
           <div className="trace-challenge">
             <div className="trace-progress" role="status" aria-label={`Completed ${traceCount} of ${currentChallenge.requiredTraces} traces`}>
@@ -878,14 +883,6 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
         )
         
       case CHALLENGE_TYPES.QUIZ:
-        // Narrate the question when it appears
-        useEffect(() => {
-          const currentQuestion = currentChallenge.questions[quizAnswers.filter(a => a !== undefined).length]
-          if (currentQuestion && !quizAnswers[quizAnswers.length - 1]) {
-            playNarration(currentQuestion.question)
-          }
-        }, [quizAnswers.length])
-        
         return (
           <div className="quiz-challenge kid-quiz">
             {needsReview ? (
@@ -963,13 +960,6 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
         )
         
       case CHALLENGE_TYPES.REWARD:
-        // Play celebration sound on mount
-        useEffect(() => {
-          setCelebrationActive(true)
-          playSound('celebration')
-          playNarration(currentChallenge.script)
-        }, [])
-        
         return (
           <div className={`reward-challenge ${celebrationActive ? 'celebrating' : ''}`}>
             <div className="badge-container">
