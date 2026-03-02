@@ -672,17 +672,12 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
   const progress = ((currentChallengeIndex + 1) / challenges.length) * 100
   const formatTime = (ms) => Math.ceil(ms / 1000)
   
-  // Get emoji for word
-  const getEmoji = (word) => {
-    const emojis = {
-      'Apple': '🍎', 'Ant': '🐜', 'Astronaut': '👨‍🚀', 'Anchor': '⚓', 'Acorn': '🌰',
-      'Butterfly': '🦋', 'Bear': '🐻', 'Ball': '⚽', 'Boat': '🚢', 'Banana': '🍌',
-      'Cat': '🐱', 'Car': '🚗', 'Cookie': '🍪', 'Cup': '☕', 'Carrot': '🥕',
-      'Dog': '🐕', 'Duck': '🦆', 'Dinosaur': '🦕', 'Donut': '🍩', 'Door': '🚪',
-      'Elephant': '🐘', 'Egg': '🥚', 'Eagle': '🦅', 'Elbow': '💪', 'Engine': '🚂',
-      'Balloon': '🎈', 'Book': '📚', 'Bird': '🐦', 'Bus': '🚌'
-    }
-    return emojis[word] || '⭐'
+  const getObjectImage = (word) => `/assets/objects/obj-${word.toLowerCase()}.png`
+  const getTutorImage = (state) => `/assets/characters/char-tutor-${state}.png`
+  const getBadgeImage = (badge) => {
+    if (!badge) return null
+    const dir = badge.includes('number') ? 'numbers' : 'letters'
+    return `/assets/${dir}/${badge}.png`
   }
   
   // Render different challenge types
@@ -691,9 +686,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       case CHALLENGE_TYPES.INTRO:
         return (
           <div className="intro-challenge">
-            <div className="tutor-avatar-large" role="img" aria-label="Friendly tutor">
-              👨‍🏫
-            </div>
+            <img className="tutor-avatar-large" src={getTutorImage('neutral')} alt="Friendly tutor" />
             <h2 className="challenge-title">{currentChallenge.title}</h2>
             <p className="challenge-script">{currentChallenge.script}</p>
             {timer !== null && (
@@ -707,13 +700,11 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       case CHALLENGE_TYPES.LISTEN:
         return (
           <div className="listen-challenge">
-            <div className="tutor-avatar" role="img" aria-label="Friendly tutor speaking">
-              👨‍🏫
-            </div>
+            <img className="tutor-avatar" src={getTutorImage('neutral')} alt="Friendly tutor speaking" />
             <div className="words-display">
               {currentChallenge.words?.map((word, i) => (
                 <div key={word} className="word-card-large" style={{ animationDelay: `${i * 0.8}s` }}>
-                  <span className="word-emoji">{getEmoji(word)}</span>
+                  <img className="word-img" src={getObjectImage(word)} alt={word} />
                   <span className="word-text-large">{word}</span>
                   <span className="word-sound">{lesson.title.match(/Letter (.)/)?.[1] || lesson.title.match(/Number (\d)/)?.[1]}-{word.toLowerCase()}</span>
                 </div>
@@ -758,7 +749,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
                     onClick={() => handleFindTap(item, item.count === currentChallenge.correctCount)}
                     style={{ minHeight: '120px', minWidth: '120px' }}
                   >
-                    <span className="counting-emoji">{item.emoji}</span>
+                    <img className="counting-img" src={`/assets/objects/obj-count-${item.count}.png`} alt={item.label} />
                     <span className="counting-label">{item.label}</span>
                   </button>
                 ))
@@ -776,7 +767,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
                       aria-pressed={isFound}
                       style={{ minHeight: '100px', minWidth: '100px' }}
                     >
-                      <span className="item-emoji-large">{getEmoji(item)}</span>
+                      <img className="item-img-large" src={getObjectImage(item)} alt={item} />
                       <span className="item-label">{item}</span>
                     </button>
                   )
@@ -963,10 +954,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
         return (
           <div className={`reward-challenge ${celebrationActive ? 'celebrating' : ''}`}>
             <div className="badge-container">
-              <div className="badge-large" role="img" aria-label="Achievement badge">
-                {currentChallenge.badge?.includes('letter') ? '🏆' : currentChallenge.badge?.includes('number') ? '🎯' : '⭐'}
-              </div>
-              <div className="badge-letter">{lesson.title.match(/Letter (.)/)?.[1] || lesson.title.match(/Number (\d)/)?.[1]}</div>
+              <img className="badge-large" src={getBadgeImage(currentChallenge.badge)} alt="Achievement badge" />
             </div>
             <h2 className="reward-title">{currentChallenge.title}</h2>
             <p className="reward-script">{currentChallenge.script}</p>
@@ -985,9 +973,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       case CHALLENGE_TYPES.OUTRO:
         return (
           <div className="outro-challenge">
-            <div className="tutor-avatar-wave" role="img" aria-label="Friendly tutor waving goodbye">
-              👋
-            </div>
+            <img className="tutor-avatar-wave" src={getTutorImage('waving')} alt="Friendly tutor waving goodbye" />
             <h2 className="outro-title">Great Job!</h2>
             <p className="outro-script">{currentChallenge.script}</p>
             {timer !== null && (

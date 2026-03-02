@@ -27,16 +27,15 @@ const createSimpleChallenges = (lesson) => {
   
   // Get just ONE target word for 4YO (not 5)
   const targetWord = lesson.targetWords?.[0] || 'Apple'
-  const distractors = isNumberLesson 
-    ? ['🍎🍎', '🍎🍎🍎']
-    : ['🐻', '🍌'] // Simple, recognizable emojis
-  
+  const distractorWords = isNumberLesson
+    ? ['Apple', 'Ball']
+    : (lesson.distractors || ['Ball', 'Cat']).slice(0, 2)
+
   return [
     {
       type: CHALLENGE_TYPES.INTRO,
       duration: 15,
       content: {
-        tutorEmoji: '👋',
         message: `Hi! Let's learn ${isNumberLesson ? 'number 1' : `letter ${letter}`}!`,
         animation: 'wave'
       }
@@ -47,7 +46,7 @@ const createSimpleChallenges = (lesson) => {
       content: {
         sound: isNumberLesson ? 'One!' : `${letter} says ${getPhoneticSound(letter)}`,
         word: isNumberLesson ? 'One apple!' : `${targetWord}!`,
-        emoji: isNumberLesson ? '🍎' : getEmoji(targetWord),
+        targetWord: isNumberLesson ? 'Apple' : targetWord,
         repeatCount: 2
       }
     },
@@ -55,11 +54,11 @@ const createSimpleChallenges = (lesson) => {
       type: CHALLENGE_TYPES.FIND,
       duration: 60,
       content: {
-        target: isNumberLesson ? '1️⃣' : getEmoji(targetWord),
+        targetWord: isNumberLesson ? 'Apple' : targetWord,
         targetLabel: isNumberLesson ? 'one' : targetWord,
-        distractors: distractors,
+        distractorWords,
         instruction: isNumberLesson ? 'Tap ONE!' : `Tap ${targetWord}!`,
-        autoCorrectAfter: 2 // Auto-help after 2 wrong taps
+        autoCorrectAfter: 2
       }
     },
     {
@@ -92,16 +91,8 @@ const getPhoneticSound = (letter) => {
   return sounds[letter] || letter.toLowerCase()
 }
 
-const getEmoji = (word) => {
-  const emojis = {
-    'Apple': '🍎', 'Ant': '🐜', 'Astronaut': '🚀', 'Anchor': '⚓', 'Acorn': '🌰',
-    'Bear': '🐻', 'Ball': '⚽', 'Butterfly': '🦋', 'Boat': '🚢', 'Banana': '🍌',
-    'Cat': '🐱', 'Car': '🚗', 'Cookie': '🍪', 'Cup': '🥤', 'Carrot': '🥕',
-    'Dog': '🐕', 'Duck': '🦆', 'Dinosaur': '🦕', 'Donut': '🍩', 'Door': '🚪',
-    'Elephant': '🐘', 'Egg': '🥚', 'Eagle': '🦅'
-  }
-  return emojis[word] || '⭐'
-}
+const getObjectImage = (word) => `/assets/objects/obj-${word.toLowerCase()}.png`
+const getTutorImage = (state) => `/assets/characters/char-tutor-${state}.png`
 
 function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
   // Safety check - ensure lesson is valid
@@ -247,9 +238,7 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
       case CHALLENGE_TYPES.INTRO:
         return (
           <div className="simple-challenge intro">
-            <div className="tutor-big" style={{ animation: 'bounce 1s infinite' }}>
-              {content.tutorEmoji}
-            </div>
+            <img className="tutor-big" src={getTutorImage('happy')} alt="Friendly tutor" style={{ animation: 'bounce 1s infinite' }} />
             <div className="big-message">{content.message}</div>
             <div className="waiting-indicator">
               <span className="dot">•</span>
@@ -264,7 +253,7 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
           <div className="simple-challenge listen">
             <div className="sound-wave">🎵</div>
             <div className="word-display">
-              <span className="word-emoji-big">{content.emoji}</span>
+              <img className="word-img-big" src={getObjectImage(content.targetWord)} alt={content.word} />
               <span className="word-text-big">{content.word}</span>
             </div>
             <div className="sound-text">{content.sound}</div>
@@ -280,24 +269,24 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
             <div className="find-prompt">{content.instruction}</div>
             <div className="simple-find-grid">
               {/* Target */}
-              <button 
+              <button
                 className={`simple-find-item target ${showAutoHelp ? 'highlight' : ''}`}
                 onClick={() => handleFindTap(true)}
-                style={{ width: '140px', height: '140px', fontSize: '5rem' }}
+                style={{ width: '140px', height: '140px' }}
               >
-                {content.target}
+                <img src={getObjectImage(content.targetWord)} alt={content.targetLabel} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 <span className="item-label">{content.targetLabel}</span>
               </button>
-              
+
               {/* Distractors */}
-              {content.distractors.map((d, i) => (
-                <button 
+              {content.distractorWords.map((word, i) => (
+                <button
                   key={i}
                   className="simple-find-item"
                   onClick={() => handleFindTap(false)}
-                  style={{ width: '140px', height: '140px', fontSize: '4rem' }}
+                  style={{ width: '140px', height: '140px' }}
                 >
-                  {d}
+                  <img src={getObjectImage(word)} alt={word} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </button>
               ))}
             </div>
@@ -363,9 +352,10 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
         )
         
       case CHALLENGE_TYPES.REWARD:
+        const rewardBadge = lesson.title.includes('Number') ? 'badge-number-1' : `badge-letter-${lesson.title.match(/Letter (.)/)?.[1]?.toLowerCase() || 'a'}`
         return (
           <div className="simple-challenge reward">
-            <div className="reward-emoji-big">{content.bigEmoji}</div>
+            <img className="reward-badge-big" src={`/assets/${lesson.title.includes('Number') ? 'numbers' : 'letters'}/${rewardBadge}.png`} alt="Achievement badge" />
             <div className="reward-message-big">{content.message}</div>
             <div className="star-fill-animation">
               <span className="star-big">⭐</span>
