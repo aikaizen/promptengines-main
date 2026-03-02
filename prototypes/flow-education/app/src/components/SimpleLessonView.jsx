@@ -91,8 +91,9 @@ const getPhoneticSound = (letter) => {
   return sounds[letter] || letter.toLowerCase()
 }
 
-const getObjectImage = (word) => `/assets/objects/obj-${word.toLowerCase()}.png`
-const getTutorImage = (state) => `/assets/characters/char-tutor-${state}.png`
+const BASE = import.meta.env.BASE_URL
+const getObjectImage = (word) => `${BASE}assets/objects/obj-${word.toLowerCase()}.png`
+const getTutorImage = (state) => `${BASE}assets/characters/char-tutor-${state}.png`
 
 function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
   // Safety check - ensure lesson is valid
@@ -352,10 +353,13 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
         )
         
       case CHALLENGE_TYPES.REWARD:
-        const rewardBadge = lesson.title.includes('Number') ? 'badge-number-1' : `badge-letter-${lesson.title.match(/Letter (.)/)?.[1]?.toLowerCase() || 'a'}`
+        const rewardLetter = lesson.title.match(/Letter (.)/)?.[1]?.toLowerCase() || 'a'
+        const rewardBadgeSrc = lesson.title.includes('Number')
+          ? `${BASE}assets/numbers/badge-number-1.png`
+          : `${BASE}assets/letters/badge-letter-${rewardLetter}.png`
         return (
           <div className="simple-challenge reward">
-            <img className="reward-badge-big" src={`/assets/${lesson.title.includes('Number') ? 'numbers' : 'letters'}/${rewardBadge}.png`} alt="Achievement badge" />
+            <img className="reward-badge-big" src={rewardBadgeSrc} alt="Achievement badge" />
             <div className="reward-message-big">{content.message}</div>
             <div className="star-fill-animation">
               <span className="star-big">⭐</span>

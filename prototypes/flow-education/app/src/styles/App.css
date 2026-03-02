@@ -2842,3 +2842,23 @@ img.reward-badge-big {
   object-fit: contain;
   animation: badge-bounce 1s ease infinite;
 }
+
+/* ── Continue button on auto-advance screens ──────────────────────── */
+.continue-btn {
+  margin-top: 2rem;
+  padding: 1rem 2.5rem;
+  background: var(--accent, #F04D26);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 56px;
+  min-width: 160px;
+  transition: transform 0.1s, opacity 0.1s;
+}
+.continue-btn:active {
+  transform: scale(0.96);
+  opacity: 0.85;
+}
