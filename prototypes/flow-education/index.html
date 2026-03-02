@@ -9,14 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #09090b;
-      --fg: #fafafa;
-      --fg-muted: #a1a1aa;
-      --fg-subtle: #52525b;
-      --accent: #F04D26;
-      --accent-glow: rgba(240, 77, 38, 0.15);
-      --border: #27272a;
-      --surface: #18181b;
+      /* Parent-friendly warm palette */
+      --bg: #fefdfb;              /* Warm white, not stark */
+      --fg: #1a1a1a;              /* Soft black */
+      --fg-muted: #6b6b6b;        /* Warm gray */
+      --fg-subtle: #9ca3af;       /* Light gray for labels */
+      --accent: #e85d3e;           /* Warm orange-red (friendly, energetic) */
+      --accent-soft: #fff5f2;     /* Light accent background */
+      --border: #e5e0db;          /* Warm border */
+      --surface: #ffffff;         /* Card backgrounds */
+      --surface-warm: #fdf8f5;    /* Slightly warm sections */
+      --success: #22c55e;
       --mono: 'JetBrains Mono', monospace;
       --sans: 'Inter', -apple-system, sans-serif;
       --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -67,7 +70,7 @@
     .stagger > *:nth-child(3) { animation-delay: 0.2s; }
     .stagger > *:nth-child(4) { animation-delay: 0.3s; }
     
-    /* Navigation */
+    /* Navigation - Light */
     .topbar {
       position: fixed;
       top: 0;
@@ -84,7 +87,7 @@
     }
     
     .topbar.scrolled {
-      background: rgba(9, 9, 11, 0.95);
+      background: rgba(254, 253, 251, 0.95);
       border-bottom-color: var(--border);
       backdrop-filter: blur(10px);
     }
@@ -97,7 +100,7 @@
     }
     
     .topbar a:hover {
-      color: var(--fg);
+      color: var(--accent);
     }
     
     .topbar .nav {
@@ -115,6 +118,9 @@
     .nav .launch {
       color: var(--accent);
       font-weight: 600;
+      background: var(--accent-soft);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
     }
     
     /* Hero */
@@ -169,7 +175,7 @@
       align-items: center;
       gap: 0.5rem;
       padding: 1rem 2rem;
-      border-radius: 8px;
+      border-radius: 12px;
       font-family: var(--sans);
       font-size: 0.9375rem;
       font-weight: 600;
@@ -182,25 +188,26 @@
     .btn-primary {
       background: var(--accent);
       color: white;
+      box-shadow: 0 4px 12px rgba(232, 93, 62, 0.25);
     }
     
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px var(--accent-glow);
+      box-shadow: 0 8px 24px rgba(232, 93, 62, 0.35);
     }
     
     .btn-secondary {
-      background: transparent;
+      background: white;
       color: var(--fg);
-      border: 1px solid var(--border);
+      border: 2px solid var(--border);
     }
     
     .btn-secondary:hover {
-      border-color: var(--fg-muted);
-      background: var(--surface);
+      border-color: var(--accent);
+      color: var(--accent);
     }
     
-    /* Hero Visual */
+    /* Hero Visual - Light */
     .hero-visual {
       position: relative;
       animation: fadeInUp 0.8s var(--ease-out) 0.2s backwards;
@@ -208,14 +215,14 @@
     
     .demo-card {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      border: 2px solid var(--border);
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
     }
     
     .demo-header {
-      background: var(--bg);
+      background: var(--surface-warm);
       padding: 1rem 1.25rem;
       display: flex;
       align-items: center;
@@ -231,7 +238,7 @@
     
     .demo-dot.red { background: #ef4444; }
     .demo-dot.yellow { background: #eab308; }
-    .demo-dot.green { background: #22c55e; }
+    .demo-dot.green { background: var(--success); }
     
     .demo-title {
       font-family: var(--mono);
@@ -243,6 +250,7 @@
     .demo-body {
       padding: 2rem;
       text-align: center;
+      background: var(--bg);
     }
     
     .demo-letter {
@@ -265,23 +273,25 @@
     }
     
     .demo-option {
-      background: var(--bg);
+      background: white;
       border: 2px solid var(--border);
       border-radius: 12px;
       padding: 1.5rem;
       font-size: 2.5rem;
       cursor: pointer;
       transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     
     .demo-option:hover {
       border-color: var(--accent);
       transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(232, 93, 62, 0.1);
     }
     
     .demo-option.correct {
-      border-color: #22c55e;
-      background: rgba(34, 197, 94, 0.1);
+      border-color: var(--success);
+      background: rgba(34, 197, 94, 0.08);
     }
     
     .status-badge {
@@ -299,12 +309,13 @@
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
     
     .status-dot {
       width: 8px;
       height: 8px;
-      background: #22c55e;
+      background: var(--success);
       border-radius: 50%;
       animation: pulse 2s infinite;
     }
@@ -337,7 +348,7 @@
       max-width: 600px;
     }
     
-    /* How It Works */
+    /* How It Works - Light */
     .features {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -347,43 +358,47 @@
     
     .feature {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
       transition: all 0.3s var(--ease-out);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     
     .feature:hover {
       transform: translateY(-4px);
       border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(232, 93, 62, 0.08);
     }
     
     .feature-icon {
-      font-size: 2rem;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
     }
     
     .feature h3 {
-      font-size: 0.9375rem;
+      font-size: 1rem;
       font-weight: 600;
       margin-bottom: 0.75rem;
+      color: var(--fg);
     }
     
     .feature p {
       font-size: 0.875rem;
       margin: 0;
+      color: var(--fg-muted);
     }
     
-    /* Stats */
+    /* Stats - Light */
     .stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
       margin-top: 3rem;
       padding: 2rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      background: var(--surface-warm);
+      border: 2px solid var(--border);
+      border-radius: 16px;
     }
     
     .stat {
@@ -391,7 +406,7 @@
     }
     
     .stat-number {
-      font-size: 2.5rem;
+      font-size: 3rem;
       font-weight: 800;
       color: var(--accent);
       display: block;
@@ -405,11 +420,11 @@
       color: var(--fg-muted);
     }
     
-    /* Links Section */
+    /* Links Section - Light */
     .links {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      background: var(--surface-warm);
+      border: 2px solid var(--border);
+      border-radius: 16px;
       padding: 2rem;
     }
     
@@ -431,16 +446,18 @@
     .link-card {
       display: block;
       padding: 1.25rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 12px;
       text-decoration: none;
       transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     
     .link-card:hover {
       border-color: var(--accent);
       transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(232, 93, 62, 0.08);
     }
     
     .link-card strong {
@@ -455,15 +472,16 @@
       color: var(--fg-muted);
     }
     
-    /* Footer */
+    /* Footer - Light */
     footer {
       border-top: 1px solid var(--border);
       padding: 3rem 2rem;
       text-align: center;
+      background: var(--surface-warm);
     }
     
     footer p {
-      color: var(--fg-subtle);
+      color: var(--fg-muted);
       font-size: 0.875rem;
       margin-bottom: 0.5rem;
     }
@@ -471,6 +489,10 @@
     footer a {
       color: var(--accent);
       text-decoration: none;
+    }
+    
+    footer a:hover {
+      text-decoration: underline;
     }
     
     /* Responsive */

@@ -9,14 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #09090b;
-      --fg: #fafafa;
-      --fg-muted: #a1a1aa;
-      --fg-subtle: #52525b;
-      --accent: #F04D26;
-      --accent-glow: rgba(240, 77, 38, 0.15);
-      --border: #27272a;
-      --surface: #18181b;
+      /* Parent-friendly warm palette */
+      --bg: #fefdfb;              /* Warm white, not stark */
+      --fg: #1a1a1a;              /* Soft black */
+      --fg-muted: #6b6b6b;        /* Warm gray */
+      --fg-subtle: #9ca3af;       /* Light gray for labels */
+      --accent: #e85d3e;           /* Warm orange-red (friendly, energetic) */
+      --accent-soft: #fff5f2;     /* Light accent background */
+      --border: #e5e0db;          /* Warm border */
+      --surface: #ffffff;         /* Card backgrounds */
+      --surface-warm: #fdf8f5;    /* Slightly warm sections */
+      --success: #22c55e;
       --mono: 'JetBrains Mono', monospace;
       --sans: 'Inter', -apple-system, sans-serif;
       --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -82,7 +85,7 @@
     .stagger > *:nth-child(3) { animation-delay: 0.2s; }
     .stagger > *:nth-child(4) { animation-delay: 0.3s; }
     
-    /* Navigation */
+    /* Navigation - Light */
     nav {
       position: fixed;
       top: 0;
@@ -93,7 +96,8 @@
       justify-content: space-between;
       align-items: center;
       z-index: 100;
-      background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+      background: linear-gradient(to bottom, var(--bg) 80%, transparent 100%);
+      border-bottom: 1px solid transparent;
     }
     
     nav a {
@@ -107,7 +111,7 @@
     }
     
     nav a:hover {
-      color: var(--fg);
+      color: var(--accent);
     }
     
     .nav-links {
@@ -124,12 +128,16 @@
       color: var(--fg-muted);
       text-transform: uppercase;
       letter-spacing: 0.1em;
+      background: var(--surface);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
     }
     
     .status-dot {
-      width: 6px;
-      height: 6px;
-      background: #22c55e;
+      width: 8px;
+      height: 8px;
+      background: var(--success);
       border-radius: 50%;
       animation: pulse 2s infinite;
     }
@@ -212,9 +220,9 @@
       color: var(--fg-muted);
     }
     
-    /* Visual Code Blocks */
+    /* Visual Code Blocks - Light */
     .visual-code {
-      background: var(--surface);
+      background: #f8f6f4;
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 1.5rem;
@@ -226,26 +234,26 @@
     }
     
     .visual-code .comment {
-      color: var(--fg-subtle);
+      color: #6b7280;
     }
     
     .visual-code .keyword {
-      color: #c084fc;
+      color: #7c3aed;
     }
     
     .visual-code .string {
-      color: #4ade80;
+      color: #059669;
     }
     
     .visual-code .number {
-      color: #fbbf24;
+      color: #d97706;
     }
     
     .visual-code .function {
-      color: #60a5fa;
+      color: #2563eb;
     }
     
-    /* Cards */
+    /* Cards - Light & Warm */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -255,15 +263,17 @@
     
     .card {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: transform 0.3s var(--ease-out), border-color 0.3s;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: transform 0.3s var(--ease-out), border-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     
     .card:hover {
       transform: translateY(-4px);
       border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(232, 93, 62, 0.08);
     }
     
     .card h4 {
@@ -278,6 +288,7 @@
     .card p {
       font-size: 0.9375rem;
       margin: 0;
+      color: var(--fg-muted);
     }
     
     /* Lists */
@@ -300,7 +311,7 @@
       color: var(--accent);
     }
     
-    /* Buttons */
+    /* Buttons - Light & Friendly */
     .button-group {
       display: flex;
       gap: 1rem;
@@ -312,10 +323,10 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.875rem 1.5rem;
-      border-radius: 8px;
+      padding: 1rem 1.75rem;
+      border-radius: 12px;
       font-family: var(--sans);
-      font-size: 0.875rem;
+      font-size: 0.9375rem;
       font-weight: 600;
       text-decoration: none;
       transition: all 0.2s var(--ease-out);
@@ -326,68 +337,84 @@
     .btn-primary {
       background: var(--accent);
       color: white;
+      box-shadow: 0 4px 12px rgba(232, 93, 62, 0.25);
     }
     
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px var(--accent-glow);
+      box-shadow: 0 8px 24px rgba(232, 93, 62, 0.35);
     }
     
     .btn-secondary {
-      background: transparent;
+      background: white;
       color: var(--fg);
-      border: 1px solid var(--border);
+      border: 2px solid var(--border);
     }
     
     .btn-secondary:hover {
-      border-color: var(--fg-muted);
-      background: var(--surface);
+      border-color: var(--accent);
+      color: var(--accent);
     }
     
-    /* Terminal Block */
-    .terminal {
-      background: #000;
-      border-radius: 12px;
+    /* Status Block - Light & Friendly */
+    .status-block {
+      background: var(--surface-warm);
+      border: 2px solid var(--border);
+      border-radius: 16px;
       overflow: hidden;
       margin: 2rem 0;
     }
     
-    .terminal-header {
+    .status-header {
       background: var(--surface);
-      padding: 0.75rem 1rem;
+      padding: 1rem 1.5rem;
       display: flex;
-      gap: 0.5rem;
+      gap: 1rem;
       align-items: center;
+      border-bottom: 1px solid var(--border);
     }
     
-    .terminal-dot {
-      width: 12px;
-      height: 12px;
+    .status-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent-soft);
       border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
     }
     
-    .terminal-dot.red { background: #ef4444; }
-    .terminal-dot.yellow { background: #eab308; }
-    .terminal-dot.green { background: #22c55e; }
+    .status-title {
+      font-weight: 600;
+      color: var(--fg);
+    }
     
-    .terminal-body {
+    .status-body {
       padding: 1.5rem;
       font-family: var(--mono);
       font-size: 0.875rem;
       line-height: 1.7;
+      color: var(--fg-muted);
     }
     
-    .terminal-body .prompt {
+    .status-body .check {
+      color: var(--success);
+    }
+    
+    .status-body .accent {
       color: var(--accent);
+      font-weight: 600;
     }
     
-    /* Footer */
+    /* Footer - Light */
     footer {
       border-top: 1px solid var(--border);
       padding: 3rem 2rem;
       text-align: center;
-      color: var(--fg-subtle);
+      color: var(--fg-muted);
       font-size: 0.875rem;
+      background: var(--surface-warm);
     }
     
     /* Responsive */
@@ -503,20 +530,18 @@
       <li><strong>Offline-first.</strong> Rural schools, spotty WiFi—progress syncs when connected.</li>
     </ul>
 
-    <div class="terminal">
-      <div class="terminal-header">
-        <span class="terminal-dot red"></span>
-        <span class="terminal-dot yellow"></span>
-        <span class="terminal-dot green"></span>
+    <div class="status-block">
+      <div class="status-header">
+        <div class="status-icon">🎒</div>
+        <div class="status-title">Pilot Classroom Ready</div>
       </div>
-      <div class="terminal-body">
-        <span class="prompt">$</span> flow-education --mode=pilot --class-size=25<br>
-        <span style="color: #22c55e;">✓</span> Lesson Plan 001 loaded (Letters A-E, Number 1)<br>
-        <span style="color: #22c55e;">✓</span> Student roster imported (25 students)<br>
-        <span style="color: #22c55e;">✓</span> Kiosk mode active<br>
-        <span style="color: #22c55e;">✓</span> Progress sync: enabled<br>
+      <div class="status-body">
+        <span class="check">✓</span> Lesson Plan 001 loaded (Letters A-E, Number 1)<br>
+        <span class="check">✓</span> Student roster imported (25 students)<br>
+        <span class="check">✓</span> Kiosk mode active<br>
+        <span class="check">✓</span> Progress sync: enabled<br>
         <br>
-        <span style="color: var(--accent);">Ready for session.</span>
+        <span class="accent">Ready for session.</span>
       </div>
     </div>
   </section>
