@@ -1,3 +1,86 @@
+/* ── MODE SELECTOR SCREEN ─────────────────────────────────────────
+   First thing a user sees. Buttons must be HUGE and obvious.
+   ────────────────────────────────────────────────────────────────── */
+.mode-selector-screen {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #09090b;
+  color: #e4e4e7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  gap: 2rem;
+}
+
+.mode-title {
+  font-size: clamp(2rem, 7vw, 3rem);
+  font-weight: 900;
+  color: var(--accent);
+  text-align: center;
+}
+
+.mode-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.mode-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem 1.5rem;
+  border-radius: 24px;
+  border: 4px solid var(--border);
+  color: #e4e4e7;
+  font-family: inherit;
+  /* CRITICAL: minimum 48px tap target, we go much bigger */
+  min-height: 140px;
+  width: 100%;
+  transition: border-color 0.15s, transform 0.1s;
+}
+
+.mode-btn:active {
+  border-color: var(--accent) !important;
+}
+
+.mode-btn-young {
+  background: linear-gradient(160deg, rgba(34, 197, 94, 0.15) 0%, #18181b 70%);
+}
+
+.mode-btn-older {
+  background: linear-gradient(160deg, rgba(59, 130, 246, 0.15) 0%, #18181b 70%);
+}
+
+.mode-emoji {
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.mode-label {
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.mode-desc {
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+/* Stack side-by-side on wider screens */
+@media (min-width: 600px) {
+  .mode-buttons {
+    flex-direction: row;
+    max-width: 600px;
+  }
+}
+
+/* ── APP SHELL ────────────────────────────────────────────────────── */
 .app {
   min-height: 100vh;
   display: flex;
@@ -60,6 +143,11 @@
   color: white;
 }
 
+.nav button:active {
+  background: #d03a15;
+  transform: scale(0.93);
+}
+
 .app-main {
   flex: 1;
   padding: 2rem;
@@ -87,16 +175,18 @@
 
 /* Lesson Plan List Styles */
 .lesson-plan-list h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .header-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
+
+/* Mobile compact overrides moved to end of file — see bottom */
 
 .reset-btn {
   background: transparent;
@@ -301,6 +391,12 @@
   background: var(--accent-light);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(240, 77, 38, 0.4);
+}
+
+.start-btn:active:not(:disabled) {
+  background: #d03a15;
+  transform: scale(0.94);
+  box-shadow: 0 2px 6px rgba(240, 77, 38, 0.3);
 }
 
 .start-btn:disabled {
@@ -1116,6 +1212,11 @@
   box-shadow: 0 4px 20px rgba(240, 77, 38, 0.3);
 }
 
+.find-item-large:active:not(:disabled) {
+  transform: scale(0.92);
+  border-color: var(--accent);
+}
+
 .find-item-large.found {
   border-color: var(--success);
   background: rgba(34, 197, 94, 0.15);
@@ -1289,6 +1390,12 @@
   border-color: var(--accent);
   background: rgba(240, 77, 38, 0.1);
   transform: translateY(-2px);
+}
+
+.quiz-option-large:active:not(:disabled) {
+  transform: scale(0.93);
+  border-color: var(--accent);
+  background: rgba(240, 77, 38, 0.2);
 }
 
 .quiz-option-large.correct {
@@ -2748,21 +2855,34 @@ a:focus-visible {
   }
 }
 
-/* Prevent hover effects on touch (they get stuck) */
+/* Prevent hover effects on touch (they get stuck on iOS) */
 @media (hover: none) {
   button:hover,
   .find-item:hover,
+  .find-item-large:hover,
   .quiz-option:hover,
-  .nav-btn:hover {
-    transform: none;
+  .quiz-option-large:hover,
+  .lesson-card:hover,
+  .nav-btn:hover,
+  .start-btn:hover {
+    transform: none !important;
+    box-shadow: none;
   }
-  
+
   button:active,
   .find-item:active,
+  .find-item-large:active,
   .quiz-option:active,
-  .nav-btn:active {
-    transform: scale(0.95);
-    opacity: 0.8;
+  .quiz-option-large:active,
+  .nav-btn:active,
+  .start-btn:active,
+  .continue-btn:active,
+  .counting-item:active,
+  .connect-dot:active,
+  .simple-find-item:active {
+    transform: scale(0.93) !important;
+    opacity: 0.85;
+    transition: transform 0.05s, opacity 0.05s;
   }
 }
 
@@ -2861,4 +2981,159 @@ img.reward-badge-big {
 .continue-btn:active {
   transform: scale(0.96);
   opacity: 0.85;
+}
+
+/* ── Trace letter/number images ──────────────────────────────────── */
+.trace-letter-img {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  opacity: 0.35;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.trace-letter-fallback {
+  font-size: 10rem;
+  font-weight: 800;
+  color: var(--accent);
+  opacity: 0.3;
+}
+
+.letter-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Find challenge "All found!" overlay ─────────────────────────── */
+.find-complete-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.find-complete-badge {
+  background: var(--success, #22c55e);
+  color: white;
+  padding: 1rem 2.5rem;
+  border-radius: 24px;
+  font-size: 2rem;
+  font-weight: 800;
+  animation: pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 24px rgba(34, 197, 94, 0.4);
+}
+
+@keyframes pop-in {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── Tutor mini avatars in challenges ────────────────────────────── */
+.tutor-mini-encourage,
+.tutor-mini-thinking {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 15;
+  border: 3px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.hint-tutor {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+/* ── Quiz image options ──────────────────────────────────────────── */
+.quiz-options-visual {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.quiz-option-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.quiz-option-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quiz-option-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.quiz-option-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* ── Review tutor in quiz ────────────────────────────────────────── */
+.review-tutor {
+  margin-bottom: 0.5rem;
+}
+
+/* ── Find challenge position context ─────────────────────────────── */
+.find-challenge {
+  position: relative;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   MOBILE COMPACT OVERRIDES — MUST be last in file to win specificity.
+   On phones, AGGRESSIVELY collapse header so lesson buttons are
+   immediately visible. A kid should see "Start" without scrolling.
+   ══════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .lesson-plan-header .description { display: none !important; }
+  .meta-tags { display: none !important; }
+  .overview-stats { display: none !important; }
+  .objectives { display: none !important; }
+  .kaizen-footer { display: none !important; }
+
+  .lesson-plan-list h1 { font-size: 1.2rem; margin-bottom: 0; }
+  .header-top { margin-bottom: 0; }
+  .lesson-plan-header { margin-bottom: 0.5rem; }
+  .lessons-section { margin-top: 0.25rem; }
+  .section-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+  .lesson-card { padding: 0.75rem; gap: 0.75rem; }
+  .lesson-number { width: 44px; height: 44px; font-size: 1.2rem; }
+  .lesson-content h3 { font-size: 1.05rem; margin-bottom: 0.25rem; }
+  .lesson-content .duration { margin-bottom: 0.25rem; font-size: 0.8rem; }
+  .start-btn { padding: 0.75rem 1.5rem; min-height: 48px; min-width: 100px; font-size: 1rem; }
+  .app-main { padding: 0.75rem; }
+  .app-header { padding: 0.5rem 1rem; }
+  .lessons-grid { gap: 0.5rem; }
 }

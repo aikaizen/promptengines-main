@@ -3,7 +3,7 @@ import LessonPlanList from './components/LessonPlanList'
 import LessonView from './components/LessonView'
 import SimpleLessonView from './components/SimpleLessonView'
 import ProgressTracker from './components/ProgressTracker'
-import { useSafeTabletTouch, usePreventZoomSafe } from './hooks/useSafeTabletTouch.js'
+import { useSafeTabletTouch } from './hooks/useSafeTabletTouch.js'
 import './styles/App.css'
 
 // Import lesson plan data
@@ -16,7 +16,6 @@ const MODE_KEY = 'flow-education-mode'
 function App() {
   // Initialize safe tablet optimizations (iOS-compatible)
   const { isTouchDevice, orientation, hapticFeedback } = useSafeTabletTouch()
-  usePreventZoomSafe()
   
   const [currentView, setCurrentView] = useState('home') // home, lesson, progress, mode-select
   const [activeLesson, setActiveLesson] = useState(null)
@@ -152,78 +151,25 @@ function App() {
   
   if (showModeSelector) {
     return (
-      <div style={{
-        minHeight: '100vh',
-        background: '#09090b',
-        color: '#e4e4e7',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '20px',
-        fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif'
-      }}>
-        <div style={{ textAlign: 'center', maxWidth: '500px' }}>
-          <h1 style={{ 
-            fontSize: '2.5rem', 
-            color: '#F04D26', 
-            marginBottom: '2rem',
-            fontWeight: '800'
-          }}>
-            Choose Your Adventure!
-          </h1>
-          
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: '1fr 1fr', 
-            gap: '1.5rem',
-            marginBottom: '2rem'
-          }}>
-            <button 
-              onClick={() => handleSelectMode('4yo')}
-              style={{
-                background: 'linear-gradient(135deg, rgba(34,197,94,0.1) 0%, #18181b 100%)',
-                border: '4px solid #27272a',
-                borderRadius: '24px',
-                padding: '2rem 1rem',
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '0.75rem',
-                color: '#e4e4e7'
-              }}
-            >
-              <div style={{ fontSize: '5rem' }}>🧒</div>
-              <div style={{ fontSize: '1.75rem', fontWeight: '800' }}>I'm 4!</div>
-              <div style={{ color: '#71717a' }}>Super simple & fun</div>
-              <div style={{ display: 'flex', gap: '0.5rem', fontSize: '1.5rem' }}>
-                <span>🎯</span><span>🎉</span><span>⭐</span>
-              </div>
-            </button>
-            
-            <button 
-              onClick={() => handleSelectMode('5-6')}
-              style={{
-                background: 'linear-gradient(135deg, rgba(59,130,246,0.1) 0%, #18181b 100%)',
-                border: '4px solid #27272a',
-                borderRadius: '24px',
-                padding: '2rem 1rem',
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '0.75rem',
-                color: '#e4e4e7'
-              }}
-            >
-              <div style={{ fontSize: '5rem' }}>🎒</div>
-              <div style={{ fontSize: '1.75rem', fontWeight: '800' }}>I'm 5 or 6!</div>
-              <div style={{ color: '#71717a' }}>More challenges</div>
-              <div style={{ display: 'flex', gap: '0.5rem', fontSize: '1.5rem' }}>
-                <span>📚</span><span>✏️</span><span>🏆</span>
-              </div>
-            </button>
-          </div>
+      <div className="mode-selector-screen">
+        <h1 className="mode-title">Pick Your Level!</h1>
+        <div className="mode-buttons">
+          <button
+            className="mode-btn mode-btn-young"
+            onClick={() => handleSelectMode('4yo')}
+          >
+            <span className="mode-emoji">🧒</span>
+            <span className="mode-label">I'm 4!</span>
+            <span className="mode-desc">Tap & play</span>
+          </button>
+          <button
+            className="mode-btn mode-btn-older"
+            onClick={() => handleSelectMode('5-6')}
+          >
+            <span className="mode-emoji">🎒</span>
+            <span className="mode-label">I'm 5 or 6!</span>
+            <span className="mode-desc">More challenges</span>
+          </button>
         </div>
       </div>
     )

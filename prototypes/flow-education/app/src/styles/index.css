@@ -22,8 +22,45 @@ body {
   color: var(--fg);
   line-height: 1.6;
   min-height: 100vh;
+  /* Allow iOS to scroll naturally — NEVER block touch */
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
 }
 
 #root {
   min-height: 100vh;
+}
+
+/* ── GLOBAL MOBILE TOUCH FIX ──────────────────────────────────────
+   Every button/link MUST respond instantly on iOS.
+   touch-action: manipulation kills the 300ms tap delay.
+   The tap highlight gives users visual feedback that something happened.
+   ────────────────────────────────────────────────────────────────── */
+button,
+a,
+[role="button"],
+[role="gridcell"],
+[role="radio"],
+input,
+select {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(240, 77, 38, 0.3);
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+/* Visible press state — the user MUST see something happen on tap */
+button:active,
+a:active,
+[role="button"]:active,
+[role="gridcell"]:active {
+  transform: scale(0.95) !important;
+  opacity: 0.85 !important;
+  transition: transform 0.05s, opacity 0.05s !important;
+}
+
+button:disabled:active {
+  transform: none !important;
+  opacity: 0.6 !important;
 }

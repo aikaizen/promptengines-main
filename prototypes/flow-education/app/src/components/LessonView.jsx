@@ -216,9 +216,37 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
   const { isTouchDevice, hapticFeedback } = useSafeTabletTouch()
   const traceCanvasRef = useRef(null)
   const challengeStartTimeRef = useRef(Date.now())
+  const advanceRef = useRef(null) // Ref to always-latest advance function
+  const isAdvancingRef = useRef(false) // Guard against double-advance race
   
   const challenges = useRef(createChallenges(lesson)).current
   const currentChallenge = challenges[currentChallengeIndex]
+
+  // Background mapping per lesson
+  const getLessonBackground = () => {
+    const letter = lesson.title.match(/Letter (.)/)?.[1]
+    const bgMap = {
+      'A': 'bg-classroom', 'B': 'bg-nature-outdoors', 'C': 'bg-kitchen',
+      'D': 'bg-prehistoric', 'E': 'bg-savanna'
+    }
+    if (lesson.isNumberLesson || lesson.title.includes('Number')) return 'bg-counting-garden'
+    return bgMap[letter] || 'bg-classroom'
+  }
+
+  // Tutor expression based on challenge type and state
+  const getTutorExpression = () => {
+    if (!currentChallenge) return 'neutral'
+    switch (currentChallenge.type) {
+      case CHALLENGE_TYPES.INTRO: return 'waving'
+      case CHALLENGE_TYPES.LISTEN: return 'neutral'
+      case CHALLENGE_TYPES.FIND: return errorCount > 2 ? 'encouraging' : 'happy'
+      case CHALLENGE_TYPES.TRACE: return 'neutral'
+      case CHALLENGE_TYPES.QUIZ: return 'thinking'
+      case CHALLENGE_TYPES.REWARD: return 'happy'
+      case CHALLENGE_TYPES.OUTRO: return 'waving'
+      default: return 'neutral'
+    }
+  }
   
   // Check for reduced motion preference
   useEffect(() => {
@@ -235,6 +263,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
     challengeStartTimeRef.current = Date.now()
     setStreakCount(0)
     setIsLocked(false)
+    isAdvancingRef.current = false
   }, [currentChallengeIndex])
   
   // Timer for auto-advance (Intro, Listen, Reward, Outro)
@@ -252,7 +281,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
         
         if (remaining <= 0) {
           clearInterval(interval)
-          advanceToNextChallenge()
+          advanceRef.current?.()
         }
       }, 100)
       
@@ -260,7 +289,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
     }
     setTimer(null)
   }, [currentChallengeIndex, currentChallenge, playNarration])
-  
+
   // Adaptive difficulty: show hint after 3 errors
   useEffect(() => {
     if (errorCount >= 3 && !showHint) {
@@ -342,6 +371,11 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
   }, [currentChallengeIndex, currentChallenge, playSound, playNarration])
 
   const advanceToNextChallenge = useCallback(() => {
+    // Guard against double-advance race (user tap + auto-advance)
+    if (isAdvancingRef.current) return
+    isAdvancingRef.current = true
+    setTimeout(() => { isAdvancingRef.current = false }, 300)
+
     if (currentChallengeIndex < challenges.length - 1) {
       setCurrentChallengeIndex(prev => prev + 1)
       setErrorCount(0)
@@ -359,6 +393,9 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       onComplete(lesson.lessonId, finalScore, timeSpent)
     }
   }, [currentChallengeIndex, challenges.length, lesson, score, lessonStartTime, onComplete])
+
+  // Keep ref synced so auto-advance timer always calls latest version
+  advanceRef.current = advanceToNextChallenge
   
   const handleAnswer = useCallback((isCorrect, value) => {
     const newAnswers = [...answers, { challenge: currentChallengeIndex, correct: isCorrect, value }]
@@ -674,7 +711,11 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
   
   const base = import.meta.env.BASE_URL
   const getObjectImage = (word) => `${base}assets/objects/obj-${word.toLowerCase()}.png`
+  const getCountImage = (count) => `${base}assets/objects/obj-count-${count}.png`
   const getTutorImage = (state) => `${base}assets/characters/char-tutor-${state}.png`
+  const getLetterImage = (letter, type = 'upper') => `${base}assets/letters/letter-${letter}-${type}.png`
+  const getNumberImage = (num) => `${base}assets/numbers/number-${num}-display.png`
+  const getBackgroundImage = (bgName) => `${base}assets/backgrounds/${bgName}.png`
   const getBadgeImage = (badge) => {
     if (!badge) return null
     if (badge.startsWith('letter-')) {
@@ -688,11 +729,14 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
   
   // Render different challenge types
   const renderChallenge = () => {
+    if (!currentChallenge) {
+      return <div style={{ padding: '40px', textAlign: 'center' }}>Loading challenge...</div>
+    }
     switch (currentChallenge.type) {
       case CHALLENGE_TYPES.INTRO:
         return (
           <div className="intro-challenge">
-            <img className="tutor-avatar-large" src={getTutorImage('neutral')} alt="Friendly tutor" />
+            <img className="tutor-avatar-large" src={getTutorImage('waving')} alt="Friendly tutor" />
             <h2 className="challenge-title">{currentChallenge.title}</h2>
             <p className="challenge-script">{currentChallenge.script}</p>
             {timer !== null && (
@@ -707,7 +751,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
       case CHALLENGE_TYPES.LISTEN:
         return (
           <div className="listen-challenge">
-            <img className="tutor-avatar" src={getTutorImage('neutral')} alt="Friendly tutor speaking" />
+            <img className="tutor-avatar" src={getTutorImage('happy')} alt="Friendly tutor speaking" />
             <div className="words-display">
               {currentChallenge.words?.map((word, i) => (
                 <div key={word} className="word-card-large" style={{ animationDelay: `${i * 0.8}s` }}>
@@ -724,9 +768,16 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
         const items = currentChallenge.isCountingChallenge
           ? currentChallenge.items
           : [...(currentChallenge.targets || []), ...(currentChallenge.distractors || [])].sort(() => Math.random() - 0.5)
-          
+
+        const allFound = !currentChallenge.isCountingChallenge && foundItems.size >= currentChallenge.requiredCorrect
+
         return (
           <div className="find-challenge">
+            {/* Tutor encouraging on errors */}
+            {errorCount > 2 && (
+              <img className="tutor-mini-encourage" src={getTutorImage('encouraging')} alt="Tutor encouraging you" />
+            )}
+
             {!currentChallenge.isCountingChallenge && (
               <div className="find-progress" role="status" aria-label={`Found ${foundItems.size} of ${currentChallenge.requiredCorrect}`}>
                 <div className="progress-pill">
@@ -740,7 +791,14 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
                 )}
               </div>
             )}
-            
+
+            {/* "All found!" celebration overlay */}
+            {allFound && (
+              <div className="find-complete-overlay" role="alert">
+                <div className="find-complete-badge">All Found!</div>
+              </div>
+            )}
+
             <div className="find-grid" role="grid" aria-label={currentChallenge.isCountingChallenge ? "Tap the group showing ONE" : `Tap items starting with ${currentChallenge.letter}`}>
               {currentChallenge.isCountingChallenge ? (
                 items.map((item) => (
@@ -750,7 +808,7 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
                     onClick={() => handleFindTap(item, item.count === currentChallenge.correctCount)}
                     style={{ minHeight: '120px', minWidth: '120px' }}
                   >
-                    <img className="counting-img" src={`/assets/objects/obj-count-${item.count}.png`} alt={item.label} />
+                    <img className="counting-img" src={getCountImage(item.count)} alt={`${item.label} item${item.count > 1 ? 's' : ''}`} />
                     <span className="counting-label">{item.label}</span>
                   </button>
                 ))
@@ -775,11 +833,12 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
                 })
               )}
             </div>
-            
+
             {showHint && (
               <div className="hint-large" role="alert">
-                💡 Hint: {currentChallenge.isCountingChallenge 
-                  ? 'Look for just ONE item' 
+                <img className="hint-tutor" src={getTutorImage('encouraging')} alt="" style={{ width: '48px', height: '48px', borderRadius: '50%' }} />
+                {currentChallenge.isCountingChallenge
+                  ? 'Look for just ONE item'
                   : `Look for items that start with "${currentChallenge.letter}"`}
               </div>
             )}
@@ -798,13 +857,27 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
             </div>
             
             <div className="trace-area" style={{ position: 'relative' }}>
-              {/* Letter/Number background */}
+              {/* Letter/Number image background */}
               <div className="letter-background">
                 {currentChallenge.isNumber ? (
-                  <span className="trace-number">{currentChallenge.letter}</span>
+                  <img
+                    className="trace-letter-img"
+                    src={getNumberImage(currentChallenge.letter)}
+                    alt={`Number ${currentChallenge.letter}`}
+                    onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block' }}
+                  />
                 ) : (
-                  <span className="trace-letter">{currentChallenge.letter}</span>
+                  <img
+                    className="trace-letter-img"
+                    src={getLetterImage(currentChallenge.letter)}
+                    alt={`Letter ${currentChallenge.letter}`}
+                    onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block' }}
+                  />
                 )}
+                {/* Fallback text if image fails */}
+                <span className="trace-letter-fallback" style={{ display: 'none' }}>
+                  {currentChallenge.letter}
+                </span>
               </div>
               
               {/* Animated guide overlay */}
@@ -875,16 +948,20 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
         )
         
       case CHALLENGE_TYPES.QUIZ:
+        const isLetterQuiz = !lesson.title.includes('Number')
         return (
           <div className="quiz-challenge kid-quiz">
+            {/* Tutor thinking face for quiz */}
+            <img className="tutor-mini-thinking" src={getTutorImage('thinking')} alt="Tutor thinking" />
+
             {needsReview ? (
               <div className="review-needed-large">
                 <div className="review-icon">🔄</div>
                 <div className="kid-review-visual">
-                  <span className="kid-review-emoji">💪</span>
+                  <img className="review-tutor" src={getTutorImage('encouraging')} alt="Tutor encouraging" style={{ width: '80px', height: '80px', borderRadius: '50%' }} />
                   <span className="kid-review-text">Practice Time!</span>
                 </div>
-                <button 
+                <button
                   className="review-btn-large kid-btn"
                   onClick={handleReview}
                 >
@@ -897,8 +974,8 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
                 {/* Visual progress dots instead of text */}
                 <div className="kid-quiz-progress" role="img" aria-label={`Question ${quizAnswers.filter(a => a !== undefined).length + 1} of ${currentChallenge.questions.length}`}>
                   {currentChallenge.questions.map((_, i) => (
-                    <span 
-                      key={i} 
+                    <span
+                      key={i}
                       className={`kid-progress-dot ${quizAnswers[i] ? (quizAnswers[i].correct ? 'correct' : 'wrong') : ''} ${i === quizAnswers.filter(a => a !== undefined).length ? 'current' : ''}`}
                       aria-hidden="true"
                     >
@@ -906,39 +983,51 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
                     </span>
                   ))}
                 </div>
-                
+
                 {currentChallenge.questions.map((q, qIndex) => {
                   const answered = quizAnswers[qIndex]
                   const showQuestion = !answered || qIndex === quizAnswers.findIndex(a => !a)
-                  
+
                   if (!showQuestion) return null
-                  
+
                   return (
                     <div key={qIndex} className="quiz-question-active kid-question">
-                      {/* Visual question prompt - minimal text */}
+                      {/* Visual question prompt */}
                       <div className="kid-question-prompt">
                         <span className="kid-prompt-icon">👆</span>
                         <span className="kid-prompt-letter">{lesson.title.match(/Letter (.)/)?.[1] || lesson.title.match(/Number (\d)/)?.[1]}</span>
                       </div>
-                      <div className="quiz-options-large" role="radiogroup" aria-label={q.question}>
-                        {q.options.map((option, oIndex) => (
-                          <button
-                            key={oIndex}
-                            className={`quiz-option-large ${answered?.answerIndex === oIndex ? (answered?.correct ? 'correct' : 'incorrect') : ''}`}
-                            onClick={() => !answered && handleQuizAnswer(qIndex, oIndex)}
-                            disabled={answered !== undefined}
-                            role="radio"
-                            aria-checked={answered?.answerIndex === oIndex}
-                            style={{ minHeight: '100px', fontSize: q.labels ? '1.5rem' : '3rem' }}
-                          >
-                            {q.labels ? q.labels[oIndex] : option}
-                          </button>
-                        ))}
+                      <div className="quiz-options-large quiz-options-visual" role="radiogroup" aria-label={q.question}>
+                        {q.options.map((option, oIndex) => {
+                          const isWordOption = isLetterQuiz && !q.labels && typeof option === 'string' && /^[A-Z]/.test(option)
+                          return (
+                            <button
+                              key={oIndex}
+                              className={`quiz-option-large ${isWordOption ? 'quiz-option-image' : ''} ${answered?.answerIndex === oIndex ? (answered?.correct ? 'correct' : 'incorrect') : ''}`}
+                              onClick={() => !answered && handleQuizAnswer(qIndex, oIndex)}
+                              disabled={answered !== undefined}
+                              role="radio"
+                              aria-checked={answered?.answerIndex === oIndex}
+                              style={{ minHeight: '100px' }}
+                            >
+                              {isWordOption ? (
+                                <div className="quiz-option-content">
+                                  <img className="quiz-option-img" src={getObjectImage(option)} alt={option} />
+                                  <span className="quiz-option-label">{option}</span>
+                                </div>
+                              ) : (
+                                <span style={{ fontSize: q.labels ? '1.5rem' : '3rem' }}>
+                                  {q.labels ? q.labels[oIndex] : option}
+                                </span>
+                              )}
+                            </button>
+                          )
+                        })}
                       </div>
                     </div>
                   )
                 })}
-                
+
                 {quizAnswers.filter(a => a !== undefined).length > 0 && (
                   <div className="quiz-progress">
                     {quizAnswers.map((a, i) => (
@@ -988,7 +1077,16 @@ function LessonView({ lesson, lessonPlan, onComplete, onExit }) {
   }
   
   return (
-    <div className="lesson-view" role="article" aria-label={`Lesson: ${lesson.title}`}>
+    <div
+      className="lesson-view"
+      role="article"
+      aria-label={`Lesson: ${lesson.title}`}
+      style={{
+        backgroundImage: `linear-gradient(rgba(9,9,11,0.82), rgba(9,9,11,0.92)), url(${getBackgroundImage(getLessonBackground())})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
       <div className="lesson-header">
         <button 
           className="exit-btn" 
