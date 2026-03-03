@@ -152,74 +152,33 @@ function App() {
   
   if (showModeSelector) {
     return (
-      <div style={{
-        minHeight: '100vh',
-        background: '#09090b',
-        color: '#e4e4e7',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '20px',
-        fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif'
-      }}>
-        <div style={{ textAlign: 'center', maxWidth: '500px' }}>
-          <h1 style={{ 
-            fontSize: '2.5rem', 
-            color: '#F04D26', 
-            marginBottom: '2rem',
-            fontWeight: '800'
-          }}>
+      <div className="mode-selector">
+        <div className="mode-selector-content">
+          <h1 className="mode-selector-title">
             Choose Your Adventure!
           </h1>
-          
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: '1fr 1fr', 
-            gap: '1.5rem',
-            marginBottom: '2rem'
-          }}>
-            <button 
+
+          <div className="mode-selector-grid">
+            <button
               onClick={() => handleSelectMode('4yo')}
-              style={{
-                background: 'linear-gradient(135deg, rgba(34,197,94,0.1) 0%, #18181b 100%)',
-                border: '4px solid #27272a',
-                borderRadius: '24px',
-                padding: '2rem 1rem',
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '0.75rem',
-                color: '#e4e4e7'
-              }}
+              className="mode-card mode-4yo"
             >
-              <div style={{ fontSize: '5rem' }}>🧒</div>
-              <div style={{ fontSize: '1.75rem', fontWeight: '800' }}>I'm 4!</div>
-              <div style={{ color: '#71717a' }}>Super simple & fun</div>
-              <div style={{ display: 'flex', gap: '0.5rem', fontSize: '1.5rem' }}>
+              <div className="mode-emoji">🧒</div>
+              <div className="mode-label">I'm 4!</div>
+              <div className="mode-desc">Super simple & fun</div>
+              <div className="mode-icons">
                 <span>🎯</span><span>🎉</span><span>⭐</span>
               </div>
             </button>
-            
-            <button 
+
+            <button
               onClick={() => handleSelectMode('5-6')}
-              style={{
-                background: 'linear-gradient(135deg, rgba(59,130,246,0.1) 0%, #18181b 100%)',
-                border: '4px solid #27272a',
-                borderRadius: '24px',
-                padding: '2rem 1rem',
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '0.75rem',
-                color: '#e4e4e7'
-              }}
+              className="mode-card mode-5-6"
             >
-              <div style={{ fontSize: '5rem' }}>🎒</div>
-              <div style={{ fontSize: '1.75rem', fontWeight: '800' }}>I'm 5 or 6!</div>
-              <div style={{ color: '#71717a' }}>More challenges</div>
-              <div style={{ display: 'flex', gap: '0.5rem', fontSize: '1.5rem' }}>
+              <div className="mode-emoji">🎒</div>
+              <div className="mode-label">I'm 5 or 6!</div>
+              <div className="mode-desc">More challenges</div>
+              <div className="mode-icons">
                 <span>📚</span><span>✏️</span><span>🏆</span>
               </div>
             </button>
@@ -229,55 +188,50 @@ function App() {
     )
   }
 
-  return (
-    <div className="app">
-      <header className="app-header">
-        <div className="brand">
-          <span className="brand-icon" aria-hidden="true">🎒</span>
-          <span className="brand-name">Flow</span>
-        </div>
-        <nav className="nav kid-nav" role="navigation" aria-label="Main navigation">
-          <button 
-            className={`nav-btn ${currentView === 'home' ? 'active' : ''}`}
-            onClick={() => setCurrentView('home')}
-            aria-pressed={currentView === 'home'}
-            title="Lessons"
-          >
-            <span className="nav-icon" aria-hidden="true">📚</span>
-            <span className="nav-label">Learn</span>
-          </button>
-          <button 
-            className={`nav-btn ${currentView === 'progress' ? 'active' : ''}`}
-            onClick={() => setCurrentView('progress')}
-            aria-pressed={currentView === 'progress'}
-            title="Progress"
-          >
-            <span className="nav-icon" aria-hidden="true">🏆</span>
-            <span className="nav-label">Stars</span>
-          </button>
-        </nav>
-        
-        {/* DEMO: Quick mode switcher */}
-        <button
-          onClick={() => setCurrentView('mode-select')}
-          style={{
-            background: ageMode === '4yo' ? '#22c55e' : '#3b82f6',
-            color: 'white',
-            border: 'none',
-            borderRadius: '20px',
-            padding: '6px 12px',
-            fontSize: '0.75rem',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            marginLeft: '10px'
-          }}
-          title="Switch age mode"
-        >
-          {ageMode === '4yo' ? '🧒 4YO' : '🎒 5-6'}
-        </button>
-      </header>
+  const isInLesson = currentView === 'lesson'
 
-      <main className="app-main" role="main">
+  return (
+    <div className={`app ${isInLesson ? 'game-mode' : ''}`}>
+      {/* Hide header during gameplay for immersive experience */}
+      {!isInLesson && (
+        <header className="app-header">
+          <div className="brand">
+            <span className="brand-icon" aria-hidden="true">🎒</span>
+            <span className="brand-name">Flow</span>
+          </div>
+          <nav className="nav kid-nav" role="navigation" aria-label="Main navigation">
+            <button
+              className={`nav-btn ${currentView === 'home' ? 'active' : ''}`}
+              onClick={() => setCurrentView('home')}
+              aria-pressed={currentView === 'home'}
+              title="Lessons"
+            >
+              <span className="nav-icon" aria-hidden="true">📚</span>
+              <span className="nav-label">Learn</span>
+            </button>
+            <button
+              className={`nav-btn ${currentView === 'progress' ? 'active' : ''}`}
+              onClick={() => setCurrentView('progress')}
+              aria-pressed={currentView === 'progress'}
+              title="Progress"
+            >
+              <span className="nav-icon" aria-hidden="true">🏆</span>
+              <span className="nav-label">Stars</span>
+            </button>
+          </nav>
+
+          {/* DEMO: Quick mode switcher */}
+          <button
+            onClick={() => setCurrentView('mode-select')}
+            className="mode-switcher"
+            title="Switch age mode"
+          >
+            {ageMode === '4yo' ? '🧒 4YO' : '🎒 5-6'}
+          </button>
+        </header>
+      )}
+
+      <main className={`app-main ${isInLesson ? 'game-main' : ''}`} role="main">
         {currentView === 'home' && (
           <LessonPlanList 
             lessonPlan={lessonPlan001}

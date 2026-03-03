@@ -3,193 +3,393 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skills — Prompt Engines Lab Notes</title>
-  <meta name="description" content="OpenClaw skills built by the PromptEngines team. Free to install. Reviewed and production-tested." />
+  <title>Skills — Prompt Engines Lab</title>
+  <meta name="description" content="Ready-to-incorporate skills for agents and humans. Tested, documented, versioned capabilities from the PromptEngines lab." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    :root {
+      --bg: #09090b;
+      --fg: #fafafa;
+      --fg-muted: #a1a1aa;
+      --fg-subtle: #52525b;
+      --accent: #F04D26;
+      --accent-glow: rgba(240, 77, 38, 0.15);
+      --border: #27272a;
+      --surface: #18181b;
+      --surface-hover: #27272a;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Outfit', sans-serif;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Navigation */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to bottom, var(--bg) 80%, transparent 100%);
+      border-bottom: 1px solid transparent;
+      z-index: 100;
+    }
+
+    .topbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--fg);
+      text-decoration: none;
+    }
+
+    .brand span {
+      color: var(--accent);
+    }
+
+    .nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav a {
+      color: var(--fg-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .nav a:hover {
+      color: var(--fg);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 8rem 2rem 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .hero-lead {
+      font-size: 1.125rem;
+      color: var(--fg-muted);
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    /* Skills Grid */
+    .skills-section {
+      padding: 0 2rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--fg-muted);
+    }
+
+    .skill-count {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--fg-subtle);
+      background: var(--surface);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+    }
+
+    .skills-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s var(--ease-out);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .skill-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--fg);
+    }
+
+    .skill-version {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--fg-subtle);
+      background: var(--bg);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .skill-purpose {
+      color: var(--fg-muted);
+      font-size: 0.9375rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .skill-meta {
+      display: flex;
+      gap: 1rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--fg-subtle);
+    }
+
+    .skill-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-stable {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+    }
+
+    .status-beta {
+      background: rgba(234, 179, 8, 0.15);
+      color: #eab308;
+    }
+
+    .status-draft {
+      background: rgba(161, 161, 170, 0.15);
+      color: #a1a1aa;
+    }
+
+    /* For Agents Section */
+    .agents-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      margin-top: 3rem;
+    }
+
+    .agents-content {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .agents-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .agents-text {
+      color: var(--fg-muted);
+      max-width: 700px;
+      line-height: 1.7;
+    }
+
+    .agents-text code {
+      font-family: var(--mono);
+      background: var(--bg);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.875em;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--fg-subtle);
+      font-size: 0.875rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
   <header class="topbar">
-    <div class="container topbar-inner">
-      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+    <div class="topbar-inner">
+      <a class="brand" href="../">Lab<span>Notes</span></a>
       <nav class="nav">
-        <a href="../team/">Team</a>
-        <a href="../purpose/">Purpose</a>
-        <div class="nav-dropdown">
-          <span>Labnotes</span>
-          <div class="nav-dropdown-menu">
-            <a href="../articles/">Articles</a>
-            <a href="../signals/">Signals</a>
-            <a href="../build-stream/">Build Stream</a>
-            <a href="../skills/">Skills</a>
-            <a href="../about/">About</a>
-          </div>
-        </div>
-        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+        <a href="../">Home</a>
+        <a href="../articles/">Articles</a>
+        <a href="../build-stream/">Build Stream</a>
+        <a href="./">Skills</a>
       </nav>
     </div>
   </header>
 
   <main>
     <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <div class="eyebrow">Skills</div>
-          <h1>OpenClaw skills from the PromptEngines lab.</h1>
-          <p class="hero-lead">Skills we built, tested in production, and published. Free to install. Each one has a writeup explaining what it does and why we built it.</p>
-        </div>
-        <aside class="hero-aside">
-          <div class="hero-stat">
-            <span class="hero-stat-number">5</span>
-            <span class="hero-stat-label">Published skills</span>
-          </div>
-          <div class="hero-stat">
-            <span class="hero-stat-number">Free</span>
-            <span class="hero-stat-label">Always</span>
-          </div>
-        </aside>
-      </div>
+      <div class="eyebrow">Ready-to-Incorporate</div>
+      <h1>Skills</h1>
+      <p class="hero-lead">
+        Tested, documented, versioned capabilities for agents and humans.
+        Copy the patterns. Reference the standards. Build on verified foundations.
+      </p>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Install</h2>
-        </div>
-        <div class="post-card" style="--i:0; margin-bottom: 2rem;">
-          <div class="post-meta"><span class="tag">CLI</span></div>
-          <h3>Install any skill in one command</h3>
-          <div class="visual visual-code" style="margin-top: 1rem;">npx clawhub@latest install &lt;skill-slug&gt;
-
-# or manually: copy skill folder to
-# ~/.openclaw/skills/   (global)
-# &lt;project&gt;/skills/    (workspace)</div>
-        </div>
+    <section class="skills-section">
+      <div class="section-header">
+        <div class="section-title">Published Skills</div>
+        <div class="skill-count">3 skills</div>
       </div>
-    </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Published skills</h2>
-          <span class="section-count">5 skills</span>
-        </div>
-
-        <div class="post-grid stagger">
-          <div class="post-card" style="--i:0">
-            <div class="post-meta">
-              <span class="tag">Content</span>
-              <span>lab-article-writer</span>
-            </div>
-            <h3>Lab Article Writer</h3>
-            <p>Writes and publishes articles for lab.promptengines.com. Enforces the Lab Notes taste profile — dark zinc aesthetic, rigor-with-vibe editorial voice, HTML/CSS charts. Includes article template, publishing workflow, and pre-publish checklist.</p>
-            <div class="visual visual-code" style="margin-top: 1rem; font-size: 0.8rem;">npx clawhub@latest install lab-article-writer</div>
+      <div class="skills-grid">
+        <!-- Lab Article Writing -->
+        <a href="./lab-article-writing/SKILL.md" class="skill-card">
+          <div class="skill-header">
+            <div class="skill-name">Lab Article Writing</div>
+            <div class="skill-version">v1.0</div>
           </div>
-
-          <div class="post-card" style="--i:1">
-            <div class="post-meta">
-              <span class="tag">Marketing</span>
-              <span>marketing-manager</span>
-            </div>
-            <h3>Marketing Manager</h3>
-            <p>Full-stack marketing management for SaaS and consumer apps. Covers paid ads (Meta, TikTok, Google, Pinterest, X), SEO, email sequences, influencer outreach, in-person events, and launch campaigns. Built for the PromptEngines ecosystem but general enough for any product.</p>
-            <div class="visual visual-code" style="margin-top: 1rem; font-size: 0.8rem;">npx clawhub@latest install marketing-manager</div>
+          <div class="skill-purpose">
+            Write high-signal, evidence-driven technical articles. Anti-slop enforcement,
+            visual guidelines, Mermaid templates, and pre-publish checklists.
           </div>
-
-          <div class="post-card" style="--i:2">
-            <div class="post-meta">
-              <span class="tag">Writing</span>
-              <span>anti-slop-writer</span>
-            </div>
-            <h3>Anti-Slop Writer</h3>
-            <p>Rejects AI-generated slop. Enforces high-signal markers: dense insight, specific examples, real metrics, original synthesis. Identifies and eliminates vague abstractions, generic buzzwords, filler content. For writing that respects the reader's time.</p>
-            <div class="visual visual-code" style="margin-top: 1rem; font-size: 0.8rem;">npx clawhub@latest install anti-slop-writer</div>
+          <div class="skill-meta">
+            <span class="status-badge status-stable">✓ Stable</span>
+            <span>📄 SKILL.md</span>
+            <span>Updated 2026-03-03</span>
           </div>
-
-          <div class="post-card" style="--i:3">
-            <div class="post-meta">
-              <span class="tag">Character</span>
-              <span>character-consistency</span>
-            </div>
-            <h3>Character Consistency</h3>
-            <p>Maintains character voice, appearance, and behavior across long-form content. Builds and references character sheets (archetypes, epistemology, methods, domains). Prevents drift in multi-session creative projects. Essential for novels, series, and persistent brand voices.</p>
-            <div class="visual visual-code" style="margin-top: 1rem; font-size: 0.8rem;">npx clawhub@latest install character-consistency</div>
-          </div>
-
-          <div class="post-card" style="--i:4">
-            <div class="post-meta">
-              <span class="tag">Strategy</span>
-              <span>master-marketer</span>
-            </div>
-            <h3>Master Marketer</h3>
-            <p>LAPS framework (Leads, Audience, Product, Sales) execution. Offer architecture, pricing strategy, funnel design, and tactical campaign planning. Built for the StoryBook Studio launch but applicable to any product go-to-market. Includes year-long strategy playbooks.</p>
-            <div class="visual visual-code" style="margin-top: 1rem; font-size: 0.8rem;">npx clawhub@latest install master-marketer</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Coming soon</h2>
-          <span class="section-count">6 skills in development</span>
-        </div>
-        <div class="archive-list">
-          <div class="archive-item">
-            <div class="archive-meta">In progress · DevOps</div>
-            <h3>build-stream-generator — auto-generate weekly commit intelligence reports from GitHub activity</h3>
-          </div>
-          <div class="archive-item">
-            <div class="archive-meta">In progress · Research</div>
-            <h3>signal-tracker — monitor X discourse, prediction markets, and price feeds for emerging trends</h3>
-          </div>
-          <div class="archive-item">
-            <div class="archive-meta">Planned · E-commerce</div>
-            <h3>print-pipeline — manage Lulu/Gelato print-on-demand order flows for physical products</h3>
-          </div>
-          <div class="archive-item">
-            <div class="archive-meta">Planned · Education</div>
-            <h3>curriculum-architect — design mastery-based learning progressions with spaced repetition</h3>
-          </div>
-          <div class="archive-item">
-            <div class="archive-meta">Planned · Product</div>
-            <h3>analytics-storyteller — translate metrics into narrative reports for stakeholders</h3>
-          </div>
-          <div class="archive-item">
-            <div class="archive-meta">Planned · Security</div>
-            <h3>dependency-sentinel — scan repos for vulnerabilities and license conflicts</h3>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container" style="text-align: center; padding: 2rem 0 4rem;">
-        <p style="font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem;">Need something else?</p>
-        <a href="mailto:skills@promptengines.com" class="post-card" style="display: inline-block; text-align: left; max-width: 400px; text-decoration: none;">
-          <div class="post-meta"><span class="tag">Request</span></div>
-          <h3 style="margin: 0.5rem 0;">Request a Skill</h3>
-          <p style="color: var(--text-3);">Have a repetitive workflow that needs automation? Describe it and we might build it.</p>
         </a>
+
+        <!-- Developer Portfolio Craft -->
+        <a href="./developer-portfolio-craft/SKILL.md" class="skill-card">
+          <div class="skill-header">
+            <div class="skill-name">Developer Portfolio Craft</div>
+            <div class="skill-version">v1.0</div>
+          </div>
+          <div class="skill-purpose">
+            Typography, motion, and code aesthetic patterns for developer portfolios.
+            Dramatic scale, dark zinc + orange palette, hover states, scroll reveals.
+          </div>
+          <div class="skill-meta">
+            <span class="status-badge status-stable">✓ Stable</span>
+            <span>📄 SKILL.md</span>
+            <span>Updated 2026-03-02</span>
+          </div>
+        </a>
+
+        <!-- Anti-Slop Writing -->
+        <a href="../../shared/skills/anti-slop/references/anti-slop.sh" class="skill-card">
+          <div class="skill-header">
+            <div class="skill-name">Anti-Slop Writing</div>
+            <div class="skill-version">v1.0</div>
+          </div>
+          <div class="skill-purpose">
+            Enforcement script for high-signal writing. Rejects hype patterns,
+            vapid abstractions, and AI slop. Bash reference implementation.
+          </div>
+          <div class="skill-meta">
+            <span class="status-badge status-stable">✓ Stable</span>
+            <span>⚙️ Shell Script</span>
+            <span>Updated 2026-02-28</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="agents-section">
+      <div class="agents-content">
+        <div class="agents-title">For Agents</div>
+        <div class="agents-text">
+          <p>
+            These skills are designed for incorporation into agent systems. Each SKILL.md follows
+            a standard format: purpose, patterns, hard rules, templates, and checklists.
+          </p>
+          <p style="margin-top: 1rem;">
+            To use a skill, reference it in your system prompt or agent configuration:
+          </p>
+          <p style="margin-top: 0.5rem; font-family: var(--mono); font-size: 0.875rem; color: var(--fg);">
+            "Follow the lab-article-writing skill at labnotes/skills/lab-article-writing/SKILL.md"
+          </p>
+          <p style="margin-top: 1rem;">
+            No private information (SSH hosts, API keys, internal URLs) is included in public skills.
+          </p>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  <footer>
+    <p>Prompt Engines Lab — <a href="https://promptengines.com">promptengines.com</a></p>
   </footer>
-  <script>
-    (function () {
-      var dd = document.querySelector('.nav-dropdown');
-      var trigger = dd && dd.querySelector('span');
-      if (!dd || !trigger) return;
-      trigger.addEventListener('click', function () { dd.classList.toggle('is-open'); });
-      document.addEventListener('click', function (e) { if (!dd.contains(e.target)) dd.classList.remove('is-open'); });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dd.classList.remove('is-open'); });
-    })();
-  </script>
 </body>
 </html>

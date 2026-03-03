@@ -1,8 +1,138 @@
+/* Parent-Friendly Light Palette */
+:root {
+  /* Warm, approachable colors */
+  --bg: #fefdfb;              /* Warm white background */
+  --card: #ffffff;            /* Card backgrounds */
+  --card-warm: #fdf8f5;       /* Warm card background */
+  --text: #1a1a1a;            /* Soft black text */
+  --text-muted: #6b6b6b;      /* Warm gray for secondary text */
+  --text-subtle: #9ca3af;     /* Light gray for labels */
+  --accent: #e85d3e;          /* Warm coral/orange accent */
+  --accent-soft: #fff5f2;     /* Light accent background */
+  --accent-green: #22c55e;    /* Success green */
+  --accent-blue: #3b82f6;     /* Info blue */
+  --border: #e5e0db;          /* Warm border */
+  --shadow: rgba(0, 0, 0, 0.06);
+  --shadow-accent: rgba(232, 93, 62, 0.12);
+}
+
 .app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   background: var(--bg);
+}
+
+/* Game Mode - Hide header, full immersion */
+.app.game-mode {
+  background: var(--card-warm);
+}
+
+.app.game-mode .app-main {
+  padding: 0;
+  max-width: 100%;
+}
+
+/* Mode Selector - Parent-friendly styling */
+.mode-selector {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+}
+
+.mode-selector-content {
+  text-align: center;
+  max-width: 500px;
+}
+
+.mode-selector-title {
+  font-size: 2.5rem;
+  color: var(--accent);
+  margin-bottom: 2rem;
+  font-weight: 800;
+}
+
+.mode-selector-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.mode-card {
+  background: var(--card);
+  border: 3px solid var(--border);
+  border-radius: 24px;
+  padding: 2rem 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.mode-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px var(--shadow-accent);
+}
+
+.mode-4yo:hover {
+  border-color: var(--accent-green);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.15);
+}
+
+.mode-5-6:hover {
+  border-color: var(--accent-blue);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+}
+
+.mode-emoji {
+  font-size: 5rem;
+}
+
+.mode-label {
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.mode-desc {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.mode-icons {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Mode switcher button in header */
+.mode-switcher {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: all 0.2s ease;
+}
+
+.mode-switcher:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px var(--shadow-accent);
 }
 
 .app-header {
@@ -30,7 +160,7 @@
 
 .brand-tagline {
   font-size: 0.75rem;
-  color: var(--muted);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -43,7 +173,7 @@
 .nav button {
   background: transparent;
   border: 2px solid var(--border);
-  color: var(--muted);
+  color: var(--text-muted);
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   cursor: pointer;
@@ -73,7 +203,7 @@
   border-top: 1px solid var(--border);
   padding: 1.5rem;
   text-align: center;
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 0.875rem;
 }
 
@@ -101,7 +231,7 @@
 .reset-btn {
   background: transparent;
   border: 1px solid var(--border);
-  color: var(--muted);
+  color: var(--text-muted);
   padding: 0.5rem 1rem;
   border-radius: 6px;
   cursor: pointer;
@@ -114,7 +244,7 @@
 }
 
 .lesson-plan-header .description {
-  color: var(--muted);
+  color: var(--text-muted);
   margin-bottom: 1rem;
   font-size: 1.1rem;
 }
@@ -131,7 +261,7 @@
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.875rem;
-  color: var(--muted);
+  color: var(--text-muted);
   font-weight: 500;
 }
 
@@ -163,7 +293,7 @@
 
 .stat-label {
   font-size: 0.875rem;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 .lessons-section {
@@ -238,7 +368,7 @@
 }
 
 .lesson-card.locked .lesson-number {
-  background: var(--muted);
+  background: var(--text-muted);
 }
 
 .mastery-stars {
@@ -251,7 +381,7 @@
 }
 
 .lesson-content .duration {
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 0.9rem;
   margin-bottom: 0.75rem;
 }
@@ -267,7 +397,7 @@
   padding: 0.4rem 0.8rem;
   border-radius: 4px;
   font-size: 0.8rem;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 .special-note {
@@ -304,7 +434,7 @@
 }
 
 .start-btn:disabled {
-  background: var(--muted);
+  background: var(--text-muted);
   cursor: not-allowed;
   box-shadow: none;
 }
@@ -335,7 +465,7 @@
 }
 
 .kaizen-footer cite {
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 /* Lesson View Styles */
@@ -355,7 +485,7 @@
   align-self: flex-start;
   background: transparent;
   border: 2px solid var(--border);
-  color: var(--muted);
+  color: var(--text-muted);
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   cursor: pointer;
@@ -387,7 +517,7 @@
 
 .challenge-indicator {
   text-align: center;
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -469,7 +599,7 @@
 .word-sound {
   display: block;
   font-size: 0.875rem;
-  color: var(--muted);
+  color: var(--text-muted);
   margin-top: 0.5rem;
 }
 
@@ -533,7 +663,7 @@
 .item-label {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--fg);
+  color: var(--text);
 }
 
 .hint {
@@ -594,7 +724,7 @@
 }
 
 .trace-instruction {
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 1rem;
 }
 
@@ -718,7 +848,7 @@
 .lesson-footer {
   display: flex;
   justify-content: space-between;
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 1rem;
   font-weight: 500;
 }
@@ -781,7 +911,7 @@
 
 .progress-label {
   font-size: 0.75rem;
-  color: var(--muted);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -814,7 +944,7 @@
 
 .stat-card .stat-label {
   font-size: 0.875rem;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 /* Achievements */
@@ -861,7 +991,7 @@
 
 .achievement-card p {
   font-size: 0.875rem;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 /* Skills */
@@ -951,7 +1081,7 @@
 
 .breakdown-meta {
   font-size: 0.875rem;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 .breakdown-bar {
@@ -986,7 +1116,7 @@
 
 .kaizen-section cite {
   display: block;
-  color: var(--muted);
+  color: var(--text-muted);
   margin-bottom: 2rem;
 }
 
@@ -1017,7 +1147,7 @@
 
 .principle p {
   font-size: 0.875rem;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 /* Additional Challenge Styles */
@@ -1177,7 +1307,7 @@
 .counting-label {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--fg);
+  color: var(--text);
 }
 
 /* Trace Challenge Updates */
@@ -1234,7 +1364,7 @@
 
 .trace-instruction-large {
   font-size: 1.25rem;
-  color: var(--muted);
+  color: var(--text-muted);
   text-align: center;
 }
 
@@ -1723,7 +1853,7 @@ a:focus-visible {
   background: var(--card);
   border: 2px solid var(--border);
   border-radius: 12px;
-  color: var(--fg);
+  color: var(--text);
   cursor: pointer;
   transition: all 0.2s;
   min-width: 70px;
@@ -2038,7 +2168,7 @@ a:focus-visible {
   gap: 0.5rem;
   padding: 1rem;
   font-size: 1rem;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 .kid-footer-icon {
@@ -2066,14 +2196,14 @@ a:focus-visible {
   padding: 0.5rem 1rem;
   background: transparent;
   border: 1px solid var(--border);
-  color: var(--muted);
+  color: var(--text-muted);
   border-radius: 6px;
   cursor: pointer;
 }
 
 .teacher-stats {
   font-size: 0.75rem;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 /* Hide complex text for kids */
@@ -2194,7 +2324,7 @@ a:focus-visible {
 
 .exit-no {
   background: var(--border);
-  color: var(--fg);
+  color: var(--text);
   border: none;
 }
 
@@ -2259,7 +2389,7 @@ a:focus-visible {
 
 .waiting-indicator {
   font-size: 2rem;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 .waiting-indicator .dot {
@@ -2303,7 +2433,7 @@ a:focus-visible {
 .sound-text {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--fg);
+  color: var(--text);
   margin-top: 1rem;
 }
 
@@ -2353,7 +2483,7 @@ a:focus-visible {
 .simple-find-item .item-label {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--fg);
+  color: var(--text);
   margin-top: 0.5rem;
 }
 
@@ -2605,12 +2735,12 @@ a:focus-visible {
 .mode-label {
   font-size: 1.75rem;
   font-weight: 800;
-  color: var(--fg);
+  color: var(--text);
 }
 
 .mode-desc {
   font-size: 1rem;
-  color: var(--muted);
+  color: var(--text-muted);
   margin-bottom: 0.5rem;
 }
 
@@ -2622,7 +2752,7 @@ a:focus-visible {
 
 .mode-hint {
   font-size: 0.75rem;
-  color: var(--muted);
+  color: var(--text-muted);
   opacity: 0.7;
   padding: 1rem;
 }
