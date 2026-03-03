@@ -1,168 +1,109 @@
 ---
 title: "Zen and the Art of Vibe Coding"
-subtitle: "Mindfulness in the age of infinite leverage"
+subtitle: "Managing the bipolarity of infinite leverage"
 date: 2026-03-03
 category: lab-notes
-topics: [vibe-coding, mindfulness, productivity, burnout-prevention, workflow-design]
+topics: [vibe-coding, productivity, leverage, workflow]
 ---
 
 # Zen and the Art of Vibe Coding
 
-Vibe-coding delivers leverage previous generations couldn't imagine. A single developer with Claude Code can produce what required teams six months ago. The output is intoxicating. So is the anxiety.
+There's a new mental state emerging from vibe-coding: the bipolarity of infinite leverage. On one pole: the intoxicating realization that you can build anything—products that used to require teams now flow from a single prompt. On the other: the crippling feeling that you're not doing enough, that every moment not producing is wasted, that the opportunity cost of your attention has become infinite.
 
-This is the new bipolarity: the oscillation between "I can build anything" and "I'm not doing enough." Every moment becomes opportunity cost. Sleep feels like waste. Social situations feel like inefficiency. The leverage is so extreme that *not* producing feels like failure.
+These two go hand-in-hand. The more you can do, the more you feel you should be doing. Every moment becomes productive potential. Every idle second feels like failure.
 
-We've seen this before. Presidents and CEOs age visibly because the job never ends—every decision, every opportunity, every crisis arrives continuously. The before-and-after photos of Obama or Trump (first term) show what sustained high-leverage pressure does to a human. Vibe-coding democratizes that pressure. You don't need to be president to feel like the world depends on your output.
+This isn't unique to vibe-coding. Anyone who accumulates capital, anyone in a particularly productive phase, anyone with high leverage experiences this. It's probably why presidents and CEOs age so visibly. Look at Obama before and after office—eight years of gray hair and etched lines. For comparison, look at Trump's first term. The stress shows. High leverage extracts a physical toll when you can't shut it off.
 
-## The Problem
-
-The tools create infinite capacity. Your mind doesn't.
-
-Claude Code, Codex, Replit Agent—these extend what you can build beyond what you can mentally track. You start ten projects. You finish none. You're always in the middle of something, always switching context, always feeling the pull of what you haven't done.
-
-The psychological pain point isn't workload. It's *unclosed loops*. Vibe-coding opens loops faster than you can close them. Every "just generate this" creates a new thread in your mind. Without boundaries, you drown in possibility.
+The question is how to manage the leverage without being consumed by it.
 
 ## The System
 
-I've developed a workflow specifically to counter this. Not to maximize output—to keep output sustainable. The goal is mindfulness *through* productivity, not despite it.
+I've developed a specific workflow for this. Four rules. No fluff.
 
-### Rule 1: Build Major Projects at the Computer
+### 1. Build Major Projects at the Computer
 
-There's a difference between ideation and construction. Vibe-coding blurs them—you can "just try something" in seconds. This creates fragmentation.
+Major work happens at the workstation. Full stop. Not on your phone while waiting in line. Not sketching ideas in a note app. When you're building, you're at the computer with full context.
 
-Major projects—Flow Education, StoryBook Studio, Lab infrastructure—get built at the computer. Full stop. Not sketched on phones. Not pondered during walks. When I'm at the workstation, I'm building. When I'm away, I'm not.
+This prevents fragmentation. Vibe-coding makes it tempting to "just try something" anywhere, anytime. That opens mental loops you can't close until you're back at the desk. Build at the computer. Think away from it.
 
-This seems obvious but the temptation is constant. "I'll just generate the scaffold on my phone while waiting for coffee." No. That opens a loop you can't close until you're back at the desk. The cognitive residue accumulates.
+### 2. Assign Screens to Projects
 
-### Rule 2: Assign Projects to Screens
+I run four screens. Each screen gets a specific project:
 
-I run four screens. Each has a specific project or project type:
+- **Screen 1:** Flow Education (React app, curriculum, student interface)
+- **Screen 2:** StoryBook Studio (marketing, content, business operations)
+- **Screen 3:** Lab Notes (articles, skills, writing)
+- **Screen 4:** Infrastructure/Experiments (API testing, model evaluation, prototyping)
 
-| Screen | Project/Type | Context |
-|--------|--------------|---------|
-| 1 | Flow Education | Active development, React app, curriculum |
-| 2 | StoryBook Studio | Marketing, content, business logic |
-| 3 | Lab Notes | Writing, skills, articles |
-| 4 | Infrastructure/Exploration | API testing, model evaluation, experiments |
+I'm not talking about specific computers—though I prefer 1:1 screen-to-computer parity when possible. I'm talking about visual space. Each project occupies a specific physical screen. No mixing. No tab drift.
 
-The screens don't mix. When I'm on Screen 1, I'm not checking email or Slack. I'm not tab-switching to research. The visual boundary reinforces mental boundaries.
+When you're on Screen 1, you're building Flow Education. You're not checking Slack. You're not "just looking something up." The screen enforces the boundary.
 
-I prefer 1:1 screen-to-computer parity when possible—each screen connected to its own machine. This prevents the "just real quick" drift. Changing machines is friction. Friction is protection.
+### 3. Away from Computer: Conversational and Joyful
 
-### Rule 3: Away-From-Computer Work Is Conversational
+When you're not at the workstation, focus on things that can be conversational and give you joy:
 
-When I'm not at the workstation, I work on things that can be conversational and joyful. This includes:
+- **Research** — Reading documentation, papers, watching talks
+- **Writing** — Articles, thinking-in-public, project notes
+- **Planning** — Thinking about future directions, exciting possibilities
 
-- **Research** — reading documentation, browsing papers, watching talks
-- **Writing** — articles, project notes, thinking-in-public posts
-- **Conversation** — discussing projects with humans, getting feedback, ideating
+These are inputs, not outputs. They don't require the deep focus of coding. They can happen while walking, in transit, during downtime. They refill rather than deplete.
 
-The key: these are *absorbable* activities. I can do them while walking, waiting, in social situations. They don't require the deep focus that coding demands. They also don't create unclosed loops—they're inputs, not works-in-progress.
+The key: these are things you're excited to look forward to. Research on a project you genuinely want to build. Writing about ideas that energize you. Not maintenance. Not obligation. Joy.
 
-### Rule 4: Phone Work by Activity Type
+### 4. Phone by Activity Type
 
-I split phone-based work by context:
+Split phone-based work by context:
 
 - **Walking:** Research, reading, audio consumption
-- **Social situations (downtime):** Note-taking, quick replies, status checks
+- **Social situations:** Only things that don't distract from the humans present—quick notes, status checks, nothing that pulls you out of the conversation
 - **Transit:** Writing drafts, reviewing, low-stakes communication
 
-The rule is strict: if the activity would distract from the social situation, I don't do it. If someone is talking to me, the phone is away. The point isn't to fill every moment with productivity. It's to match the work to the available attention.
+Match the tool to the context. Don't let high-leverage capability leak into situations where it becomes anti-social or fragmenting.
 
-This prevents the "always building" feeling from leaking into human relationships. The people around you can tell when you're mentally elsewhere. They resent it. You feel guilty. Everyone loses.
+### 5. The Two-Hour Disconnect
 
-### Rule 5: The Two-Hour Disconnect
+Every day: two hours completely away from machines. Phone included. At minimum, Do Not Disturb mode. Ideally, the phone stays behind.
 
-This is the most important rule and the hardest to execute.
+This isn't optional. The preparation matters—before disconnecting, wrap up tasks for your desktop agents so they can run uninterrupted while you're gone. Queue the long builds. Set the tests running. Document where you left off so you can resume without mental reconstruction.
 
-Every day, two hours completely away from machines. Phone in Do Not Disturb. No screens. No agents. No "just checking."
+Then leave. The agents work without you. You recover without them.
 
-The preparation matters. Before disconnecting, I wrap up active agent tasks:
-- Queue long-running tests or builds
-- Set clear next-steps for any in-flight coding sessions
-- Document where I left off so I can resume without reconstruction
+## Why This Matters
 
-The agents work while I'm gone. I don't. This creates genuine separation—you're not abandoning work, you're allowing it to continue without you.
+The leverage of vibe-coding is real. So is the psychological cost. Without boundaries, you end up like the aging president—every moment productive potential, every idle second opportunity cost, the stress compounding visibly.
 
-## Why This Works
+The system creates:
+- **Boundaries:** Screens and locations enforce context
+- **Closed loops:** Projects get built at the computer, completed or deliberately paused; away-work is input, not hanging threads
+- **Recovery:** The two-hour disconnect is non-negotiable. Agents queue. You leave.
 
-The system creates three necessary conditions:
-
-**1. Boundaries**
-The screens, the computer-per-screen parity, the activity-matching—these create hard edges between contexts. You know where you are and what you're doing. The cognitive cost of switching drops.
-
-**2. Closed Loops**
-Major projects happen at the workstation, with full context. They get completed or deliberately paused. Away-from-computer work is input, not output—it doesn't create hanging threads.
-
-**3. Recovery**
-The two-hour disconnect is non-negotiable. It's when pattern-matching happens, when your brain integrates what you've built. Skip it and the next day's output suffers. The leverage compounds downward.
-
-## The Obama/Trump Comparison
-
-Presidents age because they're always on. Every decision feels existential. Every moment holds opportunity cost.
-
-Vibe-coding creates similar dynamics at individual scale. You *could* be building. You *could* be shipping. The tools make it possible. The mind makes it painful.
-
-Obama's graying hair, Trump's first-term physical deterioration—these aren't just aging. They're the physical manifestation of sustained high-leverage stress. When you can affect outcomes continuously, you never stop trying to.
-
-The difference: you can design your workflow. Presidents can't. You can enforce the two-hour disconnect. They can't. You can assign projects to screens and refuse context-switching. They receive intelligence, diplomacy, domestic policy, crisis management—all simultaneously.
-
-Your advantage is agency. Use it.
-
-## Anti-Patterns to Avoid
-
-I've violated every rule above. Here's what happens:
-
-- **Phone coding in bed:** Sleep quality drops, next-day focus fragments, output becomes buggy
-- **Skipping the disconnect:** Two days of "productivity" followed by a day of staring at screens without output
-- **Mixed screens:** Endless tab-switching, nothing ships, feeling of chaos
-- **Conversational work at the computer:** Friends feel ignored, work feels shallow, guilt accumulates
-
-The system isn't about maximizing output. It's about making output sustainable. You can't vibe-code effectively if you're vibrating with anxiety.
-
-## The Bottom Line
-
-Vibe-coding's leverage is real. So is its psychological cost. The solution isn't less building—it's *structured* building. Boundaries, closed loops, and mandatory recovery.
-
-Build major projects at the computer. Assign them to screens. Do conversational work away from the workstation. Match phone work to activity type. Take two hours completely off, every day, with agents queued to work without you.
-
-The goal isn't productivity. It's sustainable productivity. The kind that doesn't end with a before-and-after photo showing what leverage did to your mind.
+Obama couldn't design his way out of presidential stress. You can. The screens, the activity-matching, the mandatory disconnect—these are design choices. Use them.
 
 ---
 
-## Daily Checklist
+## Daily Practice
 
-**Morning setup:**
-- [ ] Review screen assignments
-- [ ] Clear any overnight agent completions
-- [ ] Set today's primary project per screen
-
-**During work:**
-- [ ] Major coding only at workstation
-- [ ] No phone coding except designated contexts
-- [ ] Screen boundaries respected (no tab drift)
+**At the computer:**
+- [ ] Major projects only
+- [ ] Screen 1 = Flow Education, Screen 2 = StoryBook, Screen 3 = Lab, Screen 4 = Infrastructure
+- [ ] No tab drift. No "just checking."
 
 **Away from computer:**
-- [ ] Conversational work only (research, writing, discussion)
-- [ ] Phone matched to activity type
-- [ ] Social situations get full presence
+- [ ] Conversational work only (research, writing, planning)
+- [ ] Joyful inputs, not obligation
+- [ ] No coding. No generation.
+
+**Phone:**
+- [ ] Matched to activity (walking = research, social = notes only, transit = drafts)
+- [ ] Never distracts from present humans
 
 **Before disconnect:**
 - [ ] Queue agent tasks for 2-hour window
-- [ ] Document where each project stands
-- [ ] Set DND, leave devices behind
+- [ ] Document project states
+- [ ] Set DND. Leave devices.
 
 **During disconnect:**
 - [ ] No screens
 - [ ] No agents
-- [ ] No "just checking"
-
----
-
-## Notes
-
-This workflow developed through iteration while building Flow Education (4 rebuilds, 4 environments) and StoryBook Studio. The psychological pressure of vibe-coding became apparent before the technical challenges did. The system is a response to that pressure, not an optimization for output volume.
-
-Physical setup: 4 screens, prefer 1:1 screen-to-computer ratio, various environments (Google AI Studio, Replit, Claude Code, Codex) assigned to specific contexts.
-
-The two-hour disconnect is the newest addition and the most impactful. Days without it produce more commits but lower quality. Days with it produce fewer commits but cleaner architecture. Net output favors the constrained approach.
+- [ ] Two hours minimum
