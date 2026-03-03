@@ -24,12 +24,20 @@ const CHALLENGE_DURATIONS = {
 const createSimpleChallenges = (lesson) => {
   const letter = lesson.title.match(/Letter (.)/)?.[1] || 'A'
   const isNumberLesson = lesson.title.includes('Number')
-  
+
   // Get just ONE target word for 4YO (not 5)
   const targetWord = lesson.targetWords?.[0] || 'Apple'
+  // Use lesson-specific distractors instead of always Ball/Cat
   const distractorWords = isNumberLesson
     ? ['Apple', 'Ball']
     : (lesson.distractors || ['Ball', 'Cat']).slice(0, 2)
+  // Ensure distractors don't include the target word
+  const filteredDistractors = distractorWords.filter(w => w.toLowerCase() !== targetWord.toLowerCase())
+  // Pad back to 2 if we filtered one out
+  const fallbacks = ['Dog', 'Ball', 'Cat', 'Cup'].filter(w => w !== targetWord && !filteredDistractors.includes(w))
+  while (filteredDistractors.length < 2 && fallbacks.length > 0) {
+    filteredDistractors.push(fallbacks.shift())
+  }
 
   return [
     {
@@ -56,7 +64,7 @@ const createSimpleChallenges = (lesson) => {
       content: {
         targetWord: isNumberLesson ? 'Apple' : targetWord,
         targetLabel: isNumberLesson ? 'one' : targetWord,
-        distractorWords,
+        distractorWords: filteredDistractors,
         instruction: isNumberLesson ? 'Tap ONE!' : `Tap ${targetWord}!`,
         autoCorrectAfter: 2
       }
@@ -94,6 +102,18 @@ const getPhoneticSound = (letter) => {
 const BASE = import.meta.env.BASE_URL
 const getObjectImage = (word) => `${BASE}assets/objects/obj-${word.toLowerCase()}.png`
 const getTutorImage = (state) => `${BASE}assets/characters/char-tutor-${state}.png`
+const getBackgroundImage = (bgName) => `${BASE}assets/backgrounds/${bgName}.png`
+
+// Map lesson to background
+const getLessonBackground = (lesson) => {
+  const letter = lesson.title.match(/Letter (.)/)?.[1]
+  const bgMap = {
+    'A': 'bg-classroom', 'B': 'bg-nature-outdoors', 'C': 'bg-kitchen',
+    'D': 'bg-prehistoric', 'E': 'bg-savanna'
+  }
+  if (lesson.isNumberLesson || lesson.title.includes('Number')) return 'bg-counting-garden'
+  return bgMap[letter] || 'bg-classroom'
+}
 
 function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
   // Safety check - ensure lesson is valid
@@ -230,7 +250,7 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
   
   // Render challenge
   const renderChallenge = () => {
-    if (!currentChallenge) {
+    if (!currentChallenge || !currentChallenge.content) {
       return <div className="simple-challenge">Loading...</div>
     }
     const { type, content } = currentChallenge
@@ -239,7 +259,7 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
       case CHALLENGE_TYPES.INTRO:
         return (
           <div className="simple-challenge intro">
-            <img className="tutor-big" src={getTutorImage('happy')} alt="Friendly tutor" style={{ animation: 'bounce 1s infinite' }} />
+            <img className="tutor-big" src={getTutorImage('waving')} alt="Friendly tutor" style={{ animation: 'bounce 1s infinite' }} />
             <div className="big-message">{content.message}</div>
             <div className="waiting-indicator">
               <span className="dot">•</span>
@@ -381,7 +401,14 @@ function SimpleLessonView({ lesson, lessonPlan, onComplete, onExit }) {
   }
   
   return (
-    <div className="simple-lesson-view">
+    <div
+      className="simple-lesson-view"
+      style={{
+        backgroundImage: `linear-gradient(rgba(9,9,11,0.78), rgba(9,9,11,0.88)), url(${getBackgroundImage(getLessonBackground(lesson))})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
       {/* Parental exit button (hidden, requires 3s hold) */}
       <button 
         className="parent-exit-btn"

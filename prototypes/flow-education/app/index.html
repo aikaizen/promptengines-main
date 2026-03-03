@@ -28,9 +28,14 @@
       
       * {
         box-sizing: border-box;
-        -webkit-tap-highlight-color: transparent;
       }
-      
+
+      /* Make every interactive element respond instantly to touch */
+      button, a, [role="button"], input, select, textarea, [onclick] {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(240, 77, 38, 0.25);
+      }
+
       /* App container - always visible */
       #root {
         min-height: 100vh;
