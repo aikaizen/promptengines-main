@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prototypes — Prompt Engines</title>
-  <meta name="description" content="Prompt Engines prototypes — experiments that graduate to experiments and eventually to standalone apps.">
+  <title>Careers — Prompt Engines</title>
+  <meta name="description" content="Join Prompt Engines — an applied AI lab of humans and agents building practical software.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230b1220'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='52' fill='%23f17a4a'%3EPE%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -124,9 +124,7 @@
     .nav-links a.is-active { color: var(--accent); }
 
     /* ═══ NAV DROPDOWN ═══ */
-    .nav-dropdown {
-      position: relative;
-    }
+    .nav-dropdown { position: relative; }
 
     .nav-dropdown-trigger {
       cursor: pointer;
@@ -139,8 +137,7 @@
     .nav-dropdown-trigger::after {
       content: '';
       display: inline-block;
-      width: 0;
-      height: 0;
+      width: 0; height: 0;
       border-left: 3.5px solid transparent;
       border-right: 3.5px solid transparent;
       border-top: 4px solid currentColor;
@@ -148,9 +145,7 @@
       margin-top: 1px;
     }
 
-    .nav-dropdown.is-open .nav-dropdown-trigger::after {
-      transform: rotate(180deg);
-    }
+    .nav-dropdown.is-open .nav-dropdown-trigger::after { transform: rotate(180deg); }
 
     .nav-dropdown-menu {
       position: absolute;
@@ -170,9 +165,7 @@
     }
 
     .nav-dropdown.is-open .nav-dropdown-menu {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
+      opacity: 1; visibility: visible; transform: translateY(0);
     }
 
     .nav-dropdown-menu a {
@@ -190,41 +183,11 @@
       transition: background 0.15s ease, color 0.15s ease;
     }
 
-    .nav-dropdown-menu a:hover {
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
+    .nav-dropdown-menu a:hover { background: var(--accent-soft); color: var(--accent); }
+    .nav-dropdown-menu a .dd-tag { font-size: 9px; opacity: 0.5; letter-spacing: 0.05em; }
 
-    .nav-dropdown-menu a .dd-tag {
-      font-size: 9px;
-      opacity: 0.5;
-      letter-spacing: 0.05em;
-    }
-
-    .nav-dropdown-menu a:not([href]) {
-      opacity: 0.5;
-      cursor: default;
-    }
-
-    .nav-dropdown-menu a:not([href]):hover {
-      background: transparent;
-      color: var(--muted);
-    }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.25s ease;
-    }
-
-    .back-link:hover { color: var(--accent); }
+    .nav-dropdown-menu a:not([href]) { opacity: 0.5; cursor: default; }
+    .nav-dropdown-menu a:not([href]):hover { background: transparent; color: var(--muted); }
 
     /* ═══ PAGE HERO ═══ */
     .page-hero {
@@ -255,228 +218,93 @@
       font-size: clamp(16px, 2vw, 19px);
     }
 
-    /* ═══ GRADUATION PIPELINE ═══ */
-    .pipeline {
-      padding: 0 0 64px;
+    /* ═══ CAREERS CONTENT ═══ */
+    .careers-section {
+      padding: 48px 0 64px;
     }
 
-    .pipeline-track {
-      display: flex;
-      align-items: stretch;
-      gap: 0;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      overflow: hidden;
-      background: linear-gradient(160deg, rgba(22, 34, 56, 0.6), rgba(13, 21, 35, 0.5));
-    }
-
-    .pipeline-stage {
-      flex: 1;
-      padding: 20px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      position: relative;
-    }
-
-    .pipeline-stage + .pipeline-stage {
-      border-left: 1px solid var(--line);
-    }
-
-    .pipeline-stage::after {
-      content: "\2192";
-      position: absolute;
-      right: -10px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-      font-size: 16px;
-      z-index: 1;
-      background: var(--panel);
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--line);
-    }
-
-    .pipeline-stage:last-child::after {
-      display: none;
-    }
-
-    .stage-label {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-    }
-
-    .stage-name {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 18px;
-      letter-spacing: -0.02em;
-    }
-
-    .stage-desc {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.35;
-    }
-
-    .stage-active .stage-name { color: var(--signal); }
-    .stage-experiment .stage-name { color: #60a5fa; }
-    .stage-graduated .stage-name { color: #c084fc; }
-
-    .stage-active { background: rgba(93, 217, 184, 0.06); }
-
-    /* ═══ SECTION HEADERS ═══ */
-    .section-head {
-      margin-bottom: 24px;
-    }
-
-    .section-tag {
-      color: var(--signal);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 10px;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(26px, 4vw, 42px);
-      letter-spacing: -0.03em;
-      line-height: 0.98;
-      margin-bottom: 8px;
-    }
-
-    /* ═══ PROTOTYPE CARDS ═══ */
-    .proto-section {
-      padding: 48px 0;
-      border-top: 1px solid rgba(42, 59, 89, 0.55);
-    }
-
-    .proto-grid {
+    .careers-grid {
       display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 18px;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      margin-bottom: 32px;
     }
 
-    .proto-card {
+    .career-card {
       border: 1px solid var(--line);
       border-radius: 14px;
-      text-decoration: none;
-      color: inherit;
+      padding: 28px;
       background: linear-gradient(150deg, rgba(27, 42, 67, 0.58), rgba(18, 30, 50, 0.45));
-      transition: border-color 0.22s ease, transform 0.18s ease, box-shadow 0.22s ease;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
     }
 
-    a.proto-card:hover {
-      border-color: rgba(241, 122, 74, 0.52);
-      transform: translateY(-3px);
-      box-shadow: 0 16px 42px rgba(9, 14, 25, 0.36);
-    }
-
-    div.proto-card:hover {
-      transform: none;
-      border-color: var(--line);
-      box-shadow: none;
-      cursor: default;
-    }
-
-    .proto-card-head {
-      padding: 20px 20px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    .proto-card-name {
+    .career-card h3 {
       font-family: var(--font-display);
       font-size: 20px;
       font-weight: 700;
-      color: var(--text);
       letter-spacing: -0.02em;
+      margin-bottom: 10px;
     }
 
-    .proto-card-body {
-      padding: 12px 20px 20px;
-      flex: 1;
-    }
-
-    .proto-card-body p {
+    .career-card p {
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.45;
+      font-size: 15px;
+      line-height: 1.55;
     }
 
-    .proto-card-footer {
-      padding: 14px 20px;
-      border-top: 1px solid rgba(42, 59, 89, 0.4);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+    .cta-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 32px;
+      background: linear-gradient(150deg, rgba(27, 42, 67, 0.58), rgba(18, 30, 50, 0.45));
+      text-align: center;
     }
 
-    .status-badge {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      padding: 4px 10px;
-      border-radius: 5px;
-      font-weight: 600;
-    }
-
-    .status-prototype {
-      background: rgba(93, 217, 184, 0.15);
-      color: #5dd9b8;
-    }
-
-    .status-experiment {
-      background: rgba(96, 165, 250, 0.15);
-      color: #60a5fa;
-    }
-
-    .status-graduated {
-      background: rgba(192, 132, 252, 0.15);
-      color: #c084fc;
-    }
-
-    .meta-tag {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    .cta-card p {
       color: var(--muted);
-      background: rgba(42, 59, 89, 0.3);
-      padding: 4px 10px;
-      border-radius: 5px;
+      font-size: 17px;
+      line-height: 1.55;
+      max-width: 52ch;
+      margin: 0 auto 18px;
     }
 
-    .proto-card-arrow {
+    .cta-card .email {
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 16px;
       color: var(--accent);
-      margin-left: auto;
-      opacity: 0;
-      transform: translateX(-4px);
-      transition: opacity 0.2s ease, transform 0.2s ease;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(241, 122, 74, 0.4);
+      transition: border-color 0.2s ease;
     }
 
-    .proto-card:hover .proto-card-arrow {
-      opacity: 1;
-      transform: translateX(0);
+    .cta-card .email:hover {
+      border-color: var(--accent);
+    }
+
+    .btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 12px;
+      padding: 13px 22px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      transition: transform 0.18s ease, border-color 0.22s ease, background 0.22s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #121212;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
     }
 
     /* ═══ FOOTER ═══ */
@@ -528,27 +356,14 @@
         right: auto;
       }
 
-      .pipeline-track {
-        flex-direction: column;
-      }
-
-      .pipeline-stage + .pipeline-stage {
-        border-left: none;
-        border-top: 1px solid var(--line);
-      }
-
-      .pipeline-stage::after {
-        display: none;
+      .careers-grid {
+        grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 680px) {
       .container {
         width: min(1000px, calc(100% - 32px));
-      }
-
-      .proto-grid {
-        grid-template-columns: 1fr;
       }
 
       .page-hero {
@@ -575,8 +390,8 @@
               <a>Norbu <span class="dd-tag">Coming Soon</span></a>
             </div>
           </li>
-          <li><a href="/prototypes/" class="is-active">Prototypes</a></li>
-          <li><a href="/careers/">Careers</a></li>
+          <li><a href="/prototypes/">Prototypes</a></li>
+          <li><a href="/careers/" class="is-active">Careers</a></li>
           <li><a href="https://consulting.promptengines.com" target="_blank" rel="noopener noreferrer">Consulting</a></li>
           <li><a href="/contact/">Contact Us</a></li>
         </ul>
@@ -585,97 +400,32 @@
 
     <header class="page-hero">
       <div class="container">
-        <div class="eyebrow">Build Pipeline</div>
-        <h1>Prototypes</h1>
+        <div class="eyebrow">Join the lab</div>
+        <h1>Careers</h1>
         <p>
-          Rough, experimental builds proving concepts. When a prototype shows traction, it graduates to an experiment with its own subdomain.
+          We don't have a hiring page with dropdowns and cover letter fields. We have an inbox.
         </p>
       </div>
     </header>
 
-    <div class="pipeline">
+    <section class="careers-section">
       <div class="container">
-        <div class="pipeline-track">
-          <div class="pipeline-stage stage-active">
-            <span class="stage-label">Stage 1</span>
-            <span class="stage-name">Prototype</span>
-            <span class="stage-desc">Lives at /prototypes. Rough, proving concepts.</span>
+        <div class="careers-grid">
+          <div class="career-card">
+            <h3>General Application</h3>
+            <p>You've built things. You ship fast. You care about craft. Send us what you've made — repos, projects, writing, prototypes. We'll read it all.</p>
           </div>
-          <div class="pipeline-stage stage-experiment">
-            <span class="stage-label">Stage 2</span>
-            <span class="stage-name">Experiment</span>
-            <span class="stage-desc">Gets a subdomain. Shows promise, has users.</span>
-          </div>
-          <div class="pipeline-stage stage-graduated">
-            <span class="stage-label">Stage 3</span>
-            <span class="stage-name">Graduated App</span>
-            <span class="stage-desc">Own domain. Product-market fit achieved.</span>
+          <div class="career-card">
+            <h3>Propose Your Own Role</h3>
+            <p>If you see a gap we haven't filled, pitch it. Tell us what you'd build, why it matters, and how you'd measure success. We value agency over credentials.</p>
           </div>
         </div>
-      </div>
-    </div>
 
-    <section class="proto-section">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-tag">Active</div>
-          <h2 class="section-title">Prototypes</h2>
-        </div>
-
-        <div class="proto-grid">
-          <div class="proto-card">
-            <div class="proto-card-head">
-              <span class="proto-card-name">Flow Education</span>
-            </div>
-            <div class="proto-card-body">
-              <p>Kindergarten tablet learning system. 60-minute independent engagement. Lesson Plan 001 covers letters A-E and number 1. Tutor-guided, mastery-based.</p>
-            </div>
-            <div class="proto-card-footer">
-              <span class="status-badge status-prototype">Prototype</span>
-              <span class="meta-tag">MVP Phase 0</span>
-              <span class="meta-tag">Lesson Plan 001</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="proto-section">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-tag">Graduated</div>
-          <h2 class="section-title">Experiments</h2>
-        </div>
-
-        <div class="proto-grid">
-          <a class="proto-card" href="https://storybookstudio.promptengines.com" target="_blank" rel="noopener noreferrer">
-            <div class="proto-card-head">
-              <span class="proto-card-name">Storybook Studio</span>
-            </div>
-            <div class="proto-card-body">
-              <p>AI personalized children's storybooks. 34+ art styles. Digital + print. Freemium model with 100 free credits.</p>
-            </div>
-            <div class="proto-card-footer">
-              <span class="status-badge status-experiment">Experiment</span>
-              <span class="meta-tag">Active Development</span>
-              <span class="meta-tag">Pre-Launch</span>
-              <span class="proto-card-arrow">Visit &rarr;</span>
-            </div>
-          </a>
-
-          <a class="proto-card" href="https://kaizen.promptengines.com" target="_blank" rel="noopener noreferrer">
-            <div class="proto-card-head">
-              <span class="proto-card-name">Kaizen</span>
-            </div>
-            <div class="proto-card-body">
-              <p>Educational gaming platform for kids. Numbers, letters, and battles — learn through play with adaptive difficulty.</p>
-            </div>
-            <div class="proto-card-footer">
-              <span class="status-badge status-experiment">Experiment</span>
-              <span class="meta-tag">Active Development</span>
-              <span class="proto-card-arrow">Visit &rarr;</span>
-            </div>
-          </a>
+        <div class="cta-card">
+          <p>Send your profile to either a human or an agent — we are looking for the best of both.</p>
+          <a class="email" href="mailto:promptengines@gmail.com">promptengines@gmail.com</a>
+          <br>
+          <a class="btn btn-primary" href="mailto:promptengines@gmail.com">Get in touch</a>
         </div>
       </div>
     </section>
@@ -694,6 +444,7 @@
       </div>
     </footer>
   </div>
+
   <script>
     (function () {
       var dropdown = document.querySelector('.nav-dropdown');
