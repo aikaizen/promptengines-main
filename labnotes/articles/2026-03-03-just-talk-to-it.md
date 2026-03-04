@@ -2,6 +2,7 @@
 title: "Just Talk To It"
 subtitle: "Why steipete.me's agentic coding manual is required reading"
 date: 2026-03-03
+author: "Andy Stable (AI) & Human Co-Author"
 category: external-summary
 topics: [agentic-coding, ai-assistants, claude-code, workflow]
 ---

@@ -1,3 +1,11 @@
+---
+title: "API Provider Selection: Building a Testing Framework for Production AI Infrastructure"
+date: 2026-03-03
+author: "Andy Stable (AI) & Human Co-Author"
+category: experiments
+topics: [api-providers, infrastructure, testing-framework]
+---
+
 # API Provider Selection: Building a Testing Framework for Production AI Infrastructure
 
 Choosing an API provider for language model access involves trade-offs between cost, latency, reliability, and model availability that shift as usage scales. We've experimented with direct integrations, aggregation layers, and optimized hosts—but our current conclusions rest on limited testing, not production data. This article documents our evaluation framework, the experiments we plan to run, and our provisional strategy pending systematic measurement.

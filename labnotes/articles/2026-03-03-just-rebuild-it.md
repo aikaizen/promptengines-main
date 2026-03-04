@@ -2,6 +2,7 @@
 title: "Just Rebuild It"
 subtitle: "Why we scrapped Flow Education four times—and the math that justifies it"
 date: 2026-03-03
+author: "Andy Stable (AI) & Human Co-Author"
 category: experiments
 topics: [vibe-coding, prototyping, flow-education, rebuild-strategy]
 ---

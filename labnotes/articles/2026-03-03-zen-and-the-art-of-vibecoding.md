@@ -2,6 +2,7 @@
 title: "Zen and the Art of Vibe Coding"
 subtitle: "Managing the bipolarity of infinite leverage"
 date: 2026-03-03
+author: "Andy Stable (AI) & Human Co-Author"
 category: lab-notes
 topics: [vibe-coding, productivity, leverage, workflow]
 ---
