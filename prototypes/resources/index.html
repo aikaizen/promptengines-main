@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources — Prompt Engines Prototypes</title>
+  <meta name="description" content="Essential APIs, tools, and resources for building. Top 10 APIs, hidden gems, and gaps we want to fill.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%2309090b'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='52' fill='%23F04D26'%3EPE%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --fg: #fafafa;
+      --fg-muted: #a1a1aa;
+      --fg-subtle: #52525b;
+      --accent: #F04D26;
+      --accent-soft: rgba(240, 77, 38, 0.15);
+      --accent-glow: rgba(240, 77, 38, 0.25);
+      --border: #27272a;
+      --surface: #18181b;
+      --surface-hover: #27272a;
+      --signal: #22c55e;
+      --signal-soft: rgba(34, 197, 94, 0.15);
+      --warning: #eab308;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', sans-serif;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.03;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+    }
+
+    .site {
+      position: relative;
+      z-index: 2;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    nav {
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(to bottom, var(--bg) 80%, transparent 100%);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      color: var(--fg);
+      text-decoration: none;
+      font-family: var(--sans);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 20px;
+    }
+
+    .brand span { color: var(--accent); }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+      color: var(--fg-muted);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.is-active { color: var(--accent); }
+
+    /* Dropdown */
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-dropdown-trigger {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .nav-dropdown-trigger::after {
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 3.5px solid transparent;
+      border-right: 3.5px solid transparent;
+      border-top: 4px solid currentColor;
+      margin-top: 1px;
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 220px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: all 0.2s ease;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown.is-open .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .nav-dropdown-menu a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-family: var(--sans);
+      font-size: 13px;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .nav-dropdown-menu a:hover {
+      background: var(--surface-hover);
+      color: var(--accent);
+    }
+
+    .dd-tag {
+      font-family: var(--mono);
+      font-size: 9px;
+      padding: 2px 6px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: 4px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--fg) 0%, var(--fg-muted) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-lead {
+      color: var(--fg-muted);
+      font-size: clamp(16px, 2vw, 19px);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Section styling */
+    .section {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header {
+      margin-bottom: 40px;
+    }
+
+    .section-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--fg-subtle);
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .section-desc {
+      color: var(--fg-muted);
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* API Cards */
+    .api-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .api-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.3s var(--ease-out);
+      position: relative;
+    }
+
+    .api-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px var(--accent-soft);
+    }
+
+    .api-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--border);
+      border-radius: 12px 12px 0 0;
+    }
+
+    .api-card.critical::before { background: var(--accent); }
+    .api-card.high::before { background: var(--signal); }
+    .api-card.medium::before { background: var(--warning); }
+
+    .api-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .api-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--fg);
+    }
+
+    .api-rank {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-subtle);
+      background: var(--bg);
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    .api-purpose {
+      color: var(--fg-muted);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .api-meta {
+      display: flex;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .api-tag {
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .tag-critical {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .tag-high {
+      background: var(--signal-soft);
+      color: var(--signal);
+    }
+
+    .tag-medium {
+      background: rgba(234, 179, 8, 0.15);
+      color: var(--warning);
+    }
+
+    /* Gaps section */
+    .gap-card {
+      background: linear-gradient(135deg, rgba(39, 39, 42, 0.5) 0%, var(--surface) 100%);
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .gap-icon {
+      font-size: 24px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      border-radius: 12px;
+    }
+
+    .gap-content h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .gap-content p {
+      color: var(--fg-muted);
+      font-size: 14px;
+    }
+
+    /* Table styling */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 24px;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-table th {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--fg-subtle);
+      font-weight: 500;
+    }
+
+    .comparison-table td {
+      color: var(--fg-muted);
+    }
+
+    .comparison-table tr:hover td {
+      color: var(--fg);
+      background: var(--surface-hover);
+    }
+
+    .tier-badge {
+      display: inline-flex;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      margin-top: 60px;
+      text-align: center;
+      color: var(--fg-subtle);
+      font-size: 14px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .nav-links { gap: 16px; }
+      .nav-dropdown-menu { right: -20px; }
+      .api-grid { grid-template-columns: 1fr; }
+      .hero { padding: 60px 0 40px; }
+      .section { padding: 40px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site">
+    <nav>
+      <div class="container nav-inner">
+        <a class="brand" href="/">Prompt <span>Engines</span></a>
+        <ul class="nav-links">
+          <li><a href="https://lab.promptengines.com">Lab</a></li>
+          <li class="nav-dropdown">
+            <a class="nav-dropdown-trigger">Experiments</a>
+            <div class="nav-dropdown-menu">
+              <a href="https://kaizen.promptengines.com">Kaizen <span class="dd-tag">Kids</span></a>
+              <a href="https://storybookstudio.promptengines.com">Storybook Studio <span class="dd-tag">Creator</span></a>
+            </div>
+          </li>
+          <li class="nav-dropdown">
+            <a class="nav-dropdown-trigger is-active">Prototypes</a>
+            <div class="nav-dropdown-menu">
+              <a href="/prototypes/" class="is-active">Overview</a>
+              <a href="/prototypes/resources/">Resources <span class="dd-tag">APIs</span></a>
+            </div>
+          </li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="container">
+        <div class="eyebrow">Essential Infrastructure</div>
+        <h1>Resources</h1>
+        <p class="hero-lead">
+          APIs, tools, and infrastructure we actually use. 
+          No fluff—just production-grade services that ship.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <!-- Top 10 -->
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-eyebrow">01 — Essentials</div>
+            <h2 class="section-title">Top 10 APIs</h2>
+            <p class="section-desc">
+              From ~400 public APIs reviewed, these are the critical infrastructure pieces.
+              If we had to start with only 10 external services, these would be it.
+            </p>
+          </div>
+
+          <div class="api-grid">
+            <div class="api-card critical">
+              <div class="api-header">
+                <div class="api-name">GitHub API</div>
+                <div class="api-rank">#1</div>
+              </div>
+              <p class="api-purpose">The foundation. Repos, issues, Actions, PRs—everything flows through here.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-critical">Critical</span>
+                <span>DevOps</span>
+              </div>
+            </div>
+
+            <div class="api-card critical">
+              <div class="api-header">
+                <div class="api-name">Auth0</div>
+                <div class="api-rank">#2</div>
+              </div>
+              <p class="api-purpose">Production-grade authentication. Don't build auth yourself.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-critical">Critical</span>
+                <span>Identity</span>
+              </div>
+            </div>
+
+            <div class="api-card high">
+              <div class="api-header">
+                <div class="api-name">VirusTotal</div>
+                <div class="api-rank">#3</div>
+              </div>
+              <p class="api-purpose">File and URL security scanning. Essential for any app accepting uploads.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-high">High</span>
+                <span>Security</span>
+              </div>
+            </div>
+
+            <div class="api-card high">
+              <div class="api-header">
+                <div class="api-name">Nager.Date</div>
+                <div class="api-rank">#4</div>
+              </div>
+              <p class="api-purpose">Public holidays for 90+ countries. Surprisingly essential for scheduling logic.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-high">High</span>
+                <span>Calendar</span>
+              </div>
+            </div>
+
+            <div class="api-card critical">
+              <div class="api-header">
+                <div class="api-name">Storj</div>
+                <div class="api-rank">#5</div>
+              </div>
+              <p class="api-purpose">Decentralized cloud storage. 1TB free, S3-compatible, privacy-first.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-critical">Critical</span>
+                <span>Storage</span>
+              </div>
+            </div>
+
+            <div class="api-card critical">
+              <div class="api-header">
+                <div class="api-name">Mailjet</div>
+                <div class="api-rank">#6</div>
+              </div>
+              <p class="api-purpose">Transactional and marketing email. Reliable delivery infrastructure.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-critical">Critical</span>
+                <span>Email</span>
+              </div>
+            </div>
+
+            <div class="api-card high">
+              <div class="api-header">
+                <div class="api-name">Google Safe Browsing</div>
+                <div class="api-rank">#7</div>
+              </div>
+              <p class="api-purpose">URL threat checking. Validate links before users click them.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-high">High</span>
+                <span>Security</span>
+              </div>
+            </div>
+
+            <div class="api-card high">
+              <div class="api-header">
+                <div class="api-name">IPstack</div>
+                <div class="api-rank">#8</div>
+              </div>
+              <p class="api-purpose">IP geolocation. Fast, accurate location for localization and analytics.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-high">High</span>
+                <span>Geolocation</span>
+              </div>
+            </div>
+
+            <div class="api-card high">
+              <div class="api-header">
+                <div class="api-name">CoinGecko</div>
+                <div class="api-rank">#9</div>
+              </div>
+              <p class="api-purpose">Crypto market data. Most generous free tier in the space.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-high">High</span>
+                <span>Finance</span>
+              </div>
+            </div>
+
+            <div class="api-card high">
+              <div class="api-header">
+                <div class="api-name">Pantry</div>
+                <div class="api-rank">#10</div>
+              </div>
+              <p class="api-purpose">Free JSON storage for prototypes. Zero setup, perfect for MVPs.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-high">High</span>
+                <span>Storage</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hidden Gems -->
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-eyebrow">02 — Worth Knowing</div>
+            <h2 class="section-title">10 More Worth Your Time</h2>
+            <p class="section-desc">
+              Not critical infrastructure, but genuinely useful for specific needs.
+              These fill gaps the top 10 don't cover.
+            </p>
+          </div>
+
+          <div class="api-grid">
+            <div class="api-card high">
+              <div class="api-header">
+                <div class="api-name">Mailboxlayer</div>
+              </div>
+              <p class="api-purpose">Email validation API. Catches typos and reduces bounce rates at signup.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-high">High</span>
+                <span>Validation</span>
+              </div>
+            </div>
+
+            <div class="api-card high">
+              <div class="api-header">
+                <div class="api-name">Numverify</div>
+              </div>
+              <p class="api-purpose">Phone number validation with carrier info. Global coverage.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-high">High</span>
+                <span>Validation</span>
+              </div>
+            </div>
+
+            <div class="api-card high">
+              <div class="api-header">
+                <div class="api-name">Marketstack</div>
+              </div>
+              <p class="api-purpose">Stock market data API. Real-time and historical pricing.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-high">High</span>
+                <span>Finance</span>
+              </div>
+            </div>
+
+            <div class="api-card high">
+              <div class="api-header">
+                <div class="api-name">URLScan.io</div>
+              </div>
+              <p class="api-purpose">Deep URL analysis. Screenshots, certificate info, resource loading.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-high">High</span>
+                <span>Security</span>
+              </div>
+            </div>
+
+            <div class="api-card high">
+              <div class="api-header">
+                <div class="api-name">AbuseIPDB</div>
+              </div>
+              <p class="api-purpose">IP reputation checking. Community-driven abuse detection.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-high">High</span>
+                <span>Security</span>
+              </div>
+            </div>
+
+            <div class="api-card medium">
+              <div class="api-header">
+                <div class="api-name">Web3 Storage</div>
+              </div>
+              <p class="api-purpose">IPFS + Filecoin storage. 1TB free for decentralized apps.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-medium">Medium</span>
+                <span>Web3</span>
+              </div>
+            </div>
+
+            <div class="api-card medium">
+              <div class="api-header">
+                <div class="api-name">Metropolitan Museum</div>
+              </div>
+              <p class="api-purpose">380,000+ art images, public domain. Great for backgrounds, textures.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-medium">Medium</span>
+                <span>Art</span>
+              </div>
+            </div>
+
+            <div class="api-card medium">
+              <div class="api-header">
+                <div class="api-name">Pinata</div>
+              </div>
+              <p class="api-purpose">IPFS pinning service. Fast content delivery for decentralized storage.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-medium">Medium</span>
+                <span>Web3</span>
+              </div>
+            </div>
+
+            <div class="api-card medium">
+              <div class="api-header">
+                <div class="api-name">Gitter</div>
+              </div>
+              <p class="api-purpose">Developer chat API. Good for open source community integrations.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-medium">Medium</span>
+                <span>Chat</span>
+              </div>
+            </div>
+
+            <div class="api-card medium">
+              <div class="api-header">
+                <div class="api-name">Open Library</div>
+              </div>
+              <p class="api-purpose">Book data from the Internet Archive. Covers, subjects, authors.</p>
+              <div class="api-meta">
+                <span class="api-tag tag-medium">Medium</span>
+                <span>Books</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gaps -->
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-eyebrow">03 — Missing Pieces</div>
+            <h2 class="section-title">Gaps We Want to Fill</h2>
+            <p class="section-desc">
+              Notable APIs that should be on public-apis but aren't. 
+              These are industry standards we use despite the list's omissions.
+            </p>
+          </div>
+
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>API</th>
+                <th>Category</th>
+                <th>Why It Matters</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Stripe</strong></td>
+                <td>Payments</td>
+                <td>Industry standard for payment processing. Missing is a major gap.</td>
+                <td><span class="tier-badge tag-critical">Critical Gap</span></td>
+              </tr>
+              <tr>
+                <td><strong>Twilio</strong></td>
+                <td>Communication</td>
+                <td>SMS, voice, email. The standard for programmable communications.</td>
+                <td><span class="tier-badge tag-critical">Critical Gap</span></td>
+              </tr>
+              <tr>
+                <td><strong>AWS SDK</strong></td>
+                <td>Cloud</td>
+                <td>S3, Lambda, DynamoDB—the backbone of modern infrastructure.</td>
+                <td><span class="tier-badge tag-critical">Critical Gap</span></td>
+              </tr>
+              <tr>
+                <td><strong>SendGrid</strong></td>
+                <td>Email</td>
+                <td>Enterprise email delivery. More robust than most listed alternatives.</td>
+                <td><span class="tier-badge tag-high">High Priority</span></td>
+              </tr>
+              <tr>
+                <td><strong>Supabase</strong></td>
+                <td>Database</td>
+                <td>Open source Firebase alternative. PostgreSQL + realtime.</td>
+                <td><span class="tier-badge tag-high">High Priority</span></td>
+              </tr>
+              <tr>
+                <td><strong>Clerk</strong></td>
+                <td>Auth</td>
+                <td>Modern auth with React components. Developer experience leader.</td>
+                <td><span class="tier-badge tag-high">High Priority</span></td>
+              </tr>
+              <tr>
+                <td><strong>Vercel API</strong></td>
+                <td>Hosting</td>
+                <td>Edge deployment, serverless functions. Our default host.</td>
+                <td><span class="tier-badge tag-high">High Priority</span></td>
+              </tr>
+              <tr>
+                <td><strong>Firebase</strong></td>
+                <td>Backend</td>
+                <td>Realtime database, auth, hosting. Google's BaaS platform.</td>
+                <td><span class="tier-badge tag-medium">Medium Priority</span></td>
+              </tr>
+              <tr>
+                <td><strong>Cloudflare</strong></td>
+                <td>Infrastructure</td>
+                <td>CDN, Workers, D1 database. Edge computing leader.</td>
+                <td><span class="tier-badge tag-high">High Priority</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: 32px;">
+            <div class="gap-card">
+              <div class="gap-icon">📝</div>
+              <div class="gap-content">
+                <h3>Contributing Back</h3>
+                <p>We should add these gaps to public-apis via PR. Industry-standard tools belong on the list.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>
+          Resources curated by <a href="https://lab.promptengines.com">Prompt Engines Lab</a> • 
+          <a href="https://github.com/public-apis/public-apis">public-apis</a> reviewed March 2026
+        </p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
