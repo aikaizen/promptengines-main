@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Article — Prompt Engines Lab</title>
+  <meta name="description" content="Submit an article for review on Prompt Engines Lab. Share your experiments, findings, and technical insights.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* Form-specific styles */
+    .form-section {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+
+    .form-label-required::after {
+      content: " *";
+      color: var(--accent);
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.9375rem;
+      transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .form-textarea {
+      min-height: 400px;
+      font-family: var(--mono);
+      font-size: 0.875rem;
+      line-height: 1.7;
+      resize: vertical;
+    }
+
+    .form-hint {
+      margin-top: 0.5rem;
+      font-size: 0.8125rem;
+      color: var(--text-4);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.5rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--sans);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+    }
+
+    .submit-btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .success-message {
+      display: none;
+      padding: 1.25rem;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: var(--radius-sm);
+      color: #22c55e;
+      margin-bottom: 1.5rem;
+    }
+
+    .success-message.visible {
+      display: block;
+    }
+
+    .error-message {
+      display: none;
+      padding: 1.25rem;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: var(--radius-sm);
+      color: #ef4444;
+      margin-bottom: 1.5rem;
+    }
+
+    .error-message.visible {
+      display: block;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 1.125rem;
+      height: 1.125rem;
+      margin-top: 0.125rem;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .checkbox-group label {
+      font-size: 0.875rem;
+      color: var(--text-3);
+      cursor: pointer;
+    }
+
+    .checkbox-group label a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .checkbox-group label a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="./">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" style="padding: 3rem 0 2rem;">
+      <div class="container">
+        <div class="eyebrow">Contribute</div>
+        <h1>Submit an Article</h1>
+        <p class="hero-lead" style="max-width: 600px;">
+          Share your experiments, technical findings, or build stream intelligence. 
+          All submissions go through review before publication.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="form-section">
+          <div class="success-message" id="successMessage">
+            <strong>Article submitted successfully!</strong> Your article has been queued for review. 
+            You can view it in the <a href="../review/" style="color: inherit; text-decoration: underline;">Review area</a>.
+          </div>
+
+          <div class="error-message" id="errorMessage">
+            <strong>Submission failed.</strong> Please check your inputs and try again.
+          </div>
+
+          <form id="submitForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label form-label-required" for="authorName">Author Name</label>
+                <input type="text" class="form-input" id="authorName" name="authorName" required
+                       placeholder="Your name or handle">
+              </div>
+              <div class="form-group">
+                <label class="form-label form-label-required" for="authorEmail">Email</label>
+                <input type="email" class="form-input" id="authorEmail" name="authorEmail" required
+                       placeholder="your@email.com">
+                <p class="form-hint">For editorial feedback only. Never published.</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label form-label-required" for="title">Article Title</label>
+              <input type="text" class="form-input" id="title" name="title" required
+                     placeholder="e.g., API Latency Doubled: What 10M Requests Reveal">
+              <p class="form-hint">Be specific. Include a metric if possible.</p>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label form-label-required" for="category">Category</label>
+                <select class="form-select" id="category" name="category" required>
+                  <option value="">Select category...</option>
+                  <option value="Experiments">Experiments</option>
+                  <option value="Evaluation">Evaluation</option>
+                  <option value="Infrastructure">Infrastructure</option>
+                  <option value="Lab Notes">Lab Notes</option>
+                  <option value="Agents">Agents</option>
+                  <option value="Security">Security</option>
+                  <option value="Architecture">Architecture</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="tags">Tags</label>
+                <input type="text" class="form-input" id="tags" name="tags"
+                       placeholder="e.g., api, latency, testing">
+                <p class="form-hint">Comma-separated</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label form-label-required" for="content">Article Content (Markdown)</label>
+              <textarea class="form-textarea" id="content" name="content" required
+                        placeholder="# Your Article Title
+
+Start with a falsifiable claim. Include specific metrics, version numbers, or timestamps.
+
+## Section Header
+
+Use concrete examples. Avoid abstract nouns without concrete processes.
+
+## Data
+
+Include tables, code blocks, or charts where relevant.
+
+```python
+# Example code
+print('Hello, Lab Notes!')
+```
+
+## Conclusion
+
+What should the reader do with this information?"></textarea>
+              <p class="form-hint">
+                Supports GitHub-flavored Markdown. 
+                See <a href="../skills/lab-article-writing/SKILL.md" style="color: var(--accent);">writing guidelines</a>.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="notes">Editor Notes (optional)</label>
+              <textarea class="form-textarea" id="notes" name="notes" style="min-height: 100px;"
+                        placeholder="Any context for the reviewer: related articles, data sources, disclosure of conflicts..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox-group">
+                <input type="checkbox" id="originalWork" name="originalWork" required>
+                <label for="originalWork">
+                  I confirm this is my original work and I have the right to publish it. 
+                  I understand Lab Notes may edit for clarity and style.
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox-group">
+                <input type="checkbox" id="antiSlop" name="antiSlop">
+                <label for="antiSlop">
+                  I've reviewed the <a href="../skills/lab-article-writing/SKILL.md">anti-slop guidelines</a>:
+                  first sentence advances understanding, no "This is..." openings, falsifiable claims only.
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+              Submit for Review
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" style="border-top: 1px solid var(--border-subtle); margin-top: 4rem;">
+    <div class="container" style="padding: 2rem 0; text-align: center; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab Notes — Real experiments. Published findings.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Store submissions in localStorage (client-side only for static site)
+    const STORAGE_KEY = 'labnotes_submissions';
+
+    function generateId() {
+      return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+    }
+
+    function getSubmissions() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveSubmission(submission) {
+      const submissions = getSubmissions();
+      submissions.push({
+        ...submission,
+        id: generateId(),
+        submittedAt: new Date().toISOString(),
+        status: 'pending'
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(submissions));
+      return submission.id;
+    }
+
+    document.getElementById('submitForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const successMsg = document.getElementById('successMessage');
+      const errorMsg = document.getElementById('errorMessage');
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+      
+      try {
+        const formData = {
+          authorName: document.getElementById('authorName').value.trim(),
+          authorEmail: document.getElementById('authorEmail').value.trim(),
+          title: document.getElementById('title').value.trim(),
+          category: document.getElementById('category').value,
+          tags: document.getElementById('tags').value.trim(),
+          content: document.getElementById('content').value.trim(),
+          notes: document.getElementById('notes').value.trim(),
+          originalWork: document.getElementById('originalWork').checked,
+          antiSlop: document.getElementById('antiSlop').checked
+        };
+
+        const id = saveSubmission(formData);
+        
+        successMsg.classList.add('visible');
+        errorMsg.classList.remove('visible');
+        
+        // Reset form
+        document.getElementById('submitForm').reset();
+        
+        console.log('Article submitted:', id, formData);
+        
+      } catch (err) {
+        console.error('Submission error:', err);
+        errorMsg.classList.add('visible');
+        successMsg.classList.remove('visible');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `Submit for Review <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+      }
+    });
+  </script>
+</body>
+</html>
