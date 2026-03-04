@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibes — Prompt Engines Prototypes</title>
+  <meta name="description" content="Design system vibes. Color palettes, animations, and aesthetic definitions for agentic front-end development.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%2309090b'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='52' fill='%23F04D26'%3EPE%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --fg: #fafafa;
+      --fg-muted: #a1a1aa;
+      --fg-subtle: #52525b;
+      --accent: #F04D26;
+      --accent-soft: rgba(240, 77, 38, 0.15);
+      --border: #27272a;
+      --surface: #18181b;
+      --surface-hover: #27272a;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', sans-serif;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.03;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+    }
+
+    .site { position: relative; z-index: 2; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* Navigation */
+    nav {
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(to bottom, var(--bg) 80%, transparent 100%);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      color: var(--fg);
+      text-decoration: none;
+      font-family: var(--sans);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 20px;
+    }
+
+    .brand span { color: var(--accent); }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+      color: var(--fg-muted);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.is-active { color: var(--accent); }
+
+    .nav-dropdown { position: relative; }
+
+    .nav-dropdown-trigger {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .nav-dropdown-trigger::after {
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 3.5px solid transparent;
+      border-right: 3.5px solid transparent;
+      border-top: 4px solid currentColor;
+      margin-top: 1px;
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 220px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: all 0.2s ease;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown.is-open .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .nav-dropdown-menu a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-family: var(--sans);
+      font-size: 13px;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .nav-dropdown-menu a:hover {
+      background: var(--surface-hover);
+      color: var(--accent);
+    }
+
+    .dd-tag {
+      font-family: var(--mono);
+      font-size: 9px;
+      padding: 2px 6px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: 4px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--fg) 0%, var(--fg-muted) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-lead {
+      color: var(--fg-muted);
+      font-size: clamp(16px, 2vw, 19px);
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Vibe Cards Grid */
+    .vibes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+      padding: 40px 0;
+    }
+
+    .vibe-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.4s var(--ease-out);
+      position: relative;
+    }
+
+    .vibe-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    }
+
+    /* Vibe preview area */
+    .vibe-preview {
+      height: 160px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vibe-preview::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.1;
+      background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.1) 100%);
+    }
+
+    /* Individual vibe previews */
+    .preview-lab {
+      background: linear-gradient(135deg, #09090b 0%, #18181b 50%, #27272a 100%);
+    }
+
+    .preview-terminal {
+      background: linear-gradient(135deg, #080808 0%, #0a0a0a 100%);
+      position: relative;
+    }
+
+    .preview-terminal::before {
+      content: 'λ';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--mono);
+      font-size: 64px;
+      color: #00e87b;
+      opacity: 0.3;
+      text-shadow: 0 0 40px rgba(0, 232, 123, 0.5);
+    }
+
+    .preview-military {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d3329 50%, #1a1a1a 100%);
+      position: relative;
+    }
+
+    .preview-military::before {
+      content: '⚔';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      opacity: 0.4;
+      filter: sepia(1) hue-rotate(-30deg);
+    }
+
+    .preview-hacker {
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .preview-hacker::before {
+      content: '01';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--mono);
+      font-size: 72px;
+      color: #00ff41;
+      opacity: 0.15;
+      letter-spacing: 20px;
+      text-shadow: 0 0 30px rgba(0, 255, 65, 0.6);
+    }
+
+    .preview-snes {
+      background: linear-gradient(180deg, #6b5b95 0%, #b8a9c9 50%, #feb236 50%, #ff6b6b 100%);
+      position: relative;
+    }
+
+    .preview-snes::before {
+      content: '▶';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 56px;
+      color: #fff;
+      opacity: 0.6;
+      text-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+    }
+
+    .preview-cyberpunk {
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 50%, #0a0a0f 100%);
+      position: relative;
+    }
+
+    .preview-cyberpunk::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,0,128,0.03) 2px, rgba(255,0,128,0.03) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,255,255,0.03) 2px, rgba(0,255,255,0.03) 4px);
+    }
+
+    .preview-cyberpunk::after {
+      content: '◆';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      color: #ff0080;
+      opacity: 0.4;
+      text-shadow: 0 0 40px rgba(255, 0, 128, 0.8), 0 0 80px rgba(0, 255, 255, 0.4);
+    }
+
+    .preview-postapoc {
+      background: linear-gradient(135deg, #4a3728 0%, #8b7355 50%, #5c4033 100%);
+      position: relative;
+    }
+
+    .preview-postapoc::before {
+      content: '☢';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 52px;
+      color: #ff6b35;
+      opacity: 0.4;
+      filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.5));
+    }
+
+    .preview-steampunk {
+      background: linear-gradient(135deg, #4a3c2a 0%, #8b7355 30%, #cd853f 60%, #4a3c2a 100%);
+      position: relative;
+    }
+
+    .preview-steampunk::before {
+      content: '⚙';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 56px;
+      color: #d4af37;
+      opacity: 0.5;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .preview-taverncore {
+      background: linear-gradient(135deg, #2d1810 0%, #4a2c1a 50%, #8b4513 100%);
+      position: relative;
+    }
+
+    .preview-taverncore::before {
+      content: '🍺';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      opacity: 0.6;
+      filter: drop-shadow(0 0 30px rgba(255, 200, 100, 0.4));
+    }
+
+    /* Vibe content */
+    .vibe-content {
+      padding: 24px;
+    }
+
+    .vibe-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .vibe-name {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+    }
+
+    .vibe-status {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .status-live {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+    }
+
+    .status-draft {
+      background: var(--bg);
+      color: var(--fg-subtle);
+      border: 1px solid var(--border);
+    }
+
+    .vibe-desc {
+      color: var(--fg-muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .vibe-palette {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .color-swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      position: relative;
+      cursor: help;
+      transition: transform 0.2s ease;
+    }
+
+    .color-swatch:hover {
+      transform: scale(1.1);
+      border-color: var(--accent);
+    }
+
+    .color-swatch::after {
+      content: attr(data-color);
+      position: absolute;
+      bottom: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--fg-subtle);
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .color-swatch:hover::after {
+      opacity: 1;
+    }
+
+    .vibe-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .vibe-tag {
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--fg-muted);
+    }
+
+    /* Section dividers */
+    .section {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--fg-subtle);
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .section-desc {
+      color: var(--fg-muted);
+      max-width: 600px;
+      margin: 12px auto 0;
+      font-size: 15px;
+    }
+
+    /* Prompt block */
+    .prompt-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 20px;
+    }
+
+    .prompt-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .prompt-text {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--fg-muted);
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    /* Code snippet */
+    code {
+      font-family: var(--mono);
+      background: var(--bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      margin-top: 60px;
+      text-align: center;
+      color: var(--fg-subtle);
+      font-size: 14px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .nav-links { gap: 16px; }
+      .vibes-grid { grid-template-columns: 1fr; }
+      .hero { padding: 60px 0 40px; }
+      .vibe-preview { height: 140px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site">
+    <nav>
+      <div class="container nav-inner">
+        <a class="brand" href="/">Prompt <span>Engines</span></a>
+        <ul class="nav-links">
+          <li><a href="https://lab.promptengines.com">Lab</a></li>
+          <li class="nav-dropdown">
+            <a class="nav-dropdown-trigger">Experiments</a>
+            <div class="nav-dropdown-menu">
+              <a href="https://kaizen.promptengines.com">Kaizen <span class="dd-tag">Kids</span></a>
+              <a href="https://storybookstudio.promptengines.com">Storybook Studio <span class="dd-tag">Creator</span></a>
+            </div>
+          </li>
+          <li class="nav-dropdown">
+            <a class="nav-dropdown-trigger is-active">Prototypes</a>
+            <div class="nav-dropdown-menu">
+              <a href="/prototypes/">Overview</a>
+              <a href="/prototypes/resources/">Resources <span class="dd-tag">APIs</span></a>
+              <a href="/prototypes/vibes/" class="is-active">Vibes <span class="dd-tag">Design</span></a>
+            </div>
+          </li>
+          <li><a href="/careers/">Careers</a></li>
+          <li><a href="/contact/">Contact Us</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="container">
+        <div class="eyebrow">Design Systems</div>
+        <h1>Vibes</h1>
+        <p class="hero-lead">
+          Complete aesthetic definitions for agentic front-end development.
+          Color palettes, animations, and design language—encapsulated in 1-2 words.
+          Copy the prompt. Ship the vibe.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <!-- Live Vibes -->
+      <section class="section" style="border-top: none; padding-top: 0;">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-eyebrow">01 — Deployed</div>
+            <h2 class="section-title">Live Vibes</h2>
+            <p class="section-desc">
+              Active on promptengines.com. Switch between them with the perspective toggle.
+            </p>
+          </div>
+
+          <div class="vibes-grid">
+            <!-- Lab (Default) -->
+            <div class="vibe-card">
+              <div class="vibe-preview preview-lab"></div>
+              <div class="vibe-content">
+                <div class="vibe-header">
+                  <div class="vibe-name">Lab</div>
+                  <span class="vibe-status status-live">Live</span>
+                </div>
+                <p class="vibe-desc">
+                  The default Prompt Engines aesthetic. Dark zinc, orange accent, high contrast. Technical, precise, developer-focused.
+                </p>
+                <div class="vibe-palette">
+                  <div class="color-swatch" style="background: #09090b;" data-color="#09090b"></div>
+                  <div class="color-swatch" style="background: #fafafa;" data-color="#fafafa"></div>
+                  <div class="color-swatch" style="background: #F04D26;" data-color="#F04D26"></div>
+                  <div class="color-swatch" style="background: #27272a;" data-color="#27272a"></div>
+                  <div class="color-swatch" style="background: #a1a1aa;" data-color="#a1a1aa"></div>
+                </div>
+                <div class="vibe-tags">
+                  <span class="vibe-tag">Dark Mode</span>
+                  <span class="vibe-tag">Monospace</span>
+                  <span class="vibe-tag">Grain Texture</span>
+                </div>
+                <div class="prompt-block">
+                  <div class="prompt-label">Agent Prompt</div>
+                  <div class="prompt-text">Design with dark zinc (#09090b) background, orange accent (#F04D26), and high-contrast text. Use JetBrains Mono for technical elements, Inter for UI. Add subtle grain texture overlay. Keep it developer-focused: precise, minimal, functional.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Terminal -->
+            <div class="vibe-card">
+              <div class="vibe-preview preview-terminal"></div>
+              <div class="vibe-content">
+                <div class="vibe-header">
+                  <div class="vibe-name">Terminal</div>
+                  <span class="vibe-status status-live">Live</span>
+                </div>
+                <p class="vibe-desc">
+                  Bloomberg terminal meets modern CLI. Phosphor green on black, monospace dominance, data density without clutter.
+                </p>
+                <div class="vibe-palette">
+                  <div class="color-swatch" style="background: #080808;" data-color="#080808"></div>
+                  <div class="color-swatch" style="background: #00e87b;" data-color="#00e87b"></div>
+                  <div class="color-swatch" style="background: #00ff41;" data-color="#00ff41"></div>
+                  <div class="color-swatch" style="background: #0a0a0a;" data-color="#0a0a0a"></div>
+                  <div class="color-swatch" style="background: #ffffff;" data-color="#ffffff"></div>
+                </div>
+                <div class="vibe-tags">
+                  <span class="vibe-tag">Phosphor Green</span>
+                  <span class="vibe-tag">Data Dense</span>
+                  <span class="vibe-tag">CRT Glow</span>
+                </div>
+                <div class="prompt-block">
+                  <div class="prompt-label">Agent Prompt</div>
+                  <div class="prompt-text">Terminal aesthetic: phosphor green (#00e87b) on deep black (#080808). IBM Plex Mono throughout. CRT scanline texture. Dense data layout with clear hierarchy. Green glow effects on interactive elements. Financial terminal precision.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Military -->
+            <div class="vibe-card">
+              <div class="vibe-preview preview-military"></div>
+              <div class="vibe-content">
+                <div class="vibe-header">
+                  <div class="vibe-name">Military</div>
+                  <span class="vibe-status status-live">Live</span>
+                </div>
+                <p class="vibe-desc">
+                  Tactical interface design. Desaturated olive, tactical orange, utilitarian precision. No decorative elements—pure function.
+                </p>
+                <div class="vibe-palette">
+                  <div class="color-swatch" style="background: #1a1a1a;" data-color="#1a1a1a"></div>
+                  <div class="color-swatch" style="background: #ff8c00;" data-color="#ff8c00"></div>
+                  <div class="color-swatch" style="background: #2d3329;" data-color="#2d3329"></div>
+                  <div class="color-swatch" style="background: #4a4a4a;" data-color="#4a4a4a"></div>
+                  <div class="color-swatch" style="background: #e8e8e8;" data-color="#e8e8e8"></div>
+                </div>
+                <div class="vibe-tags">
+                  <span class="vibe-tag">Tactical</span>
+                  <span class="vibe-tag">Olive Drab</span>
+                  <span class="vibe-tag">Utilitarian</span>
+                </div>
+                <div class="prompt-block">
+                  <div class="prompt-label">Agent Prompt</div>
+                  <div class="prompt-text">Military/tactical interface: desaturated olive (#2d3329), tactical orange (#ff8c00) accents. Stencil or blocky typography. Corner brackets on containers. No gradients—flat colors only. Functional, utilitarian, mission-critical aesthetic.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hacker -->
+            <div class="vibe-card">
+              <div class="vibe-preview preview-hacker"></div>
+              <div class="vibe-content">
+                <div class="vibe-header">
+                  <div class="vibe-name">Hacker</div>
+                  <span class="vibe-status status-live">Live</span>
+                </div>
+                <p class="vibe-desc">
+                  Matrix aesthetic refined. Glowing green text on pure black, cascading code animations, system-level visual language.
+                </p>
+                <div class="vibe-palette">
+                  <div class="color-swatch" style="background: #0a0a0a;" data-color="#0a0a0a"></div>
+                  <div class="color-swatch" style="background: #00ff41;" data-color="#00ff41"></div>
+                  <div class="color-swatch" style="background: #008f11;" data-color="#008f11"></div>
+                  <div class="color-swatch" style="background: #003b00;" data-color="#003b00"></div>
+                  <div class="color-swatch" style="background: #ffffff;" data-color="#ffffff"></div>
+                </div>
+                <div class="vibe-tags">
+                  <span class="vibe-tag">Matrix</span>
+                  <span class="vibe-tag">Glowing Text</span>
+                  <span class="vibe-tag">Code Rain</span>
+                </div>
+                <div class="prompt-block">
+                  <div class="prompt-label">Agent Prompt</div>
+                  <div class="prompt-text">Matrix/hacker aesthetic: pure black (#0a0a0a), matrix green (#00ff41) with glow effects. Cascading code animations. Terminal windows with rounded corners. "System" language—access, breach, decrypt. High-tech, subversive, digital underground.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Draft Vibes -->
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-eyebrow">02 — In Development</div>
+            <h2 class="section-title">Draft Vibes</h2>
+            <p class="section-desc">
+              Defined and ready for implementation. These need animation refinement and real-world testing.
+            </p>
+          </div>
+
+          <div class="vibes-grid">
+            <!-- SNES 8-bit -->
+            <div class="vibe-card">
+              <div class="vibe-preview preview-snes"></div>
+              <div class="vibe-content">
+                <div class="vibe-header">
+                  <div class="vibe-name">16-Bit</div>
+                  <span class="vibe-status status-draft">Draft</span>
+                </div>
+                <p class="vibe-desc">
+                  Super Nintendo era nostalgia. Dithered gradients, sprite-inspired icons, bold primary colors with visible pixel structure.
+                </p>
+                <div class="vibe-palette">
+                  <div class="color-swatch" style="background: #6b5b95;" data-color="#6b5b95"></div>
+                  <div class="color-swatch" style="background: #feb236;" data-color="#feb236"></div>
+                  <div class="color-swatch" style="background: #ff6b6b;" data-color="#ff6b6b"></div>
+                  <div class="color-swatch" style="background: #b8a9c9;" data-color="#b8a9c9"></div>
+                  <div class="color-swatch" style="background: #2d2d2d;" data-color="#2d2d2d"></div>
+                </div>
+                <div class="vibe-tags">
+                  <span class="vibe-tag">Pixel Art</span>
+                  <span class="vibe-tag">Dithered</span>
+                  <span class="vibe-tag">Sprite UI</span>
+                </div>
+                <div class="prompt-block">
+                  <div class="prompt-label">Agent Prompt</div>
+                  <div class="prompt-text">16-bit console aesthetic: bold purples (#6b5b95), warm golds (#feb236), soft violets (#b8a9c9). Pixel-perfect icons with 1px outlines. Dithered gradients (simulate limited color depth). Sharp rectangular buttons. Nostalgic but functional.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cyberpunk -->
+            <div class="vibe-card">
+              <div class="vibe-preview preview-cyberpunk"></div>
+              <div class="vibe-content">
+                <div class="vibe-header">
+                  <div class="vibe-name">Cyberpunk</div>
+                  <span class="vibe-status status-draft">Draft</span>
+                </div>
+                <p class="vibe-desc">
+                  Neon noir. Hot magenta and electric cyan on deep purple-black. Glitch effects, holographic overlays, dystopian tech sheen.
+                </p>
+                <div class="vibe-palette">
+                  <div class="color-swatch" style="background: #0a0a0f;" data-color="#0a0a0f"></div>
+                  <div class="color-swatch" style="background: #ff0080;" data-color="#ff0080"></div>
+                  <div class="color-swatch" style="background: #00ffff;" data-color="#00ffff"></div>
+                  <div class="color-swatch" style="background: #1a0a2e;" data-color="#1a0a2e"></div>
+                  <div class="color-swatch" style="background: #ffd700;" data-color="#ffd700"></div>
+                </div>
+                <div class="vibe-tags">
+                  <span class="vibe-tag">Neon</span>
+                  <span class="vibe-tag">Glitch</span>
+                  <span class="vibe-tag">Holographic</span>
+                </div>
+                <div class="prompt-block">
+                  <div class="prompt-label">Agent Prompt</div>
+                  <div class="prompt-text">Cyberpunk aesthetic: neon magenta (#ff0080) and electric cyan (#00ffff) on deep purple-black (#0a0a0f, #1a0a2e). Glitch effects on state changes. Holographic glow overlays. Sharp geometric shapes. Dystopian tech sheen with Japanese typography accents.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Post-Apocalyptic -->
+            <div class="vibe-card">
+              <div class="vibe-preview preview-postapoc"></div>
+              <div class="vibe-content">
+                <div class="vibe-header">
+                  <div class="vibe-name">Wasteland</div>
+                  <span class="vibe-status status-draft">Draft</span>
+                </div>
+                <p class="vibe-desc">
+                  Scavenged tech aesthetic. Rusted oranges, dried-blood reds, dusty browns. Distressed textures, warning symbols, makeshift UI.
+                </p>
+                <div class="vibe-palette">
+                  <div class="color-swatch" style="background: #4a3728;" data-color="#4a3728"></div>
+                  <div class="color-swatch" style="background: #ff6b35;" data-color="#ff6b35"></div>
+                  <div class="color-swatch" style="background: #8b7355;" data-color="#8b7355"></div>
+                  <div class="color-swatch" style="background: #5c4033;" data-color="#5c4033"></div>
+                  <div class="color-swatch" style="background: #ffcc00;" data-color="#ffcc00"></div>
+                </div>
+                <div class="vibe-tags">
+                  <span class="vibe-tag">Rust</span>
+                  <span class="vibe-tag">Distressed</span>
+                  <span class="vibe-tag">Hazard</span>
+                </div>
+                <div class="prompt-block">
+                  <div class="prompt-label">Agent Prompt</div>
+                  <div class="prompt-text">Post-apocalyptic interface: rusted browns (#4a3728), hazard orange (#ff6b35), dried-blood red accents. Distressed textures—scratches, dust, corrosion. Warning symbols and radiation icons. Makeshift, scavenged tech aesthetic. Survivalist UI language.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Steampunk -->
+            <div class="vibe-card">
+              <div class="vibe-preview preview-steampunk"></div>
+              <div class="vibe-content">
+                <div class="vibe-header">
+                  <div class="vibe-name">Steampunk</div>
+                  <span class="vibe-status status-draft">Draft</span>
+                </div>
+                <p class="vibe-desc">
+                  Victorian industrial. Brass, bronze, copper. Gear mechanisms visible in UI, riveted metal borders, parchment textures behind glass.
+                </p>
+                <div class="vibe-palette">
+                  <div class="color-swatch" style="background: #4a3c2a;" data-color="#4a3c2a"></div>
+                  <div class="color-swatch" style="background: #d4af37;" data-color="#d4af37"></div>
+                  <div class="color-swatch" style="background: #cd853f;" data-color="#cd853f"></div>
+                  <div class="color-swatch" style="background: #8b7355;" data-color="#8b7355"></div>
+                  <div class="color-swatch" style="background: #2c2416;" data-color="#2c2416"></div>
+                </div>
+                <div class="vibe-tags">
+                  <span class="vibe-tag">Brass</span>
+                  <span class="vibe-tag">Victorian</span>
+                  <span class="vibe-tag">Mechanical</span>
+                </div>
+                <div class="prompt-block">
+                  <div class="prompt-label">Agent Prompt</div>
+                  <div class="prompt-text">Steampunk aesthetic: brass (#d4af37), bronze (#cd853f), copper accents. Gear mechanisms in UI elements. Riveted metal borders with patina. Parchment textures behind glass overlays. Victorian typography with industrial machinery details. Warm, mechanical, ornate.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Taverncore -->
+            <div class="vibe-card">
+              <div class="vibe-preview preview-taverncore"></div>
+              <div class="vibe-content">
+                <div class="vibe-header">
+                  <div class="vibe-name">Taverncore</div>
+                  <span class="vibe-status status-draft">Draft</span>
+                </div>
+                <p class="vibe-desc">
+                  D&D tavern coziness. Warm wood tones, firelight amber, magical glowing accents. The feeling of a party resting at an inn.
+                </p>
+                <div class="vibe-palette">
+                  <div class="color-swatch" style="background: #2d1810;" data-color="#2d1810"></div>
+                  <div class="color-swatch" style="background: #8b4513;" data-color="#8b4513"></div>
+                  <div class="color-swatch" style="background: #d2691e;" data-color="#d2691e"></div>
+                  <div class="color-swatch" style="background: #ffcc66;" data-color="#ffcc66"></div>
+                  <div class="color-swatch" style="background: #4a2c1a;" data-color="#4a2c1a"></div>
+                </div>
+                <div class="vibe-tags">
+                  <span class="vibe-tag">Cozy</span>
+                  <span class="vibe-tag">Fantasy</span>
+                  <span class="vibe-tag">Firelight</span>
+                </div>
+                <div class="prompt-block">
+                  <div class="prompt-label">Agent Prompt</div>
+                  <div class="prompt-text">Taverncore aesthetic: warm dark wood (#2d1810, #4a2c1a), firelight amber (#ffcc66), magical glow accents. Medieval fantasy UI with cozy tavern atmosphere. Leather textures, wooden planks, candlelight. Rounded corners like worn furniture. Party-at-rest feeling.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How to Use -->
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-eyebrow">03 — Usage</div>
+            <h2 class="section-title">How to Use Vibes</h2>
+          </div>
+
+          <div class="prompt-block" style="max-width: 800px; margin: 0 auto;">
+            <div class="prompt-label">For Agents</div>
+            <div class="prompt-text" style="font-family: var(--sans); white-space: normal;">
+              Include the vibe prompt in your system instructions when building front-end components. The vibe defines:
+              <br><br>
+              <strong>1. Color Palette</strong> — Primary, secondary, accent, text, and surface colors with hex codes.<br>
+              <strong>2. Typography</strong> — Font families, weights, and treatments (monospace vs. sans, display vs. body).<br>
+              <strong>3. Animation Language</strong> — How things move: terminal cursors blink, cyberpunk glitches, steampunk gears rotate.<br>
+              <strong>4. Texture & Depth</strong> — Grain, scanlines, glass, metal, wood, holographic overlays.<br>
+              <strong>5. UI Shapes</strong> — Sharp corners vs. rounded, pixel edges vs. smooth, ornate vs. minimal.<br>
+              <strong>6. Emotional Tone</strong> — The feeling the interface should evoke: technical, cozy, dystopian, magical.<br>
+              <br>
+              Copy the agent prompt from any vibe card into your build instructions. The vibe encapsulates all design decisions in 1-2 words.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>
+          Vibes curated by <a href="https://lab.promptengines.com">Prompt Engines Lab</a> • 
+          <a href="https://github.com/aikaizen/promptengines-main">GitHub</a>
+        </p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
