@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map — Prompt Engines</title>
+  <meta name="description" content="How Prompt Engines is organized — labs, prototypes, experiments, and principles.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230b1220'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='52' fill='%23f17a4a'%3EPE%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0b1220;
+      --deep: #111a2b;
+      --panel: #162238;
+      --panel-2: #1b2a43;
+      --line: #2a3b59;
+      --text: #e8edf7;
+      --muted: #9fb0cb;
+      --accent: #f17a4a;
+      --accent-soft: rgba(241, 122, 74, 0.18);
+      --signal: #5dd9b8;
+      --font-display: "Manrope", sans-serif;
+      --font-mono: "IBM Plex Mono", monospace;
+      --font-sans: "Manrope", sans-serif;
+      --shadow: 0 20px 70px rgba(4, 10, 20, 0.45);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background:
+        radial-gradient(circle at 10% 0%, rgba(93, 217, 184, 0.08), transparent 45%),
+        radial-gradient(circle at 88% 8%, rgba(241, 122, 74, 0.12), transparent 40%),
+        linear-gradient(170deg, var(--ink), #0e1524 55%, #0b1220);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .diagram-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.22;
+      background-image:
+        linear-gradient(rgba(93, 217, 184, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(93, 217, 184, 0.08) 1px, transparent 1px),
+        linear-gradient(30deg, rgba(241, 122, 74, 0.06), transparent 42%);
+      background-size: 42px 42px, 42px 42px, 100% 100%;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.12;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.3'/%3E%3C/svg%3E");
+    }
+
+    .site {
+      position: relative;
+      z-index: 2;
+    }
+
+    .container {
+      width: min(1080px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* ═══ NAV ═══ */
+    nav {
+      border-bottom: 1px solid var(--line);
+      background: rgba(11, 18, 32, 0.78);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-inner {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      color: var(--text);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 22px;
+    }
+
+    .brand span { color: var(--accent); font-style: italic; font-weight: 600; }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.is-active { color: var(--accent); }
+
+    /* ═══ NAV DROPDOWN ═══ */
+    .nav-dropdown { position: relative; }
+
+    .nav-dropdown-trigger {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      user-select: none;
+    }
+
+    .nav-dropdown-trigger::after {
+      content: '';
+      display: inline-block;
+      width: 0; height: 0;
+      border-left: 3.5px solid transparent;
+      border-right: 3.5px solid transparent;
+      border-top: 4px solid currentColor;
+      transition: transform 0.2s ease;
+      margin-top: 1px;
+    }
+
+    .nav-dropdown.is-open .nav-dropdown-trigger::after { transform: rotate(180deg); }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      min-width: 220px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 6px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+      box-shadow: var(--shadow);
+      z-index: 50;
+    }
+
+    .nav-dropdown.is-open .nav-dropdown-menu {
+      opacity: 1; visibility: visible; transform: translateY(0);
+    }
+
+    .nav-dropdown-menu a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: 7px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .nav-dropdown-menu a:hover { background: var(--accent-soft); color: var(--accent); }
+    .nav-dropdown-menu a .dd-tag { font-size: 9px; opacity: 0.5; letter-spacing: 0.05em; }
+    .nav-dropdown-menu a:not([href]) { opacity: 0.5; cursor: default; }
+    .nav-dropdown-menu a:not([href]):hover { background: transparent; color: var(--muted); }
+
+    /* ═══ PAGE HERO ═══ */
+    .page-hero {
+      padding: 80px 0 48px;
+    }
+
+    .eyebrow {
+      color: var(--signal);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      font-size: 11px;
+      margin-bottom: 16px;
+    }
+
+    .page-hero h1 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(36px, 6vw, 64px);
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      margin-bottom: 16px;
+    }
+
+    .page-hero .lead {
+      color: var(--muted);
+      max-width: 58ch;
+      font-size: clamp(16px, 2vw, 19px);
+    }
+
+    /* ═══ MAP ═══ */
+    .map-section {
+      padding: 0 0 64px;
+    }
+
+    .map-section + .map-section {
+      padding-top: 32px;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      font-size: 11px;
+      color: var(--signal);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    /* ═══ ORG TREE ═══ */
+    .org-root {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 48px;
+    }
+
+    .org-node {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px 28px;
+      background: linear-gradient(150deg, rgba(27, 42, 67, 0.58), rgba(18, 30, 50, 0.45));
+      text-align: center;
+      position: relative;
+    }
+
+    .org-node.root {
+      border-color: var(--accent);
+      background: linear-gradient(150deg, rgba(241, 122, 74, 0.12), rgba(18, 30, 50, 0.45));
+      padding: 24px 36px;
+    }
+
+    .org-node h3 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .org-node .tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .org-node .url {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      opacity: 0.7;
+      margin-top: 6px;
+    }
+
+    .connector {
+      width: 1px;
+      height: 32px;
+      background: var(--line);
+    }
+
+    .connector-h {
+      height: 1px;
+      background: var(--line);
+      flex: 1;
+      min-width: 20px;
+    }
+
+    .branch-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .branch-row .org-node {
+      flex: 1;
+      min-width: 200px;
+      max-width: 280px;
+    }
+
+    .branch-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-align: center;
+      margin: 8px 0 12px;
+    }
+
+    /* ═══ PRINCIPLES ═══ */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .principle-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px;
+      background: linear-gradient(150deg, rgba(27, 42, 67, 0.58), rgba(18, 30, 50, 0.45));
+    }
+
+    .principle-card h4 {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .principle-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .principle-card .num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ═══ LAYER GRID ═══ */
+    .layer {
+      margin-bottom: 28px;
+    }
+
+    .layer-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .layer-header h3 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .layer-header .badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 6px;
+      border: 1px solid;
+    }
+
+    .badge-live { color: var(--signal); border-color: rgba(93, 217, 184, 0.3); background: rgba(93, 217, 184, 0.08); }
+    .badge-proto { color: var(--accent); border-color: rgba(241, 122, 74, 0.3); background: rgba(241, 122, 74, 0.08); }
+    .badge-internal { color: var(--muted); border-color: rgba(159, 176, 203, 0.2); background: rgba(159, 176, 203, 0.06); }
+    .badge-coming { color: #a78bfa; border-color: rgba(167, 139, 250, 0.3); background: rgba(167, 139, 250, 0.08); }
+
+    .layer-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .layer-item {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px 20px;
+      background: linear-gradient(150deg, rgba(27, 42, 67, 0.4), rgba(18, 30, 50, 0.3));
+      transition: border-color 0.2s ease;
+    }
+
+    .layer-item:hover {
+      border-color: rgba(241, 122, 74, 0.4);
+    }
+
+    .layer-item h4 {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .layer-item .desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .layer-item .meta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--accent);
+      margin-top: 8px;
+      opacity: 0.7;
+      letter-spacing: 0.04em;
+    }
+
+    .layer-item a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ═══ TEAM ═══ */
+    .team-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .team-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px;
+      background: linear-gradient(150deg, rgba(27, 42, 67, 0.58), rgba(18, 30, 50, 0.45));
+    }
+
+    .team-card h4 {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .team-card .role {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .team-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      padding: 38px 0 54px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 900px) {
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 0;
+      }
+
+      .nav-links { gap: 10px 16px; }
+
+      .nav-dropdown-menu {
+        left: 0;
+        right: auto;
+      }
+
+      .team-row {
+        grid-template-columns: 1fr;
+      }
+
+      .branch-row .org-node {
+        min-width: 160px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        width: min(1080px, calc(100% - 32px));
+      }
+
+      .page-hero {
+        padding: 48px 0 32px;
+      }
+
+      .principles-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .layer-items {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="diagram-bg" aria-hidden="true"></div>
+
+  <div class="site">
+    <nav>
+      <div class="container nav-inner">
+        <a class="brand" href="/">Prompt <span>Engines</span></a>
+        <ul class="nav-links">
+          <li><a href="https://lab.promptengines.com" target="_blank" rel="noopener noreferrer">Lab</a></li>
+          <li class="nav-dropdown">
+            <a class="nav-dropdown-trigger" role="button" tabindex="0">Experiments</a>
+            <div class="nav-dropdown-menu">
+              <a href="https://kaizen.promptengines.com" target="_blank" rel="noopener noreferrer">Kaizen <span class="dd-tag">Kids</span></a>
+              <a href="https://storybookstudio.promptengines.com" target="_blank" rel="noopener noreferrer">Storybook Studio <span class="dd-tag">Creator</span></a>
+              <a href="https://videoterminal.promptengines.com" target="_blank" rel="noopener noreferrer">Video Terminal <span class="dd-tag">Media</span></a>
+              <a href="https://norbu.promptengines.com" target="_blank" rel="noopener noreferrer">Norbu <span class="dd-tag">Language</span></a>
+              <a>Anima <span class="dd-tag">Coming Soon</span></a>
+            </div>
+          </li>
+          <li><a href="/prototypes/">Prototypes</a></li>
+          <li><a href="/careers/">Careers</a></li>
+          <li><a href="https://consulting.promptengines.com" target="_blank" rel="noopener noreferrer">Consulting</a></li>
+          <li><a href="/contact/">Contact Us</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <header class="page-hero">
+      <div class="container">
+        <div class="eyebrow">Organization</div>
+        <h1>Map</h1>
+        <p class="lead">How Prompt Engines is structured — the principles, the layers, and how everything connects.</p>
+      </div>
+    </header>
+
+    <!-- ═══ PRINCIPLES ═══ -->
+    <section class="map-section">
+      <div class="container">
+        <div class="section-label">Operating Principles</div>
+        <div class="principles-grid">
+          <div class="principle-card">
+            <div class="num">01</div>
+            <h4>Ship constantly</h4>
+            <p>Weekly releases minimum. Every product shows real commit activity. If it's not shipping, it's not real.</p>
+          </div>
+          <div class="principle-card">
+            <div class="num">02</div>
+            <h4>Document what works</h4>
+            <p>High-signal writing. No marketing optimism or cautionary pessimism. Honest, specific, data-driven findings from production.</p>
+          </div>
+          <div class="principle-card">
+            <div class="num">03</div>
+            <h4>Humans + agents</h4>
+            <p>Symbiotic advancement. Biological and artificial intelligence working in concert. Humans set vision and architecture. Agents implement and document.</p>
+          </div>
+          <div class="principle-card">
+            <div class="num">04</div>
+            <h4>Just rebuild it</h4>
+            <p>When debugging time exceeds rebuild cost, start fresh. Preserve data and assets. Discard implementation. Momentum over sunk cost.</p>
+          </div>
+          <div class="principle-card">
+            <div class="num">05</div>
+            <h4>Surface close to the work</h4>
+            <p>No layers of abstraction between the lab and the public. Build logs, commit streams, and experiments are visible as they happen.</p>
+          </div>
+          <div class="principle-card">
+            <div class="num">06</div>
+            <h4>Prototype to product</h4>
+            <p>Everything starts as a prototype. Prototypes that prove themselves graduate to products with their own domains and infrastructure.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ STRUCTURE ═══ -->
+    <section class="map-section">
+      <div class="container">
+        <div class="section-label">Organization Structure</div>
+
+        <div class="org-root">
+          <div class="org-node root">
+            <h3>promptengines.com</h3>
+            <div class="tag">Main hub &mdash; landing page, navigation, activity feeds</div>
+            <div class="url">Main repo</div>
+          </div>
+          <div class="connector"></div>
+          <div class="branch-label">Coordinates all sub-sites and repos</div>
+          <div class="branch-row">
+            <div class="org-node">
+              <h3>Lab</h3>
+              <div class="tag">Articles, signals, build stream, skills</div>
+              <div class="url">lab.promptengines.com</div>
+            </div>
+            <div class="org-node">
+              <h3>Consulting</h3>
+              <div class="tag">Service offerings, project intake</div>
+              <div class="url">consulting.promptengines.com</div>
+            </div>
+            <div class="org-node">
+              <h3>Prototypes</h3>
+              <div class="tag">Hosted in main repo under /prototypes/</div>
+              <div class="url">promptengines.com/prototypes/</div>
+            </div>
+            <div class="org-node">
+              <h3>Experiments</h3>
+              <div class="tag">Separate repos, own domains</div>
+              <div class="url">*.promptengines.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ LAYERS ═══ -->
+    <section class="map-section">
+      <div class="container">
+        <div class="section-label">All Systems</div>
+
+        <!-- Live Products -->
+        <div class="layer">
+          <div class="layer-header">
+            <h3>Live Products</h3>
+            <span class="badge badge-live">Shipping</span>
+          </div>
+          <div class="layer-items">
+            <div class="layer-item">
+              <a href="https://lab.promptengines.com" target="_blank" rel="noopener noreferrer">
+                <h4>Lab Notes</h4>
+                <div class="desc">Articles, signals, build stream, and published skills. The documentation layer.</div>
+                <div class="meta">lab.promptengines.com &middot; Own repo</div>
+              </a>
+            </div>
+            <div class="layer-item">
+              <a href="https://kaizen.promptengines.com" target="_blank" rel="noopener noreferrer">
+                <h4>Kaizen</h4>
+                <div class="desc">Early childhood learning platform. Adaptive tutoring for ages 4-6.</div>
+                <div class="meta">kaizen.promptengines.com &middot; Own repo</div>
+              </a>
+            </div>
+            <div class="layer-item">
+              <a href="https://storybookstudio.promptengines.com" target="_blank" rel="noopener noreferrer">
+                <h4>Storybook Studio</h4>
+                <div class="desc">AI-powered storybook creation tool. Character consistency across art styles.</div>
+                <div class="meta">storybookstudio.promptengines.com &middot; Own repo</div>
+              </a>
+            </div>
+            <div class="layer-item">
+              <a href="https://consulting.promptengines.com" target="_blank" rel="noopener noreferrer">
+                <h4>Consulting</h4>
+                <div class="desc">AI strategy, agent orchestration, custom applications. Multi-week to single session.</div>
+                <div class="meta">consulting.promptengines.com &middot; Own repo</div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prototypes -->
+        <div class="layer">
+          <div class="layer-header">
+            <h3>Prototypes</h3>
+            <span class="badge badge-proto">In development</span>
+          </div>
+          <div class="layer-items">
+            <div class="layer-item">
+              <a href="/prototypes/flow-education/">
+                <h4>Flow Education</h4>
+                <div class="desc">AI-driven early childhood education. Knowledge graphs, context graphs, tutor agency. Asset generation at scale.</div>
+                <div class="meta">promptengines.com/prototypes/flow-education/ &middot; Main repo</div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- New Experiments -->
+        <div class="layer">
+          <div class="layer-header">
+            <h3>New Experiments</h3>
+            <span class="badge badge-experiment">Active</span>
+          </div>
+          <div class="layer-items">
+            <a class="layer-item" href="https://videoterminal.promptengines.com" target="_blank" rel="noopener noreferrer">
+              <h4>Video Terminal</h4>
+              <div class="desc">Node-based image and video creation tool. Visual pipeline for compositing, effects, and generation workflows.</div>
+              <div class="meta">videoterminal.promptengines.com</div>
+            </a>
+            <a class="layer-item" href="https://norbu.promptengines.com" target="_blank" rel="noopener noreferrer">
+              <h4>Norbu</h4>
+              <div class="desc">Tibetan language learning tool. Interactive lessons, script practice, and vocabulary building.</div>
+              <div class="meta">norbu.promptengines.com</div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Coming Soon -->
+        <div class="layer">
+          <div class="layer-header">
+            <h3>Coming Soon</h3>
+            <span class="badge badge-coming">Planned</span>
+          </div>
+          <div class="layer-items">
+            <div class="layer-item">
+              <h4>Anima</h4>
+              <div class="desc">Details to be announced.</div>
+              <div class="meta">Upcoming experiment</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Internal -->
+        <div class="layer">
+          <div class="layer-header">
+            <h3>Internal Systems</h3>
+            <span class="badge badge-internal">Infra</span>
+          </div>
+          <div class="layer-items">
+            <div class="layer-item">
+              <h4>Dashboard</h4>
+              <div class="desc">Metrics, analytics, and activity tracking. Next.js with instrumentation.</div>
+              <div class="meta">dashboard.promptengines.com &middot; Own repo</div>
+            </div>
+            <div class="layer-item">
+              <h4>Build Stream</h4>
+              <div class="desc">Auto-generated weekly commit intelligence. GitHub API integration across all repos.</div>
+              <div class="meta">Powered by scripts/generate-feed.js</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TEAM ═══ -->
+    <section class="map-section">
+      <div class="container">
+        <div class="section-label">Team</div>
+        <div class="team-row">
+          <div class="team-card">
+            <h4>Andy Stable</h4>
+            <div class="role">Human</div>
+            <p>Vision, strategic direction, architectural decisions. 15+ years across consulting, product, and AI systems.</p>
+          </div>
+          <div class="team-card">
+            <h4>A.I.</h4>
+            <div class="role">Agent</div>
+            <p>Implementation, documentation, operational execution. Persists through documentation across sessions. Ships code, writes findings, maintains the lab.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ REPO MAP ═══ -->
+    <section class="map-section">
+      <div class="container">
+        <div class="section-label">Repository Layout</div>
+        <div class="principle-card" style="font-family: var(--font-mono); font-size: 13px; line-height: 1.8; color: var(--muted);">
+          <span style="color: var(--accent);">promptengines/</span> <span style="opacity: 0.5">&mdash; Main repo (Vercel)</span><br>
+          &nbsp;&nbsp;<span style="color: var(--text);">index.html</span> <span style="opacity: 0.5">&mdash; Landing page</span><br>
+          &nbsp;&nbsp;<span style="color: var(--text);">careers/</span> <span style="opacity: 0.5">&mdash; Hiring page</span><br>
+          &nbsp;&nbsp;<span style="color: var(--text);">contact/</span> <span style="opacity: 0.5">&mdash; Contact form</span><br>
+          &nbsp;&nbsp;<span style="color: var(--text);">map/</span> <span style="opacity: 0.5">&mdash; This page</span><br>
+          &nbsp;&nbsp;<span style="color: var(--text);">prototypes/</span> <span style="opacity: 0.5">&mdash; In-development experiments</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: var(--signal);">flow-education/</span> <span style="opacity: 0.5">&mdash; AI tutoring prototype</span><br>
+          &nbsp;&nbsp;<span style="color: var(--text);">labnotes/</span> <span style="opacity: 0.5">&mdash; Lab platform source</span><br>
+          &nbsp;&nbsp;<span style="color: var(--text);">scripts/</span> <span style="opacity: 0.5">&mdash; Automation (feed generation)</span><br>
+          &nbsp;&nbsp;<span style="color: var(--text);">docs/</span> <span style="opacity: 0.5">&mdash; Plans and specs</span><br>
+          <br>
+          <span style="color: var(--accent);">Separate repos:</span><br>
+          &nbsp;&nbsp;<span style="color: var(--signal);">lab.promptengines.com</span> <span style="opacity: 0.5">&mdash; Articles, signals, build stream</span><br>
+          &nbsp;&nbsp;<span style="color: var(--signal);">kaizen.promptengines.com</span> <span style="opacity: 0.5">&mdash; Kids learning platform</span><br>
+          &nbsp;&nbsp;<span style="color: var(--signal);">storybookstudio.promptengines.com</span> <span style="opacity: 0.5">&mdash; Story creator</span><br>
+          &nbsp;&nbsp;<span style="color: var(--signal);">consulting.promptengines.com</span> <span style="opacity: 0.5">&mdash; Services site</span><br>
+          &nbsp;&nbsp;<span style="color: var(--signal);">dashboard.promptengines.com</span> <span style="opacity: 0.5">&mdash; Internal metrics</span>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container footer-row">
+        <div>&copy; 2026 Prompt Engines</div>
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="https://lab.promptengines.com" target="_blank" rel="noopener noreferrer">Lab</a>
+          <a href="/prototypes/">Prototypes</a>
+          <a href="/careers/">Careers</a>
+          <a href="https://consulting.promptengines.com" target="_blank" rel="noopener noreferrer">Consulting</a>
+          <a href="/contact/">Contact Us</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var dropdown = document.querySelector('.nav-dropdown');
+      var trigger = dropdown && dropdown.querySelector('.nav-dropdown-trigger');
+      if (!dropdown || !trigger) return;
+
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        dropdown.classList.toggle('is-open');
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('is-open');
+        }
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') dropdown.classList.remove('is-open');
+      });
+    })();
+  </script>
+</body>
+</html>

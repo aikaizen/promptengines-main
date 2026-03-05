@@ -16,7 +16,7 @@
     rel="stylesheet"
   />
   <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Source+Code+Pro:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Source+Code+Pro:wght@400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
   />
   <style>
@@ -934,62 +934,18 @@
     }
 
     /* ═══════════════════════════════════════════
-       THEME: TERMINAL (Green / Bloomberg)
+       THEME: TACTICAL (Defense Contractor HUD)
        ═══════════════════════════════════════════ */
-    body.theme-terminal {
-      --ink: #080808;
-      --deep: #111111;
-      --panel: #1a1a1a;
-      --panel-2: #222222;
-      --line: #2a2a2a;
-      --text: #E8E4DD;
-      --muted: #8a8680;
-      --accent: #00E87B;
-      --accent-soft: rgba(0, 232, 123, 0.2);
-      --signal: #FFB800;
-      --font-display: 'Syne', sans-serif;
-      --font-sans: 'Outfit', sans-serif;
-      --shadow: 0 20px 70px rgba(0, 0, 0, 0.6);
-      background: #080808;
-    }
-
-    body.theme-terminal .view-switcher { background: rgba(8, 8, 8, 0.95); }
-    body.theme-terminal nav { background: rgba(8, 8, 8, 0.85); }
-
-    body.theme-terminal .diagram-bg {
-      background-image:
-        linear-gradient(rgba(0, 232, 123, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 232, 123, 0.06) 1px, transparent 1px);
-      background-size: 60px 60px;
-      opacity: 0.2;
-      animation: none;
-    }
-
-    body.theme-terminal .diagram-bg::after {
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0, 232, 123, 0.12), transparent);
-      animation: none;
-    }
-
-    body.theme-terminal .btn-primary { color: #080808; }
-    body.theme-terminal .btn-secondary { border-color: rgba(0, 232, 123, 0.4); }
-
-    body.theme-terminal .app-card:hover {
-      border-color: rgba(0, 232, 123, 0.55);
-    }
-
-    /* ═══════════════════════════════════════════
-       THEME: MILITARY / TACTICAL
-       ═══════════════════════════════════════════ */
-    body.theme-military {
+    body.theme-tactical {
       --ink: #000000;
-      --deep: #0a0c0f;
-      --panel: #12151a;
-      --panel-2: #1a1e24;
-      --line: #252a32;
-      --text: #ffffff;
-      --muted: #9aa3b0;
-      --accent: #FF8C00;
-      --accent-soft: rgba(255, 140, 0, 0.15);
+      --deep: #050505;
+      --panel: #0c0c0c;
+      --panel-2: #141414;
+      --line: #1e1e1e;
+      --text: #f5f5f5;
+      --muted: #7a8a9a;
+      --accent: #FFB800;
+      --accent-soft: rgba(255, 184, 0, 0.15);
       --signal: #DC2626;
       --font-display: 'Inter', sans-serif;
       --font-sans: 'Inter', sans-serif;
@@ -998,29 +954,89 @@
       background: #000000;
     }
 
-    body.theme-military .view-switcher { background: rgba(0, 0, 0, 0.95); }
-    body.theme-military nav { background: rgba(0, 0, 0, 0.9); }
-    body.theme-military .diagram-bg { display: none; }
+    body.theme-tactical .view-switcher { background: rgba(0, 0, 0, 0.95); }
+    body.theme-tactical nav { background: rgba(0, 0, 0, 0.9); }
 
-    body.theme-military .theme-overlay {
+    body.theme-tactical .diagram-bg {
+      display: block;
+      background-image:
+        linear-gradient(rgba(255, 184, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 184, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(rgba(255, 184, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 184, 0, 0.03) 1px, transparent 1px);
+      background-size: 200px 200px, 200px 200px, 40px 40px, 40px 40px;
+      opacity: 0.3;
+      animation: none;
+    }
+
+    body.theme-tactical .diagram-bg::after {
+      background: none;
+      animation: none;
+    }
+
+    body.theme-tactical .theme-overlay {
       display: block;
       background: repeating-linear-gradient(
         0deg, transparent, transparent 2px,
-        rgba(255, 255, 255, 0.025) 2px, rgba(255, 255, 255, 0.025) 4px
+        rgba(255, 184, 0, 0.02) 2px, rgba(255, 184, 0, 0.02) 4px
       );
     }
 
-    body.theme-military .corner-brackets { display: block; }
-    body.theme-military .btn-primary { color: #000; }
-    body.theme-military .btn-secondary { border-color: rgba(255, 140, 0, 0.4); }
+    body.theme-tactical .corner-brackets { display: block; }
+    body.theme-tactical .corner-brackets .bracket-tl,
+    body.theme-tactical .corner-brackets .bracket-tr,
+    body.theme-tactical .corner-brackets .bracket-bl,
+    body.theme-tactical .corner-brackets .bracket-br {
+      border-color: rgba(255, 184, 0, 0.5);
+    }
+    body.theme-tactical .btn-primary { color: #000; }
+    body.theme-tactical .btn-secondary { border-color: rgba(255, 184, 0, 0.4); }
 
-    body.theme-military .app-card:hover {
-      border-color: rgba(255, 140, 0, 0.55);
+    body.theme-tactical .app-card:hover {
+      border-color: rgba(255, 184, 0, 0.55);
+      box-shadow: 0 0 20px rgba(255, 184, 0, 0.1);
     }
 
-    body.theme-military .weekly-dot {
+    body.theme-tactical .weekly-dot {
       background: var(--signal);
       box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.6);
+    }
+
+    /* ═══════════════════════════════════════════
+       THEME: BLAYDE (Crimson / Dark)
+       ═══════════════════════════════════════════ */
+    body.theme-blayde {
+      --ink: #0a0a0a;
+      --deep: #0f0808;
+      --panel: #1a1010;
+      --panel-2: #201414;
+      --line: #2a1a1a;
+      --text: #f0e8e8;
+      --muted: #8a7070;
+      --accent: #DC143C;
+      --accent-soft: rgba(220, 20, 60, 0.15);
+      --signal: #ff4444;
+      --font-display: 'Inter', sans-serif;
+      --font-sans: 'Inter', sans-serif;
+      --shadow: 0 20px 70px rgba(0, 0, 0, 0.8);
+      background: #0a0a0a;
+    }
+
+    body.theme-blayde .view-switcher { background: rgba(10, 10, 10, 0.95); }
+    body.theme-blayde nav { background: rgba(10, 10, 10, 0.9); }
+    body.theme-blayde .diagram-bg { display: none; }
+
+    body.theme-blayde .theme-overlay {
+      display: block;
+      background: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(220, 20, 60, 0.12), transparent 70%);
+    }
+
+    body.theme-blayde .btn-primary { color: #0a0a0a; }
+    body.theme-blayde .btn-secondary { border-color: rgba(220, 20, 60, 0.4); }
+
+    body.theme-blayde .app-card:hover {
+      border-color: rgba(220, 20, 60, 0.5);
+      box-shadow: 0 0 20px rgba(220, 20, 60, 0.15);
     }
 
     /* ═══════════════════════════════════════════
@@ -1070,15 +1086,132 @@
       border-color: var(--line);
       box-shadow: 0 0 20px rgba(0, 255, 65, 0.08);
     }
+
+    /* ═══════════════════════════════════════════
+       THEME: MINIMALIST (Light / Warm)
+       ═══════════════════════════════════════════ */
+    body.theme-minimalist {
+      --ink: #faf8f5;
+      --deep: #f4f0ea;
+      --panel: #ffffff;
+      --panel-2: #f4f0ea;
+      --line: #e4dfd7;
+      --text: #1c2536;
+      --muted: #5a6477;
+      --accent: #b87333;
+      --accent-soft: rgba(184, 115, 51, 0.12);
+      --signal: #b87333;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-sans: 'DM Sans', sans-serif;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+      background: #faf8f5;
+    }
+
+    body.theme-minimalist body::after { opacity: 0; }
+    body.theme-minimalist::after { opacity: 0; }
+    body.theme-minimalist .diagram-bg { display: none; }
+    body.theme-minimalist .view-switcher { background: rgba(250, 248, 245, 0.95); }
+    body.theme-minimalist nav { background: rgba(250, 248, 245, 0.85); }
+
+    body.theme-minimalist .weekly-chip {
+      background: #ffffff;
+      border-color: var(--line);
+    }
+
+    body.theme-minimalist .rotator-line {
+      background: #ffffff;
+    }
+
+    body.theme-minimalist .btn-primary {
+      color: #ffffff;
+    }
+
+    body.theme-minimalist .btn-product {
+      background: #ffffff;
+      color: var(--text);
+      border-color: var(--line);
+    }
+
+    body.theme-minimalist .btn-product:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    body.theme-minimalist .hero-terminal {
+      background: #ffffff;
+      border-color: var(--line);
+    }
+
+    body.theme-minimalist .hero-terminal .terminal-head {
+      background: var(--deep);
+      color: var(--muted);
+    }
+
+    body.theme-minimalist .app-card {
+      background: #ffffff;
+      border-color: var(--line);
+    }
+
+    body.theme-minimalist .app-card:hover {
+      border-color: var(--accent);
+    }
+
+    body.theme-minimalist .commit-line {
+      border-color: var(--line);
+    }
+
+    body.theme-minimalist section {
+      border-color: var(--line);
+    }
+
+    body.theme-minimalist .follow {
+      background: var(--deep);
+    }
+
+    body.theme-minimalist .follow-card {
+      background: #ffffff;
+      border-color: var(--line);
+    }
+
+    body.theme-minimalist .flow-info-card {
+      background: #ffffff;
+      border-color: var(--line);
+    }
+
+    body.theme-minimalist .nav-dropdown-menu {
+      background: #ffffff;
+      border-color: var(--line);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    body.theme-minimalist .weekly-dot {
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(184, 115, 51, 0.5);
+    }
+
+    @keyframes pingBronze {
+      0% { box-shadow: 0 0 0 0 rgba(184, 115, 51, 0.5); }
+      70% { box-shadow: 0 0 0 6px rgba(184, 115, 51, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(184, 115, 51, 0); }
+    }
+
+    body.theme-minimalist .weekly-dot {
+      animation: pingBronze 2s infinite;
+    }
+
+    body.theme-minimalist .btn-secondary {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
   </style>
 </head>
   <body>
-  <script>!function(){var t=localStorage.getItem('pe-theme');if(t&&t!=='default')document.body.className='theme-'+t}()</script>
+  <script>!function(){var t=localStorage.getItem('pe-theme');if(t==='terminal'){t='default';localStorage.setItem('pe-theme','default')}if(t==='military'){t='tactical';localStorage.setItem('pe-theme','tactical')}if(t&&t!=='default'&&['tactical','hacker','blayde','minimalist'].indexOf(t)!==-1)document.body.className='theme-'+t}()</script>
 
   <!-- View Switcher Bar -->
   <div class="view-switcher" id="view-switcher">
-    <button onclick="cycleTheme()" aria-label="Switch visual perspective">
-      <span class="sw-icon">&#9684;</span> Switch Perspective
+    <button onclick="cycleTheme()" aria-label="Switch vibe">
+      <span class="sw-icon">&#10021;</span> Vibes
     </button>
     <span class="theme-label" id="theme-label"></span>
   </div>
@@ -1106,8 +1239,9 @@
             <div class="nav-dropdown-menu">
               <a href="https://kaizen.promptengines.com" target="_blank" rel="noopener noreferrer">Kaizen <span class="dd-tag">Kids</span></a>
               <a href="https://storybookstudio.promptengines.com" target="_blank" rel="noopener noreferrer">Storybook Studio <span class="dd-tag">Creator</span></a>
+              <a href="https://videoterminal.promptengines.com" target="_blank" rel="noopener noreferrer">Video Terminal <span class="dd-tag">Media</span></a>
+              <a href="https://norbu.promptengines.com" target="_blank" rel="noopener noreferrer">Norbu <span class="dd-tag">Language</span></a>
               <a>Anima <span class="dd-tag">Coming Soon</span></a>
-              <a>Norbu <span class="dd-tag">Coming Soon</span></a>
             </div>
           </li>
           <li class="nav-dropdown">
@@ -1141,6 +1275,8 @@
           <div class="hero-actions">
             <a href="https://kaizen.promptengines.com" class="btn btn-product" target="_blank" data-track="Kaizen">Kaizen</a>
             <a href="https://storybookstudio.promptengines.com" class="btn btn-product" target="_blank" data-track="Storybook Studio">Storybook Studio</a>
+            <a href="https://videoterminal.promptengines.com" class="btn btn-product" target="_blank" data-track="Video Terminal">Video Terminal</a>
+            <a href="https://norbu.promptengines.com" class="btn btn-product" target="_blank" data-track="Norbu">Norbu</a>
             <a href="https://lab.promptengines.com" class="btn btn-product" target="_blank" data-track="Lab">Lab</a>
             <a href="https://consulting.promptengines.com" class="btn btn-product" target="_blank" data-track="Consulting">Consulting</a>
           </div>
@@ -1341,12 +1477,15 @@
 
   <script>
     /* ═══ THEME SWITCHING ═══ */
-    var PE_THEMES = ['default', 'terminal', 'military', 'hacker'];
-    var PE_THEME_NAMES = { default: 'Copper Lab', terminal: 'Terminal', military: 'Tactical', hacker: 'Hacker' };
+    var PE_THEMES = ['default', 'tactical', 'hacker', 'blayde', 'minimalist'];
+    var PE_THEME_NAMES = { default: 'Copper Lab', tactical: 'Tactical', hacker: 'Hacker', blayde: 'Blayde', minimalist: 'Minimalist' };
     var currentTheme = localStorage.getItem('pe-theme') || 'default';
+    /* Migrate old theme names */
+    if (currentTheme === 'terminal') { currentTheme = 'default'; localStorage.setItem('pe-theme', 'default'); }
+    if (currentTheme === 'military') { currentTheme = 'tactical'; localStorage.setItem('pe-theme', 'tactical'); }
 
     function applyTheme(theme) {
-      document.body.classList.remove('theme-terminal', 'theme-military', 'theme-hacker');
+      document.body.classList.remove('theme-tactical', 'theme-hacker', 'theme-blayde', 'theme-minimalist');
       if (theme !== 'default') document.body.classList.add('theme-' + theme);
       currentTheme = theme;
       localStorage.setItem('pe-theme', theme);
