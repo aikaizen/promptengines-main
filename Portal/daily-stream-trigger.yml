@@ -1,0 +1,54 @@
+name: Daily Build Stream Trigger
+
+on:
+  schedule:
+    - cron: '55 23 * * *'  # 11:55 PM UTC daily
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  create-trigger:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full git history
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Generate commit data for today
+        run: node scripts/prepare-stream-data.js
+      
+      - name: Create draft trigger
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          echo "---
+date: $DATE
+created: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+status: pending
+---
+
+# Draft Build Stream — $DATE
+
+**Status:** Awaiting human synthesis
+
+Run: 
+\`\`\`
+node scripts/write-stream-article.js
+\`\`\`
+
+Then commit and push the generated article." > labnotes/build-stream/.draft-$DATE.md
+          
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          
+          git add labnotes/build-stream/
+          git commit -m "auto(build-stream): Draft trigger for $DATE [skip ci]" || echo "No changes to commit"
+          git push
