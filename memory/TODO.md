@@ -13,8 +13,8 @@
 - [ ] **GIVE ANDY CONTROL**: Provide credentials/access so I can manage domain, email, hosting without asking each time
 - [ ] **Rotate BOTH GitHub PATs** exposed in plaintext chat (Feb 27 & Feb 28)
   - Go to: github.com/settings/tokens
-  - Current tokens: `[REMOVED]` (Feb 27)
-  - And: `[REMOVED]` (Feb 28)
+  - Current tokens: [REMOVED — use env var GITHUB_TOKEN]
+  - Note: PATs should never be stored in files, only environment variables
 
 ---
 

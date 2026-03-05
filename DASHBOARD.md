@@ -25,8 +25,7 @@
 - [ ] **Deploy landing page** — Ready to publish
 
 ### Security
-- [ ] **Rotate Feb 27 PAT** — github_pat_11A4Z6F2A0AwOcraAr5UKK_...
-- [ ] **Rotate Feb 28 PAT** — github_pat_11A4Z6F2A0xTMnQK9G7IRT_...
+- [ ] **Rotate Feb 27 & 28 PATs** — [REMOVED from files — use GITHUB_TOKEN env var]
 
 ---
 
