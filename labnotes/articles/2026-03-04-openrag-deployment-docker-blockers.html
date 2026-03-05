@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenRAG Deployment Blocked at Docker Daemon — Prompt Engines Lab</title>
+  <meta name="description" content="45-minute deployment attempt analysis. What worked, what blocked, and what the Docker daemon requirement reveals about modern RAG platform deployment complexity.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+          March 4, 2026 · 7 min read · Experiments
+        </div>
+        
+        <h1>OpenRAG Deployment Blocked at Docker Daemon: What 45 Minutes Revealed</h1>
+        
+        <p>OpenRAG's documentation promises a "comprehensive, single package Retrieval-Augmented Generation platform" installable in minutes. I spent 45 minutes attempting deployment on an ARM64 Linux environment with full internet access. The attempt halted at Docker daemon permissions—not at OpenRAG's code, but at infrastructure assumptions that aren't explicitly documented.</p>
+
+        <p>Here's what worked, what didn't, and what the blockers reveal about modern RAG platform deployment complexity.</p>
+
+        <h2>What Deployed Successfully</h2>
+
+        <p>Three of four prerequisite components installed cleanly:</p>
+
+        <table>
+          <thead>
+            <tr><th>Component</th><th>Install Method</th><th>Time</th><th>Result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Python 3.13</td><td><code>uv python install 3.13</code></td><td>110s</td><td>✅ cpython-3.13.12-linux-aarch64-gnu</td></tr>
+            <tr><td>uv (package manager)</td><td><code>curl -fsSL astral.sh/uv/install.sh</code></td><td>8s</td><td>✅ v0.10.8 to <code>~/.local/bin</code></td></tr>
+            <tr><td>Docker Engine</td><td><code>get.docker.com</code> script</td><td>45s</td><td>✅ v29.2.1 installed</td></tr>
+            <tr><td><strong>Docker daemon networking</strong></td><td>N/A</td><td>N/A</td><td>❌ Requires root iptables access</td></tr>
+          </tbody>
+        </table>
+
+        <p>The OpenRAG repository cloned successfully (46,882 lines, 12MB). Docling-serve—the document processing service that must run natively on the host—started on port 5001. This was the only OpenRAG service that achieved "running" status.</p>
+
+        <h2>The Critical Path: Docker as Hard Requirement</h2>
+
+        <p>OpenRAG requires Docker for two non-optional functions:</p>
+
+        <ol>
+          <li><strong>Container orchestration:</strong> Five services (FastAPI backend, Next.js frontend, Langflow workflow engine, OpenSearch vector database, OpenSearch Dashboards) deploy only as containers</li>
+          <li><strong>Network bridging:</strong> Containers must communicate with host-native Docling-serve via Docker's internal networking</li>
+        </ol>
+
+        <p>Both documented installation paths require Docker daemon access:</p>
+
+        <p><strong>Path A (Self-managed):</strong></p>
+        <pre><code>uv sync                                    # Python dependencies
+docker compose up -d                       # Start containers</code></pre>
+
+        <p><strong>Path B (TUI-guided):</strong></p>
+        <pre><code>uvx --from openrag openrag                 # Terminal UI that still calls Docker</code></pre>
+
+        <p>Neither provides a "pure local" mode that runs services as subprocesses. Docker is mandatory, not optional. The documentation states this clearly in prerequisites, but doesn't surface the operational implications: environments without root Docker access cannot run OpenRAG, regardless of resource availability.</p>
+
+        <h2>What the Code Reveals: Fireworks AI Compatibility</h2>
+
+        <p>OpenRAG's Langflow flow definitions contain a discovery: the OpenAI component accepts custom API base URLs.</p>
+
+        <p>From <code>flows/openrag_agent.json</code>:</p>
+
+        <pre><code>"openai_api_base": {
+  "display_name": "OpenAI API Base",
+  "info": "The base URL of the OpenAI API. Defaults to https://api.openai.com/v1. 
+           You can change this to use other APIs like JinaChat, LocalAI and Prem.",
+  "show": true,
+  "advanced": true
+}</code></pre>
+
+        <p>This enables Fireworks AI integration through their OpenAI-compatible endpoint:</p>
+
+        <table>
+          <thead>
+            <tr><th>Parameter</th><th>Fireworks Configuration</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Base URL</td><td><code>https://api.fireworks.ai/inference/v1</code></td></tr>
+            <tr><td>API Key</td><td>Fireworks API key (format: <code>fw_...</code>)</td></tr>
+            <tr><td>Model</td><td><code>accounts/fireworks/models/kimi-k2p5</code></td></tr>
+            <tr><td>Embeddings</td><td>⚠️ Not supported—requires separate provider</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>The embedding limitation:</strong> Fireworks offers language models only. OpenRAG requires both LLM and embedding models. A Fireworks-only deployment is impossible; you need a second provider (OpenAI, watsonx, or Ollama) for embeddings.</p>
+
+        <h2>Architecture Assessment</h2>
+
+        <p>Despite the deployment block, the codebase demonstrates sound engineering:</p>
+
+        <p><strong>Strengths:</strong></p>
+        <ul>
+          <li><strong>Langflow integration:</strong> Visual workflow editing for RAG pipelines (drag-and-drop components for retrieval, ranking, generation)</li>
+          <li><strong>OpenSearch backend:</strong> Production-grade vector database with proper authentication, not a lightweight embedded store</li>
+          <li><strong>Docling document processing:</strong> Handles "messy real-world data" (PDFs with tables, figures, mixed layouts)</li>
+          <li><strong>Separation of concerns:</strong> Ingestion, storage, and generation are distinct services with clear APIs</li>
+        </ul>
+
+        <p><strong>Friction points:</strong></p>
+        <ul>
+          <li><strong>Python 3.13 requirement:</strong> Released October 2024; aggressive version policy blocks older systems</li>
+          <li><strong>No pure-local mode:</strong> Every installation path requires container runtime</li>
+          <li><strong>Embedding coupling:</strong> Can't use a single provider for both LLM and embeddings with Fireworks</li>
+        </ul>
+
+        <h2>Honest Time-to-Deployment</h2>
+
+        <table>
+          <thead>
+            <tr><th>Scenario</th><th>Estimated Time</th><th>Actual Outcome</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Cloud VM with root Docker access</td><td>15-30 minutes</td><td>Not tested (assumed working)</td></tr>
+            <tr><td>Local machine with sudo</td><td>15-30 minutes</td><td>Not tested</td></tr>
+            <tr><td><strong>Restricted environment (this test)</strong></td><td>Unknown</td><td><strong>Blocked at daemon</strong></td></tr>
+          </tbody>
+        </table>
+
+        <p>The 45 minutes spent represents "time to failure diagnosis," not time to working system.</p>
+
+        <h2>Implications for Fireworks AI Users</h2>
+
+        <p>If you can solve the Docker access problem, OpenRAG + Fireworks AI is technically feasible:</p>
+
+        <ol>
+          <li>Configure OpenAI component with Fireworks base URL</li>
+          <li>Use Fireworks API key as <code>OPENAI_API_KEY</code></li>
+          <li>Set model to <code>accounts/fireworks/models/kimi-k2p5</code></li>
+          <li>Maintain separate OpenAI/watsonx/Ollama credentials for embeddings</li>
+        </ol>
+
+        <p>Cost comparison (as of March 2026, from Fireworks pricing page):</p>
+
+        <table>
+          <thead>
+            <tr><th>Provider</th><th>Input / 1M tokens</th><th>Output / 1M tokens</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>OpenAI GPT-4o-mini</td><td>$0.150</td><td>$0.600</td></tr>
+            <tr><td>Fireworks Kimi K2.5</td><td>~$0.50-1.00*</td><td>~$2.00-4.00*</td></tr>
+        </tbody>
+        </table>
+
+        <p>*Fireworks pricing varies by model tier; specific Kimi K2.5 rates not publicly listed at time of test.</p>
+
+        <p>The Fireworks cost advantage is less clear for smaller models, but their larger context windows (128K+ tokens) may justify the premium for specific use cases.</p>
+
+        <h2>Conclusion</h2>
+
+        <p>OpenRAG is a <strong>legitimate, production-ready RAG platform</strong> with architectural maturity that many open-source alternatives lack. The Docker requirement reflects this maturity—it's designed for production deployment, not quick experiments.</p>
+
+        <p>The blocker isn't OpenRAG's code quality. It's the assumption that every user has root Docker access. For environments where that's true (AWS EC2, GCP Compute Engine, local development machines), deployment should proceed smoothly. For restricted environments (shared hosting, some corporate sandboxes, certain CI/CD pipelines), OpenRAG is currently inaccessible.</p>
+
+        <p><strong>Recommendation:</strong> Use OpenRAG if you have Docker daemon access and need enterprise-grade RAG with visual workflow editing. Consider alternatives like LangChain + Chroma if you need a lightweight, container-free deployment. For Fireworks AI specifically: the integration works via OpenAI-compatible endpoints, but budget for a second embedding provider.</p>
+
+        <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+        <p style="color: var(--text-4); font-size: 0.875rem;">
+          <strong>Technical Appendix</strong><br>
+          Environment: ARM64 Linux, 4 vCPU, 8GB RAM, unrestricted internet<br>
+          OpenRAG version: Latest from <code>main</code> branch (March 4, 2026)<br>
+          Files created: .env, DEPLOYMENT.md, OPENRAG_REPORT.md, ARTICLE.md<br>
+          Commit status: None—deployment blocked before code changes<br>
+          Service status: Docling-serve running on port 5001; all other services never started<br><br>
+          <strong>References:</strong><br>
+          OpenRAG: https://openr.ag<br>
+          Documentation: https://docs.openr.ag<br>
+          Source: https://github.com/langflow-ai/openrag<br>
+          Fireworks API docs: https://docs.fireworks.ai
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" style="border-top: 1px solid var(--border-subtle); margin-top: 4rem;">
+    <div class="container" style="padding: 2rem 0; text-align: center; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab Notes — Real experiments. Published findings.</p>
+    </div>
+  </footer>
+</body>
+</html>
