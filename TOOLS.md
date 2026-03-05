@@ -50,6 +50,31 @@ Things like:
 - Default speaker: Kitchen HomePod
 ```
 
+## Web Search — Brave API (Free Tier)
+
+**Required for:** `web_search` tool, research tasks, trend analysis
+
+**Get free API key:** https://api.search.brave.com/app/engines/web/pages
+- Free tier: 2,000 queries/month
+- No credit card required
+
+**Setup:**
+```bash
+# Option 1: Configure via openclaw
+openclaw configure --section web braveApiKey=YOUR_KEY
+
+# Option 2: Environment variable
+export BRAVE_API_KEY=YOUR_KEY
+# Add to ~/.openclaw/secrets/brave.env
+```
+
+**Verify:**
+```bash
+web_search "test query"  # Should return results
+```
+
+---
+
 ## Lab Notes Article Format — CRITICAL
 
 **Always write HTML articles, not Markdown.**
