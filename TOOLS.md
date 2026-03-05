@@ -50,6 +50,37 @@ Things like:
 - Default speaker: Kitchen HomePod
 ```
 
+## Lab Notes Article Format — CRITICAL
+
+**Always write HTML articles, not Markdown.**
+
+The Vercel-hosted lab.promptengines.com serves static HTML files. Markdown files 404.
+
+### Article Template Location
+`/home/stableclaw/.openclaw/workspace/archive/promptengines-main/labnotes/articles/YYYY-MM-DD-{slug}.html`
+
+### Required HTML Structure
+- Full HTML5 document with `<!DOCTYPE html>`
+- Include Lab styles: `<link rel="stylesheet" href="../styles.css">`
+- Wrap content in `<article class="section">` with `.article-content` class
+- Include topbar navigation from existing articles
+- Add footer from existing articles
+
+### Never Do This
+❌ Write `.md` files and assume they'll work  
+❌ Skip the HTML wrapper and navigation  
+
+### Always Do This
+✅ Write complete `.html` files with full styling  
+✅ Copy navigation structure from existing articles  
+✅ Test by checking if HTML renders with Lab styles  
+
+### Reference Articles
+- `2026-03-04-openrag-deployment-docker-blockers.html` — Good structure example
+- `2026-02-28-character-consistency-34-styles.html` — Older but valid reference
+
+---
+
 ## Why Separate?
 
 Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
