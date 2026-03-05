@@ -2,27 +2,30 @@
 
 ## 🔴 High Priority: PAT + Workflow
 
-### GitHub Workflow Scope Issue
+### GitHub Workflow Scope Issue — ⏳ STILL PENDING
 **Problem:** Current PAT lacks `workflow` scope — can't push GitHub Actions files.
 
 **Needed:** New PAT with these scopes:
-- `repo` (full repository access)
-- `workflow` (update GitHub Actions)
+- ☑️ `repo` (full repository access) — ✅ Current PAT has this
+- ☑️ `workflow` (update GitHub Actions workflows) — ❌ **MISSING**
+
+**Status:** 
+- Workspace repo pushes: ✅ Working (history rewrite fixed secret scanning)
+- `promptengines-main` content pushes: ✅ Working  
+- Workflow file push: ❌ Blocked — needs `workflow` scope
 
 **Action required from you:**
 1. Go to https://github.com/settings/tokens
-2. Generate new classic PAT
-3. Check scopes: ☑️ repo, ☑️ workflow
-4. Share securely or update remote URL
+2. Generate new **classic PAT** (not fine-grained)
+3. Check scopes: ☑️ repo, ☑️ **workflow**
+4. Share securely or update remote URL yourself:
+   ```bash
+   cd /home/stableclaw/.openclaw/workspace/archive/promptengines-main
+   git remote set-url origin https://<NEW_PAT_WITH_WORKFLOW>@github.com/aikaizen/promptengines-main.git
+   git push origin main
+   ```
 
-**Then:**
-```bash
-cd /home/stableclaw/.openclaw/workspace/archive/promptengines-main
-git remote set-url origin https://<NEW_PAT>@github.com/aikaizen/promptengines-main.git
-git push origin main
-```
-
-**Also fixes:** Secret scanning blocks on old PAT in TODO.md history
+**Workflow file ready:** `08129c6` — committed locally, waiting for push
 
 ---
 
@@ -69,7 +72,19 @@ Target: `.html` files with Lab styling
 
 ## 🆕 New Tasks
 
-### X Post Analysis — moritzkremb
-**Status:** Waiting for content extraction  
-**URL:** https://x.com/moritzkremb/status/2029304864719667335  
-**Note:** X is blocking direct fetch — need alternative method or user-provided content
+### ✅ X Post — moritzkremb OpenClaw Hardening Guide
+**Status:** Content received, skill created, implementation tracking  
+**URL:** https://x.com/moritzkremb/status/2029304864719667335
+
+**Skill created:** `labnotes/skills/openclaw-hardening/SKILL.md`
+
+**Implementation checklist for this workspace:**
+- [ ] 0) Install clawddocs skill (troubleshooting baseline)
+- [ ] 2) Memory flow — verify MEMORY.md + daily files working
+- [ ] 3) Model fallbacks — add to config
+- [ ] 4) **Secrets → env file** (currently in files — CRITICAL)
+- [ ] 5) Telegram optimizations (allowlists, topic prompts)
+- [ ] 6) **Brave API key** (missing — blocks web search)
+- [ ] 7) Cron health checks — add to HEARTBEAT.md
+- [ ] 8) Operational accounts — create agent-owned GitHub/Google
+- [ ] 9) Install summarize skill
