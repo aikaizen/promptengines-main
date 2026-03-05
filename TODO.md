@@ -92,8 +92,26 @@
 
 ---
 
+## 🔴 DEPLOYMENT — Manual Vercel Deploy Needed
+
+**Issue:** GitHub integration not triggering builds despite `vercel.json: github.enabled: true`
+
+**Likely cause:** Project-level GitHub disconnect in Vercel dashboard
+
+**Immediate fix:**
+```bash
+cd /home/stableclaw/.openclaw/workspace/archive/promptengines-main
+npx vercel --prod
+```
+
+**Long-term fix:** Check Vercel dashboard → Settings → Git → Reconnect GitHub
+
+**Blocked articles:** 7 HTML articles committed but not live (404)
+
+---
+
 **Created:** March 5, 2026  
-**Last Updated:** March 5, 2026 — 10:28 PM UTC
+**Last Updated:** March 5, 2026 — 11:40 PM UTC
 
 ---
 
