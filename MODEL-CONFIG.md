@@ -1,11 +1,35 @@
 # Model Configuration for OpenClaw
 
-## Current Model Distribution
+## Current Model Distribution (Per moritzkremb Hardening)
 
 | Priority | Model | Provider | Use Case |
 |----------|-------|----------|----------|
 | **Primary** | `anthropic/claude-sonnet-4-6` | Anthropic | Default reasoning, complex tasks |
-| **Fallback** | `fireworks/accounts/fireworks/models/kimi-k2p5` | Fireworks | Cost-efficient, high throughput |
+| **Fallback 1** | `fireworks/accounts/fireworks/models/kimi-k2p5` | Fireworks | Cost-efficient, high throughput |
+| **Fallback 2** | `openrouter/auto` | OpenRouter | Provider redundancy |
+| **Fallback 3** | `kilo/gateway-models` | Gateway | Local/offline fallback |
+
+## Recommended Default Stack
+
+```yaml
+# agents.defaults.model configuration
+primary: anthropic/claude-sonnet-4-6
+fallbacks:
+  - fireworks/accounts/fireworks/models/kimi-k2p5
+  - openrouter/auto
+  - kilo/gateway-models
+
+# Aliases for convenience
+models:
+  opus:
+    alias: anthropic/claude-opus-4-6
+  sonnet:
+    alias: anthropic/claude-sonnet-4-6
+  kimi:
+    alias: fireworks/accounts/fireworks/models/kimi-k2p5
+```
+
+**Principle:** Optimize for reliability first, then cost.
 
 ## Fireworks Models for Coding
 

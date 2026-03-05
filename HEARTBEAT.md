@@ -26,13 +26,28 @@ StoryBook Studio:
 - [ ] Domain purchased (storybookstudio.ai/.io)
 - [ ] Landing page refinements
 
-## 📝 Memory Maintenance
+## 📝 Memory Maintenance (Per moritzkremb Hardening)
 
 Every few days:
 1. Read through recent `memory/YYYY-MM-DD.md` files
 2. Identify significant events, lessons, insights
 3. Update `MEMORY.md` with distilled learnings
 4. Remove outdated info from MEMORY.md
+
+**Daily memory rules:**
+- [ ] Create today's file if missing
+- [ ] Append major decisions/learnings
+- [ ] Curate important items into MEMORY.md
+
+## 🔧 Cron Health Checks (Per moritzkremb Hardening)
+
+- [ ] Check critical cron jobs for stale `lastRunAtMs`
+- [ ] If stale > threshold, report and suggest force-run
+- [ ] Log brief exception reports
+
+**Critical cron jobs to monitor:**
+- `daily-stream-trigger` (build stream automation)
+- Any user-defined recurring tasks
 
 ## ✅ Done Criteria
 
