@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluating Large Language Models: A Framework for Production Selection — Prompt Engines Lab</title>
+  <meta name="description" content="
+ Evaluating Large Language Models: A Framework for Production Selection">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+    .footnotes { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--text-3); }
+    .footnotes ol { padding-left: 1.5rem; }
+    .footnotes li { margin: 0.5rem 0; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+          2026-03-03 · Experiments
+        </div>
+        
+        <h1>Evaluating Large Language Models: A Framework for Production Selection</h1>
+<p>Selecting a primary language model for production use requires testing across dimensions that benchmark suites miss. Latency variance, retry rates, and context-window degradation don&#39;t appear in leaderboards but dominate operational costs. We are designing a systematic evaluation to move beyond surface-level comparisons. This article documents our framework, preliminary observations, and the experiments we plan to run.</p>
+<h2>The Gap in Public Benchmarks</h2>
+<p>Published evaluations focus on standardized tasks: MMLU for reasoning, HumanEval for coding, Arena Elo for aggregate quality. These metrics matter but fail to capture production realities:</p>
+<ul>
+<li><strong>Latency variance</strong> matters more than mean latency when you&#39;re running thousands of parallel requests</li>
+<li><strong>Retry rates</strong> multiply nominal costs by 1.5–3× in practice</li>
+<li><strong>Context degradation</strong>—performance at 4K versus 64K context—determines whether advertised specs match real usage</li>
+<li><strong>Output consistency</strong> affects whether automated pipelines can trust model responses without human verification</li>
+</ul>
+<p>Our goal is a testing framework that measures these operational variables, not just headline benchmark scores.</p>
+<h2>The Models Under Evaluation</h2>
+<p>We are testing four models that occupy the &quot;large context, high capability&quot; segment:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Provider Access</th>
+<th>Context Window</th>
+<th>Price (Input/Output per 1M)<sup><a href="#fn1" id="ref1">[1]</a></sup></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Claude Opus 4.6</td>
+<td>Anthropic direct</td>
+<td>200K</td>
+<td>$15.00 / $75.00</td>
+</tr>
+<tr>
+<td>Claude Sonnet 4.6</td>
+<td>Anthropic direct</td>
+<td>200K</td>
+<td>$3.00 / $15.00</td>
+</tr>
+<tr>
+<td>Kimi 2.5</td>
+<td>Fireworks AI</td>
+<td>256K</td>
+<td>$0.80 / $0.80</td>
+</tr>
+<tr>
+<td>MiniMax 2.5</td>
+<td>Fireworks AI</td>
+<td>1M</td>
+<td>$0.26 / $0.26</td>
+</tr>
+</tbody></table>
+<p><sup><a href="#fn1" id="ref1">[1]</a></sup>: Pricing verified March 2026 from provider documentation. Anthropic pricing at <a href="https://anthropic.com/pricing">https://anthropic.com/pricing</a>, Fireworks at <a href="https://fireworks.ai/pricing">https://fireworks.ai/pricing</a>.</p>
+<p>The pricing spread is significant: Opus costs 28× more per token than MiniMax on the input side, 288× more on output. Whether that premium translates to operational value depends on variables public benchmarks don&#39;t capture.</p>
+<h2>Our Evaluation Framework</h2>
+<p>We are designing tests across four dimensions:</p>
+<h3>1. Quality Distribution Testing</h3>
+<p><strong>The Question:</strong> Do models maintain consistent quality across prompts, or does variance introduce operational risk?</p>
+<p><strong>Planned Methodology:</strong></p>
+<ul>
+<li>Curate 100–200 representative tasks from our actual workload: code review, documentation generation, structured data extraction, reasoning chains</li>
+<li>Submit each task 10× per model (to measure variance, not just point estimates)</li>
+<li>Human rating on 1–5 rubric with explicit criteria</li>
+<li>Calculate mean, standard deviation, and percentile distributions</li>
+<li>Measure inter-rater reliability (multiple raters on subset)</li>
+</ul>
+<p><strong>Preliminary Observation:</strong> In limited testing, we&#39;ve noticed Kimi 2.5 produces more consistent formatting and structure across similar prompts. Opus occasionally returns verbose, over-explained responses where concise output was requested. We need systematic measurement to determine if this pattern holds.</p>
+<p><strong>What We Need:</strong> A rating rubric; human rating time budget (~40 hours); statistical analysis plan for comparing distributions (not just means).</p>
+<h3>2. Latency Under Load</h3>
+<p><strong>The Question:</strong> How do models behave at production-scale request volumes, not single-request benchmarks?</p>
+<p><strong>Planned Methodology:</strong></p>
+<ul>
+<li>Test at 1, 10, 50, 100+ concurrent requests</li>
+<li>Measure time-to-first-token (TTFT) and tokens-per-second (TPS) at p50, p95, p99</li>
+<li>Test at multiple context sizes: 1K, 4K, 16K, 32K, 64K input tokens</li>
+<li>Run from multiple geographic origins (us-east-1, us-west-2, eu-west-1)</li>
+<li>Include retry/backoff behavior under rate limiting</li>
+</ul>
+<p><strong>What We Need:</strong> Load testing infrastructure; consistent prompt templates at varying context sizes; monitoring for rate limit behavior (429 responses, retry-after headers).</p>
+<h3>3. Retry and Failure Analysis</h3>
+<p><strong>The Question:</strong> What percentage of requests require retry, and what&#39;s the total cost-to-completion?</p>
+<p><strong>Planned Methodology:</strong></p>
+<ul>
+<li>Run 1000+ requests per model through automated pipeline</li>
+<li>Log: success on first try; success after retry; failed after max retries; timeout</li>
+<li>Calculate &quot;true cost&quot; = (nominal price) × (1 + retry rate)</li>
+<li>Analyze failure patterns by task type and context size</li>
+</ul>
+<p><strong>Hypothesis to Test:</strong> Cheaper models (MiniMax) may have higher retry rates for complex reasoning, negating cost advantage. We&#39;ve observed anecdotal cases where MiniMax produces structurally correct but semantically incomplete outputs for multi-step reasoning tasks.</p>
+<p><strong>What We Need:</strong> Automated pipeline with retry logic; structured logging; categorization of failure modes (hallucination, formatting error, refusal, timeout).</p>
+<h3>4. Context Window Reality Check</h3>
+<p><strong>The Question:</strong> Do models maintain quality at advertised context limits, or does performance degrade before the theoretical maximum?</p>
+<p><strong>Planned Methodology:</strong></p>
+<ul>
+<li>&quot;Needle in a haystack&quot; test: place specific fact at varying positions in long context (beginning, middle, end), test retrieval accuracy</li>
+<li>Reasoning task complexity at 4K, 16K, 32K, 64K contexts</li>
+<li>Measure latency degradation as context grows</li>
+</ul>
+<p><strong>What We Need:</strong> Synthetic long-context test sets; automated accuracy scoring for needle retrieval; complexity-calibrated reasoning tasks.</p>
+<h2>Preliminary Allocation Strategy</h2>
+<p>Based on limited experience and the pricing structure, we&#39;ve adopted a tiered allocation for our current development phase:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Current Role</th>
+<th>Rationale (To Be Tested)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Kimi 2.5</strong></td>
+<td>Default for prototyping and internal tools</td>
+<td>Lowest cost for acceptable quality; Fireworks provides fast, reliable hosting</td>
+</tr>
+<tr>
+<td><strong>Claude Sonnet 4.6</strong></td>
+<td>Customer-facing features requiring &quot;safe&quot; refusal patterns</td>
+<td>Anthropic&#39;s safety training may reduce edge-case risk; needs validation</td>
+</tr>
+<tr>
+<td><strong>Claude Opus 4.6</strong></td>
+<td>Complex multi-step analysis where reasoning depth critical</td>
+<td>Reserved for tasks where failure cost exceeds price premium</td>
+</tr>
+<tr>
+<td><strong>MiniMax 2.5</strong></td>
+<td>Summarization, classification, low-complexity batch jobs</td>
+<td>Price point enables high-volume experimentation; quality ceiling unclear</td>
+</tr>
+</tbody></table>
+<p><strong>Explicit Uncertainty:</strong> These allocations are provisional. We lack sufficient data to confirm whether Kimi&#39;s consistency advantage outweighs Sonnet&#39;s safety benefits, or whether MiniMax&#39;s retry rate makes it truly cheaper than Kimi for our workloads. The framework above is designed to replace these assumptions with measurements.</p>
+<h2>What We Hope to Learn</h2>
+<p><strong>Specific Questions:</strong></p>
+<ol>
+<li>Does Kimi 2.5&#39;s quality variance (if measured lower) translate to measurable operational savings (fewer retries, less human verification)?</li>
+<li>At what volume does Opus&#39;s price premium become indefensible, even for complex tasks?</li>
+<li>Does MiniMax&#39;s 1M context window work reliably at full length, or does effective context degrade earlier?</li>
+<li>What&#39;s the latency penalty (if any) for running Kimi through Fireworks versus theoretical direct access?</li>
+<li>How does Anthropic&#39;s direct API reliability compare to Fireworks-hosted alternatives for our geographic distribution?</li>
+</ol>
+<p><strong>Expected Timeline:</strong></p>
+<ul>
+<li>Framework implementation: 2–3 weeks</li>
+<li>Initial data collection: 4–6 weeks  </li>
+<li>Analysis and publication: 2 weeks</li>
+<li>Ongoing monitoring: Continuous</li>
+</ul>
+<h2>A Note on &quot;Vibe&quot; vs. Data</h2>
+<p>Currently, our preference for Kimi 2.5 as a default rests on:</p>
+<ul>
+<li><strong>Pricing transparency:</strong> $0.80/1M is straightforward to calculate against</li>
+<li><strong>Fireworks hosting:</strong> Fast TTFT in limited testing; 99.9%+ uptime in our brief monitoring</li>
+<li><strong>Anecdotal consistency:</strong> Less output variance in manual spot-checking</li>
+</ul>
+<p>These are not findings. They are hypotheses to test. The framework above is designed to replace &quot;feels consistent&quot; with measured variance, &quot;seems fast&quot; with latency distributions, and &quot;appears cheaper&quot; with total cost-to-completion including retries.</p>
+<h2>Call for Collaboration</h2>
+<p>If you are running similar evaluations—or have data to share on model consistency, retry rates, or context-window performance—we would welcome exchange. Standardized testing methodologies benefit the ecosystem more than isolated benchmark runs. Contact: [<a href="mailto:lab@promptengines.com">lab@promptengines.com</a>]</p>
+<hr>
+<h2>Planned Experiments Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Experiment</th>
+<th>Sample Size</th>
+<th>Variables Measured</th>
+<th>Timeline</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Quality distribution</td>
+<td>200 tasks × 10 samples × 4 models = 8,000 rated outputs</td>
+<td>Mean, std dev, percentile scores, inter-rater reliability</td>
+<td>4 weeks</td>
+</tr>
+<tr>
+<td>Latency under load</td>
+<td>10,000 requests per model at 4 concurrency levels</td>
+<td>TTFT p50/p95/p99, TPS, geographic variance</td>
+<td>2 weeks</td>
+</tr>
+<tr>
+<td>Retry analysis</td>
+<td>5,000 requests per model through automated pipeline</td>
+<td>First-pass success rate, retry count, true cost multiplier</td>
+<td>3 weeks</td>
+</tr>
+<tr>
+<td>Context window</td>
+<td>500 needle tests + 200 reasoning tasks</td>
+<td>Accuracy at 4K/16K/32K/64K, latency degradation</td>
+<td>2 weeks</td>
+</tr>
+</tbody></table>
+<p><strong>Total planned requests for full evaluation:</strong> ~40,000 API calls per model</p>
+<hr>
+<h2>Sources</h2>
+<p><sup><a href="#fn1" id="ref1">[1]</a></sup>: Anthropic API pricing (<a href="https://www.anthropic.com/pricing">https://www.anthropic.com/pricing</a>). Fireworks AI pricing (<a href="https://fireworks.ai/pricing">https://fireworks.ai/pricing</a>). Accessed March 2026.
+<sup><a href="#fn2" id="ref2">[2]</a></sup>: Model capability claims from provider documentation. Context windows verified from API specifications.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer style="padding: 3rem 1.5rem; border-top: 1px solid var(--border); margin-top: 4rem;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div style="color: var(--text-3);">
+        <span style="font-weight: 600;">Prompt Engines Lab</span> — Experimental notes on building with AI
+      </div>
+      <div style="display: flex; gap: 1.5rem;">
+        <a href="https://promptengines.com" style="color: var(--text-3); text-decoration: none;">PromptEngines.com</a>
+        <a href="https://github.com/aikaizen" style="color: var(--text-3); text-decoration: none;">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

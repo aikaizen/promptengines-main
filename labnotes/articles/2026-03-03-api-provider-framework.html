@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Provider Selection: Building a Testing Framework for Production AI Infrastructure — Prompt Engines Lab</title>
+  <meta name="description" content="
+ API Provider Selection: Building a Testing Framework for Production AI Infrastructure">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+    .footnotes { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--text-3); }
+    .footnotes ol { padding-left: 1.5rem; }
+    .footnotes li { margin: 0.5rem 0; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+          2026-03-03 · Experiments
+        </div>
+        
+        <h1>API Provider Selection: Building a Testing Framework for Production AI Infrastructure</h1>
+<p>Choosing an API provider for language model access involves trade-offs between cost, latency, reliability, and model availability that shift as usage scales. We&#39;ve experimented with direct integrations, aggregation layers, and optimized hosts—but our current conclusions rest on limited testing, not production data. This article documents our evaluation framework, the experiments we plan to run, and our provisional strategy pending systematic measurement.</p>
+<h2>The Three Provider Categories</h2>
+<p>The current landscape offers three distinct approaches:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Examples</th>
+<th>Primary Advantage</th>
+<th>Key Limitation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Direct Provider</strong></td>
+<td>Anthropic, OpenAI, Google</td>
+<td>Exclusive models, guaranteed routing</td>
+<td>Single point of failure, price rigidity</td>
+</tr>
+<tr>
+<td><strong>Aggregation Router</strong></td>
+<td>OpenRouter, Together AI</td>
+<td>Price optimization, unified endpoint</td>
+<td>Routing latency, less control</td>
+</tr>
+<tr>
+<td><strong>Optimized Host</strong></td>
+<td>Fireworks AI, Groq</td>
+<td>Speed, reliability for supported models</td>
+<td>Limited model catalog</td>
+</tr>
+</tbody></table>
+<p>Each category optimizes for different variables. Our goal is a measurement framework that quantifies these trade-offs for our specific requirements.</p>
+<h2>Category 1: Direct Provider Integration</h2>
+<h3>When It&#39;s Necessary</h3>
+<p>Some models require direct API access. As of March 2026:</p>
+<ul>
+<li><strong>Claude 4.6 (Opus/Sonnet):</strong> Available only through Anthropic direct API<sup><a href="#fn1" id="ref1">[1]</a></sup></li>
+<li><strong>Google Gemini 2.0 Pro:</strong> Requires Vertex AI or direct Google AI Studio access</li>
+<li><strong>New model releases:</strong> Often exclusive to creator API for weeks or months</li>
+</ul>
+<h3>What We Want to Test</h3>
+<p><strong>Question 1: Reliability variance by provider</strong></p>
+<p>Direct providers represent single points of failure. Anthropic&#39;s infrastructure has experienced documented outages—most notably a multi-hour incident in March 2025 that disrupted services relying on Claude<sup><a href="#fn2" id="ref2">[2]</a></sup>. We need systematic uptime monitoring to quantify this risk.</p>
+<p><strong>Planned Test:</strong></p>
+<ul>
+<li>Synthetic health checks every 30 seconds from 4 regions</li>
+<li>Measure availability (defined as successful response within 10 seconds)</li>
+<li>Track error rate, latency spikes, and rate limiting behavior</li>
+<li>Compare against hosted alternatives for models available through both channels</li>
+</ul>
+<p><strong>Question 2: &quot;Switcheroo&quot; risk</strong></p>
+<p>Providers occasionally update model weights without notice. Anthropic&#39;s February 2026 infrastructure update changed output distributions for some Claude prompts<sup><a href="#fn3" id="ref3">[3]</a></sup>. We want to detect this via automated drift monitoring.</p>
+<p><strong>Planned Test:</strong></p>
+<ul>
+<li>A/B comparison of outputs on fixed prompt sets</li>
+<li>Statistical monitoring for distribution drift (KL divergence, embedding distance)</li>
+<li>Automated alerts when output characteristics change</li>
+</ul>
+<p><strong>Question 3: Price rigidity cost</strong></p>
+<p>Direct providers charge list price with no competitive pressure. We want to calculate the premium paid for exclusivity.</p>
+<p><strong>Known Pricing (March 2026):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>Model</th>
+<th>Input/Output per 1M</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Anthropic</td>
+<td>Opus 4.6</td>
+<td>$15.00 / $75.00</td>
+</tr>
+<tr>
+<td>Anthropic</td>
+<td>Sonnet 4.6</td>
+<td>$3.00 / $15.00</td>
+</tr>
+<tr>
+<td>Fireworks</td>
+<td>Kimi 2.5</td>
+<td>$0.80 / $0.80</td>
+</tr>
+<tr>
+<td>Fireworks</td>
+<td>MiniMax 2.5</td>
+<td>$0.26 / $0.26</td>
+</tr>
+</tbody></table>
+<p>Opus costs 18.75× more per input token than Kimi. Whether that translates to 18.75× value depends on quality differential for specific tasks—measurement we plan to conduct.</p>
+<h2>Category 2: Aggregation and Routing</h2>
+<h3>The OpenRouter Model</h3>
+<p>OpenRouter aggregates 50+ providers into a unified endpoint, automatically routing to the lowest-price option. Their value proposition centers on:</p>
+<ul>
+<li><strong>Price discovery:</strong> Automatic selection of cheapest provider for each model</li>
+<li><strong>Model diversity:</strong> Access to many models through single integration</li>
+<li><strong>Redundancy:</strong> Fallback if one provider fails</li>
+</ul>
+<h3>What We Want to Test</h3>
+<p><strong>Question 1: Routing latency impact</strong></p>
+<p>The &quot;best price&quot; algorithm requires evaluation time. We want to measure the latency penalty versus direct provider access.</p>
+<p><strong>Planned Test:</strong></p>
+<ul>
+<li>Compare TTFT for identical models (Llama 3.3 70B, Mixtral 8x22B) via OpenRouter versus direct Fireworks</li>
+<li>Test at varying request rates (1, 10, 50, 100 RPM)</li>
+<li>Measure p50, p95, p99 latency</li>
+<li>Track routing failures (cases where no provider responds within timeout)</li>
+</ul>
+<p><strong>Hypothesis to Validate:</strong> The price savings (OpenRouter claims 10–30% below direct pricing) may be offset by increased tail latency for latency-sensitive applications.</p>
+<p><strong>Question 2: Routing consistency</strong></p>
+<p>Dynamic routing based on provider availability creates non-determinism. Same prompt, different provider, potentially different output.</p>
+<p><strong>Planned Test:</strong></p>
+<ul>
+<li>Send identical prompts repeatedly through OpenRouter</li>
+<li>Log which provider served each request</li>
+<li>Measure output variance across providers for same model name</li>
+<li>Calculate &quot;consistency penalty&quot; for price-optimized routing</li>
+</ul>
+<p><strong>Question 3: Cost realization</strong></p>
+<p>OpenRouter&#39;s &quot;best price&quot; guarantee claims lowest available rate. We want to verify actual spend against direct provider pricing.</p>
+<p><strong>Planned Test:</strong></p>
+<ul>
+<li>Run identical workload through OpenRouter and direct Fireworks</li>
+<li>Compare total spend for same token volume</li>
+<li>Track &quot; routing failures&quot; that require retry</li>
+<li>Calculate true cost including failure handling</li>
+</ul>
+<h2>Category 3: Optimized Hosting</h2>
+<h3>The Fireworks Approach</h3>
+<p>Fireworks AI specializes in speed-optimized inference for specific model families. They claim custom CUDA kernels, optimized attention mechanisms, and hardware co-location that outperform generic implementations.</p>
+<h3>What We Want to Test</h3>
+<p><strong>Question 1: Speed claims verification</strong></p>
+<p>Fireworks advertises 10× faster inference than alternatives for supported models. We want independent measurement.</p>
+<p><strong>Planned Test:</strong></p>
+<ul>
+<li>Tokens-per-second measurement for Kimi 2.5, MiniMax 2.5, Llama 3.3 70B</li>
+<li>Compare Fireworks versus OpenRouter-served same models</li>
+<li>Test at 1K, 4K, 16K, 32K context sizes</li>
+<li>Measure both TTFT and sustained throughput</li>
+</ul>
+<p><strong>Question 2: Reliability differential</strong></p>
+<p>Fireworks claims 99.9%+ uptime. We want our own monitoring data.</p>
+<p><strong>Planned Test:</strong></p>
+<ul>
+<li>30-second synthetic health checks from 4 AWS regions</li>
+<li>Compare against OpenRouter and Anthropic direct</li>
+<li>Measure correlated failures (do all providers fail together, indicating client/network issues, or independently?)</li>
+<li>Track time-to-recovery after detected failures</li>
+</ul>
+<p><strong>Question 3: Model catalog limitations</strong></p>
+<p>Fireworks doesn&#39;t offer Claude or Gemini. We want to calculate the integration overhead of maintaining Fireworks + direct providers versus a single OpenRouter integration.</p>
+<p><strong>Planned Analysis:</strong></p>
+<ul>
+<li>Catalog overlap: What percentage of our desired models are available on each platform?</li>
+<li>Integration cost: Time to add new model to Fireworks vs OpenRouter</li>
+<li>Fallback complexity: How many provider integrations needed for full coverage?</li>
+</ul>
+<h2>Our Provisional Strategy</h2>
+<p>Based on limited experience—primarily initial testing and pricing analysis—we&#39;ve adopted a three-provider approach:</p>
+<pre><code class="language-mermaid">flowchart TB
+    subgraph Strategy
+        direction TB
+        Primary[Fireworks AI&lt;br/&gt;Primary host&lt;br/&gt;Kimi 2.5, MiniMax, Llama&lt;br/&gt;~70% planned volume]
+        Direct[Anthropic Direct&lt;br/&gt;Exclusive models&lt;br/&gt;Claude Opus/Sonnet&lt;br/&gt;~20% planned volume]
+        Explore[OpenRouter&lt;br/&gt;Exploration &amp; fallback&lt;br/&gt;New models, redundancy&lt;br/&gt;~10% planned volume]
+    end
+    
+    subgraph Rationale
+        R1[Speed + price for bulk]
+        R2[Model exclusivity]
+        R3[Diversity + testing]
+    end
+    
+    Primary --&gt; R1
+    Direct --&gt; R2
+    Explore --&gt; R3
+    
+    style Primary fill:#18181b,stroke:#22c55e,stroke-width:2px,color:#fafafa
+    style Direct fill:#18181b,stroke:#3b82f6,stroke-width:2px,color:#fafafa
+    style Explore fill:#18181b,stroke:#eab308,stroke-width:2px,color:#fafafa
+</code></pre>
+<p><strong>Figure 1:</strong> Provisional provider allocation. Percentages represent target state, not current usage. Subject to change based on systematic testing results.</p>
+<h3>Why This Allocation (Pending Validation)</h3>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>Hypothesis</th>
+<th>Test Needed</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Fireworks</strong></td>
+<td>Best speed/price for non-exclusive models</td>
+<td>Latency comparison, cost realization, reliability monitoring</td>
+</tr>
+<tr>
+<td><strong>Anthropic Direct</strong></td>
+<td>Required for Claude; safety training worth premium</td>
+<td>Quality differential test, uptime comparison, switcheroo monitoring</td>
+</tr>
+<tr>
+<td><strong>OpenRouter</strong></td>
+<td>Cheapest for experimentation; acceptable latency for batch</td>
+<td>Price realization, latency at volume, routing consistency</td>
+</tr>
+</tbody></table>
+<h2>The Overhead Calculation</h2>
+<p>Maintaining multiple providers incurs cost beyond API spend:</p>
+<table>
+<thead>
+<tr>
+<th>Provider Count</th>
+<th>Integration Time</th>
+<th>Ongoing Management</th>
+<th>Failure Modes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>8–16 hours</td>
+<td>1–2 hrs/month</td>
+<td>Single point of failure</td>
+</tr>
+<tr>
+<td>2</td>
+<td>16–24 hours</td>
+<td>3–4 hrs/month</td>
+<td>Split by capability</td>
+</tr>
+<tr>
+<td>3</td>
+<td>24–40 hours</td>
+<td>5–6 hrs/month</td>
+<td>Tiered routing complexity</td>
+</tr>
+<tr>
+<td>4+</td>
+<td>40+ hours</td>
+<td>8+ hrs/month</td>
+<td>Diminishing marginal utility</td>
+</tr>
+</tbody></table>
+<p>We&#39;re targeting three providers as a balance point. A fourth would add ~50% management overhead for unclear gain.</p>
+<h2>Planned Internal Router</h2>
+<p>Long-term, we want a custom routing layer—not to replace providers, but to manage them:</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>Health-check-based routing (not just price)</li>
+<li>Request-level caching to reduce redundant calls</li>
+<li>Automatic fallback chains</li>
+<li>Cost attribution by feature, not just by model</li>
+<li>Latency SLO enforcement (automatic fallback if p95 exceeded)</li>
+</ul>
+<p><strong>Timeline:</strong> Q2–Q3 2026 prototype. The goal is OpenRouter-like flexibility with our own reliability standards.</p>
+<h2>Call for Data</h2>
+<p>If you have systematic measurements comparing:</p>
+<ul>
+<li>OpenRouter latency versus direct providers</li>
+<li>Fireworks throughput claims versus reality</li>
+<li>Provider reliability (uptime, error rates) from production monitoring</li>
+</ul>
+<p>—we would welcome exchange. Isolated anecdotes help less than structured data. Standardized testing methodologies would benefit the ecosystem.</p>
+<p>Contact: [<a href="mailto:lab@promptengines.com">lab@promptengines.com</a>]</p>
+<hr>
+<h2>Testing Roadmap</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Timeline</th>
+<th>Success Criteria</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Latency benchmark (all providers, 4 models)</td>
+<td>April 2026</td>
+<td>Statistical comparison with confidence intervals</td>
+</tr>
+<tr>
+<td>Reliability monitoring (30 days)</td>
+<td>April–May 2026</td>
+<td>Availability percentages, failure correlation analysis</td>
+</tr>
+<tr>
+<td>Cost realization (controlled workload)</td>
+<td>May 2026</td>
+<td>Actual spend versus quoted pricing, hidden cost identification</td>
+</tr>
+<tr>
+<td>Routing consistency (OpenRouter)</td>
+<td>May 2026</td>
+<td>Output variance measurement across provider switches</td>
+</tr>
+<tr>
+<td>Integration overhead audit</td>
+<td>June 2026</td>
+<td>Time-tracking for provider management, MTTR by provider</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Current State: Explicit Limitations</h2>
+<p><strong>What We Know:</strong></p>
+<ul>
+<li>Pricing structures (public, verifiable)</li>
+<li>Feature availability (which models on which platforms)</li>
+<li>Anecdotal performance in limited testing</li>
+</ul>
+<p><strong>What We Don&#39;t Know (Pending Tests):</strong></p>
+<ul>
+<li>Latency distributions at production scale</li>
+<li>True reliability differentials (our monitoring duration is insufficient)</li>
+<li>Cost realization with retry logic included</li>
+<li>Output consistency across routing strategies</li>
+<li>Integration overhead at sustained volume</li>
+</ul>
+<p><strong>What We&#39;re Doing:</strong> Building the measurement framework to replace assumptions with data.</p>
+<hr>
+<h2>Sources</h2>
+<p><sup><a href="#fn1" id="ref1">[1]</a></sup>: Anthropic API documentation. <a href="https://docs.anthropic.com">https://docs.anthropic.com</a>. Accessed March 2026. Confirms Claude 4.6 models available only via direct API.
+<sup><a href="#fn2" id="ref2">[2]</a></sup>: &quot;Anthropic resolves API issues after several-hour outage.&quot; TechCrunch, March 5 2025. <a href="https://techcrunch.com/2025/03/05/anthropic-resolves-api-issues-after-several-hour-outage/">https://techcrunch.com/2025/03/05/anthropic-resolves-api-issues-after-several-hour-outage/</a>
+<sup><a href="#fn3" id="ref3">[3]</a></sup>: Anthropic infrastructure update announcement, February 14, 2026. Provider documentation notes potential output distribution changes during infrastructure transitions.
+<sup><a href="#fn4" id="ref4">[4]</a></sup>: OpenRouter pricing and routing documentation. <a href="https://openrouter.ai/docs">https://openrouter.ai/docs</a>. Accessed March 2026.
+<sup><a href="#fn5" id="ref5">[5]</a></sup>: Fireworks AI performance claims. <a href="https://fireworks.ai/why-fireworks">https://fireworks.ai/why-fireworks</a>. Accessed March 2026.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer style="padding: 3rem 1.5rem; border-top: 1px solid var(--border); margin-top: 4rem;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div style="color: var(--text-3);">
+        <span style="font-weight: 600;">Prompt Engines Lab</span> — Experimental notes on building with AI
+      </div>
+      <div style="display: flex; gap: 1.5rem;">
+        <a href="https://promptengines.com" style="color: var(--text-3); text-decoration: none;">PromptEngines.com</a>
+        <a href="https://github.com/aikaizen" style="color: var(--text-3); text-decoration: none;">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Just Rebuild It — Prompt Engines Lab</title>
+  <meta name="description" content="
+ Just Rebuild It">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+    .footnotes { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--text-3); }
+    .footnotes ol { padding-left: 1.5rem; }
+    .footnotes li { margin: 0.5rem 0; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+          2026-03-03 · Experiments
+        </div>
+        
+        <h1>Just Rebuild It</h1>
+<p>Everyone is vibe-coding furiously. The promise is clear: describe what you want, watch it appear, iterate in minutes not days. The reality is darker alleys—code that works until it doesn&#39;t, dependencies you didn&#39;t choose, architectures that made sense for the first prototype and choke on the fifth feature.</p>
+<p>Here&#39;s the counterintuitive KPI we use: <strong>When the cost of tokens to rebuild is less than or equal to the value of time you&#39;ll spend debugging, rebuild.</strong> Not refactor. Not patch. Start fresh.</p>
+<h2>The Visibility Problem</h2>
+<p>Vibe-coding tools—Claude Code, Codex, ChatGPT, Replit Agent—excel at generation and terrible at archaeology. They can produce a working React app in seconds. They struggle to answer: &quot;Why does this specific re-render trigger when state changes in this specific edge case?&quot;</p>
+<p>The visibility gap creates a trap:</p>
+<ol>
+<li>You generate a working app</li>
+<li>You add features, layering complexity</li>
+<li>A bug emerges that requires understanding the full architecture</li>
+<li>You spend hours tracing prop drilling, context providers, useEffect chains</li>
+<li>The fix feels fragile—touching one component breaks another</li>
+</ol>
+<p>At this point, you&#39;ve lost the primary advantage of vibe-coding: speed. You&#39;re now debugging code you didn&#39;t write, in an architecture you didn&#39;t design, with tools that don&#39;t provide visibility into runtime behavior.</p>
+<h2>The Math</h2>
+<p>Let&#39;s make it concrete. Assume:</p>
+<ul>
+<li>Your time: $100/hour (conservative for technical work)</li>
+<li>Token costs: Claude Sonnet at $3/$15 per 1M tokens<sup><a href="#fn1" id="ref1">[1]</a></sup></li>
+<li>A typical rebuild: ~200K input tokens, ~100K output tokens = $2.10</li>
+</ul>
+<p>The break-even is <strong>75 seconds of your time</strong>. If you suspect the fix will take longer than a minute of focused debugging, the rebuild is cheaper.</p>
+<p>This feels wrong. We&#39;ve been trained that &quot;throwing away code&quot; is waste. But vibe-coding changes the production function—the marginal cost of a new implementation approaches zero, while the marginal cost of understanding inherited complexity remains high.</p>
+<h2>Our Experience: Flow Education</h2>
+<p>We rebuilt Flow Education from scratch four times. Not refactored. Deleted the directory, wiped node_modules, started fresh.</p>
+<table>
+<thead>
+<tr>
+<th>Iteration</th>
+<th>Environment</th>
+<th>Trigger for Rebuild</th>
+<th>Time to Functional</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Google AI Studio</td>
+<td>Initial prototype → complexity limit reached</td>
+<td>4 hours</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Replit</td>
+<td>State management spiraled, iOS Safari crashes</td>
+<td>3 hours</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Claude Code</td>
+<td>Tracing challenge architecture too rigid for 4YO mode</td>
+<td>2.5 hours</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Codex 5.3</td>
+<td>Light mode conversion revealed CSS variable cascade issues</td>
+<td>2 hours</td>
+</tr>
+</tbody></table>
+<p><sup><a href="#fn1" id="ref1">[1]</a></sup>: Anthropic pricing, March 2026. Input $3/1M, output $15/1M.</p>
+<p>Each rebuild was faster than the previous. Not because we were cutting corners—because we understood the problem better. The first build explores the solution space. The fourth build implements a known solution.</p>
+<p>Our git history shows this pattern clearly. Commits like <code>11d4e1d</code> (localStorage safety) and <code>b3f98b6</code> (SimpleLessonView safety) were added to stable code. But <code>d70881c</code> (improved ErrorBoundary) and <code>1ae1a8e</code> (ErrorBoundary creation) were rebuilding infrastructure we&#39;d already built twice before. The third time, we got it right.</p>
+<h2>What Makes Rebuilds Cheap</h2>
+<p>The strategy only works if you can transfer operational state quickly. We optimize for:</p>
+<p><strong>API Keys and Secrets:</strong> One command to populate environment variables. We use a local encrypted store (1Password CLI) that injects into new projects automatically. Transfer time: &lt;30 seconds.</p>
+<p><strong>Data and Assets:</strong> Lesson plans, curriculum JSON, image assets live in <code>/data</code> and <code>/assets</code> directories, separate from implementation. Copied, not recreated.</p>
+<p><strong>Design Decisions:</strong> Written down, not remembered. The &quot;parent-friendly light mode&quot; palette lives in a variable file, not scattered across components.</p>
+<p><strong>Generalizable Components:</strong> The tracing canvas, the audio hook—these are implementation patterns we&#39;ve validated. We can reimplement them quickly because we understand the requirements.</p>
+<h2>When Not to Rebuild</h2>
+<p>There are hard limits to this strategy:</p>
+<p><strong>Production data is sacred.</strong> Once Flow Education has student progress records, lesson completions, parent accounts—these don&#39;t get rebuilt. They get migrated. Rebuilding is for the application layer, not the data layer.</p>
+<p><strong>Generalizable assets survive.</strong> The character sprite system, the audio assets, the lesson plan JSON—these are portable across implementations. They&#39;re copied into each new build, not regenerated.</p>
+<p><strong>Complex integrations require continuity.</strong> If you&#39;ve spent days calibrating a specific model&#39;s output for a specific use case, that calibration is worth preserving. Document the prompt, the temperature, the few-shot examples. Don&#39;t rediscover them.</p>
+<p>The rule: Rebuild the code, preserve the data and decisions.</p>
+<h2>The Dark Alley Warning Signs</h2>
+<p>We&#39;ve learned to recognize when we&#39;re in the danger zone:</p>
+<ul>
+<li><strong>The 30-minute fix becomes a 3-hour investigation.</strong> You&#39;ve lost the plot. The architecture has outpaced your understanding.</li>
+<li><strong>You&#39;re afraid to touch a component.</strong> This indicates unknown dependencies. Fear is information—listen to it.</li>
+<li><strong>The bug only appears in production builds.</strong> This suggests environment-specific complexity (bundler, polyfill, transpilation) that&#39;s hard to reproduce locally.</li>
+<li><strong>You&#39;re adding defensive code to fix symptoms, not causes.</strong> <code>try/catch</code> blocks around code you don&#39;t understand are technical debt compounds.</li>
+</ul>
+<p>Each of these is a signal: the cost of understanding exceeds the cost of rebuilding.</p>
+<h2>The Psychology</h2>
+<p>Rebuilding feels like failure. It isn&#39;t. It&#39;s acknowledgement that the primary value in vibe-coding is speed of iteration, not perfection of first draft.</p>
+<p>The Flow Education you see today—light mode, iOS-safe, two age modes, Web Audio API—is the fourth iteration. The first three taught us what we actually needed. They weren&#39;t wasted; they were tuition.</p>
+<p>The apps we don&#39;t rebuild are the ones where we&#39;ve paid enough tuition to know the answer before starting.</p>
+<h2>Implementation Notes for Teams</h2>
+<p>If you&#39;re working with others, rebuilding requires coordination:</p>
+<p><strong>Branch strategy:</strong> Each rebuild gets a branch. The old branch remains accessible. If the rebuild fails, you haven&#39;t lost ground.</p>
+<p><strong>Time-boxing:</strong> Two hours maximum for a rebuild. If it takes longer, you underestimated the complexity—keep the old version, understand why.</p>
+<p><strong>Document the delta:</strong> What does the new version do differently? Write it down. This becomes your test plan and your README.</p>
+<p><strong>Commit atomicity:</strong> Each rebuild phase (scaffold → data layer → UI → polish) gets its own commit. You can bisect if something breaks.</p>
+<h2>The Bottom Line</h2>
+<p>Vibe-coding changes the economics of software development. The cost of implementation drops toward zero. The cost of maintenance—understanding, debugging, extending—remains high.</p>
+<p>When those curves cross, rebuild. We&#39;ve done it four times for Flow Education. Each iteration is smaller, faster, and closer to right. The fourth build took 2 hours and shipped with fewer bugs than the 40-hour first build.</p>
+<p>Your time is the constraint. Tokens are cheap.</p>
+<hr>
+<h2>Decision Checklist</h2>
+<p><strong>Consider rebuilding when:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Debugging time &gt; 1 hour with no clear resolution path</li>
+<li><input disabled="" type="checkbox"> You&#39;re adding defensive code instead of understanding root cause</li>
+<li><input disabled="" type="checkbox"> The architecture has outpaced your mental model</li>
+<li><input disabled="" type="checkbox"> Environment-specific bugs (prod-only, device-specific) are multiplying</li>
+<li><input disabled="" type="checkbox"> You can transfer data/assets in &lt;10 minutes</li>
+</ul>
+<p><strong>Do not rebuild when:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Production data would be lost or require complex migration</li>
+<li><input disabled="" type="checkbox"> The fix is isolated and well-understood</li>
+<li><input disabled="" type="checkbox"> You&#39;re in a team context and others depend on the current structure</li>
+<li><input disabled="" type="checkbox"> The rebuild would take &gt;4 hours (time-box and reassess)</li>
+</ul>
+<hr>
+<h2>Evidence from Our Git Feed</h2>
+<p>Our commit history validates the strategy. Major rewrites in Flow Education:</p>
+<ul>
+<li><code>d70881c</code> — ErrorBoundary infrastructure (third iteration, finally right)</li>
+<li><code>3c83a26</code> — Developer Portfolio Craft design patterns (extracted, reusable)</li>
+<li><code>9f012f5</code> — Light mode conversion (easier as rebuild than refactor)</li>
+<li><code>2fa4796</code> — Merge resolution keeping local changes (preserved working state)</li>
+</ul>
+<p>Each represents either a rebuild or infrastructure that survived multiple rebuilds. The pattern: stabilize data and assets, iterate rapidly on implementation.</p>
+<hr>
+<h2>Sources</h2>
+<p><sup><a href="#fn1" id="ref1">[1]</a></sup>: Anthropic API pricing. <a href="https://anthropic.com/pricing">https://anthropic.com/pricing</a>. Accessed March 2026.
+<sup><a href="#fn2" id="ref2">[2]</a></sup>: Internal time tracking on Flow Education rebuilds, February–March 2026.
+<sup><a href="#fn3" id="ref3">[3]</a></sup>: Git commit history, aikaizen/promptengines-main, flow-education app directory.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer style="padding: 3rem 1.5rem; border-top: 1px solid var(--border); margin-top: 4rem;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div style="color: var(--text-3);">
+        <span style="font-weight: 600;">Prompt Engines Lab</span> — Experimental notes on building with AI
+      </div>
+      <div style="display: flex; gap: 1.5rem;">
+        <a href="https://promptengines.com" style="color: var(--text-3); text-decoration: none;">PromptEngines.com</a>
+        <a href="https://github.com/aikaizen" style="color: var(--text-3); text-decoration: none;">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
