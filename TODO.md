@@ -29,20 +29,47 @@
 
 ---
 
-## 🟡 Medium Priority: Article Format Fix
+## 🟡 Medium Priority: Article Format Fix — ✅ DONE
 
 ### Convert March 3 Articles to HTML
-Current: `.md` files (404 on live site)
-Target: `.html` files with Lab styling
+**Status:** COMPLETED — All 5 articles converted to HTML
 
-**Files needing conversion:**
-- `2026-03-03-model-selection-framework.md`
-- `2026-03-03-api-provider-framework.md`
-- `2026-03-03-just-talk-to-it.md`
-- `2026-03-03-just-rebuild-it.md`
-- `2026-03-03-zen-and-the-art-of-vibecoding.md`
+**Commit:** `f98aff8` — content(lab): Convert March 3 articles to HTML format
 
-**Template:** Use `2026-03-04-openrag-deployment-docker-blockers.html` structure
+**Converted:**
+- ✅ `2026-03-03-model-selection-framework.html`
+- ✅ `2026-03-03-api-provider-framework.html`
+- ✅ `2026-03-03-just-talk-to-it.html`
+- ✅ `2026-03-03-just-rebuild-it.html`
+- ✅ `2026-03-03-zen-and-the-art-of-vibecoding.html`
+
+**Note:** .md originals preserved. Can delete after verifying HTML works on live site.
+
+---
+
+## 🔴 CURRENT BLOCKER: Article Publishing
+
+### Why Articles Aren't Live on lab.promptengines.com
+
+**Root cause:** `vercel.json` has `github: { enabled: false }`
+
+**Effect:** GitHub pushes don't trigger Vercel deploy
+
+**All articles are committed but not deployed:**
+- March 3 HTML files: `f98aff8` (5 articles)
+- March 4 HTML files: `05804a7`, `69779e7` (2 articles)
+
+**To publish:**
+1. **Option A (Recommended):** Enable GitHub integration
+   ```json
+   // vercel.json
+   { "github": { "enabled": true } }
+   ```
+   Then push → auto-deploy
+
+2. **Option B (Manual):** Run `npx vercel --prod` in archive/promptengines-main
+
+3. **Option C (Dashboard):** Trigger manual deploy via Vercel web UI
 
 ---
 
@@ -73,18 +100,25 @@ Target: `.html` files with Lab styling
 ## 🆕 New Tasks
 
 ### ✅ X Post — moritzkremb OpenClaw Hardening Guide
-**Status:** Content received, skill created, implementation tracking  
+**Status:** IMPLEMENTED — 7/9 items complete  
 **URL:** https://x.com/moritzkremb/status/2029304864719667335
 
 **Skill created:** `labnotes/skills/openclaw-hardening/SKILL.md`
 
-**Implementation checklist for this workspace:**
-- [ ] 0) Install clawddocs skill (troubleshooting baseline)
-- [ ] 2) Memory flow — verify MEMORY.md + daily files working
-- [ ] 3) Model fallbacks — add to config
-- [ ] 4) **Secrets → env file** (currently in files — CRITICAL)
-- [ ] 5) Telegram optimizations (allowlists, topic prompts)
-- [ ] 6) **Brave API key** (missing — blocks web search)
-- [ ] 7) Cron health checks — add to HEARTBEAT.md
-- [ ] 8) Operational accounts — create agent-owned GitHub/Google
-- [ ] 9) Install summarize skill
+**Implementation completed:**
+| Item | Status |
+|------|--------|
+| 0) Brew installed | ✅ 5.0.16 |
+| 0) clawddocs skill | ⏳ Rate limited — retry later |
+| 1) Personalization | ✅ SOUL/USER/IDENTITY done |
+| 2) Memory flow | ✅ Working |
+| 3) Model fallbacks | ✅ 3-tier stack configured |
+| 4) Secrets → env file | ✅ `~/.openclaw/secrets/` (700/600 perms) |
+| 5) Telegram | ✅ Already configured |
+| 6) Brave API | ⏳ Template ready — needs key (free tier) |
+| 7) Cron health checks | ✅ Added to HEARTBEAT.md |
+| 8) Operational accounts | ⏳ Optional free accounts |
+| 9) Summarize skill | ✅ Installed via cargo (v0.2.0) |
+
+**Action needed from you:**
+- Get free Brave API key: https://api.search.brave.com/app/engines/web/pages (2,000 queries/month)
