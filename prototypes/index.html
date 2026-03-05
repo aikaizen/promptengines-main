@@ -579,6 +579,8 @@
             <a class="nav-dropdown-trigger is-active" role="button" tabindex="0">Prototypes</a>
             <div class="nav-dropdown-menu">
               <a href="/prototypes/" class="is-active">Overview</a>
+              <a href="/prototypes/flow-education/">Flow Education <span class="dd-tag">EdTech</span></a>
+              <a href="/Vajra-Upaya/">Vajra-Upaya <span class="dd-tag">Tooling</span></a>
               <a href="/prototypes/resources/">Resources <span class="dd-tag">APIs</span></a>
               <a href="/prototypes/vibes/">Vibes <span class="dd-tag">Design</span></a>
             </div>
@@ -745,23 +747,25 @@
   </div>
   <script>
     (function () {
-      var dropdown = document.querySelector('.nav-dropdown');
-      var trigger = dropdown && dropdown.querySelector('.nav-dropdown-trigger');
-      if (!dropdown || !trigger) return;
-
-      trigger.addEventListener('click', function (e) {
-        e.preventDefault();
-        dropdown.classList.toggle('is-open');
+      var dropdowns = document.querySelectorAll('.nav-dropdown');
+      dropdowns.forEach(function (dropdown) {
+        var trigger = dropdown.querySelector('.nav-dropdown-trigger');
+        if (!trigger) return;
+        trigger.addEventListener('click', function (e) {
+          e.preventDefault();
+          dropdowns.forEach(function (other) { if (other !== dropdown) other.classList.remove('is-open'); });
+          dropdown.classList.toggle('is-open');
+        });
       });
 
       document.addEventListener('click', function (e) {
-        if (!dropdown.contains(e.target)) {
-          dropdown.classList.remove('is-open');
-        }
+        dropdowns.forEach(function (dropdown) {
+          if (!dropdown.contains(e.target)) dropdown.classList.remove('is-open');
+        });
       });
 
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') dropdown.classList.remove('is-open');
+        if (e.key === 'Escape') dropdowns.forEach(function (d) { d.classList.remove('is-open'); });
       });
     })();
   </script>
