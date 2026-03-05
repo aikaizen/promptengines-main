@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Public APIs Classification — Usefulness Review — Prompt Engines Lab Notes</title>
+  <meta name="description" content="A tiered usefulness review of the public-apis repository, classifying ~400 APIs from Critical infrastructure to Avoid, with lab-specific recommendations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>Mar 4, 2026</span><span>12 min read</span><span>Infrastructure</span></div>
+      <h1>Public APIs Classification — Usefulness Review</h1>
+      <p class="dek">A tiered classification of roughly 400 APIs from the public-apis repository, scored from Critical infrastructure essentials down to services worth avoiding. Includes lab-specific recommendations for PromptEngines projects.</p>
+
+      <article class="content">
+        <p><strong>Source:</strong> <a href="https://github.com/public-apis/public-apis" target="_blank" rel="noopener noreferrer">public-apis/public-apis</a><br /><strong>Reviewer:</strong> Andy Stable (AI) &amp; Human Co-Author</p>
+
+        <h2>Classification System</h2>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">Tier        Description                                             Use Case
+Critical    Essential infrastructure APIs for production systems      Auth, storage, payment, monitoring
+High        Reliable, well-documented, genuinely useful for real apps Geocoding, email, validation, finance
+Medium      Useful for specific niches or prototyping                 Niche data, hobbies, entertainment
+Low         Novelty, placeholders, or significant limitations         Demos only, unreliable, or toy APIs
+Avoid       Deprecated, broken, or problematic                        Security issues, no HTTPS, dead services</div>
+          <figcaption>Five-tier classification system used throughout this review.</figcaption>
+        </figure>
+
+        <h2>Critical Tier — Infrastructure Essentials</h2>
+
+        <h3>Authentication &amp; Authorization</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API             Why Critical                    Notes
+Auth0           Production-grade auth platform  Industry standard, scalable
+Stytch          Modern passwordless auth        Good for new projects
+Firebase Auth   Google's auth infrastructure    Free tier generous</div>
+          <figcaption>Authentication APIs rated Critical.</figcaption>
+        </figure>
+
+        <h3>Cloud Storage &amp; File Sharing</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API             Why Critical                     Notes
+AWS S3          Object storage standard          Not in list but referenced via Storj
+Storj           Decentralized storage            Good alternative to centralized
+Pinata          IPFS pinning                     For web3/decentralized apps
+Web3 Storage    1TB free IPFS storage            Generous free tier</div>
+          <figcaption>Cloud storage APIs rated Critical.</figcaption>
+        </figure>
+
+        <h3>Email &amp; Communication</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API             Why Critical                     Notes
+Mailgun         Transactional email              Use Mailjet as alternative (not listed)
+Mailjet         Marketing + transactional        Good free tier
+SendGrid        Industry standard                Not in this list
+Gmail API       User email access                OAuth required, powerful</div>
+          <figcaption>Email APIs rated Critical.</figcaption>
+        </figure>
+
+        <h3>Monitoring &amp; Status</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API                    Why Critical                  Notes
+Instatus               Status page management        Important for SaaS
+Google Analytics       Web analytics standard         Essential for understanding users
+Azure DevOps Health    Azure resource monitoring      For Azure users</div>
+          <figcaption>Monitoring APIs rated Critical.</figcaption>
+        </figure>
+
+        <h3>Payments &amp; Business</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API        Why Critical              Notes
+Square     Payment processing        Good for small business
+Stripe     Industry standard         Surprisingly not in this list (not listed)</div>
+          <figcaption>Payment APIs rated Critical.</figcaption>
+        </figure>
+
+        <h2>High Utility — Reliable &amp; Production-Ready</h2>
+
+        <h3>Geocoding &amp; Location</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API             Why High              Use Case                    Notes
+IPstack         IP geolocation        Location-based features     Fast, accurate
+Google Maps     Standard geocoding    Location services           Industry standard (not fully listed)
+Nager.Date      Public holidays       Scheduling apps             90+ countries, free
+Calendarific    Worldwide holidays    Calendar integration        Good coverage</div>
+          <figcaption>Geocoding and location APIs rated High.</figcaption>
+        </figure>
+
+        <h3>Data Validation</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API                   Why High              Use Case            Notes
+Numverify             Phone validation      User verification    Global coverage
+Mailboxlayer          Email validation      Form validation      Reduces bounce rates
+vatlayer              VAT number validation EU business           Essential for B2B EU
+Smarty (US Address)   Address verification  E-commerce           Accurate, USPS-backed</div>
+          <figcaption>Data validation APIs rated High.</figcaption>
+        </figure>
+
+        <h3>Finance &amp; Markets</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API             Why High          Use Case              Notes
+Marketstack     Stock market data Financial apps        Reliable, JSON format
+CoinGecko       Crypto data       Crypto tracking       Free tier generous
+CoinMarketCap   Crypto prices     Market data           Industry standard
+Fixer           Forex rates       Currency conversion   Simple API
+Frankfurter     Exchange rates    Free alternative      ECB rates</div>
+          <figcaption>Finance and market data APIs rated High.</figcaption>
+        </figure>
+
+        <h3>Security &amp; Anti-Malware</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API                    Why High           Use Case              Notes
+VirusTotal             File/URL analysis  Security scanning     Industry standard
+Google Safe Browsing   URL checking       Link validation       Google's threat intel
+URLScan.io             URL analysis       Security research     Detailed results
+AbuseIPDB              IP reputation      Abuse prevention      Community-driven
+AlienVault OTX         Threat intel       Security operations   IOC feeds</div>
+          <figcaption>Security APIs rated High.</figcaption>
+        </figure>
+
+        <h3>Development &amp; DevOps</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API             Why High              Use Case              Notes
+GitHub          Repository management Developer tools       Essential for dev workflows
+GitLab          Git management        CI/CD                 Self-hostable alternative
+Docker Hub      Container registry    Deployment            Standard for containers
+CircleCI        CI/CD pipeline        Automation            Industry standard
+Travis CI       Continuous integration Testing              Well-established
+Bitrise         Mobile CI/CD          iOS/Android builds    Specialized for mobile
+Postman Echo    API testing           Test endpoints        Simple validation</div>
+          <figcaption>Development and DevOps APIs rated High.</figcaption>
+        </figure>
+
+        <h3>Cloud &amp; Infrastructure</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API             Why High           Use Case                Notes
+Dropbox         File storage       User file sync          Reliable, good SDK
+Google Drive    Cloud storage      Document management     Enterprise standard
+OneDrive        Microsoft storage  Office integration      For Microsoft shops
+Box             Enterprise storage Business files          Enterprise features
+Pantry          JSON storage       Quick prototyping       Free, simple</div>
+          <figcaption>Cloud and infrastructure APIs rated High.</figcaption>
+        </figure>
+
+        <h3>Communication</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API        Why High              Use Case                   Notes
+Trello     Project management    Task tracking              Kanban boards
+Slack      Team messaging        Notifications              Surprisingly not listed
+Discord    Community             Bot integrations           Not in this list
+Gitter     Developer chat        Open source communities    Good for public projects</div>
+          <figcaption>Communication APIs rated High.</figcaption>
+        </figure>
+
+        <h2>Medium Utility — Niche or Prototyping</h2>
+
+        <h3>Weather</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API               Why Medium          Limitations
+Weatherstack      Good data           Free tier limited, paid can be pricey
+OpenWeatherMap    Standard alternative Not in this list
+WeatherAPI        Good free tier       Not listed here</div>
+          <figcaption>Weather APIs rated Medium.</figcaption>
+        </figure>
+
+        <h3>Books &amp; Education</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API             Why Medium        Use Case
+Google Books    Book data         Search, previews
+Open Library    Catalog data      Free alternative
+Gutendex        Project Gutenberg Classic literature
+PoetryDB        Poetry data       Niche content</div>
+          <figcaption>Books and education APIs rated Medium.</figcaption>
+        </figure>
+
+        <h3>Art &amp; Design</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API                    Why Medium       Use Case
+Metropolitan Museum    Art collection   Cultural apps
+Harvard Art Museums    Art data         Educational
+Rijksmuseum            Dutch art        Specialized
+Iconfinder             Icons            Design resources
+EmojiHub               Emoji data       Fun features</div>
+          <figcaption>Art and design APIs rated Medium.</figcaption>
+        </figure>
+
+        <h3>Animals (Novelty/Demo)</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API                    Why Medium        Use Case
+Dog CEO                Dog pictures      Demo apps, fun features
+Cat Facts              Cat facts         Chatbots, entertainment
+RandomFox/RandomDuck   Animal images     Placeholders
+PlaceKitten            Placeholder images Development
+HTTP Cat/Dog           HTTP status memes  Error pages</div>
+          <figcaption>Animal APIs rated Medium. All are essentially entertainment/placeholder tier — useful for demos, not production features.</figcaption>
+        </figure>
+
+        <h3>Anime &amp; Entertainment</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API             Why Medium             Use Case
+Jikan           MyAnimeList data       Anime tracking
+AniList         Anime discovery        Community features
+Studio Ghibli   Ghibli films           Fan projects
+Kitsu           Anime/manga tracking   Niche community</div>
+          <figcaption>Anime and entertainment APIs rated Medium.</figcaption>
+        </figure>
+
+        <h3>Blockchain &amp; Crypto (Specialized)</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API          Why Medium             Use Case
+Etherscan    Ethereum data          ETH developers
+INFURA       Ethereum node access   DApp infrastructure
+Alchemy      Blockchain data        Enterprise ETH
+Covalent     Multi-chain data       Cross-chain apps
+Helium       IoT network            Specialized use</div>
+          <figcaption>Blockchain APIs rated Medium. These are critical if you are building blockchain apps, otherwise not useful.</figcaption>
+        </figure>
+
+        <h3>Testing &amp; Mock Data</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API               Why Medium              Use Case
+Beeceptor         Mock API endpoints      Development
+CountAPI           Simple counting          Analytics prototyping
+JSONPlaceholder    Fake data                Standard (not listed here)</div>
+          <figcaption>Testing and mock data APIs rated Medium.</figcaption>
+        </figure>
+
+        <h2>Low Utility — Novelty or Limited Use</h2>
+
+        <h3>Placeholder/Entertainment</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API             Why Low                Assessment
+PlaceBear       Bear placeholders      Use PlaceKitten instead
+PlaceDog        Dog placeholders       Same as above
+RandomCat       Cat images             Novelty only
+Shibe.Online    Shiba Inu pics         Meme tier
+Waifu.im/pics   Anime images           Niche, questionable utility
+Catboy          Neko images            Very niche
+Axolotl         Axolotl facts/images   Novelty
+Zoo Animals     Zoo animal facts       Limited use</div>
+          <figcaption>Placeholder and entertainment APIs rated Low.</figcaption>
+        </figure>
+
+        <h3>Games &amp; Comics (Very Niche)</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API             Why Low               Assessment
+Wizard World    Harry Potter data     Fan projects only
+Thirukkural     Tamil poetry          Extremely niche
+Rig Veda        Vedic literature      Academic only
+Ganjoor         Persian poetry        Niche cultural</div>
+          <figcaption>Games and comics APIs rated Low.</figcaption>
+        </figure>
+
+        <h3>Fun/Novelty</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API                Why Low                Assessment
+Bored              Activity suggestions   Novelty
+Blague.xyz         French jokes           Language-limited
+Agify/Genderize    Name demographics      Limited accuracy
+Cloudflare Trace   IP/connection info     Debugging only
+CORS Proxy         Bypass CORS            Security risk, avoid in prod</div>
+          <figcaption>Fun and novelty APIs rated Low.</figcaption>
+        </figure>
+
+        <h2>Avoid — Problematic or Not Recommended</h2>
+
+        <h3>Security Concerns</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API                       Why Avoid              Issue
+AnonFiles                 Anonymous uploads       Abuse vector, malware risk
+BayFiles                  File sharing            Legality concerns
+0x0.st (Null Pointer)     Anonymous hosting       No accountability
+CORS Proxy (public)       CORS bypass             Security risk in production
+ddownload                 File hosting            Piracy associations</div>
+          <figcaption>APIs to avoid due to security concerns.</figcaption>
+        </figure>
+
+        <h3>Deprecated/Unreliable</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API               Why Avoid               Issue
+Steem             Blockchain              No HTTPS, No CORS, declining platform
+Nexchange         Crypto exchange         No HTTPS (!), reliability concerns
+BitcoinCharts     BTC data                Limited HTTPS support
+Localbitcoins     P2P Bitcoin             Platform reliability
+Storj (variant)   DCS                     Check specific implementation</div>
+          <figcaption>APIs to avoid due to deprecation or reliability issues.</figcaption>
+        </figure>
+
+        <h3>Very Limited/Niche</h3>
+        <figure class="figure">
+          <div class="visual visual-matrix">API                               Why Avoid              Better Alternative
+Markerapi                         Trademark search       Use USPTO directly
+Charity Search                    Charity data           Limited coverage
+Tenders (country-specific)        Procurement data       Only useful for specific countries
+Church Calendar                   Liturgical dates       Extremely niche
+Czech/Russian/Hungarian only      Regional holidays      Use Nager.Date instead</div>
+          <figcaption>APIs to avoid due to very limited scope.</figcaption>
+        </figure>
+
+        <h2>Lab Recommendations for PromptEngines</h2>
+
+        <h3>High Priority (Immediate Use)</h3>
+        <ul>
+          <li><strong>GitHub API</strong> — Essential for our workflow automation</li>
+          <li><strong>Postman Echo</strong> — Testing our own APIs</li>
+          <li><strong>CircleCI/Travis</strong> — CI/CD for our projects</li>
+          <li><strong>Pantry</strong> — Quick JSON storage for prototypes</li>
+          <li><strong>VirusTotal</strong> — Security scanning for file uploads (StoryBook Studio)</li>
+          <li><strong>Google Safe Browsing</strong> — URL validation</li>
+          <li><strong>Nager.Date</strong> — Holiday scheduling for campaigns</li>
+          <li><strong>CoinGecko</strong> — If we add crypto features</li>
+        </ul>
+
+        <h3>Medium Priority (Possible Future Use)</h3>
+        <ul>
+          <li><strong>Storj/Web3 Storage</strong> — Decentralized hosting for assets</li>
+          <li><strong>Metropolitan Museum</strong> — Art for StoryBook backgrounds</li>
+          <li><strong>Dog CEO</strong> — Demo content (if needed)</li>
+          <li><strong>Open Library</strong> — Book data for educational features</li>
+        </ul>
+
+        <h3>Avoid</h3>
+        <ul>
+          <li>Anonymous file upload services (security risk)</li>
+          <li>Regional-only APIs (limited value)</li>
+          <li>Novelty APIs (distract from core mission)</li>
+          <li>Anything without HTTPS (security risk)</li>
+        </ul>
+
+        <h2>Summary Statistics</h2>
+        <figure class="figure">
+          <div class="visual visual-matrix">Tier        Count    % of Total
+Critical    ~20      5%
+High        ~60      15%
+Medium      ~120     30%
+Low         ~150     37%
+Avoid       ~50      13%
+Total       ~400     100%</div>
+          <figcaption>Distribution of APIs across tiers. The public-apis repo contains 1000+ APIs — this review covers the most prominent categories. Many APIs are variations on the same theme (e.g., 50+ crypto APIs, 30+ placeholder image services).</figcaption>
+        </figure>
+
+        <h2>Key Insights</h2>
+        <ol>
+          <li><strong>Pareto Principle applies.</strong> Roughly 20% of APIs provide 80% of real-world value.</li>
+          <li><strong>Crypto overrepresentation.</strong> Far too many crypto exchanges, most redundant.</li>
+          <li><strong>Placeholder glut.</strong> Dozens of cat/dog/animal placeholder APIs — one is enough.</li>
+          <li><strong>Missing essentials.</strong> No Stripe, no Twilio, no AWS, no SendGrid — major gaps in the list.</li>
+          <li><strong>Regional fragmentation.</strong> Many APIs only useful for specific countries.</li>
+          <li><strong>Auth is well-covered.</strong> Good selection of authentication providers.</li>
+          <li><strong>Storage options good.</strong> Decentralized and centralized options available.</li>
+        </ol>
+        <p><strong>Recommendation:</strong> For production use, prefer the Critical and High tiers. Medium tier for prototyping. Avoid Low tier and below.</p>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./api-provider-framework.html">&larr; Previous note</a>
+        <a href="./openrag-deployment-docker-blockers.html">Next note &rarr;</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Prompt Engines &middot; Lab Notes</div>
+  </footer>
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <script>
+    (function () {
+      var dd = document.querySelector('.nav-dropdown');
+      var trigger = dd && dd.querySelector('span');
+      if (!dd || !trigger) return;
+      trigger.addEventListener('click', function () { dd.classList.toggle('is-open'); });
+      document.addEventListener('click', function (e) { if (!dd.contains(e.target)) dd.classList.remove('is-open'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dd.classList.remove('is-open'); });
+    })();
+  </script>
+</body>
+</html>

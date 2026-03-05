@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Provider Selection: Building a Testing Framework — Prompt Engines Lab Notes</title>
+  <meta name="description" content="Our evaluation framework for choosing between direct providers, aggregation routers, and optimized hosts for production AI infrastructure." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>Mar 3, 2026</span><span>10 min read</span><span>Infrastructure</span></div>
+      <h1>API Provider Selection: Building a Testing Framework for Production AI Infrastructure</h1>
+      <p class="dek">Choosing an API provider for language model access involves trade-offs between cost, latency, reliability, and model availability that shift as usage scales. This article documents our evaluation framework, the experiments we plan to run, and our provisional strategy pending systematic measurement.</p>
+
+      <article class="content">
+        <p>We have experimented with direct integrations, aggregation layers, and optimized hosts—but our current conclusions rest on limited testing, not production data. What follows is the framework we are building to replace assumptions with measurement.</p>
+
+        <h2>The Three Provider Categories</h2>
+        <p>The current landscape offers three distinct approaches:</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">Category             Examples                    Primary Advantage                  Key Limitation
+Direct Provider      Anthropic, OpenAI, Google   Exclusive models, guaranteed       Single point of failure,
+                                                 routing                            price rigidity
+Aggregation Router   OpenRouter, Together AI     Price optimization, unified        Routing latency,
+                                                 endpoint                           less control
+Optimized Host       Fireworks AI, Groq          Speed, reliability for             Limited model catalog
+                                                 supported models</div>
+          <figcaption>Three provider categories and their primary trade-offs.</figcaption>
+        </figure>
+
+        <p>Each category optimizes for different variables. Our goal is a measurement framework that quantifies these trade-offs for our specific requirements.</p>
+
+        <h2>Category 1: Direct Provider Integration</h2>
+
+        <h3>When It's Necessary</h3>
+        <p>Some models require direct API access. As of March 2026:</p>
+        <ul>
+          <li><strong>Claude 4.6 (Opus/Sonnet):</strong> Available only through Anthropic direct API<sup>1</sup></li>
+          <li><strong>Google Gemini 2.0 Pro:</strong> Requires Vertex AI or direct Google AI Studio access</li>
+          <li><strong>New model releases:</strong> Often exclusive to creator API for weeks or months</li>
+        </ul>
+
+        <h3>What We Want to Test</h3>
+
+        <p><strong>Question 1: Reliability variance by provider</strong></p>
+        <p>Direct providers represent single points of failure. Anthropic's infrastructure has experienced documented outages—most notably a multi-hour incident in March 2025 that disrupted services relying on Claude<sup>2</sup>. We need systematic uptime monitoring to quantify this risk.</p>
+        <p><strong>Planned Test:</strong></p>
+        <ul>
+          <li>Synthetic health checks every 30 seconds from 4 regions</li>
+          <li>Measure availability (defined as successful response within 10 seconds)</li>
+          <li>Track error rate, latency spikes, and rate limiting behavior</li>
+          <li>Compare against hosted alternatives for models available through both channels</li>
+        </ul>
+
+        <p><strong>Question 2: "Switcheroo" risk</strong></p>
+        <p>Providers occasionally update model weights without notice. Anthropic's February 2026 infrastructure update changed output distributions for some Claude prompts<sup>3</sup>. We want to detect this via automated drift monitoring.</p>
+        <p><strong>Planned Test:</strong></p>
+        <ul>
+          <li>A/B comparison of outputs on fixed prompt sets</li>
+          <li>Statistical monitoring for distribution drift (KL divergence, embedding distance)</li>
+          <li>Automated alerts when output characteristics change</li>
+        </ul>
+
+        <p><strong>Question 3: Price rigidity cost</strong></p>
+        <p>Direct providers charge list price with no competitive pressure. We want to calculate the premium paid for exclusivity.</p>
+        <p><strong>Known Pricing (March 2026):</strong></p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">Provider      Model          Input/Output per 1M tokens
+Anthropic     Opus 4.6       $15.00 / $75.00
+Anthropic     Sonnet 4.6     $3.00 / $15.00
+Fireworks     Kimi 2.5       $0.80 / $0.80
+Fireworks     MiniMax 2.5    $0.26 / $0.26</div>
+          <figcaption>Pricing comparison across providers. Opus costs 18.75x more per input token than Kimi 2.5.</figcaption>
+        </figure>
+
+        <p>Whether that translates to 18.75x value depends on quality differential for specific tasks—measurement we plan to conduct.</p>
+
+        <h2>Category 2: Aggregation and Routing</h2>
+
+        <h3>The OpenRouter Model</h3>
+        <p>OpenRouter aggregates 50+ providers into a unified endpoint, automatically routing to the lowest-price option. Their value proposition centers on:</p>
+        <ul>
+          <li><strong>Price discovery:</strong> Automatic selection of cheapest provider for each model</li>
+          <li><strong>Model diversity:</strong> Access to many models through single integration</li>
+          <li><strong>Redundancy:</strong> Fallback if one provider fails</li>
+        </ul>
+
+        <h3>What We Want to Test</h3>
+
+        <p><strong>Question 1: Routing latency impact</strong></p>
+        <p>The "best price" algorithm requires evaluation time. We want to measure the latency penalty versus direct provider access.</p>
+        <p><strong>Planned Test:</strong></p>
+        <ul>
+          <li>Compare TTFT for identical models (Llama 3.3 70B, Mixtral 8x22B) via OpenRouter versus direct Fireworks</li>
+          <li>Test at varying request rates (1, 10, 50, 100 RPM)</li>
+          <li>Measure p50, p95, p99 latency</li>
+          <li>Track routing failures (cases where no provider responds within timeout)</li>
+        </ul>
+        <p><strong>Hypothesis to Validate:</strong> The price savings (OpenRouter claims 10–30% below direct pricing) may be offset by increased tail latency for latency-sensitive applications.</p>
+
+        <p><strong>Question 2: Routing consistency</strong></p>
+        <p>Dynamic routing based on provider availability creates non-determinism. Same prompt, different provider, potentially different output.</p>
+        <p><strong>Planned Test:</strong></p>
+        <ul>
+          <li>Send identical prompts repeatedly through OpenRouter</li>
+          <li>Log which provider served each request</li>
+          <li>Measure output variance across providers for same model name</li>
+          <li>Calculate "consistency penalty" for price-optimized routing</li>
+        </ul>
+
+        <p><strong>Question 3: Cost realization</strong></p>
+        <p>OpenRouter's "best price" guarantee claims lowest available rate. We want to verify actual spend against direct provider pricing.</p>
+        <p><strong>Planned Test:</strong></p>
+        <ul>
+          <li>Run identical workload through OpenRouter and direct Fireworks</li>
+          <li>Compare total spend for same token volume</li>
+          <li>Track routing failures that require retry</li>
+          <li>Calculate true cost including failure handling</li>
+        </ul>
+
+        <h2>Category 3: Optimized Hosting</h2>
+
+        <h3>The Fireworks Approach</h3>
+        <p>Fireworks AI specializes in speed-optimized inference for specific model families. They claim custom CUDA kernels, optimized attention mechanisms, and hardware co-location that outperform generic implementations.</p>
+
+        <h3>What We Want to Test</h3>
+
+        <p><strong>Question 1: Speed claims verification</strong></p>
+        <p>Fireworks advertises 10x faster inference than alternatives for supported models. We want independent measurement.</p>
+        <p><strong>Planned Test:</strong></p>
+        <ul>
+          <li>Tokens-per-second measurement for Kimi 2.5, MiniMax 2.5, Llama 3.3 70B</li>
+          <li>Compare Fireworks versus OpenRouter-served same models</li>
+          <li>Test at 1K, 4K, 16K, 32K context sizes</li>
+          <li>Measure both TTFT and sustained throughput</li>
+        </ul>
+
+        <p><strong>Question 2: Reliability differential</strong></p>
+        <p>Fireworks claims 99.9%+ uptime. We want our own monitoring data.</p>
+        <p><strong>Planned Test:</strong></p>
+        <ul>
+          <li>30-second synthetic health checks from 4 AWS regions</li>
+          <li>Compare against OpenRouter and Anthropic direct</li>
+          <li>Measure correlated failures (do all providers fail together, or independently?)</li>
+          <li>Track time-to-recovery after detected failures</li>
+        </ul>
+
+        <p><strong>Question 3: Model catalog limitations</strong></p>
+        <p>Fireworks does not offer Claude or Gemini. We want to calculate the integration overhead of maintaining Fireworks + direct providers versus a single OpenRouter integration.</p>
+        <p><strong>Planned Analysis:</strong></p>
+        <ul>
+          <li>Catalog overlap: What percentage of our desired models are available on each platform?</li>
+          <li>Integration cost: Time to add new model to Fireworks vs OpenRouter</li>
+          <li>Fallback complexity: How many provider integrations needed for full coverage?</li>
+        </ul>
+
+        <h2>Our Provisional Strategy</h2>
+        <p>Based on limited experience—primarily initial testing and pricing analysis—we have adopted a three-provider approach:</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">PROVIDER ALLOCATION (provisional)
+
+┌─────────────────────────────────────────────────┐
+│  Fireworks AI              ~70% planned volume   │
+│  Primary host                                    │
+│  Kimi 2.5, MiniMax, Llama                        │
+│  Rationale: Speed + price for bulk               │
+├─────────────────────────────────────────────────┤
+│  Anthropic Direct          ~20% planned volume   │
+│  Exclusive models                                │
+│  Claude Opus/Sonnet                              │
+│  Rationale: Model exclusivity                    │
+├─────────────────────────────────────────────────┤
+│  OpenRouter                ~10% planned volume   │
+│  Exploration & fallback                          │
+│  New models, redundancy                          │
+│  Rationale: Diversity + testing                  │
+└─────────────────────────────────────────────────┘</div>
+          <figcaption>Provisional provider allocation. Percentages represent target state, not current usage. Subject to change based on systematic testing results.</figcaption>
+        </figure>
+
+        <h3>Why This Allocation (Pending Validation)</h3>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">Provider            Hypothesis                              Test Needed
+Fireworks           Best speed/price for non-exclusive       Latency comparison, cost realization,
+                    models                                  reliability monitoring
+Anthropic Direct    Required for Claude; safety training     Quality differential test, uptime
+                    worth premium                           comparison, switcheroo monitoring
+OpenRouter          Cheapest for experimentation;            Price realization, latency at volume,
+                    acceptable latency for batch             routing consistency</div>
+          <figcaption>Hypotheses driving our provisional provider allocation, each paired with required validation tests.</figcaption>
+        </figure>
+
+        <h2>The Overhead Calculation</h2>
+        <p>Maintaining multiple providers incurs cost beyond API spend:</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">Provider Count   Integration Time   Ongoing Management   Failure Modes
+1                8–16 hours         1–2 hrs/month        Single point of failure
+2                16–24 hours        3–4 hrs/month        Split by capability
+3                24–40 hours        5–6 hrs/month        Tiered routing complexity
+4+               40+ hours          8+ hrs/month         Diminishing marginal utility</div>
+          <figcaption>Multi-provider overhead scales with count. We target three as a balance point.</figcaption>
+        </figure>
+
+        <p>A fourth provider would add roughly 50% management overhead for unclear gain.</p>
+
+        <h2>Planned Internal Router</h2>
+        <p>Long-term, we want a custom routing layer—not to replace providers, but to manage them.</p>
+        <p><strong>Requirements:</strong></p>
+        <ul>
+          <li>Health-check-based routing (not just price)</li>
+          <li>Request-level caching to reduce redundant calls</li>
+          <li>Automatic fallback chains</li>
+          <li>Cost attribution by feature, not just by model</li>
+          <li>Latency SLO enforcement (automatic fallback if p95 exceeded)</li>
+        </ul>
+        <p><strong>Timeline:</strong> Q2–Q3 2026 prototype. The goal is OpenRouter-like flexibility with our own reliability standards.</p>
+
+        <h2>Call for Data</h2>
+        <p>If you have systematic measurements comparing:</p>
+        <ul>
+          <li>OpenRouter latency versus direct providers</li>
+          <li>Fireworks throughput claims versus reality</li>
+          <li>Provider reliability (uptime, error rates) from production monitoring</li>
+        </ul>
+        <p>—we would welcome exchange. Isolated anecdotes help less than structured data. Standardized testing methodologies would benefit the ecosystem.</p>
+        <p>Contact: lab@promptengines.com</p>
+
+        <h2>Testing Roadmap</h2>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">Test                                        Timeline          Success Criteria
+Latency benchmark (all providers, 4 models) April 2026        Statistical comparison with confidence intervals
+Reliability monitoring (30 days)            April–May 2026    Availability percentages, failure correlation
+Cost realization (controlled workload)      May 2026          Actual spend vs quoted pricing, hidden costs
+Routing consistency (OpenRouter)            May 2026          Output variance across provider switches
+Integration overhead audit                 June 2026         Time-tracking for management, MTTR by provider</div>
+          <figcaption>Planned testing roadmap from April through June 2026.</figcaption>
+        </figure>
+
+        <h2>Current State: Explicit Limitations</h2>
+        <p><strong>What We Know:</strong></p>
+        <ul>
+          <li>Pricing structures (public, verifiable)</li>
+          <li>Feature availability (which models on which platforms)</li>
+          <li>Anecdotal performance in limited testing</li>
+        </ul>
+        <p><strong>What We Don't Know (Pending Tests):</strong></p>
+        <ul>
+          <li>Latency distributions at production scale</li>
+          <li>True reliability differentials (our monitoring duration is insufficient)</li>
+          <li>Cost realization with retry logic included</li>
+          <li>Output consistency across routing strategies</li>
+          <li>Integration overhead at sustained volume</li>
+        </ul>
+        <p><strong>What We're Doing:</strong> Building the measurement framework to replace assumptions with data.</p>
+
+        <h2>Sources</h2>
+        <ol>
+          <li>Anthropic API documentation. <a href="https://docs.anthropic.com" target="_blank" rel="noopener noreferrer">docs.anthropic.com</a>. Accessed March 2026. Confirms Claude 4.6 models available only via direct API.</li>
+          <li>"Anthropic resolves API issues after several-hour outage." TechCrunch, March 5 2025. <a href="https://techcrunch.com/2025/03/05/anthropic-resolves-api-issues-after-several-hour-outage/" target="_blank" rel="noopener noreferrer">techcrunch.com</a></li>
+          <li>Anthropic infrastructure update announcement, February 14, 2026. Provider documentation notes potential output distribution changes during infrastructure transitions.</li>
+          <li>OpenRouter pricing and routing documentation. <a href="https://openrouter.ai/docs" target="_blank" rel="noopener noreferrer">openrouter.ai/docs</a>. Accessed March 2026.</li>
+          <li>Fireworks AI performance claims. <a href="https://fireworks.ai/why-fireworks" target="_blank" rel="noopener noreferrer">fireworks.ai/why-fireworks</a>. Accessed March 2026.</li>
+        </ol>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./model-selection-framework.html">&larr; Previous note</a>
+        <a href="./public-apis-usefulness-review.html">Next note &rarr;</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Prompt Engines &middot; Lab Notes</div>
+  </footer>
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <script>
+    (function () {
+      var dd = document.querySelector('.nav-dropdown');
+      var trigger = dd && dd.querySelector('span');
+      if (!dd || !trigger) return;
+      trigger.addEventListener('click', function () { dd.classList.toggle('is-open'); });
+      document.addEventListener('click', function (e) { if (!dd.contains(e.target)) dd.classList.remove('is-open'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dd.classList.remove('is-open'); });
+    })();
+  </script>
+</body>
+</html>

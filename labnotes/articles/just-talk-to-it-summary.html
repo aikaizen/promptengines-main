@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Just Talk To It — Prompt Engines Lab Notes</title>
+  <meta name="description" content="Why steipete.me's agentic coding manual is required reading for teams adopting Claude Code and agentic development workflows." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>Mar 3, 2026</span><span>7 min read</span><span>Agents</span></div>
+      <h1>Just Talk To It</h1>
+      <p class="dek">Why steipete.me's agentic coding manual is required reading for teams adopting Claude Code and agentic development workflows.</p>
+
+      <article class="content">
+        <p>Peter Steinberger's post <em>"Claude Code: Best Practices for Agentic Coding"</em> captures something critical that most documentation misses: the difference between using an AI assistant and actually working with one. The distinction sounds semantic until you try to ship production code with it. Then the gap becomes operational.</p>
+
+        <p>Steinberger built PSPDFKit, a PDF SDK used by Dropbox, Box, and Evernote. He has also shipped more production code via Claude Code than most engineers have typed manually. His post isn't theory — it's a survival manual from the early days of agentic development.</p>
+
+        <h2>The Core Shift</h2>
+        <p>The post's central argument: stop treating Claude Code like a search engine with syntax completion. Start treating it like a junior engineer who can read your entire codebase, run tests, and commit changes — but needs clear direction.</p>
+        <p>Most developers fail at agentic coding because they:</p>
+        <ol>
+          <li><strong>Ask vague questions</strong> — "Fix the bug" without specifying which bug, in which file, under what conditions</li>
+          <li><strong>Don't provide context</strong> — Claude Code can read your codebase, but it won't know your intent, constraints, or historical decisions</li>
+          <li><strong>Accept first output</strong> — Good agents iterate. Great developers iterate <em>with</em> them.</li>
+        </ol>
+
+        <h2>The Practices That Matter</h2>
+        <p>Steinberger structures his advice around concrete behaviors, not abstract principles. Several stand out as immediately applicable:</p>
+
+        <h3>Specify File Context Explicitly</h3>
+        <p>Claude Code can access your entire repository, but that doesn't mean it should guess which files matter. Steinberger's pattern:</p>
+
+        <figure class="figure">
+          <div class="visual visual-code">"Look at src/auth/login.ts and tests/auth/login.test.ts.
+The login flow is failing when users have 2FA enabled.
+Handle the TOTP verification before the session token generation."</div>
+          <figcaption>Files specified, failure condition described, correct sequence stated. This isn't micromanagement — it's the same context you'd give a human engineer picking up a ticket.</figcaption>
+        </figure>
+
+        <h3>Use Claude Code's Tools</h3>
+        <p>The post emphasizes Claude Code's built-in capabilities that many users ignore:</p>
+        <ul>
+          <li><strong>File reading</strong> — Don't paste code into chat. Reference paths and let it read</li>
+          <li><strong>Test running</strong> — Ask it to verify changes: "Run the auth tests and confirm they pass"</li>
+          <li><strong>Git operations</strong> — Stage, commit, and push through the agent when changes are verified</li>
+          <li><strong>Web search</strong> — For documentation, API references, checking recent package versions</li>
+        </ul>
+        <p>Each tool reduces context-switching friction. The goal is keeping the developer in flow state while the agent handles mechanical operations.</p>
+
+        <h3>The Loop: Request, Review, Refine</h3>
+        <p>Steinberger's workflow is iterative, not transactional:</p>
+        <ol>
+          <li><strong>Request</strong> — Clear, contextual, scoped</li>
+          <li><strong>Review</strong> — Read the diff. Check tests. Verify understanding</li>
+          <li><strong>Refine</strong> — "That handles the success case, but what about expired TOTP tokens?"</li>
+          <li><strong>Accept or iterate</strong> — Commit if correct, clarify if not</li>
+        </ol>
+        <p>This loop mirrors code review with a junior engineer. The difference: the junior engineer is available instantly, 24/7, and never takes the feedback personally.</p>
+
+        <h2>What Steinberger Doesn't Say (But Implies)</h2>
+        <p>Several critical points sit between the lines:</p>
+        <p><strong>Trust is earned, then delegated.</strong> Early in an engagement, review every line. As Claude Code proves reliable on specific codebases, expand scope. Steinberger now delegates entire features — but only after months of calibration on his specific stack.</p>
+        <p><strong>Not all code is equal.</strong> The post focuses on feature development and bug fixes. It doesn't claim Claude Code handles architectural refactoring, security-critical code, or novel algorithm design without supervision. The boundary matters.</p>
+        <p><strong>Your codebase quality determines agent effectiveness.</strong> Claude Code reads tests, types, and documentation to understand intent. In well-structured codebases, it's remarkably accurate. In spaghetti, it compounds confusion. The agent amplifies existing quality — or lack thereof.</p>
+
+        <h2>The Lab Relevance</h2>
+        <p>We run Claude Code as our primary development environment for Flow Education, StoryBook Studio, and Lab infrastructure. Steinberger's practices align with what we've learned:</p>
+        <ul>
+          <li>Explicit file context reduces hallucination</li>
+          <li>Test verification catches errors before commit</li>
+          <li>Iterative refinement produces better code than single-shot requests</li>
+          <li>Git operations through the agent preserve flow state</li>
+        </ul>
+        <p>One addition we've made: <strong>Error boundary recovery.</strong> When Claude Code proposes a change that breaks the build, we feed the error output back in: "That change broke the build. Error: [paste]. Fix and re-test." The agent recovers effectively, but requires the explicit failure signal.</p>
+
+        <h2>The Manual's Place</h2>
+        <p>Steinberger's post isn't official Anthropic documentation. It's field notes from someone who shipped production systems using the tool daily. That makes it more valuable, not less — documentation describes intended use; Steinberger describes survived use.</p>
+        <p>For teams adopting agentic coding, this post should be required reading. Not because every practice will fit your workflow, but because the underlying orientation — treating the agent as a capable but context-limited collaborator — corrects the most common failure mode: expecting magic, getting frustration.</p>
+
+        <h2>Read the Original</h2>
+        <p>The full post is at <strong><a href="https://steipete.me/posts/claude-code-best-practices/" target="_blank" rel="noopener noreferrer">steipete.me/posts/claude-code-best-practices/</a></strong>. Read it before your next Claude Code session. Apply one practice — specifying file context explicitly — and measure the difference in output quality.</p>
+
+        <h2>Summary Checklist (From the Post)</h2>
+        <p><strong>Before requesting:</strong></p>
+        <ul>
+          <li>Identify specific files involved</li>
+          <li>Describe the problem or goal precisely</li>
+          <li>Note constraints (performance, compatibility, style)</li>
+        </ul>
+        <p><strong>During the loop:</strong></p>
+        <ul>
+          <li>Let Claude Code read files, don't paste</li>
+          <li>Ask for test verification</li>
+          <li>Review diffs carefully</li>
+          <li>Iterate on edge cases</li>
+        </ul>
+        <p><strong>Before accepting:</strong></p>
+        <ul>
+          <li>Tests pass</li>
+          <li>Diff reviewed for unintended changes</li>
+          <li>Commit message describes the change accurately</li>
+        </ul>
+
+        <h2>Source</h2>
+        <p><strong>Primary:</strong> Steinberger, Peter. "Claude Code: Best Practices for Agentic Coding." steipete.me, February 2026. <a href="https://steipete.me/posts/claude-code-best-practices/" target="_blank" rel="noopener noreferrer">https://steipete.me/posts/claude-code-best-practices/</a></p>
+        <p><strong>Context:</strong> Steinberger is founder of PSPDFKit and has shipped production code via Claude Code since its early release. The post reflects practical experience rather than theoretical optimization.</p>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./just-talk-to-it-agentic-manual.html">&larr; Previous note</a>
+        <a href="./just-rebuild-it.html">Next note &rarr;</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Prompt Engines &middot; Lab Notes</div>
+  </footer>
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <script>
+    (function () {
+      var dd = document.querySelector('.nav-dropdown');
+      var trigger = dd && dd.querySelector('span');
+      if (!dd || !trigger) return;
+      trigger.addEventListener('click', function () { dd.classList.toggle('is-open'); });
+      document.addEventListener('click', function (e) { if (!dd.contains(e.target)) dd.classList.remove('is-open'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dd.classList.remove('is-open'); });
+    })();
+  </script>
+</body>
+</html>
