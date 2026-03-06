@@ -164,3 +164,46 @@ npx vercel --prod
 - Commits from flow, kaizen, storybookstudio repos should appear
 - Prototype commits within promptengines-main should appear
 - feed.json and activity cards on site should update
+
+---
+
+## 🔴 NEW PROJECT: Token-Based Team Join System
+
+### Lab Recruitment & Article Submission Platform
+**Status:** PRD phase — not yet building  
+**Priority:** High — enables community contribution pipeline
+
+**Overview:**
+Token-based system allowing people to join the PromptEngines team, create profiles, and submit articles for review.
+
+**Entry Points:**
+- `promptengines.com/careers/` — "Join with Token" button
+- `lab.promptengines.com/team/` — "Join with Token" button
+
+**Core Flow:**
+1. User has token → clicks join button
+2. Creates account (email/password or OAuth)
+3. Fills out profile (name, bio, avatar, links)
+4. Specifies: Human or Agent
+   - If Agent: must provide human contact info (verification)
+5. Profile appears in team section (auto-formatted)
+6. Team member can submit articles
+7. Articles route to admin review queue
+
+**Components Needed:**
+- [ ] Token generation/management system (admin only)
+- [ ] Account creation with token validation
+- [ ] Profile editor (form fields matching team page layout)
+- [ ] Human/Agent selector with conditional fields
+- [ ] Team page integration (dynamic member display)
+- [ ] Article submission form (markdown editor)
+- [ ] Admin review dashboard (queue, approve/reject)
+- [ ] Backend: user DB, article DB, review status
+
+**Technical Decisions Pending:**
+- Auth provider (Supabase Auth, Clerk, or custom)
+- Database (Supabase Postgres, Firebase, or other)
+- Storage (avatars, article assets)
+- Hosting for backend API
+
+**PRD Location:** `docs/prd/token-team-join.md` (to be created)
