@@ -237,6 +237,103 @@
       padding: 0 1.5rem 1.5rem 2.5rem;
     }
 
+    /* ── Horizontal bar charts ── */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .hbar-chart {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .hbar-chart h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 1rem;
+      font-family: var(--mono);
+    }
+    .hbar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .hbar-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-3);
+      min-width: 100px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .hbar-track {
+      flex: 1;
+      height: 16px;
+      background: var(--bg);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .hbar-fill {
+      height: 100%;
+      border-radius: 3px;
+      opacity: 0.8;
+      transition: width 0.4s var(--ease);
+    }
+    .hbar-value {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-4);
+      min-width: 30px;
+      flex-shrink: 0;
+    }
+
+    /* ── Feat/Fix ratio bar ── */
+    .ratio-chart {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .ratio-chart h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 1rem;
+      font-family: var(--mono);
+    }
+    .ratio-bar {
+      display: flex;
+      height: 28px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+    .ratio-feat { background: #4ade80; }
+    .ratio-fix { background: #f87171; }
+    .ratio-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+    }
+    .ratio-labels span:first-child { color: #4ade80; }
+    .ratio-labels span:last-child { color: #f87171; }
+
+    /* ── Weekly reports ── */
+    .weekly-section {
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+
     @media (max-width: 640px) {
       .stream-day { padding: 1.25rem; }
       .stream-day-header { flex-direction: column; gap: 0.4rem; }
@@ -246,6 +343,8 @@
       .history-summary { flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; }
       .history-repos-preview { display: none; }
       .history-detail { padding: 0 1rem 1rem 1.5rem; }
+      .charts-row { grid-template-columns: 1fr; }
+      .hbar-label { min-width: 70px; }
     }
   </style>
 </head>
@@ -437,6 +536,77 @@
               <div class="chart-bar" style="height: 100%"></div>
               <div class="chart-label">3/6</div>
             </div>
+          </div>
+        </div>
+
+        <div class="charts-row">
+          <div class="hbar-chart">
+            <h3>Commits by repo</h3>
+            <div class="hbar-row">
+              <span class="hbar-label">promptengines-main</span>
+              <div class="hbar-track"><div class="hbar-fill" style="width:100%; background:var(--accent)"></div></div>
+              <span class="hbar-value">22</span>
+            </div>
+            <div class="hbar-row">
+              <span class="hbar-label">norbu</span>
+              <div class="hbar-track"><div class="hbar-fill" style="width:40.909090909090914%; background:#4ade80"></div></div>
+              <span class="hbar-value">9</span>
+            </div>
+            <div class="hbar-row">
+              <span class="hbar-label">storybookstudio</span>
+              <div class="hbar-track"><div class="hbar-fill" style="width:22.727272727272727%; background:#60a5fa"></div></div>
+              <span class="hbar-value">5</span>
+            </div>
+          </div>
+          <div class="hbar-chart">
+            <h3>Commits by type</h3>
+            <div class="hbar-row">
+              <span class="hbar-label">other</span>
+              <div class="hbar-track"><div class="hbar-fill" style="width:100%; background:#52525b"></div></div>
+              <span class="hbar-value">10</span>
+            </div>
+            <div class="hbar-row">
+              <span class="hbar-label">feat</span>
+              <div class="hbar-track"><div class="hbar-fill" style="width:80%; background:#4ade80"></div></div>
+              <span class="hbar-value">8</span>
+            </div>
+            <div class="hbar-row">
+              <span class="hbar-label">chore</span>
+              <div class="hbar-track"><div class="hbar-fill" style="width:50%; background:#71717a"></div></div>
+              <span class="hbar-value">5</span>
+            </div>
+            <div class="hbar-row">
+              <span class="hbar-label">docs</span>
+              <div class="hbar-track"><div class="hbar-fill" style="width:40%; background:#fbbf24"></div></div>
+              <span class="hbar-value">4</span>
+            </div>
+            <div class="hbar-row">
+              <span class="hbar-label">fix</span>
+              <div class="hbar-track"><div class="hbar-fill" style="width:40%; background:#f87171"></div></div>
+              <span class="hbar-value">4</span>
+            </div>
+            <div class="hbar-row">
+              <span class="hbar-label">content</span>
+              <div class="hbar-track"><div class="hbar-fill" style="width:40%; background:#60a5fa"></div></div>
+              <span class="hbar-value">4</span>
+            </div>
+            <div class="hbar-row">
+              <span class="hbar-label">refactor</span>
+              <div class="hbar-track"><div class="hbar-fill" style="width:10%; background:#c084fc"></div></div>
+              <span class="hbar-value">1</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ratio-chart">
+          <h3>Feature / Fix ratio</h3>
+          <div class="ratio-bar">
+            <div class="ratio-feat" style="width:67%"></div>
+            <div class="ratio-fix" style="width:33%"></div>
+          </div>
+          <div class="ratio-labels">
+            <span>feat 8 (67%)</span>
+            <span>fix 4 (33%)</span>
           </div>
         </div>
       </div>
@@ -669,6 +839,27 @@
             <span class="section-count">Last 14 days</span>
           </div>
         <p style="color: var(--text-4); padding: 1rem 0;">No previous days recorded yet. History will appear here as data accumulates.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="weekly-section">
+          <div class="section-header">
+            <h2>Weekly Reports</h2>
+            <span class="section-count">Published Fridays</span>
+          </div>
+          <div class="archive-list">
+          <a class="archive-item" href="./2026-W10.html">
+            <div class="archive-meta">Week 10, 2026 &middot; Build Stream</div>
+            <h3>Weekly Report &mdash; Week 10</h3>
+          </a>
+          <a class="archive-item" href="./2026-W09.html">
+            <div class="archive-meta">Week 09, 2026 &middot; Build Stream</div>
+            <h3>Weekly Report &mdash; Week 09</h3>
+          </a>
+          </div>
         </div>
       </div>
     </section>

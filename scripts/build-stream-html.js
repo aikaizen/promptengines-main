@@ -244,6 +244,87 @@ function generate() {
     })
     .join("\n");
 
+  // Repo breakdown chart (aggregate across all days)
+  const repoTotals = {};
+  allData.forEach((d) => {
+    if (d.stats.byRepo) {
+      Object.entries(d.stats.byRepo).forEach(([r, n]) => {
+        repoTotals[r] = (repoTotals[r] || 0) + n;
+      });
+    }
+  });
+  const repoColors = [
+    "var(--accent)", "#4ade80", "#60a5fa", "#c084fc",
+    "#fbbf24", "#f87171", "#2dd4bf", "#fb923c",
+  ];
+  const sortedRepos = Object.entries(repoTotals).sort((a, b) => b[1] - a[1]);
+  const maxRepo = sortedRepos.length > 0 ? sortedRepos[0][1] : 1;
+  const repoBars = sortedRepos
+    .map(([repo, count], i) => {
+      const pct = (count / maxRepo) * 100;
+      const color = repoColors[i % repoColors.length];
+      return `            <div class="hbar-row">
+              <span class="hbar-label">${esc(repo)}</span>
+              <div class="hbar-track"><div class="hbar-fill" style="width:${pct}%; background:${color}"></div></div>
+              <span class="hbar-value">${count}</span>
+            </div>`;
+    })
+    .join("\n");
+
+  // Type distribution chart (aggregate across all days)
+  const typeTotals = {};
+  allData.forEach((d) => {
+    if (d.stats.byType) {
+      Object.entries(d.stats.byType).forEach(([t, n]) => {
+        typeTotals[t] = (typeTotals[t] || 0) + n;
+      });
+    }
+  });
+  const typeColors = {
+    feat: "#4ade80", fix: "#f87171", content: "#60a5fa",
+    refactor: "#c084fc", docs: "#fbbf24", chore: "#71717a",
+    style: "#2dd4bf", test: "#fb923c", other: "#52525b",
+  };
+  const sortedTypes = Object.entries(typeTotals).sort((a, b) => b[1] - a[1]);
+  const maxType = sortedTypes.length > 0 ? sortedTypes[0][1] : 1;
+  const typeBars = sortedTypes
+    .map(([type, count]) => {
+      const pct = (count / maxType) * 100;
+      const color = typeColors[type] || "#52525b";
+      return `            <div class="hbar-row">
+              <span class="hbar-label">${esc(type)}</span>
+              <div class="hbar-track"><div class="hbar-fill" style="width:${pct}%; background:${color}"></div></div>
+              <span class="hbar-value">${count}</span>
+            </div>`;
+    })
+    .join("\n");
+
+  // Feature/Fix ratio
+  const featCount = typeTotals.feat || 0;
+  const fixCount = typeTotals.fix || 0;
+  const featFixTotal = featCount + fixCount || 1;
+  const featPct = Math.round((featCount / featFixTotal) * 100);
+  const fixPct = 100 - featPct;
+
+  // Weekly reports (scan for W*.html files)
+  const weeklyFiles = fs
+    .readdirSync(STREAM_DIR)
+    .filter((f) => /^\d{4}-W\d{2}\.html$/.test(f))
+    .sort()
+    .reverse();
+
+  const weeklyReportsHtml = weeklyFiles.length > 0
+    ? weeklyFiles.map((f) => {
+        const weekMatch = f.match(/(\d{4})-W(\d{2})/);
+        const year = weekMatch[1];
+        const week = weekMatch[2];
+        return `          <a class="archive-item" href="./${esc(f)}">
+            <div class="archive-meta">Week ${week}, ${year} &middot; Build Stream</div>
+            <h3>Weekly Report &mdash; Week ${week}</h3>
+          </a>`;
+      }).join("\n")
+    : `          <p style="color: var(--text-4);">No weekly reports yet.</p>`;
+
   // Split: today vs history
   const todayStr = new Date().toISOString().split("T")[0];
   const todayData = allData.find((d) => d.date === todayStr);
@@ -507,6 +588,103 @@ function generate() {
       padding: 0 1.5rem 1.5rem 2.5rem;
     }
 
+    /* ── Horizontal bar charts ── */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .hbar-chart {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .hbar-chart h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 1rem;
+      font-family: var(--mono);
+    }
+    .hbar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .hbar-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-3);
+      min-width: 100px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .hbar-track {
+      flex: 1;
+      height: 16px;
+      background: var(--bg);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .hbar-fill {
+      height: 100%;
+      border-radius: 3px;
+      opacity: 0.8;
+      transition: width 0.4s var(--ease);
+    }
+    .hbar-value {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-4);
+      min-width: 30px;
+      flex-shrink: 0;
+    }
+
+    /* ── Feat/Fix ratio bar ── */
+    .ratio-chart {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .ratio-chart h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 1rem;
+      font-family: var(--mono);
+    }
+    .ratio-bar {
+      display: flex;
+      height: 28px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+    .ratio-feat { background: #4ade80; }
+    .ratio-fix { background: #f87171; }
+    .ratio-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+    }
+    .ratio-labels span:first-child { color: #4ade80; }
+    .ratio-labels span:last-child { color: #f87171; }
+
+    /* ── Weekly reports ── */
+    .weekly-section {
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+
     @media (max-width: 640px) {
       .stream-day { padding: 1.25rem; }
       .stream-day-header { flex-direction: column; gap: 0.4rem; }
@@ -516,6 +694,8 @@ function generate() {
       .history-summary { flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; }
       .history-repos-preview { display: none; }
       .history-detail { padding: 0 1rem 1rem 1.5rem; }
+      .charts-row { grid-template-columns: 1fr; }
+      .hbar-label { min-width: 70px; }
     }
   </style>
 </head>
@@ -590,6 +770,29 @@ function generate() {
 ${chartBars}
           </div>
         </div>
+
+        <div class="charts-row">
+          <div class="hbar-chart">
+            <h3>Commits by repo</h3>
+${repoBars}
+          </div>
+          <div class="hbar-chart">
+            <h3>Commits by type</h3>
+${typeBars}
+          </div>
+        </div>
+
+        <div class="ratio-chart">
+          <h3>Feature / Fix ratio</h3>
+          <div class="ratio-bar">
+            <div class="ratio-feat" style="width:${featPct}%"></div>
+            <div class="ratio-fix" style="width:${fixPct}%"></div>
+          </div>
+          <div class="ratio-labels">
+            <span>feat ${featCount} (${featPct}%)</span>
+            <span>fix ${fixCount} (${fixPct}%)</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -610,6 +813,20 @@ ${todayHtml}
             <span class="section-count">Last ${HISTORY_DAYS} days</span>
           </div>
 ${historyHtml}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="weekly-section">
+          <div class="section-header">
+            <h2>Weekly Reports</h2>
+            <span class="section-count">Published Fridays</span>
+          </div>
+          <div class="archive-list">
+${weeklyReportsHtml}
+          </div>
         </div>
       </div>
     </section>
