@@ -36,6 +36,8 @@ const PRODUCT_URLS = {
   kaizen: "https://kaizen.promptengines.com",
   storybookstudio: "https://storybookstudio.promptengines.com",
   flow: "https://flow.promptengines.com",
+  videoterminal: "https://videoterminal.promptengines.com",
+  norbu: "https://norbu.promptengines.com",
   consulting: "https://consulting.promptengines.com",
   dashboard: "https://dashboard.promptengines.com",
   "promptengines-main": "https://lab.promptengines.com",
@@ -46,6 +48,8 @@ const FEATURED_APPS = [
   { repo: "flow", name: "Flow", tag: "Education" },
   { repo: "kaizen", name: "Kaizen", tag: "Kids" },
   { repo: "storybookstudio", name: "Storybook Studio", tag: "Creator Tool" },
+  { repo: "videoterminal", name: "Video Terminal", tag: "Media" },
+  { repo: "norbu", name: "Norbu", tag: "Language" },
 ];
 
 const ROOT_DIR = path.resolve(__dirname, "..");

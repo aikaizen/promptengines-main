@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preliminary views on top image generation models — Prompt Engines Lab Notes</title>
+  <meta name="description" content="We benchmarked 9 image models across 3 providers for storybook illustration. Here's what we found about Nano Banana 2, Flux, and the current landscape." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row">
+        <span>Mar 3, 2026</span>
+        <span>9 min read</span>
+        <span>Experiments</span>
+      </div>
+      <h1>Preliminary views on today's top image generation models</h1>
+      <p class="dek">We ran 9 models across 3 providers through a storybook illustration benchmark. The results changed which models we ship with — and introduced us to Nano Banana 2.</p>
+
+      <article class="content">
+
+        <p>StoryBook Studio generates illustrations across 34 art styles for children's books. Every model we use has to produce high-quality storybook-style images, handle character prompts reliably, and do it fast enough that a parent doesn't lose interest during generation. We recently ran a structured benchmark across every model we have API access to. This is what we found.</p>
+
+        <h2>The models we tested</h2>
+
+        <p>Nine models across three providers. Each model received the same two prompts: a character-interaction scene (Michaelangelo the Ninja Turtle standing next to Cinderella) and an environment scene (a cozy cabin in the woods with falling snow). Both in storybook illustration style.</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">PROVIDER     MODEL               TYPE                NOTES
+─────────    ─────────────────   ─────────────────   ──────────────────────────────
+Gemini       nano-banana         Native Gemini img   Fast, reliable, good quality
+Gemini       nano-banana-2       Native Gemini img   Slower, higher detail
+Gemini       nano-banana-pro     Native Gemini img   Highest quality tier, less reliable
+Fireworks    flux-schnell        FLUX.1 Schnell      Fastest overall, lower detail
+Fireworks    flux-dev-fp8        FLUX.1 Dev FP8      Good balance of speed and quality
+BFL          flux-2-max          FLUX 2 Max          Highest quality Flux, slow
+BFL          flux-2-pro          FLUX 2 Pro          Mid-tier, async polling
+BFL          flux-2-klein-9b     FLUX 2 Klein 9B     Smaller model, fast
+BFL          flux-2-klein-4b     FLUX 2 Klein 4B     Smallest model, fastest BFL</div>
+          <figcaption>Visual 1. All models tested, grouped by provider and model family.</figcaption>
+        </figure>
+
+        <h2>Reliability: who actually returns an image</h2>
+
+        <p>Before we talk about quality, we need to talk about whether the model returns anything at all. Of 18 total generations, 13 passed and 5 failed. The failure pattern was revealing.</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">MODEL               PROMPT 1 (character)   PROMPT 2 (scene)   RELIABILITY
+─────────────────   ────────────────────   ────────────────   ───────────
+nano-banana         PASS (6.5s)            PASS (4.9s)        100%
+nano-banana-2       PASS (13.1s)           PASS (13.1s)       100%
+nano-banana-pro     PASS (19.0s)           FAIL (70s)          50%
+flux-schnell        PASS (1.9s)            PASS (2.4s)        100%
+flux-dev-fp8        PASS (3.9s)            PASS (3.8s)        100%
+flux-2-max          FAIL (15.5s)           PASS (30.1s)        50%
+flux-2-pro          FAIL (5.5s)            PASS (18.4s)        50%
+flux-2-klein-9b     FAIL (3.5s)            PASS (7.3s)         50%
+flux-2-klein-4b     FAIL (3.0s)            PASS (5.9s)         50%</div>
+          <figcaption>Visual 2. Pass/fail results per model and prompt. All BFL-hosted Flux models failed on the character-interaction prompt.</figcaption>
+        </figure>
+
+        <p>The pattern is immediate: every BFL-hosted Flux model failed on Prompt 1 (the character interaction). All of them succeeded on Prompt 2 (the environment scene). This suggests either a content-filtering issue with the character IP prompt or an API-level reliability problem under certain prompt structures. Either way, for production storybook generation involving named characters, the BFL API is not reliable enough to be a primary provider today.</p>
+
+        <p>The Fireworks-hosted Flux models (schnell and dev) both passed 100%. Same underlying model family, different hosting — and completely different reliability outcomes. Provider matters as much as the model.</p>
+
+        <h2>Speed: the production constraint</h2>
+
+        <p>In a children's book generator, each page requires an image. A 12-page book means 12 sequential generations plus a cover. If each takes 20 seconds, that's 4 minutes of waiting. Parents leave. Speed is not optional.</p>
+
+        <figure class="figure">
+          <div class="visual visual-bars" style="--bar-count:9; gap:4px;">
+            <i style="height:7%" title="flux-schnell: 2.2s avg"></i>
+            <i style="height:14%" title="flux-dev-fp8: 3.9s avg"></i>
+            <i style="height:18%" title="flux-2-klein-4b: 5.9s"></i>
+            <i style="height:20%" title="nano-banana: 5.7s avg"></i>
+            <i style="height:24%" title="flux-2-klein-9b: 7.3s"></i>
+            <i style="height:42%" title="nano-banana-2: 13.1s avg"></i>
+            <i style="height:60%" title="flux-2-pro: 18.4s"></i>
+            <i style="height:65%" title="nano-banana-pro: 19.0s"></i>
+            <i style="height:98%" title="flux-2-max: 30.1s"></i>
+          </div>
+          <figcaption>Visual 3. Average generation time (successful runs only). Left to right: flux-schnell (2.2s), flux-dev-fp8 (3.9s), flux-2-klein-4b (5.9s), nano-banana (5.7s), flux-2-klein-9b (7.3s), nano-banana-2 (13.1s), flux-2-pro (18.4s), nano-banana-pro (19.0s), flux-2-max (30.1s).</figcaption>
+        </figure>
+
+        <p>Flux Schnell via Fireworks is the fastest at 2.2 seconds average. This is exceptional for production use. Flux Dev FP8 runs at 3.9 seconds with visibly higher quality — our current sweet spot for the cost-speed trade.</p>
+
+        <p>Nano Banana (original) averages 5.7 seconds. That is competitive. Nano Banana 2 doubles that to 13.1 seconds — meaningfully slower, but the quality improvement is visible.</p>
+
+        <h2>Nano Banana 2: the new entrant</h2>
+
+        <p>Google's Nano Banana family is their native image generation through the Gemini API. We tested three tiers: nano-banana (base), nano-banana-2 (enhanced), and nano-banana-pro (highest tier).</p>
+
+        <p>Nano Banana 2 stands out. At 13.1 seconds, it is not the fastest model. But it has three properties that matter for storybook illustration specifically:</p>
+
+        <ul>
+          <li><strong>100% reliability</strong> — both prompts passed, including the character-interaction prompt that tripped every BFL model.</li>
+          <li><strong>High output resolution</strong> — 2342KB and 2110KB file sizes indicate high-detail generation. This is the largest output of any Gemini model in the test, and competitive with BFL's best.</li>
+          <li><strong>Native integration</strong> — Gemini API is a single synchronous call. No polling, no async status checks, no download step. The simplest integration of any model we tested.</li>
+        </ul>
+
+        <p>Nano Banana Pro, the highest tier, failed one of two generations and timed out at 70 seconds. For production use, the Pro tier is not stable enough yet. Nano Banana 2 hits the reliability floor while still delivering quality output.</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">                    nano-banana   nano-banana-2   nano-banana-pro
+                    ───────────   ─────────────   ───────────────
+Avg time            5.7s          13.1s           19.0s*
+Reliability         100%          100%            50%
+Avg file size       1971KB        2226KB          988KB
+Integration         sync          sync            sync
+Polling required    no            no              no
+
+* nano-banana-pro: successful run only; failed run timed out at 70s</div>
+          <figcaption>Visual 4. Nano Banana family comparison. Nano Banana 2 is the reliable sweet spot — the Pro tier trades stability for marginal quality gains that aren't worth the failure rate.</figcaption>
+        </figure>
+
+        <h2>The Flux landscape</h2>
+
+        <p>Flux remains the dominant open-source image model family. But the hosting provider changes the story completely.</p>
+
+        <p><strong>Fireworks-hosted Flux</strong> (schnell, dev-fp8) is fast, reliable, and simple. Both models returned images for both prompts. Schnell at 1.9-2.4 seconds is the fastest model in the entire benchmark. Dev FP8 at 3.8-3.9 seconds produces noticeably better images while staying under 4 seconds. The file sizes are smaller (565-905KB) indicating efficient but lower-resolution output compared to Gemini models.</p>
+
+        <p><strong>BFL-hosted Flux</strong> (flux-2-max, pro, klein-9b, klein-4b) failed every character prompt. When they succeeded on the environment prompt, the output quality and resolution were impressive — flux-2-pro produced a 2003KB image, flux-2-klein-9b hit 2103KB. But the async polling architecture (submit → poll → download) adds complexity, and the 50% failure rate on character prompts is disqualifying for production.</p>
+
+        <figure class="figure">
+          <div class="visual visual-code">PRODUCTION VIABILITY (as of March 2026)
+
+  TIER 1 — Ship today
+  ├── flux-schnell (Fireworks)    Speed king. 2.2s. Draft/preview use.
+  ├── flux-dev-fp8 (Fireworks)    Best speed/quality ratio. 3.9s. Primary.
+  └── nano-banana (Gemini)        Reliable fallback. 5.7s. Good quality.
+
+  TIER 2 — Ship with caveats
+  └── nano-banana-2 (Gemini)      Best quality of reliable models. 13.1s.
+                                   Use for final/cover pages where quality
+                                   matters more than speed.
+
+  TIER 3 — Monitor, don't ship
+  ├── nano-banana-pro (Gemini)    Quality high, reliability too low (50%).
+  └── flux-2-* (BFL direct)       Quality high, API reliability too low.
+                                   Revisit when BFL fixes character prompts.</div>
+          <figcaption>Visual 5. Production tier list based on combined reliability, speed, and quality assessment.</figcaption>
+        </figure>
+
+        <h2>What's missing from this benchmark</h2>
+
+        <p>This is a preliminary view. What we haven't tested yet:</p>
+
+        <ul>
+          <li><strong>GPT-Image-1 (OpenAI)</strong> — recently released, native image generation from GPT-4o. Needs API access and testing. Early reports suggest strong prompt adherence and character consistency.</li>
+          <li><strong>Recraft V3</strong> — designed specifically for illustration and design use cases. The style-conditioning approach could be a strong fit for storybook work.</li>
+          <li><strong>Ideogram 3.0</strong> — known for text rendering in images. Less relevant for pure illustration but worth benchmarking for title pages.</li>
+          <li><strong>Stable Diffusion 3.5</strong> — Stability AI's latest. Open weights, self-hostable. If quality is competitive, the economics at scale are significantly better.</li>
+          <li><strong>Character consistency testing</strong> — this benchmark tested single images. The real question for StoryBook Studio is whether a model can produce the same character across 12+ pages. That requires a different test harness.</li>
+          <li><strong>Cost per image</strong> — not measured here. Gemini and Fireworks have different pricing models. At scale (thousands of books), cost per image becomes the dominant variable.</li>
+        </ul>
+
+        <h2>Current position</h2>
+
+        <p>As of today, our production stack for StoryBook Studio uses Flux Dev FP8 via Fireworks as the primary model, with Flux Schnell for preview/draft generation. We are adding Nano Banana 2 as a quality tier for cover pages and key illustrations where the 13-second generation time is acceptable.</p>
+
+        <p>The BFL direct API is on hold until the character-prompt reliability issue is resolved. Nano Banana Pro is on watch — if Gemini stabilizes the Pro tier, it could move to Tier 1.</p>
+
+        <p>We will run this benchmark again when we have API access to GPT-Image-1 and Recraft V3. The full benchmark with interactive scoring and generated images is available as a <a href="./image-model-benchmark.html" style="color: var(--accent); text-decoration: underline;">standalone tool</a>.</p>
+
+      </article>
+
+      <nav class="article-nav">
+        <a href="./character-consistency-34-styles.html">← Previous note</a>
+        <a href="../index.html">Back to all notes →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <script>
+    (function () {
+      var dd = document.querySelector('.nav-dropdown');
+      var trigger = dd && dd.querySelector('span');
+      if (!dd || !trigger) return;
+      trigger.addEventListener('click', function () { dd.classList.toggle('is-open'); });
+      document.addEventListener('click', function (e) { if (!dd.contains(e.target)) dd.classList.remove('is-open'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dd.classList.remove('is-open'); });
+    })();
+  </script>
+</body>
+</html>
