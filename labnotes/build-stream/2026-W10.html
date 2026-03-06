@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build Stream: Week 10, 2026 — Prompt Engines Lab Notes</title>
+  <meta name="description" content="94 commits across 4 repos. Build stream infrastructure, Norbu cloud sync, StoryBook style system, Video Terminal launch." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span class="nav-dropdown-trigger">Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row">
+        <span>Mar 7, 2026</span>
+        <span>8 min read</span>
+        <span>Build Stream</span>
+      </div>
+      <h1>Build Stream: Week 10, 2026</h1>
+      <p class="dek">94 commits across 4 active repos. Two new products launched, an entire observability pipeline built, and the lab's first self-documenting infrastructure went live.</p>
+
+      <article class="content">
+
+        <p>Week 10 was infrastructure week. Not in the boring "fix the CI" sense — in the "build a system that watches itself build" sense. The dominant story is that PromptEngines now auto-generates daily commit intelligence from every repo in the organization, publishes it to the web, and will analyze its own patterns over time. But that was only half the week. The other half was two product launches and a complete cloud sync architecture for Norbu.</p>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">repo                  commits  dominant_type    hottest_area
+promptengines-main    51       feat/content     build stream + lab articles
+storybookstudio       27       feat/fix         style system + print pipeline
+norbu                  9       feat             Firebase + cloud sync
+videoterminal          7       feat/fix         initial launch + API security</div>
+          <figcaption>Commit volume and activity profile by repo, week of Mar 2–6, 2026.</figcaption>
+        </figure>
+
+        <h2>What shipped</h2>
+
+        <h3>Build Stream — self-documenting infrastructure</h3>
+        <p>The biggest architectural move this week was building the build stream itself. The system that generates this report now runs on a daily cron: it fetches commits from every repo in the aikaizen GitHub account via the API, generates structured JSON data, produces a markdown draft, and renders a single HTML page with a 30-day activity chart and collapsible daily history. The entire pipeline is zero-cost: GitHub Actions (free tier), Octokit REST API (free tier), Vercel static deploy (free tier). No LLM in the loop. The workflow pushes to main, which triggers auto-deploy via Vercel. By 6am CST every morning, the build stream page is updated.</p>
+        <p>This took three iterations to get right. The first attempt used local <code>git log</code> which only saw one repo. The second added the GitHub API but lacked the HTML generator. The third added the chart, collapsible history, and the full daily automation pipeline. The whole thing was designed, built, and deployed in under 4 hours.</p>
+
+        <h3>Video Terminal — new product launch</h3>
+        <p>Video Terminal went from initial commit to a working product in two days. The stack: Neon Postgres with Drizzle ORM, Stripe credits system, admin dashboard. The core feature set at launch: AI image generation with multiple models (including BFL Flux 2 Max and Klein), reference image categories, action/camera dropdowns, AI recompose, and a drawing canvas. API security hardening and audit logging followed immediately. Seven commits, each one substantial.</p>
+
+        <h3>Norbu — cloud sync architecture</h3>
+        <p>Norbu, the Tibetan language learning tool, went from local-only to cloud-synced in a single push sequence. Nine commits tell the story: Firebase auth and cloud sync first, then global baseline card propagation, then a sequence of increasingly defensive commits — backfilling missing cards, preventing sync failures from blocking the starter deck, guaranteeing backfill, sanitizing Firestore writes. The pattern is clear: build the happy path, then harden every edge. The final commits added curriculum integration with official packet roadmaps and branded the app with the provided logo.</p>
+
+        <h3>StoryBook Studio — style regularization</h3>
+        <p>StoryBook had 27 commits this week spanning the full stack. The highlight: a style regularization system with character metadata, style sheets, and a consistency toggle. This followed a style picker with image cards and featured/browse-all toggle. On the generation side: a "Read Me a Story" narration feature, story AI model picker, and four new BFL Flux models (Max, Pro, Klein 9B, Klein 4B). The print pipeline continued hardening — page count bug fix, book layout outline preview, 25 Google Fonts integration. Security hardening, journey-based dashboard A/B test, admin impersonation, and a complete platform expansion design doc round out a very active week.</p>
+
+        <h3>PromptEngines main site</h3>
+        <p>51 commits on the main site. The non-build-stream highlights: 7 Lab Notes articles converted from markdown to HTML and published. Vajra-Upaya vision and PRD documents added to prototypes. Video Terminal and Norbu added as experiments across all site pages. The nav system was fixed to handle multiple dropdowns. Flow Education pages got iOS touch interaction fixes and a light-mode palette conversion. The careers and contact pages were created. A complete site restructuring moved from a single-page approach to a multi-section architecture with Experiments, Prototypes, and Lab Notes as distinct navigation paths.</p>
+
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:100%"></i><i style="height:53%"></i><i style="height:18%"></i><i style="height:14%"></i>
+          </div>
+          <figcaption>Relative commit volume: promptengines-main (51), storybookstudio (27), norbu (9), videoterminal (7).</figcaption>
+        </figure>
+
+        <h2>New tech introduced</h2>
+
+        <figure class="figure">
+          <div class="visual visual-code">new_concepts_week_10:
+  cross_repo_commit_intelligence:
+    first_seen: promptengines-main
+    pattern: GitHub API → JSON → HTML with charts
+    zero_cost: true
+
+  firebase_cloud_sync_with_defensive_backfill:
+    first_seen: norbu
+    pattern: auth → sync → propagate → backfill → sanitize
+
+  style_regularization_system:
+    first_seen: storybookstudio
+    pattern: character metadata + sheets + consistency toggle
+
+  neon_postgres_with_drizzle_orm:
+    first_seen: videoterminal
+    pattern: serverless SQL + type-safe ORM
+
+  stripe_credits_system:
+    first_seen: videoterminal
+    pattern: purchase credits → deduct per generation
+
+  bfl_flux2_model_family:
+    first_seen: storybookstudio, videoterminal
+    propagated_to: both products simultaneously</div>
+          <figcaption>Net-new technical concepts introduced across repos, week 10.</figcaption>
+        </figure>
+
+        <h2>Build patterns observed</h2>
+
+        <p><strong>Launch velocity is increasing.</strong> Video Terminal went from zero to production in 2 days, 7 commits. Norbu went from local-only to cloud-synced in 9 commits over one day. The pattern: small repos, fast iteration, defensive hardening immediately after the happy path works.</p>
+
+        <p><strong>Conventional commit discipline varies by repo.</strong> promptengines-main uses conventional commits consistently (<code>feat:</code>, <code>fix:</code>, <code>content:</code>). storybookstudio mostly follows the convention. norbu and videoterminal use plain English subjects. This matters for automated analysis — the build stream type detection only works when commits follow the convention.</p>
+
+        <p><strong>Feature-to-fix ratio signals product phase.</strong> storybookstudio is 50/50 feat/fix — it's in active development and stabilization simultaneously. videoterminal is mostly feat — greenfield. norbu is all feat — initial architecture. promptengines-main is balanced across feat/content/fix/chore — it's a platform, not a product.</p>
+
+        <p><strong>Cross-repo coordination is happening through model availability.</strong> BFL Flux 2 models appeared in both storybookstudio and videoterminal in the same week. The model picker pattern is propagating — both products now have selectable AI model registries. This wasn't coordinated top-down; it emerged from both products hitting the same need.</p>
+
+        <h2>What to watch next week</h2>
+        <ul>
+          <li><strong>Build stream weekly automation.</strong> This weekly report was hand-written. The goal is to automate the data collection and template generation for Friday reports, similar to the daily stream. The narrative layer stays human/agent-authored.</li>
+          <li><strong>Norbu curriculum depth.</strong> The cloud sync infrastructure is in place. The curriculum section and official packet integration roadmap were the last commits. Expect actual Tibetan language content to start flowing in.</li>
+          <li><strong>StoryBook Lulu go-live.</strong> The Lulu checklist and Gelato integration docs were updated this week. The print pipeline has been hardened across two full weeks. Physical book ordering is close.</li>
+          <li><strong>Video Terminal video models.</strong> The fal.ai video endpoints were fixed this week. Video generation is the next frontier after image generation stabilizes.</li>
+          <li><strong>Flow Education.</strong> Zero commits this week. The iOS fixes and light-mode conversion landed last weekend. It's either stable or stalled — next week will tell.</li>
+        </ul>
+
+      </article>
+
+      <nav class="article-nav">
+        <a href="./index.html">&larr; Build Stream</a>
+        <a href="./2026-W09.html">&larr; Week 9</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Prompt Engines &middot; Lab Notes</div>
+  </footer>
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <script>
+    (function () {
+      var dropdowns = document.querySelectorAll('.nav-dropdown');
+      dropdowns.forEach(function (dropdown) {
+        var trigger = dropdown.querySelector('.nav-dropdown-trigger') || dropdown.querySelector('span');
+        if (!trigger) return;
+        trigger.addEventListener('click', function (e) {
+          e.preventDefault();
+          dropdowns.forEach(function (other) { if (other !== dropdown) other.classList.remove('is-open'); });
+          dropdown.classList.toggle('is-open');
+        });
+      });
+      document.addEventListener('click', function (e) {
+        dropdowns.forEach(function (dd) { if (!dd.contains(e.target)) dd.classList.remove('is-open'); });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') dropdowns.forEach(function (dd) { dd.classList.remove('is-open'); });
+      });
+    })();
+  </script>
+</body>
+</html>

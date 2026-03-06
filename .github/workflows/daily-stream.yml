@@ -1,0 +1,42 @@
+name: Daily Build Stream
+
+on:
+  schedule:
+    - cron: '50 11 * * *' # 11:50 UTC = 5:50am CST — data collection
+  workflow_dispatch: # manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  collect-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Collect commit data from all repos
+        run: node scripts/prepare-stream-data.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.FEED_GITHUB_TOKEN }}
+
+      - name: Generate markdown draft
+        run: node scripts/write-stream-article.js
+
+      - name: Generate build stream HTML
+        run: node scripts/build-stream-html.js
+
+      - name: Commit and push if changed
+        run: |
+          git diff --quiet && git diff --cached --quiet && [ -z "$(git ls-files --others --exclude-standard labnotes/build-stream/)" ] && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add labnotes/build-stream/
+          git commit -m "chore(build-stream): auto-generate daily stream data + HTML"
+          git push
