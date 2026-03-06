@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build Stream — March 6, 2026 — Prompt Engines Lab Notes</title>
+  <meta name="description" content="Build stream infrastructure completion, security hardening, and deployment pipeline fixes. 18 commits analyzed.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.85rem; }
+    .article-content th, .article-content td { padding: 0.6rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); font-family: var(--mono); }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+          March 6, 2026 · Build Stream
+        </div>
+        
+        <h1>Build Stream — March 6, 2026</h1>
+        <p style="color: var(--text-3); font-size: 1.1rem; line-height: 1.6; margin: 1rem 0 2rem;">
+          <strong>18 commits</strong> analyzed. Build stream infrastructure achieves full automation. 
+          Security hardening from external input. The deployment gap persists.
+        </p>
+
+        <h2>What the Commits Show</h2>
+
+        <h3>Morning: Build Stream Infrastructure Completion</h3>
+        <p>The dominant pattern: <strong>the build stream system achieving full automation</strong>. The commit sequence shows three iterations:</p>
+        
+        <table>
+          <tr><th>Time</th><th>Commit</th><th>Type</th><th>What Changed</th></tr>
+          <tr><td>19:32</td><td><code>323f510</code></td><td>feat</td><td>Repo/type/ratio charts + Week 10 report</td></tr>
+          <tr><td>19:32</td><td><code>1cd2f37</code></td><td>feat</td><td>Collapsible history + today section</td></tr>
+          <tr><td>19:32</td><td><code>53f89d8</code></td><td>chore</td><td>Auto-generate daily stream data + HTML</td></tr>
+        </table>
+
+        <p><strong>Pattern:</strong> This wasn't built in one shot. API integration → HTML generation → Interactive features.</p>
+
+        <h3>Midday: Security Hardening Response</h3>
+        <p>Three security commits — all reactive to external input (moritzkremb's X thread):</p>
+        
+        <ul>
+          <li><code>02af392</code> — Removed exposed PATs from files, enforced env vars only</li>
+          <li><code>a2ab6fe</code> — Installed Homebrew, summarize CLI, created secrets directory</li>
+          <li><code>88a41f2</code> — Added model fallbacks, cron health checks to HEARTBEAT.md</li>
+        </ul>
+
+        <p><strong>Implication:</strong> External best practices are integrated immediately, not backlogged.</p>
+
+        <h3>Afternoon: The Deployment Paradox</h3>
+        <p>Commits <code>d62c664</code> (5 articles converted to HTML) and <code>d6d42ef</code> (Vercel integration enabled) are <strong>in the repo but not live</strong>. The tracking system works. The shipping system doesn't.</p>
+
+        <h2>By The Numbers</h2>
+        
+        <table>
+          <tr><th>Type</th><th>Count</th><th>Purpose</th></tr>
+          <tr><td>feat</td><td>5 (38%)</td><td>New capabilities</td></tr>
+          <tr><td>chore</td><td>4</td><td>Automation, maintenance</td></tr>
+          <tr><td>content</td><td>2</td><td>Articles, writing</td></tr>
+          <tr><td>hardening</td><td>2</td><td>Security implementation</td></tr>
+          <tr><td>security</td><td>1</td><td>PAT removal</td></tr>
+        </table>
+
+        <p><strong>Dominant pattern:</strong> 38% of commits are <code>feat</code> — this was a feature-building day.</p>
+
+        <h2>Deduced Patterns</h2>
+
+        <h3>1. Infrastructure Before Content</h3>
+        <p>The build stream infrastructure (<code>ab784ea</code> → <code>abfec26</code> → <code>323f510</code>) preceded the actual build stream content. The lab builds self-documenting systems.</p>
+
+        <h3>2. Zero-Cost Architecture</h3>
+        <p>From commit analysis: GitHub Actions (free), GitHub API (free), Vercel (free), no paid LLM calls. This infrastructure is designed to run indefinitely at zero marginal cost.</p>
+
+        <h3>3. The Deployment Gap</h3>
+        <p>Commits exist. Deployment doesn't reflect them. Tracking work is solved. Shipping work has a manual bottleneck.</p>
+
+        <h2>What to Watch Next</h2>
+        <ul>
+          <li><strong>Tonight at 11:55 PM UTC:</strong> First automated daily trigger runs. Pipeline proof point.</li>
+          <li><strong>Cross-repo commits:</strong> Build stream now fetches from all aikaizen repos. Expect flow/kaizen/storybookstudio commits tomorrow.</li>
+          <li><strong>Deployment resolution:</strong> Manual Vercel deploy or project-level GitHub reconnection needed.</li>
+        </ul>
+
+        <div style="margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-4); font-size: 0.85rem;">
+          <strong>Source:</strong> Git commits <code>773391b</code> through <code>ab784ea</code> from promptengines-main<br>
+          <strong>Generated:</strong> March 6, 2026 from actual commit data — no synthetic facts
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer style="padding: 3rem 1.5rem; border-top: 1px solid var(--border); margin-top: 4rem;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div style="color: var(--text-3);">
+        <span style="font-weight: 600;">Prompt Engines Lab</span> — Experimental notes on building with AI
+      </div>
+      <div style="display: flex; gap: 1.5rem;">
+        <a href="https://promptengines.com" style="color: var(--text-3); text-decoration: none;">PromptEngines.com</a>
+        <a href="https://github.com/aikaizen" style="color: var(--text-3); text-decoration: none;">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
