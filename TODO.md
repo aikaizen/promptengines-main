@@ -206,4 +206,32 @@ Token-based system allowing people to join the PromptEngines team, create profil
 - Storage (avatars, article assets)
 - Hosting for backend API
 
-**PRD Location:** `docs/prd/token-team-join.md` (to be created)
+**PRD Location:** `docs/prd/token-team-join.md` ✅ Created and pushed to main
+
+---
+
+## 🔴 NEW PROJECT: Google Workspace CLI (gws) Integration
+
+### Claude & Agent Google Workspace Access
+**Status:** PRD phase — research complete  
+**Priority:** Medium-High
+
+**Overview:**
+Integrate [googleworkspace/cli](https://github.com/googleworkspace/cli) (`gws`) for unified Google Workspace API access.
+
+**Key Features:**
+- 40+ agent skills included (calendar, drive, gmail, docs, chat, admin)
+- Dynamic API building from Google Discovery Service
+- Structured JSON output for programmatic use
+
+**Use Cases:**
+- **Local Claude:** Access user's calendar, Gmail, Drive for context
+- **Docker Agents:** Service account automation, shared team resources
+
+**Components:**
+- OAuth 2.0 setup (desktop app for local, service account for Docker)
+- gws CLI installation (npm: `@googleworkspace/cli`)
+- Custom skills for PromptEngines workflows
+- Token management and rotation
+
+**PRD Location:** `docs/prd/gws-google-workspace-cli-integration.md` ✅ Created and pushed to main
