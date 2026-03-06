@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    /* ── Build Stream specific ── */
+    /* ── Build Stream ── */
     .stream-chart {
       background: var(--bg-elevated);
       border: 1px solid var(--border);
@@ -32,7 +32,6 @@
       gap: 3px;
       height: 140px;
       padding-bottom: 1.5rem;
-      position: relative;
     }
     .chart-col {
       flex: 1;
@@ -41,7 +40,6 @@
       align-items: center;
       justify-content: flex-end;
       height: 100%;
-      position: relative;
     }
     .chart-bar {
       width: 100%;
@@ -51,14 +49,8 @@
       transition: height 0.3s var(--ease);
       opacity: 0.85;
     }
-    .chart-col:hover .chart-bar {
-      opacity: 1;
-      background: var(--accent-hover);
-    }
-    .chart-col-empty .chart-bar {
-      background: var(--border);
-      opacity: 0.3;
-    }
+    .chart-col:hover .chart-bar { opacity: 1; background: var(--accent-hover); }
+    .chart-col-empty .chart-bar { background: var(--border); opacity: 0.3; }
     .chart-label {
       font-size: 0.55rem;
       color: var(--text-4);
@@ -66,13 +58,8 @@
       margin-top: 6px;
       white-space: nowrap;
     }
-    /* Only show every 5th label to reduce clutter */
-    .chart-col:not(:nth-child(5n+1)) .chart-label {
-      visibility: hidden;
-    }
-    .chart-col:last-child .chart-label {
-      visibility: visible;
-    }
+    .chart-col:not(:nth-child(5n+1)) .chart-label { visibility: hidden; }
+    .chart-col:last-child .chart-label { visibility: visible; }
 
     .stream-totals {
       display: flex;
@@ -98,6 +85,7 @@
       letter-spacing: 0.06em;
     }
 
+    /* ── Today's entry ── */
     .stream-day {
       background: var(--bg-elevated);
       border: 1px solid var(--border);
@@ -122,10 +110,7 @@
       font-weight: 600;
       color: var(--text);
     }
-    .stream-day-stats {
-      display: flex;
-      gap: 0.5rem;
-    }
+    .stream-day-stats { display: flex; gap: 0.5rem; }
     .stat-chip {
       font-size: 0.7rem;
       font-family: var(--mono);
@@ -134,6 +119,11 @@
       padding: 0.2rem 0.6rem;
       border-radius: 99px;
       border: 1px solid var(--border);
+    }
+    .stat-chip-today {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-dim);
     }
     .stream-day-types {
       display: flex;
@@ -157,58 +147,21 @@
     .type-pill.type-docs { color: #fbbf24; border-color: rgba(251,191,36,0.2); }
     .type-pill.type-chore { color: var(--text-4); }
 
-    .stream-day-repos {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .stream-repo {
-      padding-left: 1rem;
-      border-left: 2px solid var(--border);
-    }
-    .stream-repo-head {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-    .stream-repo-name {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--accent);
-    }
+    .stream-day-repos { display: flex; flex-direction: column; gap: 1rem; }
+    .stream-repo { padding-left: 1rem; border-left: 2px solid var(--border); }
+    .stream-repo-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .stream-repo-name { font-family: var(--mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); }
     .stream-repo-count {
-      font-size: 0.6rem;
-      font-family: var(--mono);
-      color: var(--text-4);
-      background: var(--bg);
-      padding: 0.1rem 0.4rem;
-      border-radius: 99px;
-      border: 1px solid var(--border-subtle);
+      font-size: 0.6rem; font-family: var(--mono); color: var(--text-4);
+      background: var(--bg); padding: 0.1rem 0.4rem; border-radius: 99px; border: 1px solid var(--border-subtle);
     }
     .stream-commit {
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-      padding: 0.2rem 0;
-      font-size: 0.8rem;
-      line-height: 1.4;
+      display: flex; align-items: baseline; gap: 0.5rem; padding: 0.2rem 0; font-size: 0.8rem; line-height: 1.4;
     }
-    .commit-hash {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--text-4);
-      flex-shrink: 0;
-    }
+    .commit-hash { font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); flex-shrink: 0; }
     .commit-type {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      padding: 0.05rem 0.35rem;
-      border-radius: 3px;
-      flex-shrink: 0;
-      background: var(--bg);
-      border: 1px solid var(--border-subtle);
+      font-family: var(--mono); font-size: 0.6rem; padding: 0.05rem 0.35rem; border-radius: 3px;
+      flex-shrink: 0; background: var(--bg); border: 1px solid var(--border-subtle);
     }
     .commit-type.type-feat { color: #4ade80; border-color: rgba(74,222,128,0.15); }
     .commit-type.type-fix { color: #f87171; border-color: rgba(248,113,113,0.15); }
@@ -216,8 +169,72 @@
     .commit-type.type-refactor { color: #c084fc; border-color: rgba(192,132,252,0.15); }
     .commit-type.type-docs { color: #fbbf24; border-color: rgba(251,191,36,0.15); }
     .commit-type.type-chore { color: var(--text-4); }
-    .commit-subject {
-      color: var(--text-2);
+    .commit-subject { color: var(--text-2); }
+
+    /* ── History (collapsible) ── */
+    .history-section {
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+    .history-day {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+    .history-day[open] {
+      border-color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .history-summary {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      transition: background 0.15s ease;
+    }
+    .history-summary::-webkit-details-marker { display: none; }
+    .history-summary::before {
+      content: "\25B6";
+      font-size: 0.6rem;
+      color: var(--text-4);
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .history-day[open] .history-summary::before {
+      transform: rotate(90deg);
+      color: var(--accent);
+    }
+    .history-summary:hover { background: var(--bg-subtle); }
+    .history-date {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      min-width: 110px;
+      flex-shrink: 0;
+    }
+    .history-stats {
+      display: flex;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+    .history-repos-preview {
+      font-size: 0.7rem;
+      color: var(--text-4);
+      font-family: var(--mono);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .history-detail {
+      padding: 0 1.5rem 1.5rem 2.5rem;
     }
 
     @media (max-width: 640px) {
@@ -226,6 +243,9 @@
       .chart-grid { height: 100px; }
       .chart-col:not(:nth-child(7n+1)) .chart-label { visibility: hidden; }
       .stream-commit { flex-wrap: wrap; }
+      .history-summary { flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; }
+      .history-repos-preview { display: none; }
+      .history-detail { padding: 0 1rem 1rem 1.5rem; }
     }
   </style>
 </head>
@@ -295,128 +315,128 @@
         </div>
 
         <div class="stream-chart">
-          <h3>Commit activity — last 30 days</h3>
+          <h3>Commit activity &mdash; last 30 days</h3>
           <div class="chart-grid">
-          <div class="chart-col chart-col-empty" title="2026-02-05: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/5</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-06: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/6</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-07: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/7</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-08: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/8</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-09: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/9</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-10: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/10</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-11: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/11</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-12: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/12</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-13: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/13</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-14: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/14</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-15: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/15</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-16: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/16</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-17: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/17</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-18: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/18</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-19: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/19</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-20: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/20</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-21: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/21</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-22: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/22</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-23: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/23</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-24: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/24</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-25: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/25</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-26: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/26</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-27: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/27</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-02-28: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">2/28</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-03-01: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">3/1</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-03-02: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">3/2</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-03-03: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">3/3</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-03-04: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">3/4</div>
-          </div>
-          <div class="chart-col chart-col-empty" title="2026-03-05: 0 commits">
-            <div class="chart-bar" style="height: 0%"></div>
-            <div class="chart-label">3/5</div>
-          </div>
-          <div class="chart-col" title="2026-03-06: 36 commits">
-            <div class="chart-bar" style="height: 100%"></div>
-            <div class="chart-label">3/6</div>
-          </div>
+            <div class="chart-col chart-col-empty" title="2026-02-05: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/5</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-06: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/6</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-07: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/7</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-08: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/8</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-09: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/9</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-10: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/10</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-11: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/11</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-12: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/12</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-13: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/13</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-14: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/14</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-15: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/15</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-16: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/16</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-17: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/17</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-18: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/18</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-19: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/19</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-20: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/20</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-21: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/21</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-22: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/22</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-23: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/23</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-24: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/24</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-25: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/25</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-26: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/26</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-27: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/27</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-02-28: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">2/28</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-03-01: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">3/1</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-03-02: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">3/2</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-03-03: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">3/3</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-03-04: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">3/4</div>
+            </div>
+            <div class="chart-col chart-col-empty" title="2026-03-05: 0 commits">
+              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-label">3/5</div>
+            </div>
+            <div class="chart-col" title="2026-03-06: 36 commits">
+              <div class="chart-bar" style="height: 100%"></div>
+              <div class="chart-label">3/6</div>
+            </div>
           </div>
         </div>
       </div>
@@ -425,223 +445,231 @@
     <section class="section">
       <div class="container">
         <div class="section-header">
-          <h2>Daily Log</h2>
-          <span class="section-count">1 days</span>
+          <h2>Today</h2>
         </div>
+        <article class="stream-day stream-day-today" id="day-2026-03-06">
+          <div class="stream-day-header">
+            <h2>Friday, March 6, 2026</h2>
+            <div class="stream-day-stats">
+              <span class="stat-chip stat-chip-today">Today</span>
+              <span class="stat-chip">36 commits</span>
+              <span class="stat-chip">3 repos</span>
+            </div>
+          </div>
+          <div class="stream-day-types"><span class="type-pill type-other">other 10</span> <span class="type-pill type-feat">feat 8</span> <span class="type-pill type-chore">chore 5</span> <span class="type-pill type-docs">docs 4</span> <span class="type-pill type-fix">fix 4</span> <span class="type-pill type-content">content 4</span> <span class="type-pill type-refactor">refactor 1</span></div>
+          <div class="stream-day-repos">
+            <div class="stream-repo">
+              <div class="stream-repo-head">
+                <span class="stream-repo-name">promptengines-main</span>
+                <span class="stream-repo-count">22</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">abfec26</code>
+                <span class="commit-type type-feat">feat</span>
+                <span class="commit-subject">single HTML page with chart + daily history</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">ba3c913</code>
+                <span class="commit-type type-chore">chore</span>
+                <span class="commit-subject">auto-generate daily stream data</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">ab784ea</code>
+                <span class="commit-type type-feat">feat</span>
+                <span class="commit-subject">fetch commits from all aikaizen repos via GitHub API</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">1bc84a0</code>
+                <span class="commit-type type-chore">chore</span>
+                <span class="commit-subject">update activity feed from GitHub commits</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">c6787be</code>
+                <span class="commit-type type-fix">fix</span>
+                <span class="commit-subject">Restore daily stream workflow + publish image model articles</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">56bb034</code>
+                <span class="commit-type type-content">content</span>
+                <span class="commit-subject">Rewrite March 5 build stream from git commit feed</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">1c98910</code>
+                <span class="commit-type type-content">content</span>
+                <span class="commit-subject">Build stream article for March 5, 2026</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">d62c664</code>
+                <span class="commit-type type-content">content</span>
+                <span class="commit-subject">Convert March 3 articles to HTML format</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">d6d42ef</code>
+                <span class="commit-type type-chore">chore</span>
+                <span class="commit-subject">Enable Vercel GitHub integration for auto-deploy</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">eb0666a</code>
+                <span class="commit-type type-fix">fix</span>
+                <span class="commit-subject">Enable all nav dropdowns + add prototypes to Prototypes menu</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">f61d726</code>
+                <span class="commit-type type-fix">fix</span>
+                <span class="commit-subject">Remove Anima from all pages (renamed to Video Terminal)</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">d9536df</code>
+                <span class="commit-type type-feat">feat</span>
+                <span class="commit-subject">Add Video Terminal and Norbu as experiments across all pages</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">918fdc9</code>
+                <span class="commit-type type-content">content</span>
+                <span class="commit-subject">Publish 7 HTML articles + add Vajra-Upaya to prototypes</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">69779e7</code>
+                <span class="commit-type type-chore">chore</span>
+                <span class="commit-subject">Remove .md versions after HTML conversion</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">05804a7</code>
+                <span class="commit-type type-fix">fix</span>
+                <span class="commit-subject">Convert March 4 articles from .md to .html</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">6944a7f</code>
+                
+                <span class="commit-subject">revert(ci): Remove workflow file - needs workflow scope PAT</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">1110ede</code>
+                <span class="commit-type type-docs">docs</span>
+                <span class="commit-subject">Add Vajra-Upaya vision, MVP PRD, and Phase 1 PRD</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">64f5136</code>
+                <span class="commit-type type-feat">feat</span>
+                <span class="commit-subject">Add daily build stream trigger workflow</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">5bb17ab</code>
+                <span class="commit-type type-feat">feat</span>
+                <span class="commit-subject">Option B automation scripts</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">a44bcc9</code>
+                <span class="commit-type type-docs">docs</span>
+                <span class="commit-subject">Add README for commit archive</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">1a76995</code>
+                <span class="commit-type type-feat">feat</span>
+                <span class="commit-subject">Git feed → Markdown + Daily Stream articles</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">206306b</code>
+                <span class="commit-type type-refactor">refactor</span>
+                <span class="commit-subject">Remove Dandy from skills index</span>
+              </div>
+            </div>
+            <div class="stream-repo">
+              <div class="stream-repo-head">
+                <span class="stream-repo-name">norbu</span>
+                <span class="stream-repo-count">9</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">01c3f31</code>
+                
+                <span class="commit-subject">Integrate provided logo into app branding</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">4522d63</code>
+                
+                <span class="commit-subject">Add curriculum section and official packet integration roadmap</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">945ecfd</code>
+                
+                <span class="commit-subject">Document validation run and curriculum/ux upgrade roadmap</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">5df672d</code>
+                
+                <span class="commit-subject">Replace community deck model with explicit community import flows</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">5ba1f3e</code>
+                
+                <span class="commit-subject">Propagate shared cards into user decks with batch-safe sync</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">5192048</code>
+                
+                <span class="commit-subject">Guarantee starter deck backfill and sanitize Firestore writes</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">46bfb2f</code>
+                
+                <span class="commit-subject">Prevent community sync failures from blocking starter deck seed</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">a541acc</code>
+                
+                <span class="commit-subject">Backfill missing starter cards for existing user clouds</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">da5c8e4</code>
+                
+                <span class="commit-subject">Add Firebase auth, cloud sync, and global baseline card propagation</span>
+              </div>
+            </div>
+            <div class="stream-repo">
+              <div class="stream-repo-head">
+                <span class="stream-repo-name">storybookstudio</span>
+                <span class="stream-repo-count">5</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">ff68055</code>
+                <span class="commit-type type-docs">docs</span>
+                <span class="commit-subject">update todo with Lulu go-live checklist + Gelato integration</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">a59982e</code>
+                <span class="commit-type type-chore">chore</span>
+                <span class="commit-subject">move all docs to docs/ folder, clean up root</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">a58b567</code>
+                <span class="commit-type type-feat">feat</span>
+                <span class="commit-subject">style regularization — character metadata, sheets, consistency toggle</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">d591010</code>
+                <span class="commit-type type-feat">feat</span>
+                <span class="commit-subject">style picker with image cards, featured/browse-all toggle</span>
+              </div>
+              <div class="stream-commit">
+                <code class="commit-hash">24a3e34</code>
+                <span class="commit-type type-docs">docs</span>
+                <span class="commit-subject">add testing guide with free vs paid test breakdown</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
 
-<!-- STREAM:START -->
-      <article class="stream-day stream-day-today" id="day-2026-03-06">
-        <div class="stream-day-header">
-          <h2>Friday, March 6, 2026</h2>
-          <div class="stream-day-stats">
-            <span class="stat-chip">36 commits</span>
-            <span class="stat-chip">3 repos</span>
+    <section class="section">
+      <div class="container">
+        <div class="history-section">
+          <div class="section-header">
+            <h2>History</h2>
+            <span class="section-count">Last 14 days</span>
           </div>
+        <p style="color: var(--text-4); padding: 1rem 0;">No previous days recorded yet. History will appear here as data accumulates.</p>
         </div>
-        <div class="stream-day-types"><span class="type-pill type-other">other 10</span> <span class="type-pill type-feat">feat 8</span> <span class="type-pill type-chore">chore 5</span> <span class="type-pill type-docs">docs 4</span> <span class="type-pill type-fix">fix 4</span> <span class="type-pill type-content">content 4</span> <span class="type-pill type-refactor">refactor 1</span></div>
-        <div class="stream-day-repos">
-          <div class="stream-repo">
-            <div class="stream-repo-head">
-              <span class="stream-repo-name">promptengines-main</span>
-              <span class="stream-repo-count">22</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">abfec26</code>
-              <span class="commit-type type-feat">feat</span>
-              <span class="commit-subject">single HTML page with chart + daily history</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">ba3c913</code>
-              <span class="commit-type type-chore">chore</span>
-              <span class="commit-subject">auto-generate daily stream data</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">ab784ea</code>
-              <span class="commit-type type-feat">feat</span>
-              <span class="commit-subject">fetch commits from all aikaizen repos via GitHub API</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">1bc84a0</code>
-              <span class="commit-type type-chore">chore</span>
-              <span class="commit-subject">update activity feed from GitHub commits</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">c6787be</code>
-              <span class="commit-type type-fix">fix</span>
-              <span class="commit-subject">Restore daily stream workflow + publish image model articles</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">56bb034</code>
-              <span class="commit-type type-content">content</span>
-              <span class="commit-subject">Rewrite March 5 build stream from git commit feed</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">1c98910</code>
-              <span class="commit-type type-content">content</span>
-              <span class="commit-subject">Build stream article for March 5, 2026</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">d62c664</code>
-              <span class="commit-type type-content">content</span>
-              <span class="commit-subject">Convert March 3 articles to HTML format</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">d6d42ef</code>
-              <span class="commit-type type-chore">chore</span>
-              <span class="commit-subject">Enable Vercel GitHub integration for auto-deploy</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">eb0666a</code>
-              <span class="commit-type type-fix">fix</span>
-              <span class="commit-subject">Enable all nav dropdowns + add prototypes to Prototypes menu</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">f61d726</code>
-              <span class="commit-type type-fix">fix</span>
-              <span class="commit-subject">Remove Anima from all pages (renamed to Video Terminal)</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">d9536df</code>
-              <span class="commit-type type-feat">feat</span>
-              <span class="commit-subject">Add Video Terminal and Norbu as experiments across all pages</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">918fdc9</code>
-              <span class="commit-type type-content">content</span>
-              <span class="commit-subject">Publish 7 HTML articles + add Vajra-Upaya to prototypes</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">69779e7</code>
-              <span class="commit-type type-chore">chore</span>
-              <span class="commit-subject">Remove .md versions after HTML conversion</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">05804a7</code>
-              <span class="commit-type type-fix">fix</span>
-              <span class="commit-subject">Convert March 4 articles from .md to .html</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">6944a7f</code>
-              
-              <span class="commit-subject">revert(ci): Remove workflow file - needs workflow scope PAT</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">1110ede</code>
-              <span class="commit-type type-docs">docs</span>
-              <span class="commit-subject">Add Vajra-Upaya vision, MVP PRD, and Phase 1 PRD</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">64f5136</code>
-              <span class="commit-type type-feat">feat</span>
-              <span class="commit-subject">Add daily build stream trigger workflow</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">5bb17ab</code>
-              <span class="commit-type type-feat">feat</span>
-              <span class="commit-subject">Option B automation scripts</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">a44bcc9</code>
-              <span class="commit-type type-docs">docs</span>
-              <span class="commit-subject">Add README for commit archive</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">1a76995</code>
-              <span class="commit-type type-feat">feat</span>
-              <span class="commit-subject">Git feed → Markdown + Daily Stream articles</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">206306b</code>
-              <span class="commit-type type-refactor">refactor</span>
-              <span class="commit-subject">Remove Dandy from skills index</span>
-            </div>
-          </div>
-          <div class="stream-repo">
-            <div class="stream-repo-head">
-              <span class="stream-repo-name">norbu</span>
-              <span class="stream-repo-count">9</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">01c3f31</code>
-              
-              <span class="commit-subject">Integrate provided logo into app branding</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">4522d63</code>
-              
-              <span class="commit-subject">Add curriculum section and official packet integration roadmap</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">945ecfd</code>
-              
-              <span class="commit-subject">Document validation run and curriculum/ux upgrade roadmap</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">5df672d</code>
-              
-              <span class="commit-subject">Replace community deck model with explicit community import flows</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">5ba1f3e</code>
-              
-              <span class="commit-subject">Propagate shared cards into user decks with batch-safe sync</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">5192048</code>
-              
-              <span class="commit-subject">Guarantee starter deck backfill and sanitize Firestore writes</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">46bfb2f</code>
-              
-              <span class="commit-subject">Prevent community sync failures from blocking starter deck seed</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">a541acc</code>
-              
-              <span class="commit-subject">Backfill missing starter cards for existing user clouds</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">da5c8e4</code>
-              
-              <span class="commit-subject">Add Firebase auth, cloud sync, and global baseline card propagation</span>
-            </div>
-          </div>
-          <div class="stream-repo">
-            <div class="stream-repo-head">
-              <span class="stream-repo-name">storybookstudio</span>
-              <span class="stream-repo-count">5</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">ff68055</code>
-              <span class="commit-type type-docs">docs</span>
-              <span class="commit-subject">update todo with Lulu go-live checklist + Gelato integration</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">a59982e</code>
-              <span class="commit-type type-chore">chore</span>
-              <span class="commit-subject">move all docs to docs/ folder, clean up root</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">a58b567</code>
-              <span class="commit-type type-feat">feat</span>
-              <span class="commit-subject">style regularization — character metadata, sheets, consistency toggle</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">d591010</code>
-              <span class="commit-type type-feat">feat</span>
-              <span class="commit-subject">style picker with image cards, featured/browse-all toggle</span>
-            </div>
-            <div class="stream-commit">
-              <code class="commit-hash">24a3e34</code>
-              <span class="commit-type type-docs">docs</span>
-              <span class="commit-subject">add testing guide with free vs paid test breakdown</span>
-            </div>
-          </div>
-        </div>
-      </article>
-<!-- STREAM:END -->
-
       </div>
     </section>
   </main>

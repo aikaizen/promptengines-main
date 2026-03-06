@@ -4,8 +4,8 @@
  * Reads all .data-*.json files in labnotes/build-stream/ and generates
  * a single index.html with:
  *   - Activity chart (last 30 days)
- *   - Today's stream at the top
- *   - Full history below
+ *   - Today's stream expanded at the top
+ *   - Collapsible history for the last 14 days below
  *
  * No external dependencies — uses only Node built-ins.
  */
@@ -15,6 +15,7 @@ const path = require("path");
 
 const STREAM_DIR = path.join(__dirname, "..", "labnotes", "build-stream");
 const OUTPUT = path.join(STREAM_DIR, "index.html");
+const HISTORY_DAYS = 14;
 
 // ---------------------------------------------------------------------------
 // Load all data files
@@ -50,8 +51,6 @@ function buildChartData(allData) {
       date: dateStr,
       label: `${d.getMonth() + 1}/${d.getDate()}`,
       total: entry ? entry.stats.total : 0,
-      repos: entry ? Object.keys(entry.stats.byRepo || {}).length : 0,
-      byRepo: entry ? entry.stats.byRepo || {} : {},
     });
   }
 
@@ -71,27 +70,50 @@ function esc(str) {
 }
 
 // ---------------------------------------------------------------------------
-// Build a day's entry HTML
+// Format a date string as readable label
 // ---------------------------------------------------------------------------
 
-function buildDayEntry(data, isToday) {
-  const d = new Date(data.date + "T12:00:00Z");
-  const dateLabel = d.toLocaleDateString("en-US", {
+function formatDate(dateStr) {
+  const d = new Date(dateStr + "T12:00:00Z");
+  return d.toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
     timeZone: "UTC",
   });
+}
 
-  // Group by repo
+function formatDateShort(dateStr) {
+  const d = new Date(dateStr + "T12:00:00Z");
+  return d.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Build repo detail HTML (shared between today + history)
+// ---------------------------------------------------------------------------
+
+function buildRepoDetail(data) {
   const byRepo = {};
   data.commits.forEach((c) => {
     if (!byRepo[c.repo]) byRepo[c.repo] = [];
     byRepo[c.repo].push(c);
   });
 
-  // Repo sections
+  const byType = data.stats.byType || {};
+  const typePills = Object.entries(byType)
+    .sort((a, b) => b[1] - a[1])
+    .map(
+      ([t, n]) =>
+        `<span class="type-pill type-${esc(t)}">${esc(t)} ${n}</span>`
+    )
+    .join(" ");
+
   const repoSections = Object.entries(byRepo)
     .sort((a, b) => b[1].length - a[1].length)
     .map(([repo, commits]) => {
@@ -105,49 +127,84 @@ function buildDayEntry(data, isToday) {
             /^(feat|fix|content|refactor|docs|chore|style|test)(\(.+\))?: /,
             ""
           );
-          return `            <div class="stream-commit">
-              <code class="commit-hash">${esc(c.shortHash)}</code>
-              ${typeTag}
-              <span class="commit-subject">${esc(subject)}</span>
-            </div>`;
+          return `              <div class="stream-commit">
+                <code class="commit-hash">${esc(c.shortHash)}</code>
+                ${typeTag}
+                <span class="commit-subject">${esc(subject)}</span>
+              </div>`;
         })
         .join("\n");
 
-      return `          <div class="stream-repo">
-            <div class="stream-repo-head">
-              <span class="stream-repo-name">${esc(repo)}</span>
-              <span class="stream-repo-count">${commits.length}</span>
-            </div>
+      return `            <div class="stream-repo">
+              <div class="stream-repo-head">
+                <span class="stream-repo-name">${esc(repo)}</span>
+                <span class="stream-repo-count">${commits.length}</span>
+              </div>
 ${lines}
-          </div>`;
+            </div>`;
     })
     .join("\n");
 
-  // Type summary
-  const byType = data.stats.byType || {};
-  const typePills = Object.entries(byType)
-    .sort((a, b) => b[1] - a[1])
-    .map(
-      ([t, n]) =>
-        `<span class="type-pill type-${esc(t)}">${esc(t)} ${n}</span>`
-    )
-    .join(" ");
+  return { typePills, repoSections, repoCount: Object.keys(byRepo).length };
+}
 
-  const todayClass = isToday ? ' stream-day-today' : '';
+// ---------------------------------------------------------------------------
+// Build today's expanded entry
+// ---------------------------------------------------------------------------
 
-  return `      <article class="stream-day${todayClass}" id="day-${esc(data.date)}">
-        <div class="stream-day-header">
-          <h2>${esc(dateLabel)}</h2>
-          <div class="stream-day-stats">
-            <span class="stat-chip">${data.stats.total} commits</span>
-            <span class="stat-chip">${Object.keys(byRepo).length} repos</span>
+function buildTodayEntry(data) {
+  const { typePills, repoSections, repoCount } = buildRepoDetail(data);
+
+  return `        <article class="stream-day stream-day-today" id="day-${esc(data.date)}">
+          <div class="stream-day-header">
+            <h2>${esc(formatDate(data.date))}</h2>
+            <div class="stream-day-stats">
+              <span class="stat-chip stat-chip-today">Today</span>
+              <span class="stat-chip">${data.stats.total} commits</span>
+              <span class="stat-chip">${repoCount} repos</span>
+            </div>
           </div>
-        </div>
-        <div class="stream-day-types">${typePills}</div>
-        <div class="stream-day-repos">
+          <div class="stream-day-types">${typePills}</div>
+          <div class="stream-day-repos">
 ${repoSections}
-        </div>
-      </article>`;
+          </div>
+        </article>`;
+}
+
+// ---------------------------------------------------------------------------
+// Build a collapsible history entry
+// ---------------------------------------------------------------------------
+
+function buildHistoryEntry(data) {
+  const { typePills, repoSections, repoCount } = buildRepoDetail(data);
+
+  // Build a short repo summary for the collapsed summary line
+  const repoNames = [];
+  const byRepo = {};
+  data.commits.forEach((c) => {
+    if (!byRepo[c.repo]) byRepo[c.repo] = 0;
+    byRepo[c.repo]++;
+  });
+  Object.entries(byRepo)
+    .sort((a, b) => b[1] - a[1])
+    .forEach(([r, n]) => repoNames.push(`${r} (${n})`));
+
+  return `        <details class="history-day" id="day-${esc(data.date)}">
+          <summary class="history-summary">
+            <span class="history-date">${esc(formatDateShort(data.date))}</span>
+            <span class="history-stats">
+              <span class="stat-chip">${data.stats.total} commits</span>
+              <span class="stat-chip">${repoCount} repos</span>
+            </span>
+            <span class="history-repos-preview">${esc(repoNames.join(" · "))}</span>
+          </summary>
+          <div class="history-detail">
+            <div class="stream-day-types">${typePills}</div>
+            <div class="stream-day-repos">
+${repoSections}
+            </div>
+          </div>
+        </details>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -165,14 +222,6 @@ function generate() {
   const chartData = buildChartData(allData);
   const maxCommits = Math.max(...chartData.map((d) => d.total), 1);
 
-  // Collect all repo names for chart legend
-  const allRepoNames = new Set();
-  allData.forEach((d) => {
-    if (d.stats.byRepo) {
-      Object.keys(d.stats.byRepo).forEach((r) => allRepoNames.add(r));
-    }
-  });
-
   // Total stats
   const totalCommits = allData.reduce((sum, d) => sum + d.stats.total, 0);
   const totalDays = allData.length;
@@ -188,18 +237,36 @@ function generate() {
     .map((day) => {
       const pct = maxCommits > 0 ? (day.total / maxCommits) * 100 : 0;
       const isEmpty = day.total === 0;
-      return `          <div class="chart-col${isEmpty ? " chart-col-empty" : ""}" title="${esc(day.date)}: ${day.total} commits">
-            <div class="chart-bar" style="height: ${pct}%"></div>
-            <div class="chart-label">${esc(day.label)}</div>
-          </div>`;
+      return `            <div class="chart-col${isEmpty ? " chart-col-empty" : ""}" title="${esc(day.date)}: ${day.total} commits">
+              <div class="chart-bar" style="height: ${pct}%"></div>
+              <div class="chart-label">${esc(day.label)}</div>
+            </div>`;
     })
     .join("\n");
 
-  // Day entries (newest first)
+  // Split: today vs history
   const todayStr = new Date().toISOString().split("T")[0];
-  const dayEntries = allData
-    .map((data) => buildDayEntry(data, data.date === todayStr))
-    .join("\n\n");
+  const todayData = allData.find((d) => d.date === todayStr);
+
+  // History: everything except today, limited to HISTORY_DAYS
+  const cutoffDate = new Date();
+  cutoffDate.setDate(cutoffDate.getDate() - HISTORY_DAYS);
+  const cutoffStr = cutoffDate.toISOString().split("T")[0];
+
+  const historyData = allData.filter(
+    (d) => d.date !== todayStr && d.date >= cutoffStr
+  );
+
+  const todayHtml = todayData
+    ? buildTodayEntry(todayData)
+    : `        <div class="stream-day" style="text-align:center; color: var(--text-4); padding: 3rem;">
+          <p>No data for today yet. The stream runs daily at 6:30am CST.</p>
+        </div>`;
+
+  const historyHtml =
+    historyData.length > 0
+      ? historyData.map((d) => buildHistoryEntry(d)).join("\n")
+      : `        <p style="color: var(--text-4); padding: 1rem 0;">No previous days recorded yet. History will appear here as data accumulates.</p>`;
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -213,7 +280,7 @@ function generate() {
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    /* ── Build Stream specific ── */
+    /* ── Build Stream ── */
     .stream-chart {
       background: var(--bg-elevated);
       border: 1px solid var(--border);
@@ -235,7 +302,6 @@ function generate() {
       gap: 3px;
       height: 140px;
       padding-bottom: 1.5rem;
-      position: relative;
     }
     .chart-col {
       flex: 1;
@@ -244,7 +310,6 @@ function generate() {
       align-items: center;
       justify-content: flex-end;
       height: 100%;
-      position: relative;
     }
     .chart-bar {
       width: 100%;
@@ -254,14 +319,8 @@ function generate() {
       transition: height 0.3s var(--ease);
       opacity: 0.85;
     }
-    .chart-col:hover .chart-bar {
-      opacity: 1;
-      background: var(--accent-hover);
-    }
-    .chart-col-empty .chart-bar {
-      background: var(--border);
-      opacity: 0.3;
-    }
+    .chart-col:hover .chart-bar { opacity: 1; background: var(--accent-hover); }
+    .chart-col-empty .chart-bar { background: var(--border); opacity: 0.3; }
     .chart-label {
       font-size: 0.55rem;
       color: var(--text-4);
@@ -269,13 +328,8 @@ function generate() {
       margin-top: 6px;
       white-space: nowrap;
     }
-    /* Only show every 5th label to reduce clutter */
-    .chart-col:not(:nth-child(5n+1)) .chart-label {
-      visibility: hidden;
-    }
-    .chart-col:last-child .chart-label {
-      visibility: visible;
-    }
+    .chart-col:not(:nth-child(5n+1)) .chart-label { visibility: hidden; }
+    .chart-col:last-child .chart-label { visibility: visible; }
 
     .stream-totals {
       display: flex;
@@ -301,6 +355,7 @@ function generate() {
       letter-spacing: 0.06em;
     }
 
+    /* ── Today's entry ── */
     .stream-day {
       background: var(--bg-elevated);
       border: 1px solid var(--border);
@@ -325,10 +380,7 @@ function generate() {
       font-weight: 600;
       color: var(--text);
     }
-    .stream-day-stats {
-      display: flex;
-      gap: 0.5rem;
-    }
+    .stream-day-stats { display: flex; gap: 0.5rem; }
     .stat-chip {
       font-size: 0.7rem;
       font-family: var(--mono);
@@ -337,6 +389,11 @@ function generate() {
       padding: 0.2rem 0.6rem;
       border-radius: 99px;
       border: 1px solid var(--border);
+    }
+    .stat-chip-today {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-dim);
     }
     .stream-day-types {
       display: flex;
@@ -360,58 +417,21 @@ function generate() {
     .type-pill.type-docs { color: #fbbf24; border-color: rgba(251,191,36,0.2); }
     .type-pill.type-chore { color: var(--text-4); }
 
-    .stream-day-repos {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .stream-repo {
-      padding-left: 1rem;
-      border-left: 2px solid var(--border);
-    }
-    .stream-repo-head {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-    .stream-repo-name {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--accent);
-    }
+    .stream-day-repos { display: flex; flex-direction: column; gap: 1rem; }
+    .stream-repo { padding-left: 1rem; border-left: 2px solid var(--border); }
+    .stream-repo-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .stream-repo-name { font-family: var(--mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); }
     .stream-repo-count {
-      font-size: 0.6rem;
-      font-family: var(--mono);
-      color: var(--text-4);
-      background: var(--bg);
-      padding: 0.1rem 0.4rem;
-      border-radius: 99px;
-      border: 1px solid var(--border-subtle);
+      font-size: 0.6rem; font-family: var(--mono); color: var(--text-4);
+      background: var(--bg); padding: 0.1rem 0.4rem; border-radius: 99px; border: 1px solid var(--border-subtle);
     }
     .stream-commit {
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-      padding: 0.2rem 0;
-      font-size: 0.8rem;
-      line-height: 1.4;
+      display: flex; align-items: baseline; gap: 0.5rem; padding: 0.2rem 0; font-size: 0.8rem; line-height: 1.4;
     }
-    .commit-hash {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--text-4);
-      flex-shrink: 0;
-    }
+    .commit-hash { font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); flex-shrink: 0; }
     .commit-type {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      padding: 0.05rem 0.35rem;
-      border-radius: 3px;
-      flex-shrink: 0;
-      background: var(--bg);
-      border: 1px solid var(--border-subtle);
+      font-family: var(--mono); font-size: 0.6rem; padding: 0.05rem 0.35rem; border-radius: 3px;
+      flex-shrink: 0; background: var(--bg); border: 1px solid var(--border-subtle);
     }
     .commit-type.type-feat { color: #4ade80; border-color: rgba(74,222,128,0.15); }
     .commit-type.type-fix { color: #f87171; border-color: rgba(248,113,113,0.15); }
@@ -419,8 +439,72 @@ function generate() {
     .commit-type.type-refactor { color: #c084fc; border-color: rgba(192,132,252,0.15); }
     .commit-type.type-docs { color: #fbbf24; border-color: rgba(251,191,36,0.15); }
     .commit-type.type-chore { color: var(--text-4); }
-    .commit-subject {
-      color: var(--text-2);
+    .commit-subject { color: var(--text-2); }
+
+    /* ── History (collapsible) ── */
+    .history-section {
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+    .history-day {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+    .history-day[open] {
+      border-color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .history-summary {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      transition: background 0.15s ease;
+    }
+    .history-summary::-webkit-details-marker { display: none; }
+    .history-summary::before {
+      content: "\\25B6";
+      font-size: 0.6rem;
+      color: var(--text-4);
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .history-day[open] .history-summary::before {
+      transform: rotate(90deg);
+      color: var(--accent);
+    }
+    .history-summary:hover { background: var(--bg-subtle); }
+    .history-date {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      min-width: 110px;
+      flex-shrink: 0;
+    }
+    .history-stats {
+      display: flex;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+    .history-repos-preview {
+      font-size: 0.7rem;
+      color: var(--text-4);
+      font-family: var(--mono);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .history-detail {
+      padding: 0 1.5rem 1.5rem 2.5rem;
     }
 
     @media (max-width: 640px) {
@@ -429,6 +513,9 @@ function generate() {
       .chart-grid { height: 100px; }
       .chart-col:not(:nth-child(7n+1)) .chart-label { visibility: hidden; }
       .stream-commit { flex-wrap: wrap; }
+      .history-summary { flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; }
+      .history-repos-preview { display: none; }
+      .history-detail { padding: 0 1rem 1rem 1.5rem; }
     }
   </style>
 </head>
@@ -498,7 +585,7 @@ function generate() {
         </div>
 
         <div class="stream-chart">
-          <h3>Commit activity — last 30 days</h3>
+          <h3>Commit activity &mdash; last 30 days</h3>
           <div class="chart-grid">
 ${chartBars}
           </div>
@@ -509,14 +596,21 @@ ${chartBars}
     <section class="section">
       <div class="container">
         <div class="section-header">
-          <h2>Daily Log</h2>
-          <span class="section-count">${totalDays} days</span>
+          <h2>Today</h2>
         </div>
+${todayHtml}
+      </div>
+    </section>
 
-<!-- STREAM:START -->
-${dayEntries}
-<!-- STREAM:END -->
-
+    <section class="section">
+      <div class="container">
+        <div class="history-section">
+          <div class="section-header">
+            <h2>History</h2>
+            <span class="section-count">Last ${HISTORY_DAYS} days</span>
+          </div>
+${historyHtml}
+        </div>
       </div>
     </section>
   </main>
@@ -549,7 +643,10 @@ ${dayEntries}
 
   fs.writeFileSync(OUTPUT, html, "utf-8");
   console.log(`Generated: ${OUTPUT}`);
-  console.log(`Days: ${totalDays}, Total commits: ${totalCommits}, Repos: ${allRepos.size}`);
+  console.log(
+    `Today: ${todayData ? todayData.stats.total + " commits" : "no data"}, History: ${historyData.length} days`
+  );
+  console.log(`Total: ${totalDays} days, ${totalCommits} commits, ${allRepos.size} repos`);
 }
 
 if (require.main === module) {
