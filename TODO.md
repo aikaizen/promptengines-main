@@ -140,3 +140,27 @@ npx vercel --prod
 
 **Action needed from you:**
 - Get free Brave API key: https://api.search.brave.com/app/engines/web/pages (2,000 queries/month)
+
+---
+
+## 🔴 GitHub Activity Feed — BROKEN
+
+**Problem:** Activity feed not updating — no commits from other repos (flow, kaizen, storybookstudio) or prototypes appearing on promptengines.com
+
+**Root cause:** Missing `FEED_GITHUB_TOKEN` secret
+
+**Effect:** 
+- GitHub Action `Update Activity Feed` runs but fails silently
+- No commits from: flow, kaizen, storybookstudio, or prototypes in promptengines-main
+- index.html, v1-v6.html not getting updated with activity cards
+
+**Fix:**
+1. Go to https://github.com/aikaizen/promptengines-main/settings/secrets/actions
+2. Add repository secret: `FEED_GITHUB_TOKEN`
+3. Value: Classic PAT with `repo` scope (reads commits from all repos)
+4. Workflow will resume updating every 6 hours
+
+**Verify after fix:**
+- Commits from flow, kaizen, storybookstudio repos should appear
+- Prototype commits within promptengines-main should appear
+- feed.json and activity cards on site should update
