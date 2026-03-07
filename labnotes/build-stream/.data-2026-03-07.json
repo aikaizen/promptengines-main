@@ -1,0 +1,390 @@
+{
+  "date": "2026-03-07",
+  "generatedAt": "2026-03-07T11:56:36.530Z",
+  "commits": [
+    {
+      "repo": "promptengines-main",
+      "hash": "2757506eba05eb0022810243687dbcec259f11fc",
+      "shortHash": "2757506",
+      "date": "2026-03-07T06:41:15Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/2757506eba05eb0022810243687dbcec259f11fc",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "2c15559672548c5fb27ad49284a51e5b9c01fca1",
+      "shortHash": "2c15559",
+      "date": "2026-03-07T01:58:10Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/2c15559672548c5fb27ad49284a51e5b9c01fca1",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "7fb5e93ce290ee0da0eaac094e76db00e61091d1",
+      "shortHash": "7fb5e93",
+      "date": "2026-03-06T23:32:46Z",
+      "subject": "chore(docs): rename docs/prd/ to docs/prds/ for consistency",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/7fb5e93ce290ee0da0eaac094e76db00e61091d1",
+      "type": "chore",
+      "scope": "docs"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "568c1471914a2e3d72834f16359e7c0fc3948e35",
+      "shortHash": "568c147",
+      "date": "2026-03-06T23:11:02Z",
+      "subject": "docs(prd): Add PRD index and README",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/568c1471914a2e3d72834f16359e7c0fc3948e35",
+      "type": "docs",
+      "scope": "prd"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "21ab92f5f2d3f49e4354e996f2e89afe78851f68",
+      "shortHash": "21ab92f",
+      "date": "2026-03-06T23:10:43Z",
+      "subject": "docs(prd): Add Google Workspace CLI (gws) integration PRD",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/21ab92f5f2d3f49e4354e996f2e89afe78851f68",
+      "type": "docs",
+      "scope": "prd"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "1beebcad2d679c72078b139afb56f5af889e98e1",
+      "shortHash": "1beebca",
+      "date": "2026-03-06T22:57:14Z",
+      "subject": "docs(prd): Add Token-Based Team Join System PRD",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/1beebcad2d679c72078b139afb56f5af889e98e1",
+      "type": "docs",
+      "scope": "prd"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "cd00191608b291b2749a0a06f1a01e97ccfb564b",
+      "shortHash": "cd00191",
+      "date": "2026-03-06T22:14:40Z",
+      "subject": "chore: Remove daily stream trigger workflow (blocking pushes)",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/cd00191608b291b2749a0a06f1a01e97ccfb564b",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "b61b83730715f99348e20c463f36fbcba4781119",
+      "shortHash": "b61b837",
+      "date": "2026-03-06T22:02:22Z",
+      "subject": "content(stream): Build stream article for March 6, 2026",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/b61b83730715f99348e20c463f36fbcba4781119",
+      "type": "content",
+      "scope": "stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "773391bb9516787504b2275407b0229fa0b83a4a",
+      "shortHash": "773391b",
+      "date": "2026-03-06T21:32:44Z",
+      "subject": "chore(build-stream): remove processed data file",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/773391bb9516787504b2275407b0229fa0b83a4a",
+      "type": "chore",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "2db4a4ba418f6593d25560ac7c5e7b140c9e3bbe",
+      "shortHash": "2db4a4b",
+      "date": "2026-03-06T20:33:10Z",
+      "subject": "content(build-stream): March 6, 2026 build stream article",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/2db4a4ba418f6593d25560ac7c5e7b140c9e3bbe",
+      "type": "content",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "norbu",
+      "hash": "3fdb63276778f38aac67005b66e5087c9cfbda8c",
+      "shortHash": "3fdb632",
+      "date": "2026-03-06T20:29:04Z",
+      "subject": "Bug fixes, admin roles, visual redesign with saffron palette",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/norbu/commit/3fdb63276778f38aac67005b66e5087c9cfbda8c",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "73403e984e7f4826eff762feebb019dea1527640",
+      "shortHash": "73403e9",
+      "date": "2026-03-06T19:31:57Z",
+      "subject": "feat(ci): Add daily build stream trigger workflow",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/73403e984e7f4826eff762feebb019dea1527640",
+      "type": "feat",
+      "scope": "ci"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "0a4f2a9297cb57954659e12edc275a3f58bee63c",
+      "shortHash": "0a4f2a9",
+      "date": "2026-03-06T18:46:28Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/0a4f2a9297cb57954659e12edc275a3f58bee63c",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "73c358b581a7fbdc223c2e0929778c78f412258b",
+      "shortHash": "73c358b",
+      "date": "2026-03-06T17:13:58Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/73c358b581a7fbdc223c2e0929778c78f412258b",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "323f510e88a06685a1903cc2601ac250b4b1d623",
+      "shortHash": "323f510",
+      "date": "2026-03-06T16:33:23Z",
+      "subject": "feat(build-stream): add repo/type/ratio charts + Week 10 report + weekly reports section",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/323f510e88a06685a1903cc2601ac250b4b1d623",
+      "type": "feat",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "1cd2f3744815244a5ef88a1a6dd42f715fb7d45d",
+      "shortHash": "1cd2f37",
+      "date": "2026-03-06T06:20:25Z",
+      "subject": "feat(build-stream): collapsible history + today section in HTML page",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/1cd2f3744815244a5ef88a1a6dd42f715fb7d45d",
+      "type": "feat",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "53f89d895216bb07d9a24edb8a0321ade2b557b3",
+      "shortHash": "53f89d8",
+      "date": "2026-03-06T04:15:11Z",
+      "subject": "chore(build-stream): auto-generate daily stream data + HTML",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/53f89d895216bb07d9a24edb8a0321ade2b557b3",
+      "type": "chore",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "abfec2629d66681b507d8ab6999dedf0979b5e4b",
+      "shortHash": "abfec26",
+      "date": "2026-03-06T04:14:28Z",
+      "subject": "feat(build-stream): single HTML page with chart + daily history",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/abfec2629d66681b507d8ab6999dedf0979b5e4b",
+      "type": "feat",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "ba3c913532a89cb633befc5a8b3df598c4256708",
+      "shortHash": "ba3c913",
+      "date": "2026-03-06T03:10:36Z",
+      "subject": "chore(build-stream): auto-generate daily stream data",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/ba3c913532a89cb633befc5a8b3df598c4256708",
+      "type": "chore",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "ab784eacbdccf4793385d8835177a374926b16aa",
+      "shortHash": "ab784ea",
+      "date": "2026-03-06T03:10:11Z",
+      "subject": "feat(build-stream): fetch commits from all aikaizen repos via GitHub API",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/ab784eacbdccf4793385d8835177a374926b16aa",
+      "type": "feat",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "norbu",
+      "hash": "01c3f3130156977fa72645a93ef24d1e55f65d8d",
+      "shortHash": "01c3f31",
+      "date": "2026-03-06T02:59:09Z",
+      "subject": "Integrate provided logo into app branding",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/norbu/commit/01c3f3130156977fa72645a93ef24d1e55f65d8d",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "ff680550fac2e9af5a19dae254b1428b6c023ed4",
+      "shortHash": "ff68055",
+      "date": "2026-03-06T02:38:03Z",
+      "subject": "docs: update todo with Lulu go-live checklist + Gelato integration",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/ff680550fac2e9af5a19dae254b1428b6c023ed4",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "1bc84a0fefeaed637f56da57b44671338958b1bb",
+      "shortHash": "1bc84a0",
+      "date": "2026-03-06T02:25:41Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/1bc84a0fefeaed637f56da57b44671338958b1bb",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "norbu",
+      "hash": "4522d63f55eefae941189c09138b667e81238356",
+      "shortHash": "4522d63",
+      "date": "2026-03-06T01:35:49Z",
+      "subject": "Add curriculum section and official packet integration roadmap",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/norbu/commit/4522d63f55eefae941189c09138b667e81238356",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "norbu",
+      "hash": "945ecfd701c66286ca6630c9b35e468fbd1aa37f",
+      "shortHash": "945ecfd",
+      "date": "2026-03-06T01:33:32Z",
+      "subject": "Document validation run and curriculum/ux upgrade roadmap",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/norbu/commit/945ecfd701c66286ca6630c9b35e468fbd1aa37f",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "c6787be998538b98957e70dac2bd5e039848d02b",
+      "shortHash": "c6787be",
+      "date": "2026-03-06T01:25:09Z",
+      "subject": "fix(build-stream): Restore daily stream workflow + publish image model articles",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/c6787be998538b98957e70dac2bd5e039848d02b",
+      "type": "fix",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "a59982e13c11b78d77ff354130a4d185f6062130",
+      "shortHash": "a59982e",
+      "date": "2026-03-06T01:23:56Z",
+      "subject": "chore: move all docs to docs/ folder, clean up root",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/a59982e13c11b78d77ff354130a4d185f6062130",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "a58b567e98989b4e70469cc0700d6394b311bda9",
+      "shortHash": "a58b567",
+      "date": "2026-03-06T00:58:30Z",
+      "subject": "feat: style regularization — character metadata, sheets, consistency toggle",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/a58b567e98989b4e70469cc0700d6394b311bda9",
+      "type": "feat",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "chore": 11,
+      "docs": 4,
+      "content": 2,
+      "other": 4,
+      "feat": 6,
+      "fix": 1
+    },
+    "byAuthor": {
+      "github-actions[bot]": 7,
+      "Andy Stable": 9,
+      "aikaizen": 12
+    },
+    "byRepo": {
+      "promptengines-main": 21,
+      "norbu": 4,
+      "storybookstudio": 3
+    },
+    "total": 28
+  },
+  "summary": {
+    "totalCommits": 28,
+    "activeRepos": [
+      "promptengines-main",
+      "norbu",
+      "storybookstudio"
+    ],
+    "primaryTypes": [
+      [
+        "chore",
+        11
+      ],
+      [
+        "feat",
+        6
+      ],
+      [
+        "docs",
+        4
+      ]
+    ],
+    "activeAuthors": [
+      "github-actions[bot]",
+      "Andy Stable",
+      "aikaizen"
+    ]
+  }
+}
