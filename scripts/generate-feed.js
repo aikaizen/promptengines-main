@@ -191,8 +191,10 @@ async function main() {
 
         const { title, body } = parseMessage(message);
 
-        // Skip merge commits
+        // Skip merge commits and automated bot commits
         if (title.startsWith("Merge ")) continue;
+        if (title.startsWith("chore: update activity feed")) continue;
+        if (title.startsWith("chore(build-stream):")) continue;
 
         allCommits.push({
           repo: repo.name,
