@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zen and the Art of Vibe Coding (v2) — Prompt Engines Lab</title>
+  <meta name="description" content="Five rules for managing infinite leverage without burning out. Structured boundaries for vibe-coding productivity.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+    .article-content .dek { font-size: 1.1rem; color: var(--text-3); line-height: 1.5; margin-bottom: 2.5rem; max-width: 52ch; }
+    .article-content h2 { margin-top: 3rem; font-size: 0.75rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; color: var(--text-2); }
+    .article-content strong { color: var(--text); }
+    .rule-block { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.25rem 1.5rem; margin: 1.25rem 0; }
+    .rule-block h3 { font-size: 1rem; margin: 0 0 0.5rem; display: flex; align-items: baseline; gap: 0.75rem; }
+    .rule-block h3 .num { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); min-width: 1.5rem; }
+    .rule-block p { margin: 0; font-size: 0.95rem; color: var(--text-3); }
+    .screen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: var(--radius-sm); overflow: hidden; margin: 1.25rem 0; }
+    .screen-cell { background: var(--bg-elevated); padding: 1rem 1.25rem; }
+    .screen-cell .label { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-4); margin-bottom: 0.25rem; }
+    .screen-cell .project { font-weight: 600; font-size: 0.95rem; }
+    .checklist { list-style: none; padding: 0; margin: 1rem 0; }
+    .checklist li { padding: 0.4rem 0; padding-left: 1.5rem; position: relative; font-size: 0.9rem; color: var(--text-3); border-bottom: 1px solid var(--border-subtle); }
+    .checklist li::before { content: "—"; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); }
+    .pull { font-size: 1.25rem; color: var(--text); font-weight: 500; line-height: 1.4; margin: 2rem 0; padding-left: 1.25rem; border-left: 3px solid var(--accent); }
+    .alt-link { display: inline-block; margin-top: 2rem; font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.2s; }
+    .alt-link:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div style="color: var(--text-4); font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.5rem;">
+          2026-03-03 · Lab Notes · 4 min
+        </div>
+
+        <h1>Zen and the Art of Vibe Coding</h1>
+        <p class="dek">Vibe-coding gives you infinite leverage. That leverage will eat you alive without a system.</p>
+
+        <h2>The Problem</h2>
+
+        <p>You can build anything now. Products that required teams flow from a single prompt. The result is a new bipolarity:</p>
+
+        <div class="pull">Pole 1: You can build anything.<br>Pole 2: You feel like you're building nothing fast enough.</div>
+
+        <p>Every idle second becomes opportunity cost. Every moment not producing feels wasted. This is the psychological tax of high leverage — and it compounds.</p>
+
+        <h2>The System</h2>
+
+        <p>Five rules. Each one is a boundary that protects output quality and mental health simultaneously.</p>
+
+        <div class="rule-block">
+          <h3><span class="num">01</span> Major work at the computer only</h3>
+          <p>No building on your phone. No "just trying something" in a note app. Build at the desk with full context. Think away from it. Mixing fragments mental loops you can't close.</p>
+        </div>
+
+        <div class="rule-block">
+          <h3><span class="num">02</span> One screen, one project</h3>
+          <p>Four screens. Each locked to a project. No tab drift. No "just checking." The screen enforces the boundary.</p>
+        </div>
+
+        <div class="screen-grid">
+          <div class="screen-cell"><div class="label">Screen 1</div><div class="project">Flow Education</div></div>
+          <div class="screen-cell"><div class="label">Screen 2</div><div class="project">StoryBook Studio</div></div>
+          <div class="screen-cell"><div class="label">Screen 3</div><div class="project">Lab Notes</div></div>
+          <div class="screen-cell"><div class="label">Screen 4</div><div class="project">Infrastructure</div></div>
+        </div>
+
+        <div class="rule-block">
+          <h3><span class="num">03</span> Away = inputs only</h3>
+          <p>Away from the workstation: research, writing, planning. Inputs that refill, not outputs that deplete. Choose things you're excited about — not obligations.</p>
+        </div>
+
+        <div class="rule-block">
+          <h3><span class="num">04</span> Phone matched to context</h3>
+          <p>Walking → research, reading. Social → quick notes only, never pull out of conversation. Transit → drafts, low-stakes review.</p>
+        </div>
+
+        <div class="rule-block">
+          <h3><span class="num">05</span> Two-hour daily disconnect</h3>
+          <p>Non-negotiable. Queue agent tasks. Document project states. Set DND. Leave devices. Agents work without you. You recover without them.</p>
+        </div>
+
+        <h2>Why It Works</h2>
+
+        <ul class="checklist">
+          <li>Screens and locations enforce context — no willpower required</li>
+          <li>Projects get built or deliberately paused — no hanging threads</li>
+          <li>Away-work is input, not fragmented output</li>
+          <li>The disconnect is designed, not accidental — agents queue, you leave</li>
+        </ul>
+
+        <p>The leverage is real. So is the cost. Design boundaries or the leverage designs your burnout.</p>
+
+        <a class="alt-link" href="./2026-03-03-zen-and-the-art-of-vibecoding.html">← Read alternate version (maxims + glyphs)</a>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Prompt Engines &middot; Lab Notes</div>
+  </footer>
+</body>
+</html>

@@ -4,28 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zen and the Art of Vibe Coding — Prompt Engines Lab</title>
-  <meta name="description" content="
- Zen and the Art of Vibe Coding">
+  <meta name="description" content="An operating framework for infinite leverage. Boundaries that prevent burnout without limiting output.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
   <style>
     .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
-    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
-    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
-    .article-content p { line-height: 1.7; margin: 1rem 0; }
-    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
-    .article-content li { margin: 0.5rem 0; }
-    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
-    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
-    .article-content pre code { background: none; padding: 0; }
-    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
-    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
-    .article-content th { font-weight: 600; color: var(--text-2); }
-    .footnotes { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--text-3); }
-    .footnotes ol { padding-left: 1.5rem; }
-    .footnotes li { margin: 0.5rem 0; }
+    .article-content h1 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.0; letter-spacing: -0.04em; margin-bottom: 0.5rem; font-weight: 800; }
+    .article-content .subtitle { font-family: var(--mono); font-size: 0.8rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; color: var(--text-2); font-size: 0.95rem; }
+    .article-content strong { color: var(--text); }
+    .section-break { display: flex; align-items: center; gap: 1rem; margin: 3rem 0 1.5rem; }
+    .section-break .line { flex: 1; height: 1px; background: var(--border); }
+    .section-break .icon { font-size: 1.25rem; color: var(--accent); }
+    .maxim { font-size: 1.6rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; color: var(--text); margin: 2rem 0 0.5rem; }
+    .maxim-sub { font-size: 0.85rem; color: var(--text-4); margin: 0 0 1rem; font-style: italic; }
+    .spec { display: grid; grid-template-columns: auto 1fr; gap: 0 1.5rem; margin: 1.5rem 0; font-size: 0.9rem; }
+    .spec dt { font-family: var(--mono); color: var(--accent); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.5rem 0; border-bottom: 1px solid var(--border-subtle); white-space: nowrap; }
+    .spec dd { padding: 0.5rem 0; border-bottom: 1px solid var(--border-subtle); color: var(--text-2); margin: 0; }
+    .four-up { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--border); border-radius: var(--radius-sm); overflow: hidden; margin: 1.5rem 0; }
+    .four-up > div { background: var(--bg-elevated); padding: 1.25rem 0.75rem; text-align: center; }
+    .four-up .n { font-family: var(--mono); font-size: 2rem; font-weight: 600; color: var(--text); display: block; }
+    .four-up .l { font-size: 0.7rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-4); display: block; margin-top: 0.25rem; }
+    .equation { font-family: var(--mono); font-size: 1.1rem; text-align: center; padding: 1.5rem; margin: 2rem 0; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); letter-spacing: 0.02em; }
+    .equation .op { color: var(--accent); }
+    .glyph-list { list-style: none; padding: 0; margin: 1.25rem 0; }
+    .glyph-list li { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.9rem; color: var(--text-2); }
+    .glyph-list .g { font-size: 1.1rem; min-width: 1.5rem; text-align: center; }
+    .endmark { text-align: center; margin-top: 4rem; font-size: 1.5rem; color: var(--accent); letter-spacing: 0.5rem; }
+    .alt-link { display: inline-block; margin-top: 2rem; font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.2s; }
+    .alt-link:hover { color: var(--accent); }
   </style>
 </head>
 <body>
@@ -43,7 +52,6 @@
             <a href="../build-stream/">Build Stream</a>
             <a href="../skills/">Skills</a>
             <a href="../submit/">Submit Article</a>
-            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
             <a href="../about/">About</a>
           </div>
         </div>
@@ -55,106 +63,94 @@
   <main>
     <article class="section" style="padding-top: 2rem;">
       <div class="article-content">
-        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+        <div style="color: var(--text-4); font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.5rem;">
           2026-03-03 · Lab Notes
         </div>
-        
+
         <h1>Zen and the Art of Vibe Coding</h1>
-<p>There&#39;s a new mental state emerging from vibe-coding: the bipolarity of infinite leverage. On one pole: the intoxicating realization that you can build anything—products that used to require teams now flow from a single prompt. On the other: the crippling feeling that you&#39;re not doing enough, that every moment not producing is wasted, that the opportunity cost of your attention has become infinite.</p>
-<p>These two go hand-in-hand. The more you can do, the more you feel you should be doing. Every moment becomes productive potential. Every idle second feels like failure.</p>
-<p>This isn&#39;t unique to vibe-coding. Anyone who accumulates capital, anyone in a particularly productive phase, anyone with high leverage experiences this. It&#39;s probably why presidents and CEOs age so visibly. Look at Obama before and after office—eight years of gray hair and etched lines. For comparison, look at Trump&#39;s first term. The stress shows. High leverage extracts a physical toll when you can&#39;t shut it off.</p>
-<p>The question is how to manage the leverage without being consumed by it.</p>
-<h2>The System</h2>
-<p>I&#39;ve developed a specific workflow for this. Four rules. No fluff.</p>
-<h3>1. Build Major Projects at the Computer</h3>
-<p>Major work happens at the workstation. Full stop. Not on your phone while waiting in line. Not sketching ideas in a note app. When you&#39;re building, you&#39;re at the computer with full context.</p>
-<p>This prevents fragmentation. Vibe-coding makes it tempting to &quot;just try something&quot; anywhere, anytime. That opens mental loops you can&#39;t close until you&#39;re back at the desk. Build at the computer. Think away from it.</p>
-<h3>2. Assign Screens to Projects</h3>
-<p>I run four screens. Each screen gets a specific project:</p>
-<ul>
-<li><strong>Screen 1:</strong> Flow Education (React app, curriculum, student interface)</li>
-<li><strong>Screen 2:</strong> StoryBook Studio (marketing, content, business operations)</li>
-<li><strong>Screen 3:</strong> Lab Notes (articles, skills, writing)</li>
-<li><strong>Screen 4:</strong> Infrastructure/Experiments (API testing, model evaluation, prototyping)</li>
-</ul>
-<p>I&#39;m not talking about specific computers—though I prefer 1:1 screen-to-computer parity when possible. I&#39;m talking about visual space. Each project occupies a specific physical screen. No mixing. No tab drift.</p>
-<p>When you&#39;re on Screen 1, you&#39;re building Flow Education. You&#39;re not checking Slack. You&#39;re not &quot;just looking something up.&quot; The screen enforces the boundary.</p>
-<h3>3. Away from Computer: Conversational and Joyful</h3>
-<p>When you&#39;re not at the workstation, focus on things that can be conversational and give you joy:</p>
-<ul>
-<li><strong>Research</strong> — Reading documentation, papers, watching talks</li>
-<li><strong>Writing</strong> — Articles, thinking-in-public, project notes</li>
-<li><strong>Planning</strong> — Thinking about future directions, exciting possibilities</li>
-</ul>
-<p>These are inputs, not outputs. They don&#39;t require the deep focus of coding. They can happen while walking, in transit, during downtime. They refill rather than deplete.</p>
-<p>The key: these are things you&#39;re excited to look forward to. Research on a project you genuinely want to build. Writing about ideas that energize you. Not maintenance. Not obligation. Joy.</p>
-<h3>4. Phone by Activity Type</h3>
-<p>Split phone-based work by context:</p>
-<ul>
-<li><strong>Walking:</strong> Research, reading, audio consumption</li>
-<li><strong>Social situations:</strong> Only things that don&#39;t distract from the humans present—quick notes, status checks, nothing that pulls you out of the conversation</li>
-<li><strong>Transit:</strong> Writing drafts, reviewing, low-stakes communication</li>
-</ul>
-<p>Match the tool to the context. Don&#39;t let high-leverage capability leak into situations where it becomes anti-social or fragmenting.</p>
-<h3>5. The Two-Hour Disconnect</h3>
-<p>Every day: two hours completely away from machines. Phone included. At minimum, Do Not Disturb mode. Ideally, the phone stays behind.</p>
-<p>This isn&#39;t optional. The preparation matters—before disconnecting, wrap up tasks for your desktop agents so they can run uninterrupted while you&#39;re gone. Queue the long builds. Set the tests running. Document where you left off so you can resume without mental reconstruction.</p>
-<p>Then leave. The agents work without you. You recover without them.</p>
-<h2>Why This Matters</h2>
-<p>The leverage of vibe-coding is real. So is the psychological cost. Without boundaries, you end up like the aging president—every moment productive potential, every idle second opportunity cost, the stress compounding visibly.</p>
-<p>The system creates:</p>
-<ul>
-<li><strong>Boundaries:</strong> Screens and locations enforce context</li>
-<li><strong>Closed loops:</strong> Projects get built at the computer, completed or deliberately paused; away-work is input, not hanging threads</li>
-<li><strong>Recovery:</strong> The two-hour disconnect is non-negotiable. Agents queue. You leave.</li>
-</ul>
-<p>Obama couldn&#39;t design his way out of presidential stress. You can. The screens, the activity-matching, the mandatory disconnect—these are design choices. Use them.</p>
-<hr>
-<h2>Daily Practice</h2>
-<p><strong>At the computer:</strong></p>
-<ul>
-<li><input disabled="" type="checkbox"> Major projects only</li>
-<li><input disabled="" type="checkbox"> Screen 1 = Flow Education, Screen 2 = StoryBook, Screen 3 = Lab, Screen 4 = Infrastructure</li>
-<li><input disabled="" type="checkbox"> No tab drift. No &quot;just checking.&quot;</li>
-</ul>
-<p><strong>Away from computer:</strong></p>
-<ul>
-<li><input disabled="" type="checkbox"> Conversational work only (research, writing, planning)</li>
-<li><input disabled="" type="checkbox"> Joyful inputs, not obligation</li>
-<li><input disabled="" type="checkbox"> No coding. No generation.</li>
-</ul>
-<p><strong>Phone:</strong></p>
-<ul>
-<li><input disabled="" type="checkbox"> Matched to activity (walking = research, social = notes only, transit = drafts)</li>
-<li><input disabled="" type="checkbox"> Never distracts from present humans</li>
-</ul>
-<p><strong>Before disconnect:</strong></p>
-<ul>
-<li><input disabled="" type="checkbox"> Queue agent tasks for 2-hour window</li>
-<li><input disabled="" type="checkbox"> Document project states</li>
-<li><input disabled="" type="checkbox"> Set DND. Leave devices.</li>
-</ul>
-<p><strong>During disconnect:</strong></p>
-<ul>
-<li><input disabled="" type="checkbox"> No screens</li>
-<li><input disabled="" type="checkbox"> No agents</li>
-<li><input disabled="" type="checkbox"> Two hours minimum</li>
-</ul>
+        <div class="subtitle">An operating framework for infinite leverage</div>
+
+        <div class="equation">
+          infinite_capacity <span class="op">+</span> zero_boundaries <span class="op">=</span> burnout
+        </div>
+
+        <p>You can build anything now. The cost is that every idle moment feels like failure. This is the psychological tax of leverage — and it compounds daily.</p>
+
+        <p>The counter isn't discipline. It's architecture.</p>
+
+        <div class="section-break"><span class="line"></span><span class="icon">&#x2726;</span><span class="line"></span></div>
+
+        <div class="maxim">Build at the desk. Think away from it.</div>
+        <div class="maxim-sub">Never mix. Fragments open loops you can't close.</div>
+
+        <div class="section-break"><span class="line"></span><span class="icon">&#x25A0;</span><span class="line"></span></div>
+
+        <div class="maxim">One screen. One project. No drift.</div>
+        <div class="maxim-sub">The screen enforces what willpower cannot.</div>
+
+        <div class="four-up">
+          <div><span class="n">1</span><span class="l">Flow Edu</span></div>
+          <div><span class="n">2</span><span class="l">StoryBook</span></div>
+          <div><span class="n">3</span><span class="l">Lab Notes</span></div>
+          <div><span class="n">4</span><span class="l">Infra</span></div>
+        </div>
+
+        <div class="section-break"><span class="line"></span><span class="icon">&#x25CB;</span><span class="line"></span></div>
+
+        <div class="maxim">Away from the machine: inputs only.</div>
+        <div class="maxim-sub">Research. Writing. Planning. Things that refill.</div>
+
+        <ul class="glyph-list">
+          <li><span class="g">&#x1F4D6;</span> Research on projects you're excited about</li>
+          <li><span class="g">&#x270D;</span> Writing that clarifies thinking</li>
+          <li><span class="g">&#x1F9ED;</span> Planning that opens possibility</li>
+        </ul>
+
+        <div class="section-break"><span class="line"></span><span class="icon">&#x25C6;</span><span class="line"></span></div>
+
+        <div class="maxim">Match the phone to the moment.</div>
+
+        <dl class="spec">
+          <dt>Walking</dt>
+          <dd>Research, reading, audio</dd>
+          <dt>Social</dt>
+          <dd>Quick notes only — never pull out of conversation</dd>
+          <dt>Transit</dt>
+          <dd>Drafts, review, light comms</dd>
+        </dl>
+
+        <div class="section-break"><span class="line"></span><span class="icon">&#x23F8;</span><span class="line"></span></div>
+
+        <div class="maxim">Two hours. No screens. Every day.</div>
+        <div class="maxim-sub">Non-negotiable. Designed recovery, not accidental downtime.</div>
+
+        <dl class="spec">
+          <dt>Before exit</dt>
+          <dd>Queue agent tasks, document project states, set DND</dd>
+          <dt>During</dt>
+          <dd>No machines. No exceptions. Agents work without you.</dd>
+          <dt>After</dt>
+          <dd>Resume from documented state. No reconstruction cost.</dd>
+        </dl>
+
+        <div class="section-break"><span class="line"></span><span class="icon">&#x2726;</span><span class="line"></span></div>
+
+        <div class="equation">
+          designed_boundaries <span class="op">+</span> infinite_capacity <span class="op">=</span> sustainable_output
+        </div>
+
+        <p>Screens enforce context. Locations enforce mode. The disconnect enforces recovery. No willpower required — the system does the work.</p>
+
+        <a class="alt-link" href="./2026-03-03-zen-vibecoding-v2.html">Read alternate version (structured rules) →</a>
+
+        <div class="endmark">&#x2022; &#x2022; &#x2022;</div>
 
       </div>
     </article>
   </main>
 
-  <footer style="padding: 3rem 1.5rem; border-top: 1px solid var(--border); margin-top: 4rem;">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-      <div style="color: var(--text-3);">
-        <span style="font-weight: 600;">Prompt Engines Lab</span> — Experimental notes on building with AI
-      </div>
-      <div style="display: flex; gap: 1.5rem;">
-        <a href="https://promptengines.com" style="color: var(--text-3); text-decoration: none;">PromptEngines.com</a>
-        <a href="https://github.com/aikaizen" style="color: var(--text-3); text-decoration: none;">GitHub</a>
-      </div>
-    </div>
+  <footer class="footer">
+    <div class="container">&copy; 2026 Prompt Engines &middot; Lab Notes</div>
   </footer>
 </body>
 </html>
