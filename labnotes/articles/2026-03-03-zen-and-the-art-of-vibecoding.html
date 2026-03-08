@@ -4,37 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zen and the Art of Vibe Coding — Prompt Engines Lab</title>
-  <meta name="description" content="An operating framework for infinite leverage. Boundaries that prevent burnout without limiting output.">
+  <meta name="description" content="Five rules for managing infinite leverage. Screen assignment, input separation, context-matched phone use, daily disconnect.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
   <style>
     .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
-    .article-content h1 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.0; letter-spacing: -0.04em; margin-bottom: 0.5rem; font-weight: 800; }
-    .article-content .subtitle { font-family: var(--mono); font-size: 0.8rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3rem; }
-    .article-content p { line-height: 1.7; margin: 1rem 0; color: var(--text-2); font-size: 0.95rem; }
+    .article-content h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+    .article-content .dek { font-size: 1.1rem; color: var(--text-3); line-height: 1.5; margin-bottom: 2.5rem; max-width: 52ch; }
+    .article-content h2 { margin-top: 3rem; font-size: 0.75rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; color: var(--text-2); }
     .article-content strong { color: var(--text); }
-    .section-break { display: flex; align-items: center; gap: 1rem; margin: 3rem 0 1.5rem; }
-    .section-break .line { flex: 1; height: 1px; background: var(--border); }
-    .section-break .icon { font-size: 1.25rem; color: var(--accent); }
-    .maxim { font-size: 1.6rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; color: var(--text); margin: 2rem 0 0.5rem; }
-    .maxim-sub { font-size: 0.85rem; color: var(--text-4); margin: 0 0 1rem; font-style: italic; }
-    .spec { display: grid; grid-template-columns: auto 1fr; gap: 0 1.5rem; margin: 1.5rem 0; font-size: 0.9rem; }
-    .spec dt { font-family: var(--mono); color: var(--accent); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.5rem 0; border-bottom: 1px solid var(--border-subtle); white-space: nowrap; }
-    .spec dd { padding: 0.5rem 0; border-bottom: 1px solid var(--border-subtle); color: var(--text-2); margin: 0; }
-    .four-up { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--border); border-radius: var(--radius-sm); overflow: hidden; margin: 1.5rem 0; }
-    .four-up > div { background: var(--bg-elevated); padding: 1.25rem 0.75rem; text-align: center; }
-    .four-up .n { font-family: var(--mono); font-size: 2rem; font-weight: 600; color: var(--text); display: block; }
-    .four-up .l { font-size: 0.7rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-4); display: block; margin-top: 0.25rem; }
-    .equation { font-family: var(--mono); font-size: 1.1rem; text-align: center; padding: 1.5rem; margin: 2rem 0; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); letter-spacing: 0.02em; }
-    .equation .op { color: var(--accent); }
-    .glyph-list { list-style: none; padding: 0; margin: 1.25rem 0; }
-    .glyph-list li { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.9rem; color: var(--text-2); }
-    .glyph-list .g { font-size: 1.1rem; min-width: 1.5rem; text-align: center; }
-    .endmark { text-align: center; margin-top: 4rem; font-size: 1.5rem; color: var(--accent); letter-spacing: 0.5rem; }
-    .alt-link { display: inline-block; margin-top: 2rem; font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.2s; }
-    .alt-link:hover { color: var(--accent); }
+    .rule-block { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.25rem 1.5rem; margin: 1.25rem 0; }
+    .rule-block h3 { font-size: 1rem; margin: 0 0 0.5rem; display: flex; align-items: baseline; gap: 0.75rem; }
+    .rule-block h3 .num { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); min-width: 1.5rem; }
+    .rule-block p { margin: 0; font-size: 0.95rem; color: var(--text-3); }
+    .screen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: var(--radius-sm); overflow: hidden; margin: 1.25rem 0; }
+    .screen-cell { background: var(--bg-elevated); padding: 1rem 1.25rem; }
+    .screen-cell .label { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-4); margin-bottom: 0.25rem; }
+    .screen-cell .project { font-weight: 600; font-size: 0.95rem; }
+    .checklist { list-style: none; padding: 0; margin: 1rem 0; }
+    .checklist li { padding: 0.4rem 0; padding-left: 1.5rem; position: relative; font-size: 0.9rem; color: var(--text-3); border-bottom: 1px solid var(--border-subtle); }
+    .checklist li::before { content: "—"; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); }
+    .mode-badge { display: inline-block; font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; margin-left: 0.5rem; vertical-align: middle; }
+    .alt-links { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .alt-links a { display: block; font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-decoration: none; padding: 0.4rem 0; transition: color 0.2s; }
+    .alt-links a:hover { color: var(--accent); }
   </style>
 </head>
 <body>
@@ -64,86 +60,65 @@
     <article class="section" style="padding-top: 2rem;">
       <div class="article-content">
         <div style="color: var(--text-4); font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.5rem;">
-          2026-03-03 · Lab Notes
+          2026-03-03 · Lab Notes · 4 min <span class="mode-badge">◉ Standard</span>
         </div>
 
         <h1>Zen and the Art of Vibe Coding</h1>
-        <div class="subtitle">An operating framework for infinite leverage</div>
+        <p class="dek">Vibe-coding gives you infinite leverage. That leverage compounds into burnout without boundaries. Five rules for managing both.</p>
 
-        <div class="equation">
-          infinite_capacity <span class="op">+</span> zero_boundaries <span class="op">=</span> burnout
+        <h2>The Problem</h2>
+
+        <p>You can build anything now. Products that required teams flow from a single prompt. Two forces emerge simultaneously: the capacity to build anything, and the feeling that you're building nothing fast enough. Every idle second becomes opportunity cost. The psychological tax of high leverage compounds daily.</p>
+
+        <h2>The System</h2>
+
+        <p>Five boundaries. Each one protects output quality and mental health simultaneously.</p>
+
+        <div class="rule-block">
+          <h3><span class="num">01</span> Major work at the computer only</h3>
+          <p>No building on your phone. No "just trying something" in a note app. Build at the desk with full context. Think away from it. Phone builds fragment attention and open loops you can't close until you're back at the desk.</p>
         </div>
 
-        <p>You can build anything now. The cost is that every idle moment feels like failure. This is the psychological tax of leverage — and it compounds daily.</p>
-
-        <p>The counter isn't discipline. It's architecture.</p>
-
-        <div class="section-break"><span class="line"></span><span class="icon">&#x2726;</span><span class="line"></span></div>
-
-        <div class="maxim">Build at the desk. Think away from it.</div>
-        <div class="maxim-sub">Never mix. Fragments open loops you can't close.</div>
-
-        <div class="section-break"><span class="line"></span><span class="icon">&#x25A0;</span><span class="line"></span></div>
-
-        <div class="maxim">One screen. One project. No drift.</div>
-        <div class="maxim-sub">The screen enforces what willpower cannot.</div>
-
-        <div class="four-up">
-          <div><span class="n">1</span><span class="l">Flow Edu</span></div>
-          <div><span class="n">2</span><span class="l">StoryBook</span></div>
-          <div><span class="n">3</span><span class="l">Lab Notes</span></div>
-          <div><span class="n">4</span><span class="l">Infra</span></div>
+        <div class="rule-block">
+          <h3><span class="num">02</span> One screen, one project</h3>
+          <p>Four screens. Each locked to a project. No tab drift. No "just checking." The screen enforces the boundary.</p>
         </div>
 
-        <div class="section-break"><span class="line"></span><span class="icon">&#x25CB;</span><span class="line"></span></div>
+        <div class="screen-grid">
+          <div class="screen-cell"><div class="label">Screen 1</div><div class="project">Flow Education</div></div>
+          <div class="screen-cell"><div class="label">Screen 2</div><div class="project">StoryBook Studio</div></div>
+          <div class="screen-cell"><div class="label">Screen 3</div><div class="project">Lab Notes</div></div>
+          <div class="screen-cell"><div class="label">Screen 4</div><div class="project">Infrastructure</div></div>
+        </div>
 
-        <div class="maxim">Away from the machine: inputs only.</div>
-        <div class="maxim-sub">Research. Writing. Planning. Things that refill.</div>
+        <div class="rule-block">
+          <h3><span class="num">03</span> Away = inputs only</h3>
+          <p>Away from the workstation: research, writing, planning. Inputs that refill, not outputs that deplete. Choose things you're excited about, not obligations.</p>
+        </div>
 
-        <ul class="glyph-list">
-          <li><span class="g">&#x1F4D6;</span> Research on projects you're excited about</li>
-          <li><span class="g">&#x270D;</span> Writing that clarifies thinking</li>
-          <li><span class="g">&#x1F9ED;</span> Planning that opens possibility</li>
+        <div class="rule-block">
+          <h3><span class="num">04</span> Phone matched to context</h3>
+          <p>Walking: research, reading, audio. Social: quick notes only, never pull out of conversation. Transit: drafts, low-stakes review.</p>
+        </div>
+
+        <div class="rule-block">
+          <h3><span class="num">05</span> Two-hour daily disconnect</h3>
+          <p>Non-negotiable. Queue agent tasks before disconnecting. Document project states. Set DND. Leave devices. Agents work without you. You recover without them.</p>
+        </div>
+
+        <h2>Outcomes</h2>
+
+        <ul class="checklist">
+          <li>Screens and locations enforce context without willpower</li>
+          <li>Projects get built or deliberately paused, no hanging threads</li>
+          <li>Away-work is input, not fragmented output</li>
+          <li>Recovery is designed into the schedule, not accidental</li>
         </ul>
 
-        <div class="section-break"><span class="line"></span><span class="icon">&#x25C6;</span><span class="line"></span></div>
-
-        <div class="maxim">Match the phone to the moment.</div>
-
-        <dl class="spec">
-          <dt>Walking</dt>
-          <dd>Research, reading, audio</dd>
-          <dt>Social</dt>
-          <dd>Quick notes only — never pull out of conversation</dd>
-          <dt>Transit</dt>
-          <dd>Drafts, review, light comms</dd>
-        </dl>
-
-        <div class="section-break"><span class="line"></span><span class="icon">&#x23F8;</span><span class="line"></span></div>
-
-        <div class="maxim">Two hours. No screens. Every day.</div>
-        <div class="maxim-sub">Non-negotiable. Designed recovery, not accidental downtime.</div>
-
-        <dl class="spec">
-          <dt>Before exit</dt>
-          <dd>Queue agent tasks, document project states, set DND</dd>
-          <dt>During</dt>
-          <dd>No machines. No exceptions. Agents work without you.</dd>
-          <dt>After</dt>
-          <dd>Resume from documented state. No reconstruction cost.</dd>
-        </dl>
-
-        <div class="section-break"><span class="line"></span><span class="icon">&#x2726;</span><span class="line"></span></div>
-
-        <div class="equation">
-          designed_boundaries <span class="op">+</span> infinite_capacity <span class="op">=</span> sustainable_output
+        <div class="alt-links">
+          <a href="./2026-03-03-zen-vibecoding-v2.html">◆ Read experimental version →</a>
+          <a href="./2026-03-03-zen-vibecoding-v3.html">⬡ Read agent version →</a>
         </div>
-
-        <p>Screens enforce context. Locations enforce mode. The disconnect enforces recovery. No willpower required — the system does the work.</p>
-
-        <a class="alt-link" href="./2026-03-03-zen-vibecoding-v2.html">Read alternate version (structured rules) →</a>
-
-        <div class="endmark">&#x2022; &#x2022; &#x2022;</div>
 
       </div>
     </article>

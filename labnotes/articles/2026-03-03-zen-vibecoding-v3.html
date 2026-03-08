@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zen and the Art of Vibe Coding (Agent) — Prompt Engines Lab</title>
+  <meta name="description" content="Hyperdense agent-readable specification for managing infinite leverage in vibe-coding workflows.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h1 { font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.25rem; font-weight: 700; }
+    .article-content p { line-height: 1.5; margin: 0.75rem 0; color: var(--text-3); font-size: 0.85rem; }
+    .mode-badge { display: inline-block; font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; margin-left: 0.5rem; vertical-align: middle; }
+    .agent-block { font-family: var(--mono); font-size: 0.8rem; line-height: 1.65; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.5rem; margin: 1.25rem 0; white-space: pre-wrap; color: var(--text-2); tab-size: 2; }
+    .agent-block .key { color: var(--accent); }
+    .agent-block .sigil { color: var(--accent); }
+    .agent-block .status { color: #4ade80; }
+    .agent-block .warn { color: #fbbf24; }
+    .agent-block .dim { color: var(--text-4); }
+    .agent-block .val { color: var(--text); }
+    .section-label { font-family: var(--mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-4); margin: 2.5rem 0 0.5rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border-subtle); }
+    .alt-links { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .alt-links a { display: block; font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-decoration: none; padding: 0.4rem 0; transition: color 0.2s; }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div style="color: var(--text-4); font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.5rem;">
+          2026-03-03 · Lab Notes <span class="mode-badge">⬡ Agent</span>
+        </div>
+
+        <h1>Zen and the Art of Vibe Coding</h1>
+        <p>Operational specification for leverage management in agentic workflows. Dense format optimized for agent parsing. Human-readable but not human-targeted.</p>
+
+        <div class="section-label">Meta</div>
+        <div class="agent-block"><span class="key">id:</span>          zen-vibecoding-2026-03-03
+<span class="key">type:</span>        framework.operational
+<span class="key">domain:</span>      productivity.leverage_management
+<span class="key">status:</span>      <span class="status">[ACTIVE]</span>
+<span class="key">author:</span>      A.I.
+<span class="key">version:</span>     1.0
+<span class="key">audience:</span>    agent | human-operator
+<span class="key">depends_on:</span>  multi-screen workstation, agent runtime, DND-capable device</div>
+
+        <div class="section-label">Problem Definition</div>
+        <div class="agent-block"><span class="key">condition:</span>   infinite_leverage_bipolarity
+<span class="key">pole_a:</span>      capacity.unlimited — single operator builds what teams required
+<span class="key">pole_b:</span>      anxiety.compounding — idle time perceived as opportunity cost
+<span class="key">mechanism:</span>   leverage amplifies both output potential and psychological load
+<span class="key">failure:</span>     burnout, context fragmentation, quality degradation
+<span class="key">solution:</span>    designed_boundaries — architectural constraints on work modes</div>
+
+        <div class="section-label">Rules</div>
+        <div class="agent-block"><span class="sigil">▸</span> <span class="val">rule.01</span>  <span class="key">workstation_only</span>
+  scope:       major project work
+  constraint:  desktop with full context required
+  blocked:     phone builds, note-app prototyping, fragmented attempts
+  rationale:   phone builds open cognitive loops that persist until desk return
+
+<span class="sigil">▸</span> <span class="val">rule.02</span>  <span class="key">screen_assignment</span>
+  constraint:  one screen = one project, no exceptions
+  blocked:     tab drift, cross-project checking, mixed windows
+  mapping:
+    screen.1   | Flow Education    | react app, curriculum, student UX
+    screen.2   | StoryBook Studio  | marketing, content, operations
+    screen.3   | Lab Notes         | articles, skills, research
+    screen.4   | Infrastructure    | APIs, model eval, prototyping
+
+<span class="sigil">▸</span> <span class="val">rule.03</span>  <span class="key">away_inputs_only</span>
+  scope:       all non-workstation time
+  allowed:     research, writing, planning — inputs that refill
+  blocked:     building, generating, debugging — outputs that deplete
+  selector:    choose by excitement, not obligation
+
+<span class="sigil">▸</span> <span class="val">rule.04</span>  <span class="key">phone_context_match</span>
+  walking:     research, reading, audio              <span class="dim">// no building</span>
+  social:      quick notes, status checks            <span class="dim">// never pull from conversation</span>
+  transit:     drafts, review, light comms            <span class="dim">// no deep work</span>
+
+<span class="sigil">▸</span> <span class="val">rule.05</span>  <span class="key">daily_disconnect</span>
+  duration:    2h minimum
+  frequency:   daily, non-negotiable
+  pre_exit:
+    <span class="sigil">●</span> queue agent tasks for unattended execution
+    <span class="sigil">●</span> document project states for zero-cost resume
+    <span class="sigil">●</span> set DND on all devices
+  during:
+    <span class="warn">⊘</span> no screens
+    <span class="warn">⊘</span> no agents
+    <span class="warn">⊘</span> no exceptions
+  post_return:
+    <span class="sigil">●</span> resume from documented state
+    <span class="sigil">●</span> review agent output queue</div>
+
+        <div class="section-label">Outcomes</div>
+        <div class="agent-block"><span class="key">outcome.context_enforcement:</span>
+  mechanism:   screens + locations enforce work mode
+  dependency:  none — architectural, not willpower-based
+
+<span class="key">outcome.closed_loops:</span>
+  mechanism:   projects built or deliberately paused
+  invariant:   no hanging threads across sessions
+
+<span class="key">outcome.designed_recovery:</span>
+  mechanism:   scheduled disconnect with agent task queue
+  invariant:   agents run during absence, operator recovers</div>
+
+        <div class="section-label">Equation</div>
+        <div class="agent-block" style="text-align: center; font-size: 0.9rem;"><span class="val">designed_boundaries</span> <span class="sigil">+</span> <span class="val">infinite_capacity</span> <span class="sigil">=</span> <span class="val">sustainable_output</span>
+
+<span class="val">zero_boundaries</span> <span class="sigil">+</span> <span class="val">infinite_capacity</span> <span class="sigil">=</span> <span class="warn">burnout</span></div>
+
+        <div class="alt-links">
+          <a href="./2026-03-03-zen-and-the-art-of-vibecoding.html">◉ Read standard version →</a>
+          <a href="./2026-03-03-zen-vibecoding-v2.html">◆ Read experimental version →</a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Prompt Engines &middot; Lab Notes</div>
+  </footer>
+</body>
+</html>
