@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- GA4 Tracking -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+    gtag('event', 'page_view', {'variant': 'b'});
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Gift They'll Never Forget — Personalized Children's Books | StoryBook Studio</title>
+  <meta name="description" content="Create a storybook starring your child. The gift that makes them feel seen, loved, and heroic. Made in Austin, Texas." />
+  
+  <style>
+    :root {
+      --primary: #F04D26;
+      --primary-dark: #d43d1a;
+      --text: #1a1a1a;
+      --text-light: #666;
+      --bg: #fff;
+      --bg-cream: #faf8f5;
+      --border: #e5e5e5;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); line-height: 1.6; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    
+    header { background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--primary); }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+    .btn-primary { background: var(--primary); color: white; }
+    
+    .hero { background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg) 100%); padding: 120px 0 80px; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .hero h1 { font-size: 3.5rem; line-height: 1.1; font-weight: 800; margin-bottom: 24px; color: var(--primary); }
+    .hero-lead { font-size: 1.25rem; color: var(--text-light); margin-bottom: 32px; }
+    .hero-badges { display: flex; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
+    .badge { display: flex; align-items: center; gap: 8px; font-size: 0.875rem; color: var(--text-light); }
+    
+    .emotional-hook { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); padding: 60px 0; text-align: center; }
+    .emotional-hook h2 { font-size: 2rem; font-weight: 700; margin-bottom: 16px; }
+    .emotional-hook p { font-size: 1.125rem; color: var(--text-light); max-width: 600px; margin: 0 auto; }
+    
+    .features { padding: 80px 0; }
+    .section-header { text-align: center; margin-bottom: 64px; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .feature { padding: 32px; border: 1px solid var(--border); border-radius: 12px; }
+    
+    .cta { background: var(--primary); padding: 80px 0; text-align: center; color: white; }
+    .cta h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; }
+    .btn-white { background: white; color: var(--primary); }
+    
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container header-inner">
+    <a href="/" class="logo">StoryBook<span>Studio</span></a>
+    <a href="/app" class="btn btn-primary">See The Magic →</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <h1>The gift they'll never forget</h1>
+      <p class="hero-lead">
+        Imagine their face when they see themselves as the hero of their own story. 
+        A book where they're brave, clever, and completely themselves. 
+        This isn't just a story — it's proof that you see them.
+      </p>
+      <a href="/app" class="btn btn-primary" style="font-size: 1.125rem; padding: 16px 32px;">
+        Create Their Book — Free
+      </a>
+      <div class="hero-badges">
+        <span class="badge">❤️ Loved by 1,000+ parents</span>
+        <span class="badge">🎁 Perfect for ages 3-10</span>
+        <span class="badge">📚 Ships in 3-5 days</span>
+      </div>
+    </div>
+    <div style="background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); border-radius: 16px; height: 400px; display: flex; align-items: center; justify-content: center;">
+      [Hero: Child's face lighting up]
+    </div>
+  </div>
+</section>
+
+<section class="emotional-hook">
+  <div class="container">
+    <h2>They grow up so fast</h2>
+    <p>
+      One day they're obsessed with dinosaurs. The next, it's space. 
+      But this book? It captures who they are right now. 
+      A keepsake they'll treasure long after they've outgrown the phase.
+    </p>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <div class="section-header">
+      <h2>What parents are saying</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature">
+        <h3>"My daughter sleeps with it"</h3>
+        <p>"She asked us to read it three times the first night. Now it's her comfort object. Best $40 I've spent." — Sarah M., Austin</p>
+      </div>
+      <div class="feature">
+        <h3>"He felt like a superhero"</h3>
+        <p>"My son has ADHD and rarely sits for books. But when he's the main character? He was mesmerized." — James T., Houston</p>
+      </div>
+      <div class="feature">
+        <h3>"Grandma cried"</h3>
+        <p>"Sent one to my mom with her granddaughter as the star. She called me crying. Instant heirloom." — Maria L., Dallas</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2>Make them feel seen</h2>
+    <p>Start free. Preview before you buy. Create magic in 5 minutes.</p>
+    <a href="/app" class="btn btn-white" style="font-size: 1.125rem; padding: 16px 32px;">Start Their Adventure</a>
+  </div>
+</section>
+
+</body>
+</html>

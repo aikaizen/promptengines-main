@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0;url=/a/">
+  <title>StoryBook Studio — A/B Test Router</title>
+  <script>
+    // Simple A/B router - random assignment with cookie persistence
+    (function() {
+      const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      };
+      
+      const setCookie = (name, value, days) => {
+        const expires = new Date(Date.now() + days * 864e5).toUTCString();
+        document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+      };
+      
+      // Check for existing assignment
+      let variant = getCookie('sbs_variant');
+      
+      if (!variant) {
+        // Random assignment: 25% each
+        const variants = ['a', 'b', 'c', 'd'];
+        variant = variants[Math.floor(Math.random() * variants.length)];
+        setCookie('sbs_variant', variant, 30); // 30 days
+      }
+      
+      // Track assignment in GA4 if available
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'ab_test_assignment', {
+          'variant': variant,
+          'test_name': 'landing_page_v1'
+        });
+      }
+      
+      // Redirect to variant
+      window.location.replace(`/${variant}/`);
+    })();
+  </script>
+</head>
+<body>
+  <p>Redirecting to your assigned variant...</p>
+  <p>If not redirected, <a href="/a/">click here</a>.</p>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stop Wasting Money on Toys They Forget — StoryBook Studio</title>
+  <meta name="description" content="Generic books collect dust. Create a personalized storybook they'll treasure forever. Made in Austin, Texas." />
+  
+  <style>
+    :root {
+      --primary: #F04D26;
+      --primary-dark: #d43d1a;
+      --text: #1a1a1a;
+      --text-light: #666;
+      --bg: #fff;
+      --bg-cream: #faf8f5;
+      --border: #e5e5e5;
+      --problem-bg: #fef2f2;
+      --agitation-bg: #fff7ed;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); line-height: 1.6; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    
+    header { background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--primary); }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+    .btn-primary { background: var(--primary); color: white; }
+    
+    .problem { background: var(--problem-bg); padding: 80px 0; text-align: center; }
+    .problem h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 24px; color: #dc2626; }
+    .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
+    .problem-card { background: white; padding: 32px; border-radius: 12px; border: 2px solid #fecaca; }
+    .problem-card h3 { color: #dc2626; margin-bottom: 12px; }
+    
+    .agitation { background: var(--agitation-bg); padding: 80px 0; }
+    .agitation-content { max-width: 700px; margin: 0 auto; text-align: center; }
+    .agitation h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 24px; }
+    .agitation-list { text-align: left; margin-top: 32px; }
+    .agitation-list li { padding: 16px 0; border-bottom: 1px solid #fed7aa; list-style: none; font-size: 1.125rem; }
+    .agitation-list li::before { content: "⚠️ "; margin-right: 8px; }
+    
+    .solution { background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg) 100%); padding: 80px 0; }
+    .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .solution h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 24px; color: var(--primary); }
+    .solution p { font-size: 1.125rem; color: var(--text-light); margin-bottom: 16px; }
+    .solution-benefits { list-style: none; margin-top: 24px; }
+    .solution-benefits li { padding: 12px 0; padding-left: 32px; position: relative; }
+    .solution-benefits li::before { content: "✓"; position: absolute; left: 0; color: var(--primary); font-weight: 700; }
+    
+    .features { padding: 80px 0; }
+    .section-header { text-align: center; margin-bottom: 64px; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .feature { padding: 32px; border: 1px solid var(--border); border-radius: 12px; }
+    
+    .cta { background: var(--primary); padding: 80px 0; text-align: center; color: white; }
+    .cta h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; }
+    .btn-white { background: white; color: var(--primary); }
+    
+    @media (max-width: 768px) {
+      .problem-grid, .solution-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .problem h2, .agitation h2, .solution h2 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container header-inner">
+    <a href="/" class="logo">StoryBook<span>Studio</span></a>
+    <a href="/app" class="btn btn-primary">Fix This →</a>
+  </div>
+</header>
+
+<section class="problem">
+  <div class="container">
+    <h2>Generic books collect dust.<br>Your child deserves better.</h2>
+    <p style="font-size: 1.25rem; color: var(--text-light); max-width: 600px; margin: 0 auto;">
+      You know the cycle. Buy a book. They read it once. It goes on the shelf. Forgotten.
+    </p>
+    
+    <div class="problem-grid">
+      <div class="problem-card">
+        <h3>❌ The Character Problem</h3>
+        <p>"Who's that?" Your child doesn't see themselves in the stories. No connection = no engagement.</p>
+      </div>
+      <div class="problem-card">
+        <h3>❌ The Memory Problem</h3>
+        <p>Toys break. Clothes are outgrown. Books become clutter. Nothing lasts as a keepsake.</p>
+      </div>
+      <div class="problem-card">
+        <h3>❌ The Gift Problem</h3>
+        <p>Another plastic toy? Another generic book? Gifts that show you didn't think about THEM.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="agitation">
+  <div class="container">
+    <div class="agitation-content">
+      <h2>And here's what happens next...</h2>
+      <ul class="agitation-list">
+        <li>They outgrow characters who look nothing like them</li>
+        <li>They forget plots because there's no emotional hook</li>
+        <li>The magic fades. The book sits. Dust collects.</li>
+        <li>You've spent $20-40 on another thing they don't care about</li>
+        <li>They ask for screen time instead — again</li>
+      </ul>
+      <p style="margin-top: 32px; font-size: 1.25rem; font-weight: 600;">
+        It's not your fault. Generic books weren't built for YOUR child.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="solution">
+  <div class="container solution-grid">
+    <div>
+      <h2>What if the book starred THEM?</h2>
+      <p>
+        Imagine a story where your child is the hero. Where they look like the main character. 
+        Where their name is woven into every page.
+      </p>
+      <p>
+        A book so personal, they'll never outgrow it. A keepsake they'll show their own kids someday.
+      </p>
+      <ul class="solution-benefits">
+        <li>Upload their photo → AI generates their character</li>
+        <li>Choose from 34+ art styles (watercolor, comic, sketch, etc.)</li>
+        <li>Preview the entire book before buying</li>
+        <li>Print-on-demand: starts at $39, ships in 3-5 days</li>
+        <li>Preview is FREE — only pay when you love it</li>
+      </ul>
+    </div>
+    <div style="background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); border-radius: 16px; height: 400px; display: flex; align-items: center; justify-content: center;">
+      [Book preview: Child as hero]
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <div class="section-header">
+      <h2>Real results from real parents</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature">
+        <h3>"She sleeps with it"</h3>
+        <p>"Three readings the first night. Now it's her comfort object. She feels SEEN." — Sarah M.</p>
+      </div>
+      <div class="feature">
+        <h3>"He sat still for 20 minutes"</h3>
+        <p>"ADHD kid who never sits still. But when HE'S the superhero? Mesmerized." — James T.</p>
+      </div>
+      <div class="feature">
+        <h3>"Best $40 I've spent"</h3>
+        <p>"Compared to toys they break in a week? This is an heirloom." — Maria L.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2>Stop buying forgettable gifts</h2>
+    <p>Create a book they'll treasure forever. Start free. Preview before you buy.</p>
+    <a href="/app" class="btn btn-white" style="font-size: 1.125rem; padding: 16px 32px;">Create Their Book — Free</a>
+    <p style="margin-top: 16px; font-size: 0.875rem; opacity: 0.8;">Join 1,000+ parents. 4.9★ rating. Made in Austin, TX.</p>
+  </div>
+</section>
+
+</body>
+</html>
