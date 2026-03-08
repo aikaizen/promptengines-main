@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prompt Engines Lab Notes</title>
-  <meta name="description" content="Real experiments. Build stream intelligence. Market signals. OpenClaw skills. Published findings from the PromptEngines lab." />
+  <meta name="description" content="Research and development from the Prompt Engines lab. Articles, build stream intelligence, market signals, and engineering skills." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -39,26 +39,25 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <div class="eyebrow">Prompt Engines Lab Notes</div>
-          <h1>Real experiments. Published findings. No filler.</h1>
+          <div class="eyebrow">Lab Notes</div>
+          <h1>Research from active builds.</h1>
           <p class="hero-lead">
-            We test AI systems in production and write about what holds up.
-            Articles, build stream intelligence, market signals, and OpenClaw skills — from active builds.
+            Engineering articles, cross-repo build intelligence, market signals, and production-tested skills — published as we ship.
           </p>
         </div>
         <aside class="hero-aside">
-          <div class="hero-stat">
-            <span class="hero-stat-number">16</span>
-            <span class="hero-stat-label">Published notes</span>
-          </div>
-          <div class="hero-stat">
-            <span class="hero-stat-number">140</span>
-            <span class="hero-stat-label">Min total read time</span>
-          </div>
-          <div class="hero-stat">
-            <span class="hero-stat-number">10</span>
-            <span class="hero-stat-label">Active systems covered</span>
-          </div>
+          <a class="hero-stat" href="./articles/2026-03-03-zen-and-the-art-of-vibecoding.html" style="text-decoration:none; transition: background 0.2s;">
+            <span class="hero-stat-number" style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent);">Latest Article</span>
+            <span class="hero-stat-label" style="font-size:13px; color:var(--text-2); text-transform:none; letter-spacing:0;">Zen and the Art of Vibe Coding</span>
+          </a>
+          <a class="hero-stat" href="./build-stream/" style="text-decoration:none; transition: background 0.2s;">
+            <span class="hero-stat-number" style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent);">Build Stream</span>
+            <span class="hero-stat-label" style="font-size:13px; color:var(--text-2); text-transform:none; letter-spacing:0;">Week 10 — 94 commits across 4 repos</span>
+          </a>
+          <a class="hero-stat" href="./signals/2026-02-28-ai-twitter-vibe.html" style="text-decoration:none; transition: background 0.2s;">
+            <span class="hero-stat-number" style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent);">Latest Signal</span>
+            <span class="hero-stat-label" style="font-size:13px; color:var(--text-2); text-transform:none; letter-spacing:0;">AI Twitter vibe check — Feb 28</span>
+          </a>
         </aside>
       </div>
     </section>
@@ -67,20 +66,20 @@
     <section class="section">
       <div class="container">
         <div class="post-grid stagger">
-          <a class="post-card" href="./signals/" style="--i:0">
-            <div class="post-meta"><span class="tag">Signals</span><span>Weekly</span></div>
-            <h3>Market & discourse signals</h3>
-            <p>AI Twitter vibe, prediction market experiments, price analysis. What the data says this week.</p>
+          <a class="post-card" href="./articles/" style="--i:0">
+            <div class="post-meta"><span class="tag">Articles</span></div>
+            <h3>Engineering & research</h3>
+            <p>Model evaluations, architecture decisions, production experiments, and frameworks tested against real workloads.</p>
           </a>
           <a class="post-card" href="./build-stream/" style="--i:1">
-            <div class="post-meta"><span class="tag">Build Stream</span><span>Weekly</span></div>
+            <div class="post-meta"><span class="tag">Build Stream</span><span>Daily</span></div>
             <h3>Commit intelligence</h3>
-            <p>Auto-generated from our repos. Velocity, new tech, build patterns, AI co-authorship rates.</p>
+            <p>Cross-repo commit data updated daily. Velocity by repo, commit types, feature/fix ratios, and weekly summaries.</p>
           </a>
-          <a class="post-card" href="./skills/" style="--i:2">
-            <div class="post-meta"><span class="tag">Skills</span><span>Free</span></div>
-            <h3>OpenClaw skills</h3>
-            <p>Skills we built and tested in production. Install in one command.</p>
+          <a class="post-card" href="./signals/" style="--i:2">
+            <div class="post-meta"><span class="tag">Signals</span><span>Weekly</span></div>
+            <h3>Market & discourse</h3>
+            <p>AI builder sentiment, prediction markets, and technology adoption signals from X and broader discourse.</p>
           </a>
         </div>
       </div>
@@ -90,8 +89,8 @@
     <section class="section">
       <div class="container">
         <div class="section-header">
-          <h2>Latest notes</h2>
-          <span class="section-count">14 notes</span>
+          <h2>Recent articles</h2>
+          <a href="./articles/" class="section-link">All articles →</a>
         </div>
 
         <div class="featured-grid stagger">
@@ -182,6 +181,62 @@
       </div>
     </section>
 
+    <!-- ════ BUILD STREAM ════ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Build Stream</h2>
+          <a href="./build-stream/" class="section-link">Full stream →</a>
+        </div>
+        <div class="featured-grid stagger">
+          <a class="post-card post-featured" href="./build-stream/2026-W10.html" style="--i:0">
+            <div class="post-meta"><span>Mar 7, 2026</span><span class="tag">Weekly Report</span></div>
+            <h3>Week 10 — 94 commits across 4 repos</h3>
+            <p>Build stream infrastructure, Video Terminal launch, Norbu cloud sync, StoryBook style system. Two new products shipped, full observability pipeline live.</p>
+          </a>
+          <a class="post-card" href="./build-stream/2026-W09.html" style="--i:1">
+            <div class="post-meta"><span>Feb 28, 2026</span><span class="tag">Weekly Report</span></div>
+            <h3>Week 9 — 50 commits across 6 repos</h3>
+            <p>Print pipelines, AppShell refactors, live data feeds. Commit velocity and repo activity breakdown.</p>
+          </a>
+        </div>
+        <!-- Commit activity chart -->
+        <div style="margin-top: 2rem; padding: 1.5rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+          <div style="font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-4); margin-bottom: 1rem;">Commits by repo — Week 10</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-3); min-width: 140px; text-align: right;">promptengines</span>
+              <div style="flex: 1; background: var(--bg-subtle); border-radius: 3px; height: 20px; overflow: hidden;">
+                <div style="width: 54%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+              </div>
+              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-4); min-width: 24px;">51</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-3); min-width: 140px; text-align: right;">storybookstudio</span>
+              <div style="flex: 1; background: var(--bg-subtle); border-radius: 3px; height: 20px; overflow: hidden;">
+                <div style="width: 29%; height: 100%; background: #4ade80; border-radius: 3px;"></div>
+              </div>
+              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-4); min-width: 24px;">27</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-3); min-width: 140px; text-align: right;">norbu</span>
+              <div style="flex: 1; background: var(--bg-subtle); border-radius: 3px; height: 20px; overflow: hidden;">
+                <div style="width: 10%; height: 100%; background: #60a5fa; border-radius: 3px;"></div>
+              </div>
+              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-4); min-width: 24px;">9</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-3); min-width: 140px; text-align: right;">videoterminal</span>
+              <div style="flex: 1; background: var(--bg-subtle); border-radius: 3px; height: 20px; overflow: hidden;">
+                <div style="width: 7%; height: 100%; background: #c084fc; border-radius: 3px;"></div>
+              </div>
+              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-4); min-width: 24px;">7</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ════ LATEST SIGNAL ════ -->
     <section class="section">
       <div class="container">
@@ -194,11 +249,6 @@
             <div class="post-meta"><span>Feb 28, 2026</span><span class="tag">X / Twitter Vibe</span></div>
             <h3>AI Twitter vibe check: week of Feb 28, 2026</h3>
             <p>Agent frameworks gaining, long-context hype fading, education AI quietly rising. Sentiment snapshot of AI builder discourse on X.</p>
-          </a>
-          <a class="post-card" href="./build-stream/2026-W09.html" style="--i:1">
-            <div class="post-meta"><span>Feb 28, 2026</span><span class="tag">Build Stream</span></div>
-            <h3>Build Stream: Week 9 — 50 commits, 6 repos, 98% AI co-authored</h3>
-            <p>Print pipelines, AppShell refactors, live data feeds. What the commits say about where the work is.</p>
           </a>
         </div>
       </div>
