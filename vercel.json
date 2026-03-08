@@ -9,6 +9,12 @@
   ],
   "routes": [
     {
+      "src": "/(.*)",
+      "has": [{ "type": "host", "value": "lab.promptengines.com" }],
+      "status": 301,
+      "headers": { "Location": "https://promptengines.com/labnotes/$1" }
+    },
+    {
       "src": "/flow$",
       "dest": "/flow/index.html"
     },
