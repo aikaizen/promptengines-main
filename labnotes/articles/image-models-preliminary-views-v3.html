@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Model API Baseline (Agent) — Prompt Engines Lab Notes</title>
+  <meta name="description" content="Hyperdense agent-readable specification for image model API selection. 9 models, 3 providers, production viability matrix." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .article-content { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h1 { font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.25rem; font-weight: 700; }
+    .article-content p { line-height: 1.5; margin: 0.75rem 0; color: var(--text-3); font-size: 0.85rem; }
+    .mode-badge { display: inline-block; font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; margin-left: 0.5rem; vertical-align: middle; }
+    .agent-block { font-family: var(--mono); font-size: 0.8rem; line-height: 1.65; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.5rem; margin: 1.25rem 0; white-space: pre-wrap; color: var(--text-2); tab-size: 2; }
+    .agent-block .key { color: var(--accent); }
+    .agent-block .sigil { color: var(--accent); }
+    .agent-block .status { color: #4ade80; }
+    .agent-block .warn { color: #fbbf24; }
+    .agent-block .fail { color: #ef4444; }
+    .agent-block .dim { color: var(--text-4); }
+    .agent-block .val { color: var(--text); }
+    .section-label { font-family: var(--mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-4); margin: 2.5rem 0 0.5rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border-subtle); }
+    .alt-links { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .alt-links a { display: block; font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-decoration: none; padding: 0.4rem 0; transition: color 0.2s; }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div style="color: var(--text-4); font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.5rem;">
+          2026-03-03 · Lab Notes <span class="mode-badge">⬡ Agent</span>
+        </div>
+
+        <h1>Image Model API Baseline</h1>
+        <p>Production benchmark specification for image generation API selection. Dense format optimized for agent parsing. Human-readable but not human-targeted.</p>
+
+        <div class="section-label">Meta</div>
+        <div class="agent-block"><span class="key">id:</span>          img-api-baseline-2026-03
+<span class="key">type:</span>        benchmark.operational
+<span class="key">domain:</span>      image_generation.api_selection
+<span class="key">status:</span>      <span class="status">[ACTIVE]</span>
+<span class="key">date:</span>        2026-03-03
+<span class="key">scope:</span>       9 models | 3 providers | 2 prompts
+<span class="key">prompts:</span>
+  <span class="sigil">●</span> character_ip    — ninja turtle + cinderella, storybook style
+  <span class="sigil">●</span> environment     — cozy cabin, falling snow, storybook style</div>
+
+        <div class="section-label">Benchmark Matrix</div>
+        <div class="agent-block"><span class="key">provider</span>     <span class="key">model</span>               <span class="key">speed</span>    <span class="key">ip_pass</span>  <span class="key">env_pass</span>  <span class="key">reliable</span>
+───────────  ─────────────────  ───────  ───────  ────────  ────────
+Gemini       nano-banana         5.7s    <span class="status">PASS</span>     <span class="status">PASS</span>      <span class="status">100%</span>
+Gemini       nano-banana-2      13.1s    <span class="status">PASS</span>     <span class="status">PASS</span>      <span class="status">100%</span>
+Gemini       nano-banana-pro    19.0s    <span class="status">PASS</span>     <span class="fail">FAIL</span>       <span class="warn">50%</span>
+Fireworks    flux-schnell        2.2s    <span class="status">PASS</span>     <span class="status">PASS</span>      <span class="status">100%</span>
+Fireworks    flux-dev-fp8        3.9s    <span class="status">PASS</span>     <span class="status">PASS</span>      <span class="status">100%</span>
+BFL          flux-2-max         30.1s    <span class="fail">FAIL</span>     <span class="status">PASS</span>       <span class="warn">50%</span>
+BFL          flux-2-pro         18.4s    <span class="fail">FAIL</span>     <span class="status">PASS</span>       <span class="warn">50%</span>
+BFL          flux-2-klein-9b     7.3s    <span class="fail">FAIL</span>     <span class="status">PASS</span>       <span class="warn">50%</span>
+BFL          flux-2-klein-4b     5.9s    <span class="fail">FAIL</span>     <span class="status">PASS</span>       <span class="warn">50%</span></div>
+
+        <div class="section-label">Critical Finding: Provider Determines IP Viability</div>
+        <div class="agent-block"><span class="key">finding:</span>     bfl_content_filter_blocks_ip
+<span class="key">severity:</span>    <span class="fail">critical</span>
+<span class="key">pattern:</span>     ALL BFL-hosted Flux models reject IP character prompts
+<span class="key">contrast:</span>    ALL Fireworks-hosted Flux models pass IP character prompts
+<span class="key">cause:</span>       BFL content filtering layer, not model architecture
+<span class="key">implication:</span> provider selection = IP viability
+
+<span class="sigil">▸</span> <span class="val">same_model_family</span>  Flux architecture identical across providers
+<span class="sigil">▸</span> <span class="val">opposite_outcome</span>  BFL: 0/4 IP pass | Fireworks: 2/2 IP pass
+<span class="sigil">▸</span> <span class="val">root_cause</span>         content_filter, not model_capability</div>
+
+        <div class="section-label">Recommended Stack</div>
+        <div class="agent-block"><span class="sigil">▸</span> <span class="val">role.driver</span>         <span class="key">nano-banana-2</span>
+  provider:    Gemini
+  speed:       13.1s
+  reliability: <span class="status">100%</span>
+  quality:     highest of reliable models (2226KB avg)
+  integration: synchronous, single API call, no polling
+
+<span class="sigil">▸</span> <span class="val">role.draft</span>          <span class="key">flux-schnell</span>
+  provider:    Fireworks
+  speed:       2.2s
+  reliability: <span class="status">100%</span>
+  use:         previews, iteration, low-latency paths
+
+<span class="sigil">▸</span> <span class="val">role.quality_tier</span>   <span class="key">flux-dev-fp8</span>
+  provider:    Fireworks
+  speed:       3.9s
+  reliability: <span class="status">100%</span>
+  use:         speed-quality balance, production renders
+
+<span class="sigil">▸</span> <span class="val">role.ip_pipeline</span>   <span class="key">flux.1-dev + lora + controlnet</span>
+  training:    LoRA fine-tune on Flux.1 Dev
+  control:     ControlNet-based composition workflows
+  augment:     nano-banana-2 for precision | upscaling models for resolution
+  <span class="warn">△ cost:</span>      monitor per-image at scale</div>
+
+        <div class="section-label">Production Tiers</div>
+        <div class="agent-block"><span class="status">TIER 1</span> — ship today
+  <span class="sigil">●</span> flux-schnell       | Fireworks  | 2.2s  | drafts, previews
+  <span class="sigil">●</span> flux-dev-fp8       | Fireworks  | 3.9s  | primary renders
+  <span class="sigil">●</span> nano-banana        | Gemini     | 5.7s  | reliable fallback
+  <span class="sigil">●</span> nano-banana-2      | Gemini     | 13.1s | quality driver
+
+<span class="warn">TIER 2</span> — conditional
+  <span class="sigil">◇</span> nano-banana-pro    | Gemini     | 19.0s | <span class="warn">50% reliability</span>
+
+<span class="fail">TIER 3</span> — blocked
+  <span class="sigil">⊘</span> flux-2-max         | BFL        | 30.1s | <span class="fail">IP filter block</span>
+  <span class="sigil">⊘</span> flux-2-pro         | BFL        | 18.4s | <span class="fail">IP filter block</span>
+  <span class="sigil">⊘</span> flux-2-klein-9b    | BFL        |  7.3s | <span class="fail">IP filter block</span>
+  <span class="sigil">⊘</span> flux-2-klein-4b    | BFL        |  5.9s | <span class="fail">IP filter block</span></div>
+
+        <div class="section-label">Decision Rules</div>
+        <div class="agent-block"><span class="key">if</span> general_generation:
+  <span class="sigil">▸</span> use nano-banana-2
+  <span class="dim">// highest quality, 100% reliable, simple integration</span>
+
+<span class="key">if</span> latency_critical:
+  <span class="sigil">▸</span> use flux-schnell (2.2s) or flux-dev-fp8 (3.9s)
+  <span class="dim">// Fireworks, fast, reliable</span>
+
+<span class="key">if</span> ip_characters:
+  <span class="sigil">⊘</span> never BFL direct API
+  <span class="sigil">▸</span> use Fireworks-hosted Flux.1 for base generation
+  <span class="sigil">▸</span> use Flux.1 Dev + LoRA + ControlNet for consistency
+  <span class="dim">// augment with NB2 or upscaling, watch cost</span>
+
+<span class="key">if</span> cost_sensitive:
+  <span class="sigil">▸</span> nano-banana-2 for ad-hoc (per-generation pricing)
+  <span class="sigil">▸</span> LoRA pipeline for volume (amortized training cost)
+  <span class="warn">△</span> upscaling adds per-image cost — monitor at scale</div>
+
+        <div class="alt-links">
+          <a href="./image-models-preliminary-views.html">◉ Read standard version →</a>
+          <a href="./image-models-preliminary-views-v2.html">◆ Read experimental version →</a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Prompt Engines &middot; Lab Notes</div>
+  </footer>
+</body>
+</html>

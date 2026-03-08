@@ -9,6 +9,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .archive-item.has-modes { grid-template-columns: 200px 1fr auto; }
+    .mode-dots { display: flex; flex-direction: column; gap: 3px; align-items: center; padding: 2px 0; font-family: var(--mono); font-size: 10px; line-height: 1; }
+    .mode-dots .dot-std { color: var(--text); }
+    .mode-dots .dot-exp { color: var(--accent); }
+    .mode-dots .dot-agt { color: var(--text-4); }
+    @media (max-width: 640px) {
+      .archive-item.has-modes { grid-template-columns: 1fr auto; }
+    }
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -75,9 +85,10 @@
           <span class="section-count">18 notes</span>
         </div>
         <div class="archive-list">
-          <a class="archive-item" href="./image-models-preliminary-views.html">
-            <div class="archive-meta">Mar 3 · 9 min · Experiments</div>
-            <h3>Preliminary views on today's top image generation models</h3>
+          <a class="archive-item has-modes" href="./image-models-preliminary-views.html">
+            <div class="archive-meta">Mar 3 · 7 min · Benchmark</div>
+            <h3>Image model API baseline: March 2026</h3>
+            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
           </a>
           <a class="archive-item" href="./image-model-benchmark.html">
             <div class="archive-meta">Mar 3 · 9 min · Benchmark</div>
@@ -99,9 +110,10 @@
             <div class="archive-meta">Mar 3 · 9 min · Evaluation</div>
             <h3>Evaluating large language models: a framework for production selection</h3>
           </a>
-          <a class="archive-item" href="./2026-03-03-zen-and-the-art-of-vibecoding.html">
-            <div class="archive-meta">Mar 3 · 4 min · Lab Notes · <span style="color: var(--accent);">◆</span></div>
+          <a class="archive-item has-modes" href="./2026-03-03-zen-and-the-art-of-vibecoding.html">
+            <div class="archive-meta">Mar 3 · 4 min · Lab Notes</div>
             <h3>Zen and the art of vibe coding</h3>
+            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
           </a>
           <a class="archive-item" href="./just-rebuild-it.html">
             <div class="archive-meta">Mar 3 · 8 min · Experiments</div>
