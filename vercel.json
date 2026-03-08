@@ -1,12 +1,6 @@
 {
   "version": 2,
   "name": "promptengines",
-  "builds": [
-    {
-      "src": "**/*",
-      "use": "@vercel/static"
-    }
-  ],
   "redirects": [
     {
       "source": "/:path(.*)",
@@ -15,43 +9,14 @@
       "permanent": true
     }
   ],
-  "routes": [
-    {
-      "src": "/flow$",
-      "dest": "/flow/index.html"
-    },
-    {
-      "src": "/flow/(.*)",
-      "dest": "/flow/$1"
-    },
-    {
-      "src": "/prototypes/flow-education/app/dist/assets/(.*)",
-      "dest": "/prototypes/flow-education/app/dist/assets/$1"
-    },
-    {
-      "src": "/prototypes/flow-education/app/dist/(.*)",
-      "dest": "/prototypes/flow-education/app/dist/$1"
-    },
-    {
-      "src": "/prototypes/(.*)",
-      "dest": "/prototypes/$1"
-    },
-    {
-      "src": "/floweducation",
-      "dest": "/prototypes/flow-education/index.html"
-    },
-    {
-      "src": "/floweducation/(.*)",
-      "dest": "/prototypes/flow-education/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
+  "rewrites": [
+    { "source": "/flow", "destination": "/flow/index.html" },
+    { "source": "/flow/:path(.*)", "destination": "/flow/:path" },
+    { "source": "/floweducation", "destination": "/prototypes/flow-education/index.html" },
+    { "source": "/floweducation/:path(.*)", "destination": "/prototypes/flow-education/:path" }
   ],
   "github": {
     "enabled": true,
     "silent": false
   }
 }
-
