@@ -7,13 +7,15 @@
       "use": "@vercel/static"
     }
   ],
-  "routes": [
+  "redirects": [
     {
-      "src": "/(.*)",
+      "source": "/:path(.*)",
       "has": [{ "type": "host", "value": "lab.promptengines.com" }],
-      "status": 301,
-      "headers": { "Location": "https://promptengines.com/labnotes/$1" }
-    },
+      "destination": "https://promptengines.com/labnotes/:path",
+      "permanent": true
+    }
+  ],
+  "routes": [
     {
       "src": "/flow$",
       "dest": "/flow/index.html"
