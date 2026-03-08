@@ -1,0 +1,293 @@
+{
+  "date": "2026-03-08",
+  "generatedAt": "2026-03-08T11:57:28.146Z",
+  "commits": [
+    {
+      "repo": "promptengines-main",
+      "hash": "b7b3b725a8ad792673e4b7ae8f4ec862f5fd80cb",
+      "shortHash": "b7b3b72",
+      "date": "2026-03-08T07:21:01Z",
+      "subject": "feat(articles): rewrite image model baseline with 3-tier treatment + mode dots",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/b7b3b725a8ad792673e4b7ae8f4ec862f5fd80cb",
+      "type": "feat",
+      "scope": "articles"
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "b9906b7b75eb21e9dcaf6a7229e1a85da4bda0b8",
+      "shortHash": "b9906b7",
+      "date": "2026-03-08T06:53:30Z",
+      "subject": "feat: About page — landing-page style with Austin story, SEO, generated images",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/b9906b7b75eb21e9dcaf6a7229e1a85da4bda0b8",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "77a931a65b5d6f9f2c42a4a3a1eedbdb6278a9dd",
+      "shortHash": "77a931a",
+      "date": "2026-03-08T06:39:20Z",
+      "subject": "content(lab): three content modes for Zen article — Standard, Experimental, Agent",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/77a931a65b5d6f9f2c42a4a3a1eedbdb6278a9dd",
+      "type": "content",
+      "scope": "lab"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "3b550d556e7f5274d2fa678158b6c590aadaf03f",
+      "shortHash": "3b550d5",
+      "date": "2026-03-08T06:36:05Z",
+      "subject": "fix: update old zen article URL with rewritten version",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/3b550d556e7f5274d2fa678158b6c590aadaf03f",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "72268c2126e5818d251d741487fe877a37b56f9d",
+      "shortHash": "72268c2",
+      "date": "2026-03-08T05:52:23Z",
+      "subject": "feat(lab): add three content modes (Standard, Experimental, Agent) to site",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/72268c2126e5818d251d741487fe877a37b56f9d",
+      "type": "feat",
+      "scope": "lab"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "5d3018854db45e6705c84ba7ee8fd8a2b6cb51fd",
+      "shortHash": "5d30188",
+      "date": "2026-03-08T05:33:09Z",
+      "subject": "content(lab): rewrite Zen and the Art of Vibe Coding — two styled versions",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/5d3018854db45e6705c84ba7ee8fd8a2b6cb51fd",
+      "type": "content",
+      "scope": "lab"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "ab7dec26002f2b0c9d2c6971e38c7d206791af63",
+      "shortHash": "ab7dec2",
+      "date": "2026-03-08T05:14:20Z",
+      "subject": "fix: migrate vercel.json from legacy builds/routes to modern config",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/ab7dec26002f2b0c9d2c6971e38c7d206791af63",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "61bd77dfa195bae8a3f2ae035375e3b6fedff6d1",
+      "shortHash": "61bd77d",
+      "date": "2026-03-08T05:12:46Z",
+      "subject": "fix: use redirects config for lab.promptengines.com redirect",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/61bd77dfa195bae8a3f2ae035375e3b6fedff6d1",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "729ba3ab7dbc27b01bc3b0d6227c98ba1d5903e0",
+      "shortHash": "729ba3a",
+      "date": "2026-03-08T05:04:05Z",
+      "subject": "feat: redirect lab.promptengines.com to promptengines.com/labnotes/",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/729ba3ab7dbc27b01bc3b0d6227c98ba1d5903e0",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "6f30f4bb66e413328b2438d83673dd69b3dd4fae",
+      "shortHash": "6f30f4b",
+      "date": "2026-03-08T04:04:37Z",
+      "subject": "feat: character system redesign — poses, detail modal, sheet gen, auto-book UX",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/6f30f4bb66e413328b2438d83673dd69b3dd4fae",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "984140d830ae0c1a5cf441e2f8efe81c562c53ab",
+      "shortHash": "984140d",
+      "date": "2026-03-08T04:01:07Z",
+      "subject": "feat(lab): redesign homepage — professional copy, build stream charts, no vanity metrics",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/984140d830ae0c1a5cf441e2f8efe81c562c53ab",
+      "type": "feat",
+      "scope": "lab"
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "37a06a980c9f7a7729ef52ab3ccb46ba931743d3",
+      "shortHash": "37a06a9",
+      "date": "2026-03-08T00:44:13Z",
+      "subject": "fix: story gen max_tokens error + multi-POD routing + admin providers UI",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/37a06a980c9f7a7729ef52ab3ccb46ba931743d3",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "0c4da7b032e299abf65df3631609b7a82134544b",
+      "shortHash": "0c4da7b",
+      "date": "2026-03-07T21:48:53Z",
+      "subject": "feat(team): add Hermetic_Demiurge as third team member",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/0c4da7b032e299abf65df3631609b7a82134544b",
+      "type": "feat",
+      "scope": "team"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "070bdab2538aa315caf06d974c530567ee4bb13b",
+      "shortHash": "070bdab",
+      "date": "2026-03-07T19:32:23Z",
+      "subject": "fix: filter bot commits from GitHub feed and add missing v2.html to workflow",
+      "author": "Claude",
+      "email": "noreply@anthropic.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/070bdab2538aa315caf06d974c530567ee4bb13b",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "3af33b437b1eb972991aa641ef123856b4f7bcdf",
+      "shortHash": "3af33b4",
+      "date": "2026-03-07T18:34:32Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/3af33b437b1eb972991aa641ef123856b4f7bcdf",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "a89506fedcc2c7852cc024e0f3728e9ede8ee1d1",
+      "shortHash": "a89506f",
+      "date": "2026-03-07T16:45:57Z",
+      "subject": "Create README.md",
+      "author": "promptengines",
+      "email": "promptengines@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/a89506fedcc2c7852cc024e0f3728e9ede8ee1d1",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "dca43162ca060ae1b1f4d3aeef65afc050178eaf",
+      "shortHash": "dca4316",
+      "date": "2026-03-07T12:48:20Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/dca43162ca060ae1b1f4d3aeef65afc050178eaf",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "9cfc3dba3605b470be783f88df64ff667db42218",
+      "shortHash": "9cfc3db",
+      "date": "2026-03-07T11:56:41Z",
+      "subject": "chore(build-stream): auto-generate daily stream data + HTML",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/9cfc3dba3605b470be783f88df64ff667db42218",
+      "type": "chore",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "2757506eba05eb0022810243687dbcec259f11fc",
+      "shortHash": "2757506",
+      "date": "2026-03-07T06:41:15Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/2757506eba05eb0022810243687dbcec259f11fc",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "2c15559672548c5fb27ad49284a51e5b9c01fca1",
+      "shortHash": "2c15559",
+      "date": "2026-03-07T01:58:10Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/2c15559672548c5fb27ad49284a51e5b9c01fca1",
+      "type": "chore",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "feat": 7,
+      "content": 2,
+      "fix": 5,
+      "chore": 5,
+      "other": 1
+    },
+    "byAuthor": {
+      "aikaizen": 13,
+      "Claude": 1,
+      "github-actions[bot]": 5,
+      "promptengines": 1
+    },
+    "byRepo": {
+      "promptengines-main": 17,
+      "storybookstudio": 3
+    },
+    "total": 20
+  },
+  "summary": {
+    "totalCommits": 20,
+    "activeRepos": [
+      "promptengines-main",
+      "storybookstudio"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        7
+      ],
+      [
+        "fix",
+        5
+      ],
+      [
+        "chore",
+        5
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen",
+      "Claude",
+      "github-actions[bot]",
+      "promptengines"
+    ]
+  }
+}
