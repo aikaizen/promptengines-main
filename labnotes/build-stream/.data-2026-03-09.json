@@ -1,0 +1,279 @@
+{
+  "date": "2026-03-09",
+  "generatedAt": "2026-03-09T12:03:23.259Z",
+  "commits": [
+    {
+      "repo": "videoterminal",
+      "hash": "c881bc9e7be024c35f2cc0436956f8d41bb4d30b",
+      "shortHash": "c881bc9",
+      "date": "2026-03-09T06:20:00Z",
+      "subject": "Add Play Mode — column-based sequential video playback",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/c881bc9e7be024c35f2cc0436956f8d41bb4d30b",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "7a9fc0d88650007318a32974cf0b7b913bbfc07d",
+      "shortHash": "7a9fc0d",
+      "date": "2026-03-09T06:05:57Z",
+      "subject": "Add zoom speed fix, route tests, release checklist, and Play Mode design",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/7a9fc0d88650007318a32974cf0b7b913bbfc07d",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "2500c4191983107cf655d676272376db03b27234",
+      "shortHash": "2500c41",
+      "date": "2026-03-09T04:46:38Z",
+      "subject": "feat: homepage redesign — product spotlight, portfolio pipeline, OS vision",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/2500c4191983107cf655d676272376db03b27234",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "6ebe35a96a30903afd62fc3e8963c8233bb7729a",
+      "shortHash": "6ebe35a",
+      "date": "2026-03-09T04:24:15Z",
+      "subject": "Move dev password to env var, add Stripe webhook + transition tests",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/6ebe35a96a30903afd62fc3e8963c8233bb7729a",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "34b6e358b1a741e3f526d03a5c87f213fbbdcf8b",
+      "shortHash": "34b6e35",
+      "date": "2026-03-09T04:15:16Z",
+      "subject": "Add transition node class, freeze-to-start/end, video/image uploads",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/34b6e358b1a741e3f526d03a5c87f213fbbdcf8b",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "6709b2fff907df73caeb9e8c330b7c5d15c84f07",
+      "shortHash": "6709b2f",
+      "date": "2026-03-09T03:35:43Z",
+      "subject": "Add audio backend, admin hardening, observability, vibes, and tests",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/6709b2fff907df73caeb9e8c330b7c5d15c84f07",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "1c243094f8d920e33588c80bf036e9bf877cf564",
+      "shortHash": "1c24309",
+      "date": "2026-03-08T11:57:32Z",
+      "subject": "chore(build-stream): auto-generate daily stream data + HTML",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/1c243094f8d920e33588c80bf036e9bf877cf564",
+      "type": "chore",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "b7b3b725a8ad792673e4b7ae8f4ec862f5fd80cb",
+      "shortHash": "b7b3b72",
+      "date": "2026-03-08T07:21:01Z",
+      "subject": "feat(articles): rewrite image model baseline with 3-tier treatment + mode dots",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/b7b3b725a8ad792673e4b7ae8f4ec862f5fd80cb",
+      "type": "feat",
+      "scope": "articles"
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "b9906b7b75eb21e9dcaf6a7229e1a85da4bda0b8",
+      "shortHash": "b9906b7",
+      "date": "2026-03-08T06:53:30Z",
+      "subject": "feat: About page — landing-page style with Austin story, SEO, generated images",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/b9906b7b75eb21e9dcaf6a7229e1a85da4bda0b8",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "77a931a65b5d6f9f2c42a4a3a1eedbdb6278a9dd",
+      "shortHash": "77a931a",
+      "date": "2026-03-08T06:39:20Z",
+      "subject": "content(lab): three content modes for Zen article — Standard, Experimental, Agent",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/77a931a65b5d6f9f2c42a4a3a1eedbdb6278a9dd",
+      "type": "content",
+      "scope": "lab"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "3b550d556e7f5274d2fa678158b6c590aadaf03f",
+      "shortHash": "3b550d5",
+      "date": "2026-03-08T06:36:05Z",
+      "subject": "fix: update old zen article URL with rewritten version",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/3b550d556e7f5274d2fa678158b6c590aadaf03f",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "72268c2126e5818d251d741487fe877a37b56f9d",
+      "shortHash": "72268c2",
+      "date": "2026-03-08T05:52:23Z",
+      "subject": "feat(lab): add three content modes (Standard, Experimental, Agent) to site",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/72268c2126e5818d251d741487fe877a37b56f9d",
+      "type": "feat",
+      "scope": "lab"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "5d3018854db45e6705c84ba7ee8fd8a2b6cb51fd",
+      "shortHash": "5d30188",
+      "date": "2026-03-08T05:33:09Z",
+      "subject": "content(lab): rewrite Zen and the Art of Vibe Coding — two styled versions",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/5d3018854db45e6705c84ba7ee8fd8a2b6cb51fd",
+      "type": "content",
+      "scope": "lab"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "ab7dec26002f2b0c9d2c6971e38c7d206791af63",
+      "shortHash": "ab7dec2",
+      "date": "2026-03-08T05:14:20Z",
+      "subject": "fix: migrate vercel.json from legacy builds/routes to modern config",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/ab7dec26002f2b0c9d2c6971e38c7d206791af63",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "61bd77dfa195bae8a3f2ae035375e3b6fedff6d1",
+      "shortHash": "61bd77d",
+      "date": "2026-03-08T05:12:46Z",
+      "subject": "fix: use redirects config for lab.promptengines.com redirect",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/61bd77dfa195bae8a3f2ae035375e3b6fedff6d1",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "729ba3ab7dbc27b01bc3b0d6227c98ba1d5903e0",
+      "shortHash": "729ba3a",
+      "date": "2026-03-08T05:04:05Z",
+      "subject": "feat: redirect lab.promptengines.com to promptengines.com/labnotes/",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/729ba3ab7dbc27b01bc3b0d6227c98ba1d5903e0",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "6f30f4bb66e413328b2438d83673dd69b3dd4fae",
+      "shortHash": "6f30f4b",
+      "date": "2026-03-08T04:04:37Z",
+      "subject": "feat: character system redesign — poses, detail modal, sheet gen, auto-book UX",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/6f30f4bb66e413328b2438d83673dd69b3dd4fae",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "984140d830ae0c1a5cf441e2f8efe81c562c53ab",
+      "shortHash": "984140d",
+      "date": "2026-03-08T04:01:07Z",
+      "subject": "feat(lab): redesign homepage — professional copy, build stream charts, no vanity metrics",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/984140d830ae0c1a5cf441e2f8efe81c562c53ab",
+      "type": "feat",
+      "scope": "lab"
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "37a06a980c9f7a7729ef52ab3ccb46ba931743d3",
+      "shortHash": "37a06a9",
+      "date": "2026-03-08T00:44:13Z",
+      "subject": "fix: story gen max_tokens error + multi-POD routing + admin providers UI",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/37a06a980c9f7a7729ef52ab3ccb46ba931743d3",
+      "type": "fix",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "other": 5,
+      "feat": 7,
+      "chore": 1,
+      "content": 2,
+      "fix": 4
+    },
+    "byAuthor": {
+      "aikaizen": 18,
+      "github-actions[bot]": 1
+    },
+    "byRepo": {
+      "videoterminal": 5,
+      "promptengines-main": 11,
+      "storybookstudio": 3
+    },
+    "total": 19
+  },
+  "summary": {
+    "totalCommits": 19,
+    "activeRepos": [
+      "promptengines-main",
+      "videoterminal",
+      "storybookstudio"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        7
+      ],
+      [
+        "other",
+        5
+      ],
+      [
+        "fix",
+        4
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen",
+      "github-actions[bot]"
+    ]
+  }
+}
