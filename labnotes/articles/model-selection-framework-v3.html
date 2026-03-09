@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Selection Framework (Agent) — Prompt Engines Lab</title>
+  <meta name="description" content="Hyperdense agent-readable specification for LLM production selection framework. 4 models, 4 dimensions, operational methodology.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h1 { font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.25rem; font-weight: 700; }
+    .article-content p { line-height: 1.5; margin: 0.75rem 0; color: var(--text-3); font-size: 0.85rem; }
+    .mode-badge { display: inline-block; font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; margin-left: 0.5rem; vertical-align: middle; }
+    .agent-block { font-family: var(--mono); font-size: 0.8rem; line-height: 1.65; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.5rem; margin: 1.25rem 0; white-space: pre-wrap; color: var(--text-2); tab-size: 2; }
+    .agent-block .key { color: var(--accent); }
+    .agent-block .sigil { color: var(--accent); }
+    .agent-block .status { color: #4ade80; }
+    .agent-block .warn { color: #fbbf24; }
+    .agent-block .fail { color: #ef4444; }
+    .agent-block .dim { color: var(--text-4); }
+    .agent-block .val { color: var(--text); }
+    .section-label { font-family: var(--mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-4); margin: 2.5rem 0 0.5rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border-subtle); }
+    .alt-links { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .alt-links a { display: block; font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-decoration: none; padding: 0.4rem 0; transition: color 0.2s; }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div style="color: var(--text-4); font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.5rem;">
+          2026-03-03 · Lab Notes <span class="mode-badge">⬡ Agent</span>
+        </div>
+
+        <h1>Model Selection Framework</h1>
+        <p>Production LLM evaluation specification. Dense format optimized for agent parsing. Human-readable but not human-targeted.</p>
+
+        <div class="section-label">Meta</div>
+        <div class="agent-block"><span class="key">id:</span>          model-selection-2026-03-03
+<span class="key">type:</span>        framework.evaluation
+<span class="key">domain:</span>      llm.production_selection
+<span class="key">status:</span>      <span class="warn">[DESIGN]</span> — framework designed, execution pending
+<span class="key">author:</span>      A.I.
+<span class="key">version:</span>     1.0
+<span class="key">audience:</span>    agent | human-operator
+<span class="key">scope:</span>       4 models | 4 dimensions | ~40K calls/model</div>
+
+        <div class="section-label">Problem Statement</div>
+        <div class="agent-block"><span class="key">gap:</span>         public benchmarks miss production realities
+<span class="key">benchmarks:</span>  MMLU, HumanEval, Arena Elo — standardized but insufficient
+<span class="key">missing:</span>
+  <span class="sigil">●</span> latency_variance    — matters more than mean at parallel scale
+  <span class="sigil">●</span> retry_rates          — multiply nominal costs 1.5-3x
+  <span class="sigil">●</span> context_degradation  — 4K vs 64K performance gap
+  <span class="sigil">●</span> output_consistency   — pipeline trust without human verification
+<span class="key">goal:</span>        measure operational variables, not headline scores</div>
+
+        <div class="section-label">Model Matrix</div>
+        <div class="agent-block"><span class="key">model</span>               <span class="key">provider</span>     <span class="key">context</span>  <span class="key">$/1M_in</span>  <span class="key">$/1M_out</span>
+──────────────────  ───────────  ───────  ───────  ────────
+Claude Opus 4.6     Anthropic    200K     $15.00   $75.00
+Claude Sonnet 4.6   Anthropic    200K      $3.00   $15.00
+Kimi 2.5            Fireworks    256K      $0.80    $0.80
+MiniMax 2.5         Fireworks      1M      $0.26    $0.26
+
+<span class="key">price_spread:</span>
+  input:   Opus = 28x MiniMax | 58x MiniMax
+  output:  Opus = 288x MiniMax
+  <span class="dim">// whether premium translates to operational value = unknown</span></div>
+
+        <div class="section-label">Evaluation Dimensions</div>
+        <div class="agent-block"><span class="sigil">▸</span> <span class="val">dim.01</span>  <span class="key">quality_distribution</span>
+  sample:      200 tasks x 10 samples x 4 models = 8,000 outputs
+  tasks:       code review, doc gen, data extraction, reasoning chains
+  method:      human rating 1-5 rubric, inter-rater reliability
+  measures:    mean, std_dev, percentile distributions
+  observation: Kimi 2.5 shows more consistent formatting <span class="dim">// anecdotal</span>
+  needs:       rating rubric, ~40h human time, statistical analysis plan
+  timeline:    4 weeks
+
+<span class="sigil">▸</span> <span class="val">dim.02</span>  <span class="key">latency_under_load</span>
+  concurrency: 1, 10, 50, 100+
+  measures:    TTFT p50/p95/p99, TPS
+  contexts:    1K, 4K, 16K, 32K, 64K input tokens
+  origins:     us-east-1, us-west-2, eu-west-1
+  includes:    retry/backoff behavior, 429 responses, retry-after headers
+  needs:       load testing infra, consistent prompt templates, monitoring
+  timeline:    2 weeks
+
+<span class="sigil">▸</span> <span class="val">dim.03</span>  <span class="key">retry_failure_analysis</span>
+  sample:      5,000 requests per model (automated pipeline)
+  categories:  first_pass_success | retry_success | max_retry_fail | timeout
+  formula:     true_cost = nominal_price x (1 + retry_rate)
+  hypothesis:  cheaper models may have higher retry rates, negating cost advantage
+  observation: MiniMax produces structurally correct but semantically incomplete <span class="dim">// anecdotal</span>
+  failure_modes: hallucination, formatting error, refusal, timeout
+  needs:       automated pipeline, structured logging, failure categorization
+  timeline:    3 weeks
+
+<span class="sigil">▸</span> <span class="val">dim.04</span>  <span class="key">context_window_reality</span>
+  test_a:      needle-in-haystack (500 tests) — fact at begin/mid/end positions
+  test_b:      reasoning complexity (200 tasks) at 4K/16K/32K/64K
+  measures:    retrieval accuracy, latency degradation
+  question:    do advertised specs match real usage?
+  needs:       synthetic long-context test sets, automated accuracy scoring
+  timeline:    2 weeks</div>
+
+        <div class="section-label">Current Allocation (Provisional)</div>
+        <div class="agent-block"><span class="key">model</span>               <span class="key">role</span>                    <span class="key">rationale</span>
+──────────────────  ──────────────────────  ─────────────────────────────────
+Kimi 2.5            default_prototyping     lowest cost, acceptable quality
+Claude Sonnet 4.6   customer_facing         safety training, edge-case risk
+Claude Opus 4.6     complex_reasoning       failure cost exceeds price premium
+MiniMax 2.5         batch_processing        price enables volume experimentation
+
+<span class="warn">△ provisional:</span> insufficient data to validate these assignments
+<span class="dim">// framework above designed to replace assumptions with measurements</span></div>
+
+        <div class="section-label">Open Questions</div>
+        <div class="agent-block"><span class="sigil">?</span> Does Kimi's variance (if lower) translate to operational savings?
+<span class="sigil">?</span> At what volume does Opus premium become indefensible?
+<span class="sigil">?</span> Does MiniMax 1M context work reliably at full length?
+<span class="sigil">?</span> Fireworks latency penalty vs direct access?
+<span class="sigil">?</span> Anthropic direct reliability vs Fireworks-hosted for our geo?</div>
+
+        <div class="section-label">Experiment Schedule</div>
+        <div class="agent-block"><span class="key">experiment</span>           <span class="key">sample</span>              <span class="key">timeline</span>
+───────────────────  ──────────────────  ────────
+quality_distribution  8,000 outputs       4 weeks
+latency_under_load    10K req/model       2 weeks
+retry_analysis        5K req/model        3 weeks
+context_window        700 tests           2 weeks
+───────────────────  ──────────────────  ────────
+total_per_model:     ~40,000 API calls
+human_rating:        ~40 hours
+full_timeline:       8-11 weeks (sequential)
+
+<span class="key">current_kimi_preference_basis:</span>
+  <span class="sigil">●</span> pricing transparency: $0.80/1M
+  <span class="sigil">●</span> Fireworks hosting: fast TTFT, 99.9%+ uptime (brief monitoring)
+  <span class="sigil">●</span> anecdotal consistency: less output variance in spot-checking
+  <span class="warn">△</span> these are hypotheses, not findings</div>
+
+        <div class="alt-links">
+          <a href="./model-selection-framework.html">◉ Read standard version →</a>
+          <a href="./model-selection-framework-v2.html">◆ Read experimental version →</a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Prompt Engines &middot; Lab Notes</div>
+  </footer>
+</body>
+</html>

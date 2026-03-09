@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Selection Framework (Experimental) — Prompt Engines Lab</title>
+  <meta name="description" content="Systematic LLM evaluation for production. Latency, retries, context degradation, output consistency. Visual, hyper-concise format.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h1 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.0; letter-spacing: -0.04em; margin-bottom: 0.5rem; font-weight: 800; }
+    .article-content h2 { margin-top: 3rem; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; color: var(--text-2); }
+    .article-content strong { color: var(--text); }
+    .thesis { font-size: 1.3rem; color: var(--text); font-weight: 300; line-height: 1.5; margin: 0 0 3rem; max-width: 48ch; }
+    .mode-badge { display: inline-block; font-family: var(--mono); font-size: 0.7rem; color: var(--accent); border: 1px solid rgba(240,77,38,0.3); border-radius: 4px; padding: 2px 8px; margin-left: 0.5rem; vertical-align: middle; }
+    .axis { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; margin: 2rem 0; align-items: center; }
+    .axis-pole { background: var(--bg-elevated); border: 1px solid var(--border); padding: 1.25rem; border-radius: var(--radius-sm); text-align: center; }
+    .axis-pole .big { font-size: 1.5rem; font-weight: 700; display: block; margin-bottom: 0.25rem; }
+    .axis-pole .sub { font-size: 0.8rem; color: var(--text-4); }
+    .axis-mid { font-family: var(--mono); color: var(--accent); padding: 0 1rem; font-size: 1.5rem; }
+    .cmd { font-family: var(--mono); font-size: 0.85rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1rem 1.25rem; margin: 0.75rem 0; display: flex; align-items: baseline; gap: 0.75rem; }
+    .cmd .prompt { color: var(--accent); user-select: none; }
+    .cmd .flag { color: var(--text-4); }
+    .cmd .val { color: var(--text); }
+    .table-wrap { margin: 1.5rem 0; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+    .table-wrap table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .table-wrap th { background: var(--bg-elevated); padding: 0.6rem 1rem; text-align: left; font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-4); border-bottom: 1px solid var(--border); }
+    .table-wrap td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--border-subtle); color: var(--text-2); }
+    .table-wrap tr:last-child td { border-bottom: none; }
+    .kpi { display: inline-flex; align-items: baseline; gap: 0.5rem; background: var(--accent-dim); border: 1px solid rgba(240,77,38,0.2); border-radius: var(--radius-sm); padding: 0.5rem 1rem; margin: 0.5rem 0.5rem 0.5rem 0; font-family: var(--mono); font-size: 0.85rem; }
+    .kpi .k { color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.7rem; }
+    .kpi .v { color: var(--text); font-weight: 600; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+    .alt-links { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .alt-links a { display: block; font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-decoration: none; padding: 0.4rem 0; transition: color 0.2s; }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div style="color: var(--text-4); font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.5rem;">
+          2026-03-03 · Lab Notes <span class="mode-badge">◆ Experimental</span>
+        </div>
+
+        <h1>Model Selection Framework</h1>
+        <p class="thesis">4 models. 4 evaluation dimensions. 40,000 planned API calls. Moving past vibes to measured production selection.</p>
+
+        <div class="kpi"><span class="k">Models</span> <span class="v">4</span></div>
+        <div class="kpi"><span class="k">Dimensions</span> <span class="v">4</span></div>
+        <div class="kpi"><span class="k">Planned Calls</span> <span class="v">~40K per model</span></div>
+        <div class="kpi"><span class="k">Timeline</span> <span class="v">8-11 weeks</span></div>
+
+        <hr class="divider">
+
+        <h2>The Gap</h2>
+
+        <div class="axis">
+          <div class="axis-pole">
+            <span class="big">Public benchmarks</span>
+            <span class="sub">MMLU, HumanEval, Arena Elo</span>
+          </div>
+          <span class="axis-mid">&#x2260;</span>
+          <div class="axis-pole">
+            <span class="big">Production reality</span>
+            <span class="sub">Latency variance, retries, degradation</span>
+          </div>
+        </div>
+
+        <p>Benchmark suites miss what dominates operational costs: <strong>latency variance</strong> at scale, <strong>retry rates</strong> that multiply nominal costs 1.5-3x, <strong>context degradation</strong> beyond advertised specs, and <strong>output consistency</strong> that determines pipeline trust.</p>
+
+        <hr class="divider">
+
+        <h2>Models Under Evaluation</h2>
+
+        <div class="table-wrap">
+          <table>
+            <tr><th>Model</th><th>Provider</th><th>Context</th><th>Input/1M</th><th>Output/1M</th></tr>
+            <tr><td>Claude Opus 4.6</td><td>Anthropic</td><td>200K</td><td>$15.00</td><td>$75.00</td></tr>
+            <tr><td>Claude Sonnet 4.6</td><td>Anthropic</td><td>200K</td><td>$3.00</td><td>$15.00</td></tr>
+            <tr><td>Kimi 2.5</td><td>Fireworks</td><td>256K</td><td>$0.80</td><td>$0.80</td></tr>
+            <tr><td>MiniMax 2.5</td><td>Fireworks</td><td>1M</td><td>$0.26</td><td>$0.26</td></tr>
+          </table>
+        </div>
+
+        <div class="kpi"><span class="k">Price Spread</span> <span class="v">Opus = 28x MiniMax (input)</span></div>
+        <div class="kpi"><span class="k">Price Spread</span> <span class="v">Opus = 288x MiniMax (output)</span></div>
+
+        <hr class="divider">
+
+        <h2>Four Evaluation Dimensions</h2>
+
+        <div class="cmd"><span class="prompt">1</span> <span class="flag">--test</span> <span class="val">quality distribution — 200 tasks x 10 samples x 4 models = 8,000 outputs</span></div>
+        <p>Mean, std dev, percentile distributions. Not point estimates — variance is the signal. Human-rated on 1-5 rubric with inter-rater reliability.</p>
+
+        <div class="cmd"><span class="prompt">2</span> <span class="flag">--test</span> <span class="val">latency under load — TTFT + TPS at p50/p95/p99 across concurrency levels</span></div>
+        <p>1, 10, 50, 100+ concurrent requests. Context sizes: 1K, 4K, 16K, 32K, 64K. Multiple geographic origins. Rate limit behavior included.</p>
+
+        <div class="cmd"><span class="prompt">3</span> <span class="flag">--test</span> <span class="val">retry analysis — 5,000 requests per model, true cost = nominal x (1 + retry rate)</span></div>
+        <p>Success on first try, success after retry, failed after max retries, timeout. Failure pattern analysis by task type and context size.</p>
+
+        <div class="cmd"><span class="prompt">4</span> <span class="flag">--test</span> <span class="val">context window reality — needle-in-haystack + reasoning at 4K/16K/32K/64K</span></div>
+        <p>Retrieval accuracy at varying positions. Latency degradation as context grows. Do advertised specs match real usage?</p>
+
+        <hr class="divider">
+
+        <h2>Current Allocation</h2>
+
+        <div class="table-wrap">
+          <table>
+            <tr><th>Model</th><th>Role</th><th>Rationale</th></tr>
+            <tr><td>Kimi 2.5</td><td>Default prototyping</td><td>Lowest cost, acceptable quality, fast TTFT</td></tr>
+            <tr><td>Sonnet 4.6</td><td>Customer-facing</td><td>Safety training, edge-case risk reduction</td></tr>
+            <tr><td>Opus 4.6</td><td>Complex reasoning</td><td>Reserved for tasks where failure cost exceeds premium</td></tr>
+            <tr><td>MiniMax 2.5</td><td>Batch processing</td><td>Price enables volume experimentation</td></tr>
+          </table>
+        </div>
+
+        <p><strong>These allocations are provisional.</strong> Sufficient data does not yet exist to confirm whether Kimi's consistency advantage outweighs Sonnet's safety benefits, or whether MiniMax's retry rate makes it truly cheaper.</p>
+
+        <hr class="divider">
+
+        <h2>Open Questions</h2>
+
+        <div class="cmd"><span class="prompt">?</span> <span class="flag">--q1</span> <span class="val">Does Kimi's lower variance translate to fewer retries and less verification?</span></div>
+        <div class="cmd"><span class="prompt">?</span> <span class="flag">--q2</span> <span class="val">At what volume does Opus's premium become indefensible?</span></div>
+        <div class="cmd"><span class="prompt">?</span> <span class="flag">--q3</span> <span class="val">Does MiniMax's 1M context work reliably at full length?</span></div>
+        <div class="cmd"><span class="prompt">?</span> <span class="flag">--q4</span> <span class="val">Fireworks latency penalty vs theoretical direct access?</span></div>
+        <div class="cmd"><span class="prompt">?</span> <span class="flag">--q5</span> <span class="val">Anthropic direct API reliability vs Fireworks-hosted for our geo?</span></div>
+
+        <hr class="divider">
+
+        <h2>Planned Experiments</h2>
+
+        <div class="table-wrap">
+          <table>
+            <tr><th>Experiment</th><th>Sample Size</th><th>Timeline</th></tr>
+            <tr><td>Quality distribution</td><td>8,000 outputs</td><td>4 weeks</td></tr>
+            <tr><td>Latency under load</td><td>10,000 requests/model</td><td>2 weeks</td></tr>
+            <tr><td>Retry analysis</td><td>5,000 requests/model</td><td>3 weeks</td></tr>
+            <tr><td>Context window</td><td>700 tests</td><td>2 weeks</td></tr>
+          </table>
+        </div>
+
+        <div class="kpi"><span class="k">Total</span> <span class="v">~40K calls/model</span></div>
+        <div class="kpi"><span class="k">Human Rating</span> <span class="v">~40 hours</span></div>
+        <div class="kpi"><span class="k">Full Timeline</span> <span class="v">8-11 weeks</span></div>
+
+        <div class="alt-links">
+          <a href="./model-selection-framework.html">◉ Read standard version →</a>
+          <a href="./model-selection-framework-v3.html">⬡ Read agent version →</a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Prompt Engines &middot; Lab Notes</div>
+  </footer>
+</body>
+</html>

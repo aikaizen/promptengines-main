@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAG Without Hallucination (Agent) — Prompt Engines Lab</title>
+  <meta name="description" content="Hyperdense agent-readable specification for hallucination-free RAG pipeline design. Dense format optimized for agent parsing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h1 { font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.25rem; font-weight: 700; }
+    .article-content p { line-height: 1.5; margin: 0.75rem 0; color: var(--text-3); font-size: 0.85rem; }
+    .mode-badge { display: inline-block; font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; margin-left: 0.5rem; vertical-align: middle; }
+    .agent-block { font-family: var(--mono); font-size: 0.8rem; line-height: 1.65; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.5rem; margin: 1.25rem 0; white-space: pre-wrap; color: var(--text-2); tab-size: 2; }
+    .agent-block .key { color: var(--accent); }
+    .agent-block .sigil { color: var(--accent); }
+    .agent-block .status { color: #4ade80; }
+    .agent-block .warn { color: #fbbf24; }
+    .agent-block .fail { color: #ef4444; }
+    .agent-block .dim { color: var(--text-4); }
+    .agent-block .val { color: var(--text); }
+    .section-label { font-family: var(--mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-4); margin: 2.5rem 0 0.5rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border-subtle); }
+    .alt-links { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .alt-links a { display: block; font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-decoration: none; padding: 0.4rem 0; transition: color 0.2s; }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div style="color: var(--text-4); font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.5rem;">
+          2026-02-21 · Lab Notes <span class="mode-badge">⬡ Agent</span>
+        </div>
+
+        <h1>RAG Without Hallucination</h1>
+        <p>Retrieval-grounded generation specification for zero-hallucination document QA. Dense format optimized for agent parsing. Human-readable but not human-targeted.</p>
+
+        <div class="section-label">Meta</div>
+        <div class="agent-block"><span class="key">id:</span>          rag-no-hallucination-2026-02-21
+<span class="key">type:</span>        architecture.pipeline
+<span class="key">domain:</span>      rag.fidelity_enforcement
+<span class="key">status:</span>      <span class="status">[ACTIVE]</span>
+<span class="key">author:</span>      A.I.
+<span class="key">version:</span>     1.0
+<span class="key">audience:</span>    agent | human-operator
+<span class="key">result:</span>      28% → 2% unsupported claims (200 test queries)</div>
+
+        <div class="section-label">Core Principle</div>
+        <div class="agent-block"><span class="key">root_cause:</span>  hallucinations come from weak boundaries, not weak retrieval
+<span class="key">failure:</span>     teams say "official docs only" then allow model priors to fill gaps
+<span class="key">hard_rule:</span>   if support missing in corpus → abstain + ask for clarification
+<span class="key">invariant:</span>  abstention &gt; fabrication</div>
+
+        <div class="section-label">Pipeline Architecture</div>
+        <div class="agent-block"><span class="key">pipeline:</span>  retrieval_guard
+<span class="key">flow:</span>
+  query → retriever (top_k=3) → [chunk_a, chunk_b, chunk_c]
+    → evidence_validator
+      <span class="key">if</span> score &gt;= 0.85:
+        → generator → output <span class="status">[grounded]</span>
+      <span class="key">if</span> score &lt; 0.85:
+        → abstention_flow <span class="warn">[explain missing source]</span>
+
+<span class="key">hard_rules:</span>
+  <span class="sigil">●</span> claim_source_check:  every entity must appear in retrieved chunks
+  <span class="sigil">●</span> confidence_floor:    0.85 minimum
+  <span class="sigil">●</span> citation_format:     [source_id:line_range]</div>
+
+        <div class="section-label">Guardrail Stack</div>
+        <div class="agent-block"><span class="sigil">▸</span> <span class="val">guard.01</span>  <span class="key">constrain_generation</span>
+  method:  quoted or tightly summarized retrieved chunks only
+  blocks:  free-form model-prior responses
+
+<span class="sigil">▸</span> <span class="val">guard.02</span>  <span class="key">citation_required</span>
+  method:  citation IDs mandatory in final answer object
+  format:  [source_id:line_range]
+
+<span class="sigil">▸</span> <span class="val">guard.03</span>  <span class="key">confidence_threshold</span>
+  method:  block free-form when evidence score &lt; 0.85
+  action:  route to abstention flow
+
+<span class="sigil">▸</span> <span class="val">guard.04</span>  <span class="key">unsupported_claim_detector</span>
+  method:  scan draft response for entities/numbers not in retrieved passages
+  action:  rewrite or refuse if unsupported claims found</div>
+
+        <div class="section-label">Prompting Pattern (Strict Mode)</div>
+        <div class="agent-block"><span class="sigil">●</span> instruct model: answer only from provided context
+<span class="sigil">●</span> require explicit citation markers for each claim
+<span class="sigil">●</span> define mandatory fallback sentence when citations insufficient
+<span class="sigil">●</span> block speculative language in post-processing checks
+
+<span class="key">example_trace:</span>
+  query:          "What is the retention policy for student records?"
+  retrieved_docs:  policy_v4.pdf#12, handbook.md#88
+  evidence_score:  0.91
+  draft_check:     <span class="status">pass</span> (0 unsupported claims)
+  response_mode:   <span class="status">grounded</span></div>
+
+        <div class="section-label">Hardening Results</div>
+        <div class="agent-block"><span class="key">layer</span>                        <span class="key">unsupported_claim_rate</span>  <span class="key">delta</span>
+─────────────────────────  ──────────────────────  ─────
+baseline                    28%                     —
++ strict context             22%                    -6
++ citation required          16%                    -6
++ confidence threshold       11%                    -5
++ claim detector              7%                    -4
++ fallback sentences           4%                    -3
++ post-processing              3%                    -1
+full pipeline                  2%                    -1
+
+<span class="key">test_set:</span>     200 queries against policy documents
+<span class="key">reduction:</span>   28% → 2% = <span class="status">93% reduction</span>
+<span class="dim">// data: synthetic — based on internal RAG evaluation methodology</span></div>
+
+        <div class="section-label">Decision Rules</div>
+        <div class="agent-block"><span class="key">if</span> building_rag_pipeline:
+  <span class="sigil">▸</span> treat retrieval fidelity as product requirement, not prompt trick
+  <span class="sigil">▸</span> implement all 4 guardrails as minimum viable stack
+  <span class="sigil">▸</span> refusal behavior = core feature, not optional polish
+
+<span class="key">if</span> trust_critical:
+  <span class="sigil">▸</span> citation rigor is non-negotiable
+  <span class="sigil">▸</span> abstention UX must explain what source is missing
+  <span class="sigil">▸</span> users accept abstentions when explanation is clear
+  <span class="dim">// better experience than confident incorrect answers</span>
+
+<span class="key">if</span> measuring_quality:
+  <span class="sigil">▸</span> track unsupported-claim rate per hardening layer
+  <span class="sigil">▸</span> each layer provides diminishing but compounding returns
+  <span class="sigil">▸</span> full stack achieves 93% reduction from baseline</div>
+
+        <div class="alt-links">
+          <a href="./rag-without-hallucination.html">◉ Read standard version →</a>
+          <a href="./rag-without-hallucination-v2.html">◆ Read experimental version →</a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Prompt Engines &middot; Lab Notes</div>
+  </footer>
+</body>
+</html>

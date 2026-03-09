@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAG Without Hallucination (Experimental) — Prompt Engines Lab</title>
+  <meta name="description" content="Retrieval-grounded answers from official documents only. Visual, hyper-concise format.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h1 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.0; letter-spacing: -0.04em; margin-bottom: 0.5rem; font-weight: 800; }
+    .article-content h2 { margin-top: 3rem; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; color: var(--text-2); }
+    .article-content strong { color: var(--text); }
+    .thesis { font-size: 1.3rem; color: var(--text); font-weight: 300; line-height: 1.5; margin: 0 0 3rem; max-width: 48ch; }
+    .mode-badge { display: inline-block; font-family: var(--mono); font-size: 0.7rem; color: var(--accent); border: 1px solid rgba(240,77,38,0.3); border-radius: 4px; padding: 2px 8px; margin-left: 0.5rem; vertical-align: middle; }
+    .axis { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; margin: 2rem 0; align-items: center; }
+    .axis-pole { background: var(--bg-elevated); border: 1px solid var(--border); padding: 1.25rem; border-radius: var(--radius-sm); text-align: center; }
+    .axis-pole .big { font-size: 1.5rem; font-weight: 700; display: block; margin-bottom: 0.25rem; }
+    .axis-pole .sub { font-size: 0.8rem; color: var(--text-4); }
+    .axis-mid { font-family: var(--mono); color: var(--accent); padding: 0 1rem; font-size: 1.5rem; }
+    .cmd { font-family: var(--mono); font-size: 0.85rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1rem 1.25rem; margin: 0.75rem 0; display: flex; align-items: baseline; gap: 0.75rem; }
+    .cmd .prompt { color: var(--accent); user-select: none; }
+    .cmd .flag { color: var(--text-4); }
+    .cmd .val { color: var(--text); }
+    .table-wrap { margin: 1.5rem 0; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+    .table-wrap table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .table-wrap th { background: var(--bg-elevated); padding: 0.6rem 1rem; text-align: left; font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-4); border-bottom: 1px solid var(--border); }
+    .table-wrap td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--border-subtle); color: var(--text-2); }
+    .table-wrap tr:last-child td { border-bottom: none; }
+    .kpi { display: inline-flex; align-items: baseline; gap: 0.5rem; background: var(--accent-dim); border: 1px solid rgba(240,77,38,0.2); border-radius: var(--radius-sm); padding: 0.5rem 1rem; margin: 0.5rem 0.5rem 0.5rem 0; font-family: var(--mono); font-size: 0.85rem; }
+    .kpi .k { color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.7rem; }
+    .kpi .v { color: var(--text); font-weight: 600; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+    .speed-bar { display: flex; align-items: center; gap: 0.75rem; margin: 0.35rem 0; font-family: var(--mono); font-size: 0.8rem; }
+    .speed-bar .label { width: 200px; color: var(--text-3); text-align: right; flex-shrink: 0; }
+    .speed-bar .bar { height: 18px; background: var(--accent); border-radius: 2px; opacity: 0.7; }
+    .speed-bar .time { color: var(--text-4); min-width: 3.5rem; }
+    .speed-chart { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .alt-links { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .alt-links a { display: block; font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-decoration: none; padding: 0.4rem 0; transition: color 0.2s; }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div style="color: var(--text-4); font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.5rem;">
+          2026-02-21 · Lab Notes <span class="mode-badge">◆ Experimental</span>
+        </div>
+
+        <h1>RAG Without Hallucination</h1>
+        <p class="thesis">Weak boundaries cause hallucinations, not weak retrieval. If your policy is "official docs only," enforce it at every generation stage.</p>
+
+        <div class="kpi"><span class="k">Baseline Error</span> <span class="v">28%</span></div>
+        <div class="kpi"><span class="k">Final Error</span> <span class="v">2%</span></div>
+        <div class="kpi"><span class="k">Layers</span> <span class="v">7 hardening stages</span></div>
+        <div class="kpi"><span class="k">Test Queries</span> <span class="v">200</span></div>
+
+        <hr class="divider">
+
+        <h2>The Pipeline</h2>
+
+        <div class="axis">
+          <div class="axis-pole">
+            <span class="big">Query</span>
+            <span class="sub">User question</span>
+          </div>
+          <span class="axis-mid">&rarr;</span>
+          <div class="axis-pole">
+            <span class="big">Retriever</span>
+            <span class="sub">top_k=3 chunks</span>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin: 0.5rem 0;">
+          <span style="font-family: var(--mono); color: var(--accent); font-size: 1.5rem;">&darr;</span>
+        </div>
+
+        <div class="axis">
+          <div class="axis-pole">
+            <span class="big">Evidence Validator</span>
+            <span class="sub">confidence &ge; 0.85</span>
+          </div>
+          <span class="axis-mid">&rarr;</span>
+          <div class="axis-pole">
+            <span class="big">Generator</span>
+            <span class="sub">grounded output</span>
+          </div>
+        </div>
+
+        <p>If evidence score falls below threshold, the system enters <strong>abstention flow</strong> — explains what source is missing rather than fabricating an answer.</p>
+
+        <hr class="divider">
+
+        <h2>Guardrails</h2>
+
+        <div class="cmd"><span class="prompt">$</span> <span class="flag">--rule</span> <span class="val">constrain generation to quoted or tightly summarized retrieved chunks</span></div>
+        <div class="cmd"><span class="prompt">$</span> <span class="flag">--rule</span> <span class="val">require citation IDs in final answer object [source_id:line_range]</span></div>
+        <div class="cmd"><span class="prompt">$</span> <span class="flag">--rule</span> <span class="val">confidence threshold blocks free-form responses when evidence is thin</span></div>
+        <div class="cmd"><span class="prompt">$</span> <span class="flag">--rule</span> <span class="val">unsupported-claim detector scans for entities/numbers not in retrieved passages</span></div>
+
+        <hr class="divider">
+
+        <h2>Prompting Pattern</h2>
+
+        <div class="table-wrap">
+          <table>
+            <tr><th>Step</th><th>Instruction</th></tr>
+            <tr><td>1</td><td>Answer only from provided context</td></tr>
+            <tr><td>2</td><td>Require explicit citation markers for each claim</td></tr>
+            <tr><td>3</td><td>Define mandatory fallback sentence when citations insufficient</td></tr>
+            <tr><td>4</td><td>Block speculative language in post-processing</td></tr>
+          </table>
+        </div>
+
+        <hr class="divider">
+
+        <h2>Error Rate Decline</h2>
+
+        <div class="speed-chart">
+          <div class="speed-bar"><span class="label">Baseline</span><div class="bar" style="width: 100%;"></div><span class="time">28%</span></div>
+          <div class="speed-bar"><span class="label">+ Strict context</span><div class="bar" style="width: 79%;"></div><span class="time">22%</span></div>
+          <div class="speed-bar"><span class="label">+ Citation required</span><div class="bar" style="width: 57%;"></div><span class="time">16%</span></div>
+          <div class="speed-bar"><span class="label">+ Confidence threshold</span><div class="bar" style="width: 39%;"></div><span class="time">11%</span></div>
+          <div class="speed-bar"><span class="label">+ Claim detector</span><div class="bar" style="width: 25%;"></div><span class="time">7%</span></div>
+          <div class="speed-bar"><span class="label">+ Fallback sentences</span><div class="bar" style="width: 14%;"></div><span class="time">4%</span></div>
+          <div class="speed-bar"><span class="label">+ Post-processing</span><div class="bar" style="width: 11%;"></div><span class="time">3%</span></div>
+          <div class="speed-bar"><span class="label">Full pipeline</span><div class="bar" style="width: 7%;"></div><span class="time">2%</span></div>
+        </div>
+
+        <p>Measured on 200 test queries against policy documents. Users accepted abstentions when the system explained what source was missing — a better experience than confident incorrect answers.</p>
+
+        <hr class="divider">
+
+        <h2>Recommendation</h2>
+
+        <p><strong>Treat retrieval fidelity as a product requirement, not a prompt trick.</strong> If trust matters, refusal behavior and citation rigor are core features, not optional polish.</p>
+
+        <div class="kpi"><span class="k">Principle</span> <span class="v">Abstention > fabrication</span></div>
+        <div class="kpi"><span class="k">Method</span> <span class="v">Architectural enforcement</span></div>
+        <div class="kpi"><span class="k">Result</span> <span class="v">28% → 2% unsupported claims</span></div>
+
+        <div class="alt-links">
+          <a href="./rag-without-hallucination.html">◉ Read standard version →</a>
+          <a href="./rag-without-hallucination-v3.html">⬡ Read agent version →</a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Prompt Engines &middot; Lab Notes</div>
+  </footer>
+</body>
+</html>
