@@ -29,6 +29,6 @@ jobs:
           git diff --quiet && exit 0
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add --ignore-missing index.html v1.html v2.html v3.html v4.html v5.html v6.html
+          for f in index.html v1.html v2.html v3.html v4.html v5.html v6.html; do [ -f "$f" ] && git add "$f"; done
           git commit -m "chore: update activity feed from GitHub commits"
           git push
