@@ -32,6 +32,16 @@ jobs:
       - name: Generate build stream HTML
         run: node scripts/build-stream-html.js
 
+      - name: Generate weekly report (Fridays and manual triggers)
+        run: |
+          DAY_OF_WEEK=$(date -u +%u)
+          if [ "$DAY_OF_WEEK" = "5" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Friday or manual trigger — generating weekly report"
+            node scripts/generate-weekly-report.js
+          else
+            echo "Not Friday (day $DAY_OF_WEEK) — skipping weekly report"
+          fi
+
       - name: Commit and push if changed
         run: |
           git diff --quiet && git diff --cached --quiet && [ -z "$(git ls-files --others --exclude-standard labnotes/build-stream/)" ] && exit 0
