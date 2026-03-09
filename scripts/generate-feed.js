@@ -38,6 +38,7 @@ const PRODUCT_URLS = {
   flow: "https://flow.promptengines.com",
   videoterminal: "https://videoterminal.promptengines.com",
   norbu: "https://norbu.promptengines.com",
+  bible: "https://bible.promptengines.com",
   consulting: "https://consulting.promptengines.com",
   dashboard: "https://dashboard.promptengines.com",
   "promptengines-main": "https://lab.promptengines.com",
@@ -50,6 +51,7 @@ const FEATURED_APPS = [
   { repo: "storybookstudio", name: "Storybook Studio", tag: "Creator Tool" },
   { repo: "videoterminal", name: "Video Terminal", tag: "Media" },
   { repo: "norbu", name: "Norbu", tag: "Language" },
+  { repo: "bible", name: "Bible", tag: "Scripture" },
 ];
 
 const ROOT_DIR = path.resolve(__dirname, "..");

@@ -10,28 +10,55 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    /* ── Build Stream ── */
+    /* ── Build Stream — Redesigned ── */
     .stream-chart {
       background: var(--bg-elevated);
-      border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 2rem;
+      padding: 2.5rem;
       margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 8px 24px rgba(0,0,0,0.15);
     }
     .stream-chart h3 {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      margin-bottom: 1.5rem;
-      font-family: var(--mono);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 1.75rem;
+      font-family: var(--sans);
+      letter-spacing: -0.01em;
+    }
+    .stream-chart h3 .chart-subtitle {
+      color: var(--text-4);
+      font-weight: 400;
+    }
+
+    /* Activity chart with gridlines */
+    .chart-grid-wrapper {
+      position: relative;
+      height: 160px;
+      padding-bottom: 1.75rem;
+    }
+    .chart-gridlines {
+      position: absolute;
+      inset: 0;
+      bottom: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      pointer-events: none;
+      padding: 0;
+    }
+    .chart-gridline {
+      width: 100%;
+      height: 1px;
+      background: var(--border-subtle);
     }
     .chart-grid {
+      position: relative;
       display: flex;
       align-items: flex-end;
-      gap: 3px;
-      height: 140px;
-      padding-bottom: 1.5rem;
+      gap: 4px;
+      height: 100%;
+      z-index: 1;
     }
     .chart-col {
       flex: 1;
@@ -39,63 +66,80 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-end;
-      height: 100%;
+      height: calc(100% - 1.75rem);
+      position: relative;
     }
     .chart-bar {
-      width: 100%;
+      width: 80%;
       min-height: 2px;
-      background: var(--accent);
-      border-radius: 2px 2px 0 0;
-      transition: height 0.3s var(--ease);
-      opacity: 0.85;
+      background: linear-gradient(180deg, var(--accent) 0%, rgba(240,77,38,0.5) 100%);
+      border-radius: 3px 3px 1px 1px;
+      transition: all 0.3s var(--ease);
     }
-    .chart-col:hover .chart-bar { opacity: 1; background: var(--accent-hover); }
-    .chart-col-empty .chart-bar { background: var(--border); opacity: 0.3; }
+    .chart-col:hover .chart-bar {
+      background: linear-gradient(180deg, var(--accent-hover) 0%, var(--accent) 100%);
+      opacity: 1 !important;
+      filter: brightness(1.1);
+    }
+    .chart-col-empty .chart-bar {
+      background: var(--border-subtle);
+      opacity: 0.25 !important;
+    }
+    .chart-col-peak .chart-bar {
+      box-shadow: 0 0 12px var(--accent-glow), 0 0 4px var(--accent-dim);
+    }
     .chart-label {
       font-size: 0.55rem;
       color: var(--text-4);
       font-family: var(--mono);
-      margin-top: 6px;
+      margin-top: 8px;
       white-space: nowrap;
+      position: absolute;
+      bottom: -1.5rem;
     }
     .chart-col:not(:nth-child(5n+1)) .chart-label { visibility: hidden; }
     .chart-col:last-child .chart-label { visibility: visible; }
 
+    /* ── Totals row ── */
     .stream-totals {
       display: flex;
-      gap: 2rem;
+      gap: 3rem;
       margin-bottom: 2.5rem;
       flex-wrap: wrap;
     }
     .stream-total {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 0.35rem;
     }
     .stream-total-num {
-      font-size: 1.6rem;
-      font-weight: 700;
+      font-size: 2.2rem;
+      font-weight: 800;
       color: var(--text);
-      font-family: var(--mono);
+      font-family: var(--sans);
+      letter-spacing: -0.03em;
+      line-height: 1;
     }
     .stream-total-label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--text-4);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      font-family: var(--mono);
+      letter-spacing: 0.04em;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid var(--accent-dim);
+      display: inline-block;
     }
 
     /* ── Today's entry ── */
     .stream-day {
       background: var(--bg-elevated);
-      border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 2rem;
       margin-bottom: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 16px rgba(0,0,0,0.12);
     }
     .stream-day-today {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px var(--accent-dim);
+      box-shadow: 0 0 0 1px var(--accent-dim), 0 1px 3px rgba(0,0,0,0.2), 0 8px 24px rgba(0,0,0,0.15);
     }
     .stream-day-header {
       display: flex;
@@ -140,11 +184,11 @@
       color: var(--text-3);
       border: 1px solid var(--border-subtle);
     }
-    .type-pill.type-feat { color: #4ade80; border-color: rgba(74,222,128,0.2); }
-    .type-pill.type-fix { color: #f87171; border-color: rgba(248,113,113,0.2); }
-    .type-pill.type-content { color: #60a5fa; border-color: rgba(96,165,250,0.2); }
-    .type-pill.type-refactor { color: #c084fc; border-color: rgba(192,132,252,0.2); }
-    .type-pill.type-docs { color: #fbbf24; border-color: rgba(251,191,36,0.2); }
+    .type-pill.type-feat { color: #34d399; border-color: rgba(52,211,153,0.2); }
+    .type-pill.type-fix { color: #fb7185; border-color: rgba(251,113,133,0.2); }
+    .type-pill.type-content { color: #38bdf8; border-color: rgba(56,189,248,0.2); }
+    .type-pill.type-refactor { color: #a78bfa; border-color: rgba(167,139,250,0.2); }
+    .type-pill.type-docs { color: #f59e0b; border-color: rgba(245,158,11,0.2); }
     .type-pill.type-chore { color: var(--text-4); }
 
     .stream-day-repos { display: flex; flex-direction: column; gap: 1rem; }
@@ -163,11 +207,11 @@
       font-family: var(--mono); font-size: 0.6rem; padding: 0.05rem 0.35rem; border-radius: 3px;
       flex-shrink: 0; background: var(--bg); border: 1px solid var(--border-subtle);
     }
-    .commit-type.type-feat { color: #4ade80; border-color: rgba(74,222,128,0.15); }
-    .commit-type.type-fix { color: #f87171; border-color: rgba(248,113,113,0.15); }
-    .commit-type.type-content { color: #60a5fa; border-color: rgba(96,165,250,0.15); }
-    .commit-type.type-refactor { color: #c084fc; border-color: rgba(192,132,252,0.15); }
-    .commit-type.type-docs { color: #fbbf24; border-color: rgba(251,191,36,0.15); }
+    .commit-type.type-feat { color: #34d399; border-color: rgba(52,211,153,0.15); }
+    .commit-type.type-fix { color: #fb7185; border-color: rgba(251,113,133,0.15); }
+    .commit-type.type-content { color: #38bdf8; border-color: rgba(56,189,248,0.15); }
+    .commit-type.type-refactor { color: #a78bfa; border-color: rgba(167,139,250,0.15); }
+    .commit-type.type-docs { color: #f59e0b; border-color: rgba(245,158,11,0.15); }
     .commit-type.type-chore { color: var(--text-4); }
     .commit-subject { color: var(--text-2); }
 
@@ -179,14 +223,14 @@
     }
     .history-day {
       background: var(--bg-elevated);
-      border: 1px solid var(--border);
       border-radius: var(--radius);
       margin-bottom: 0.5rem;
       overflow: hidden;
-      transition: border-color 0.2s ease;
+      transition: box-shadow 0.2s ease;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.15);
     }
     .history-day[open] {
-      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-dim), 0 4px 16px rgba(0,0,0,0.2);
       margin-bottom: 1rem;
     }
     .history-summary {
@@ -241,28 +285,28 @@
     .charts-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-      margin-bottom: 1.25rem;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
     }
     .hbar-chart {
       background: var(--bg-elevated);
-      border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 16px rgba(0,0,0,0.12);
     }
     .hbar-chart h3 {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      margin-bottom: 1rem;
-      font-family: var(--mono);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 1.25rem;
+      font-family: var(--sans);
+      letter-spacing: -0.01em;
     }
     .hbar-row {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
     }
     .hbar-label {
       font-family: var(--mono);
@@ -274,21 +318,35 @@
     }
     .hbar-track {
       flex: 1;
-      height: 16px;
-      background: var(--bg);
-      border-radius: 3px;
+      height: 10px;
+      background: transparent;
+      border-radius: 99px;
       overflow: hidden;
+      position: relative;
+    }
+    .hbar-track::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--border-subtle);
+      border-radius: 99px;
     }
     .hbar-fill {
       height: 100%;
-      border-radius: 3px;
-      opacity: 0.8;
-      transition: width 0.4s var(--ease);
+      border-radius: 99px;
+      opacity: 0.85;
+      transition: width 0.5s var(--ease);
+      position: relative;
+      z-index: 1;
+    }
+    .hbar-row:hover .hbar-fill {
+      opacity: 1;
     }
     .hbar-value {
       font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--text-4);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-3);
       min-width: 30px;
       flex-shrink: 0;
     }
@@ -296,36 +354,41 @@
     /* ── Feat/Fix ratio bar ── */
     .ratio-chart {
       background: var(--bg-elevated);
-      border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem;
-      margin-bottom: 1.25rem;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 16px rgba(0,0,0,0.12);
     }
     .ratio-chart h3 {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      margin-bottom: 1rem;
-      font-family: var(--mono);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 1.25rem;
+      font-family: var(--sans);
+      letter-spacing: -0.01em;
+    }
+    .ratio-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
     .ratio-bar {
       display: flex;
-      height: 28px;
-      border-radius: 6px;
+      flex: 1;
+      height: 8px;
+      border-radius: 99px;
       overflow: hidden;
-      margin-bottom: 0.75rem;
     }
-    .ratio-feat { background: #4ade80; }
-    .ratio-fix { background: #f87171; }
-    .ratio-labels {
-      display: flex;
-      justify-content: space-between;
+    .ratio-feat { background: #34d399; }
+    .ratio-fix { background: #fb7185; }
+    .ratio-label {
       font-family: var(--mono);
-      font-size: 0.7rem;
+      font-size: 0.75rem;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
-    .ratio-labels span:first-child { color: #4ade80; }
-    .ratio-labels span:last-child { color: #f87171; }
+    .ratio-label-feat { color: #34d399; }
+    .ratio-label-fix { color: #fb7185; }
 
     /* ── Weekly reports ── */
     .weekly-section {
@@ -337,7 +400,7 @@
     @media (max-width: 640px) {
       .stream-day { padding: 1.25rem; }
       .stream-day-header { flex-direction: column; gap: 0.4rem; }
-      .chart-grid { height: 100px; }
+      .chart-grid-wrapper { height: 120px; }
       .chart-col:not(:nth-child(7n+1)) .chart-label { visibility: hidden; }
       .stream-commit { flex-wrap: wrap; }
       .history-summary { flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; }
@@ -345,6 +408,10 @@
       .history-detail { padding: 0 1rem 1rem 1.5rem; }
       .charts-row { grid-template-columns: 1fr; }
       .hbar-label { min-width: 70px; }
+      .stream-totals { gap: 2rem; }
+      .stream-total-num { font-size: 1.8rem; }
+      .ratio-row { flex-direction: column; gap: 0.5rem; align-items: stretch; }
+      .ratio-label { text-align: center; }
     }
   </style>
 </head>
@@ -414,127 +481,134 @@
         </div>
 
         <div class="stream-chart">
-          <h3>Commit activity &mdash; last 30 days</h3>
-          <div class="chart-grid">
+          <h3>Commit activity <span class="chart-subtitle">&mdash; last 30 days</span></h3>
+          <div class="chart-grid-wrapper">
+            <div class="chart-gridlines">
+              <div class="chart-gridline"></div>
+              <div class="chart-gridline"></div>
+              <div class="chart-gridline"></div>
+            </div>
+            <div class="chart-grid">
             <div class="chart-col" title="2026-02-08: 8 commits">
-              <div class="chart-bar" style="height: 10.95890410958904%"></div>
+              <div class="chart-bar" style="height: 10.95890410958904%; opacity: 0.55"></div>
               <div class="chart-label">2/8</div>
             </div>
             <div class="chart-col" title="2026-02-09: 4 commits">
-              <div class="chart-bar" style="height: 5.47945205479452%"></div>
+              <div class="chart-bar" style="height: 5.47945205479452%; opacity: 0.53"></div>
               <div class="chart-label">2/9</div>
             </div>
             <div class="chart-col" title="2026-02-10: 5 commits">
-              <div class="chart-bar" style="height: 6.8493150684931505%"></div>
+              <div class="chart-bar" style="height: 6.8493150684931505%; opacity: 0.53"></div>
               <div class="chart-label">2/10</div>
             </div>
             <div class="chart-col" title="2026-02-11: 8 commits">
-              <div class="chart-bar" style="height: 10.95890410958904%"></div>
+              <div class="chart-bar" style="height: 10.95890410958904%; opacity: 0.55"></div>
               <div class="chart-label">2/11</div>
             </div>
             <div class="chart-col" title="2026-02-12: 6 commits">
-              <div class="chart-bar" style="height: 8.21917808219178%"></div>
+              <div class="chart-bar" style="height: 8.21917808219178%; opacity: 0.54"></div>
               <div class="chart-label">2/12</div>
             </div>
             <div class="chart-col" title="2026-02-13: 13 commits">
-              <div class="chart-bar" style="height: 17.80821917808219%"></div>
+              <div class="chart-bar" style="height: 17.80821917808219%; opacity: 0.59"></div>
               <div class="chart-label">2/13</div>
             </div>
             <div class="chart-col" title="2026-02-14: 1 commits">
-              <div class="chart-bar" style="height: 1.36986301369863%"></div>
+              <div class="chart-bar" style="height: 1.36986301369863%; opacity: 0.51"></div>
               <div class="chart-label">2/14</div>
             </div>
             <div class="chart-col" title="2026-02-15: 2 commits">
-              <div class="chart-bar" style="height: 2.73972602739726%"></div>
+              <div class="chart-bar" style="height: 2.73972602739726%; opacity: 0.51"></div>
               <div class="chart-label">2/15</div>
             </div>
             <div class="chart-col" title="2026-02-16: 6 commits">
-              <div class="chart-bar" style="height: 8.21917808219178%"></div>
+              <div class="chart-bar" style="height: 8.21917808219178%; opacity: 0.54"></div>
               <div class="chart-label">2/16</div>
             </div>
             <div class="chart-col" title="2026-02-17: 21 commits">
-              <div class="chart-bar" style="height: 28.767123287671232%"></div>
+              <div class="chart-bar" style="height: 28.767123287671232%; opacity: 0.64"></div>
               <div class="chart-label">2/17</div>
             </div>
             <div class="chart-col" title="2026-02-18: 12 commits">
-              <div class="chart-bar" style="height: 16.43835616438356%"></div>
+              <div class="chart-bar" style="height: 16.43835616438356%; opacity: 0.58"></div>
               <div class="chart-label">2/18</div>
             </div>
             <div class="chart-col chart-col-empty" title="2026-02-19: 0 commits">
-              <div class="chart-bar" style="height: 0%"></div>
+              <div class="chart-bar" style="height: 0%; opacity: 0.15"></div>
               <div class="chart-label">2/19</div>
             </div>
             <div class="chart-col" title="2026-02-20: 14 commits">
-              <div class="chart-bar" style="height: 19.17808219178082%"></div>
+              <div class="chart-bar" style="height: 19.17808219178082%; opacity: 0.60"></div>
               <div class="chart-label">2/20</div>
             </div>
             <div class="chart-col" title="2026-02-21: 5 commits">
-              <div class="chart-bar" style="height: 6.8493150684931505%"></div>
+              <div class="chart-bar" style="height: 6.8493150684931505%; opacity: 0.53"></div>
               <div class="chart-label">2/21</div>
             </div>
             <div class="chart-col" title="2026-02-22: 20 commits">
-              <div class="chart-bar" style="height: 27.397260273972602%"></div>
+              <div class="chart-bar" style="height: 27.397260273972602%; opacity: 0.64"></div>
               <div class="chart-label">2/22</div>
             </div>
             <div class="chart-col" title="2026-02-23: 9 commits">
-              <div class="chart-bar" style="height: 12.32876712328767%"></div>
+              <div class="chart-bar" style="height: 12.32876712328767%; opacity: 0.56"></div>
               <div class="chart-label">2/23</div>
             </div>
             <div class="chart-col" title="2026-02-24: 10 commits">
-              <div class="chart-bar" style="height: 13.698630136986301%"></div>
+              <div class="chart-bar" style="height: 13.698630136986301%; opacity: 0.57"></div>
               <div class="chart-label">2/24</div>
             </div>
             <div class="chart-col" title="2026-02-25: 10 commits">
-              <div class="chart-bar" style="height: 13.698630136986301%"></div>
+              <div class="chart-bar" style="height: 13.698630136986301%; opacity: 0.57"></div>
               <div class="chart-label">2/25</div>
             </div>
             <div class="chart-col" title="2026-02-26: 19 commits">
-              <div class="chart-bar" style="height: 26.027397260273972%"></div>
+              <div class="chart-bar" style="height: 26.027397260273972%; opacity: 0.63"></div>
               <div class="chart-label">2/26</div>
             </div>
             <div class="chart-col" title="2026-02-27: 19 commits">
-              <div class="chart-bar" style="height: 26.027397260273972%"></div>
+              <div class="chart-bar" style="height: 26.027397260273972%; opacity: 0.63"></div>
               <div class="chart-label">2/27</div>
             </div>
-            <div class="chart-col" title="2026-02-28: 73 commits">
-              <div class="chart-bar" style="height: 100%"></div>
+            <div class="chart-col chart-col-peak" title="2026-02-28: 73 commits">
+              <div class="chart-bar" style="height: 100%; opacity: 1.00"></div>
               <div class="chart-label">2/28</div>
             </div>
             <div class="chart-col" title="2026-03-01: 43 commits">
-              <div class="chart-bar" style="height: 58.9041095890411%"></div>
+              <div class="chart-bar" style="height: 58.9041095890411%; opacity: 0.79"></div>
               <div class="chart-label">3/1</div>
             </div>
             <div class="chart-col" title="2026-03-02: 14 commits">
-              <div class="chart-bar" style="height: 19.17808219178082%"></div>
+              <div class="chart-bar" style="height: 19.17808219178082%; opacity: 0.60"></div>
               <div class="chart-label">3/2</div>
             </div>
             <div class="chart-col" title="2026-03-03: 23 commits">
-              <div class="chart-bar" style="height: 31.506849315068493%"></div>
+              <div class="chart-bar" style="height: 31.506849315068493%; opacity: 0.66"></div>
               <div class="chart-label">3/3</div>
             </div>
             <div class="chart-col" title="2026-03-04: 16 commits">
-              <div class="chart-bar" style="height: 21.91780821917808%"></div>
+              <div class="chart-bar" style="height: 21.91780821917808%; opacity: 0.61"></div>
               <div class="chart-label">3/4</div>
             </div>
             <div class="chart-col" title="2026-03-05: 25 commits">
-              <div class="chart-bar" style="height: 34.24657534246575%"></div>
+              <div class="chart-bar" style="height: 34.24657534246575%; opacity: 0.67"></div>
               <div class="chart-label">3/5</div>
             </div>
             <div class="chart-col" title="2026-03-06: 26 commits">
-              <div class="chart-bar" style="height: 35.61643835616438%"></div>
+              <div class="chart-bar" style="height: 35.61643835616438%; opacity: 0.68"></div>
               <div class="chart-label">3/6</div>
             </div>
             <div class="chart-col" title="2026-03-07: 28 commits">
-              <div class="chart-bar" style="height: 38.35616438356164%"></div>
+              <div class="chart-bar" style="height: 38.35616438356164%; opacity: 0.69"></div>
               <div class="chart-label">3/7</div>
             </div>
             <div class="chart-col" title="2026-03-08: 20 commits">
-              <div class="chart-bar" style="height: 27.397260273972602%"></div>
+              <div class="chart-bar" style="height: 27.397260273972602%; opacity: 0.64"></div>
               <div class="chart-label">3/8</div>
             </div>
             <div class="chart-col" title="2026-03-09: 19 commits">
-              <div class="chart-bar" style="height: 26.027397260273972%"></div>
+              <div class="chart-bar" style="height: 26.027397260273972%; opacity: 0.63"></div>
               <div class="chart-label">3/9</div>
+            </div>
             </div>
           </div>
         </div>
@@ -544,47 +618,47 @@
             <h3>Commits by repo</h3>
             <div class="hbar-row">
               <span class="hbar-label">promptengines-main</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:100%; background:var(--accent)"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:100%; background:#2dd4bf; box-shadow: 0 0 8px #2dd4bf33"></div></div>
               <span class="hbar-value">182</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">storybookstudio</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:53.2967032967033%; background:#4ade80"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:53.2967032967033%; background:#34d399; box-shadow: 0 0 8px #34d39933"></div></div>
               <span class="hbar-value">97</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">kaizen</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:46.15384615384615%; background:#60a5fa"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:46.15384615384615%; background:#38bdf8; box-shadow: 0 0 8px #38bdf833"></div></div>
               <span class="hbar-value">84</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">norbu</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:24.175824175824175%; background:#c084fc"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:24.175824175824175%; background:#818cf8; box-shadow: 0 0 8px #818cf833"></div></div>
               <span class="hbar-value">44</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">flow</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:17.582417582417584%; background:#fbbf24"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:17.582417582417584%; background:#f59e0b; box-shadow: 0 0 8px #f59e0b33"></div></div>
               <span class="hbar-value">32</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">bible</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:13.186813186813188%; background:#f87171"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:13.186813186813188%; background:#fb7185; box-shadow: 0 0 8px #fb718533"></div></div>
               <span class="hbar-value">24</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">videoterminal</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:6.593406593406594%; background:#2dd4bf"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:6.593406593406594%; background:#a78bfa; box-shadow: 0 0 8px #a78bfa33"></div></div>
               <span class="hbar-value">12</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">transcriber</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:1.098901098901099%; background:#fb923c"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:1.098901098901099%; background:#22d3ee; box-shadow: 0 0 8px #22d3ee33"></div></div>
               <span class="hbar-value">2</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">lifebois_bible</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:1.098901098901099%; background:var(--accent)"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:1.098901098901099%; background:#2dd4bf; box-shadow: 0 0 8px #2dd4bf33"></div></div>
               <span class="hbar-value">2</span>
             </div>
           </div>
@@ -592,56 +666,57 @@
             <h3>Commits by type</h3>
             <div class="hbar-row">
               <span class="hbar-label">feat</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:100%; background:#4ade80"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:100%; background:#34d399; box-shadow: 0 0 8px #34d39933"></div></div>
               <span class="hbar-value">205</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">fix</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:41.951219512195124%; background:#f87171"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:41.951219512195124%; background:#fb7185; box-shadow: 0 0 8px #fb718533"></div></div>
               <span class="hbar-value">86</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">other</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:41.46341463414634%; background:#52525b"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:41.46341463414634%; background:#52525b; box-shadow: 0 0 8px #52525b33"></div></div>
               <span class="hbar-value">85</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">chore</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:19.024390243902438%; background:#71717a"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:19.024390243902438%; background:#71717a; box-shadow: 0 0 8px #71717a33"></div></div>
               <span class="hbar-value">39</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">docs</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:18.536585365853657%; background:#fbbf24"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:18.536585365853657%; background:#f59e0b; box-shadow: 0 0 8px #f59e0b33"></div></div>
               <span class="hbar-value">38</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">content</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:9.75609756097561%; background:#60a5fa"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:9.75609756097561%; background:#38bdf8; box-shadow: 0 0 8px #38bdf833"></div></div>
               <span class="hbar-value">20</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">refactor</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:2.4390243902439024%; background:#c084fc"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:2.4390243902439024%; background:#a78bfa; box-shadow: 0 0 8px #a78bfa33"></div></div>
               <span class="hbar-value">5</span>
             </div>
             <div class="hbar-row">
               <span class="hbar-label">test</span>
-              <div class="hbar-track"><div class="hbar-fill" style="width:0.4878048780487805%; background:#fb923c"></div></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:0.4878048780487805%; background:#fb923c; box-shadow: 0 0 8px #fb923c33"></div></div>
               <span class="hbar-value">1</span>
             </div>
           </div>
         </div>
 
+
         <div class="ratio-chart">
           <h3>Feature / Fix ratio</h3>
-          <div class="ratio-bar">
-            <div class="ratio-feat" style="width:70%"></div>
-            <div class="ratio-fix" style="width:30%"></div>
-          </div>
-          <div class="ratio-labels">
-            <span>feat 205 (70%)</span>
-            <span>fix 86 (30%)</span>
+          <div class="ratio-row">
+            <span class="ratio-label ratio-label-feat">feat 205 (70%)</span>
+            <div class="ratio-bar">
+              <div class="ratio-feat" style="width:70%"></div>
+              <div class="ratio-fix" style="width:30%"></div>
+            </div>
+            <span class="ratio-label ratio-label-fix">fix 86 (30%)</span>
           </div>
         </div>
       </div>
