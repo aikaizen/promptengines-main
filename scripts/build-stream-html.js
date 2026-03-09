@@ -247,6 +247,67 @@ function generate() {
     })
     .join("\n");
 
+  // SVG line chart overlay — smooth trend line with area fill
+  const svgW = 1000;
+  const svgH = 140; // matches chart height minus label area
+  const padding = 16; // half a bar width of padding on each side
+  const plotW = svgW - padding * 2;
+  const n = chartData.length;
+  const points = chartData.map((day, i) => {
+    const x = padding + (i / (n - 1)) * plotW;
+    const y = svgH - (maxCommits > 0 ? (day.total / maxCommits) * (svgH - 4) : 0) - 2;
+    return { x, y, total: day.total };
+  });
+
+  // Catmull-Rom to cubic bezier for smooth curves
+  function catmullRomToBezier(pts) {
+    const d = [`M ${pts[0].x},${pts[0].y}`];
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[Math.max(i - 1, 0)];
+      const p1 = pts[i];
+      const p2 = pts[i + 1];
+      const p3 = pts[Math.min(i + 2, pts.length - 1)];
+      const tension = 6;
+      const cp1x = p1.x + (p2.x - p0.x) / tension;
+      const cp1y = p1.y + (p2.y - p0.y) / tension;
+      const cp2x = p2.x - (p3.x - p1.x) / tension;
+      const cp2y = p2.y - (p3.y - p1.y) / tension;
+      d.push(`C ${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`);
+    }
+    return d.join(" ");
+  }
+
+  const linePath = catmullRomToBezier(points);
+  const areaPath = linePath + ` L ${points[n - 1].x},${svgH} L ${points[0].x},${svgH} Z`;
+
+  // 7-day moving average
+  const maPoints = chartData.map((day, i) => {
+    const window = chartData.slice(Math.max(0, i - 6), i + 1);
+    const avg = window.reduce((s, d) => s + d.total, 0) / window.length;
+    const x = padding + (i / (n - 1)) * plotW;
+    const y = svgH - (maxCommits > 0 ? (avg / maxCommits) * (svgH - 4) : 0) - 2;
+    return { x, y };
+  });
+  const maPath = catmullRomToBezier(maPoints);
+
+  const dotMarkers = points
+    .map((p, i) => `<circle class="line-dot" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3"><title>${chartData[i].date}: ${p.total}</title></circle>`)
+    .join("\n              ");
+
+  const lineChartSvg = `
+            <svg class="line-chart-svg" viewBox="0 0 ${svgW} ${svgH}" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.02"/>
+                </linearGradient>
+              </defs>
+              <path class="line-area" d="${areaPath}" fill="url(#areaGrad)"/>
+              <path class="line-ma" d="${maPath}" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-dasharray="6 4"/>
+              <path class="line-path" d="${linePath}" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              ${dotMarkers}
+            </svg>`;
+
   // Repo breakdown chart (aggregate across all days)
   const repoTotals = {};
   allData.forEach((d) => {
@@ -453,6 +514,37 @@ function generate() {
     }
     .chart-col:not(:nth-child(5n+1)) .chart-label { visibility: hidden; }
     .chart-col:last-child .chart-label { visibility: visible; }
+
+    /* ── Line chart overlay ── */
+    .line-chart-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 1.75rem);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .line-path {
+      filter: drop-shadow(0 0 4px var(--accent-glow));
+    }
+    .line-dot {
+      fill: var(--accent);
+      stroke: var(--bg-elevated);
+      stroke-width: 2;
+      opacity: 0;
+      pointer-events: all;
+      cursor: crosshair;
+      transition: opacity 0.15s ease, r 0.15s ease;
+    }
+    .chart-grid-wrapper:hover .line-dot {
+      opacity: 0.6;
+    }
+    .line-dot:hover {
+      opacity: 1 !important;
+      r: 5;
+      filter: drop-shadow(0 0 6px var(--accent-glow));
+    }
 
     /* ── Totals row ── */
     .stream-totals {
@@ -845,6 +937,7 @@ function generate() {
             <div class="chart-grid">
 ${chartBars}
             </div>
+${lineChartSvg}
           </div>
         </div>
 

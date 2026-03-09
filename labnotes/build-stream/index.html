@@ -100,6 +100,37 @@
     .chart-col:not(:nth-child(5n+1)) .chart-label { visibility: hidden; }
     .chart-col:last-child .chart-label { visibility: visible; }
 
+    /* ── Line chart overlay ── */
+    .line-chart-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 1.75rem);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .line-path {
+      filter: drop-shadow(0 0 4px var(--accent-glow));
+    }
+    .line-dot {
+      fill: var(--accent);
+      stroke: var(--bg-elevated);
+      stroke-width: 2;
+      opacity: 0;
+      pointer-events: all;
+      cursor: crosshair;
+      transition: opacity 0.15s ease, r 0.15s ease;
+    }
+    .chart-grid-wrapper:hover .line-dot {
+      opacity: 0.6;
+    }
+    .line-dot:hover {
+      opacity: 1 !important;
+      r: 5;
+      filter: drop-shadow(0 0 6px var(--accent-glow));
+    }
+
     /* ── Totals row ── */
     .stream-totals {
       display: flex;
@@ -610,6 +641,48 @@
               <div class="chart-label">3/9</div>
             </div>
             </div>
+
+            <svg class="line-chart-svg" viewBox="0 0 1000 140" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.02"/>
+                </linearGradient>
+              </defs>
+              <path class="line-area" d="M 16,123.0958904109589 C 21.6,124.3 38.3,129.6 49.4,130.5 C 60.5,131.5 71.6,129.9 82.8,128.7 C 93.9,127.4 105.0,123.4 116.1,123.1 C 127.3,122.8 138.4,128.4 149.5,126.8 C 160.6,125.3 171.8,112.2 182.9,113.8 C 194.0,115.3 205.1,132.7 216.3,136.1 C 227.4,139.6 238.5,135.8 249.7,134.3 C 260.8,132.7 271.9,132.7 283.0,126.8 C 294.2,120.9 305.3,100.7 316.4,98.9 C 327.5,97.0 338.7,109.1 349.8,115.6 C 360.9,122.2 372.0,138.6 383.2,138.0 C 394.3,137.4 405.4,113.5 416.6,111.9 C 427.7,110.4 438.8,130.5 449.9,128.7 C 461.1,126.8 472.2,102.0 483.3,100.7 C 494.4,99.5 505.6,118.1 516.7,121.2 C 527.8,124.3 538.9,119.7 550.1,119.4 C 561.2,119.1 572.3,122.2 583.4,119.4 C 594.6,116.6 605.7,105.4 616.8,102.6 C 628.0,99.8 639.1,119.4 650.2,102.6 C 661.3,85.8 672.5,9.5 683.6,2.0 C 694.7,-5.5 705.8,39.6 717.0,57.9 C 728.1,76.2 739.2,105.7 750.3,111.9 C 761.5,118.1 772.6,95.8 783.7,95.2 C 794.9,94.5 806.0,108.8 817.1,108.2 C 828.2,107.6 839.4,94.5 850.5,91.4 C 861.6,88.3 872.7,90.5 883.9,89.6 C 895.0,88.6 906.1,84.0 917.2,85.8 C 928.4,87.7 939.5,97.9 950.6,100.7 C 961.7,103.5 978.4,102.3 984.0,102.6 L 984,140 L 16,140 Z" fill="url(#areaGrad)"/>
+              <path class="line-ma" d="M 16,123.0958904109589 C 21.6,123.7 38.3,126.1 49.4,126.8 C 60.5,127.5 71.6,127.5 82.8,127.4 C 93.9,127.4 105.0,126.5 116.1,126.4 C 127.3,126.2 138.4,126.8 149.5,126.4 C 160.6,126.1 171.8,124.4 182.9,124.3 C 194.0,124.3 205.1,125.5 216.3,126.0 C 227.4,126.6 238.5,127.4 249.7,127.6 C 260.8,127.8 271.9,127.9 283.0,127.1 C 294.2,126.3 305.3,123.7 316.4,122.8 C 327.5,121.9 338.7,121.7 349.8,121.8 C 360.9,121.9 372.0,123.1 383.2,123.4 C 394.3,123.6 405.4,123.3 416.6,123.1 C 427.7,122.9 438.8,123.0 449.9,122.0 C 461.1,121.1 472.2,118.2 483.3,117.2 C 494.4,116.3 505.6,116.1 516.7,116.4 C 527.8,116.8 538.9,118.8 550.1,119.4 C 561.2,119.9 572.3,120.7 583.4,119.9 C 594.6,119.1 605.7,115.9 616.8,114.8 C 628.0,113.8 639.1,116.8 650.2,113.5 C 661.3,110.3 672.5,99.5 683.6,95.4 C 694.7,91.4 705.8,90.5 717.0,89.3 C 728.1,88.1 739.2,88.8 750.3,88.0 C 761.5,87.2 772.6,85.3 783.7,84.5 C 794.9,83.7 806.0,83.4 817.1,82.9 C 828.2,82.4 839.4,81.9 850.5,81.3 C 861.6,80.7 872.7,77.8 883.9,79.4 C 895.0,81.1 906.1,88.4 917.2,91.4 C 928.4,94.4 939.5,96.7 950.6,97.5 C 961.7,98.3 978.4,96.4 984.0,96.2" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-dasharray="6 4"/>
+              <path class="line-path" d="M 16,123.0958904109589 C 21.6,124.3 38.3,129.6 49.4,130.5 C 60.5,131.5 71.6,129.9 82.8,128.7 C 93.9,127.4 105.0,123.4 116.1,123.1 C 127.3,122.8 138.4,128.4 149.5,126.8 C 160.6,125.3 171.8,112.2 182.9,113.8 C 194.0,115.3 205.1,132.7 216.3,136.1 C 227.4,139.6 238.5,135.8 249.7,134.3 C 260.8,132.7 271.9,132.7 283.0,126.8 C 294.2,120.9 305.3,100.7 316.4,98.9 C 327.5,97.0 338.7,109.1 349.8,115.6 C 360.9,122.2 372.0,138.6 383.2,138.0 C 394.3,137.4 405.4,113.5 416.6,111.9 C 427.7,110.4 438.8,130.5 449.9,128.7 C 461.1,126.8 472.2,102.0 483.3,100.7 C 494.4,99.5 505.6,118.1 516.7,121.2 C 527.8,124.3 538.9,119.7 550.1,119.4 C 561.2,119.1 572.3,122.2 583.4,119.4 C 594.6,116.6 605.7,105.4 616.8,102.6 C 628.0,99.8 639.1,119.4 650.2,102.6 C 661.3,85.8 672.5,9.5 683.6,2.0 C 694.7,-5.5 705.8,39.6 717.0,57.9 C 728.1,76.2 739.2,105.7 750.3,111.9 C 761.5,118.1 772.6,95.8 783.7,95.2 C 794.9,94.5 806.0,108.8 817.1,108.2 C 828.2,107.6 839.4,94.5 850.5,91.4 C 861.6,88.3 872.7,90.5 883.9,89.6 C 895.0,88.6 906.1,84.0 917.2,85.8 C 928.4,87.7 939.5,97.9 950.6,100.7 C 961.7,103.5 978.4,102.3 984.0,102.6" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle class="line-dot" cx="16.0" cy="123.1" r="3"><title>2026-02-08: 8</title></circle>
+              <circle class="line-dot" cx="49.4" cy="130.5" r="3"><title>2026-02-09: 4</title></circle>
+              <circle class="line-dot" cx="82.8" cy="128.7" r="3"><title>2026-02-10: 5</title></circle>
+              <circle class="line-dot" cx="116.1" cy="123.1" r="3"><title>2026-02-11: 8</title></circle>
+              <circle class="line-dot" cx="149.5" cy="126.8" r="3"><title>2026-02-12: 6</title></circle>
+              <circle class="line-dot" cx="182.9" cy="113.8" r="3"><title>2026-02-13: 13</title></circle>
+              <circle class="line-dot" cx="216.3" cy="136.1" r="3"><title>2026-02-14: 1</title></circle>
+              <circle class="line-dot" cx="249.7" cy="134.3" r="3"><title>2026-02-15: 2</title></circle>
+              <circle class="line-dot" cx="283.0" cy="126.8" r="3"><title>2026-02-16: 6</title></circle>
+              <circle class="line-dot" cx="316.4" cy="98.9" r="3"><title>2026-02-17: 21</title></circle>
+              <circle class="line-dot" cx="349.8" cy="115.6" r="3"><title>2026-02-18: 12</title></circle>
+              <circle class="line-dot" cx="383.2" cy="138.0" r="3"><title>2026-02-19: 0</title></circle>
+              <circle class="line-dot" cx="416.6" cy="111.9" r="3"><title>2026-02-20: 14</title></circle>
+              <circle class="line-dot" cx="449.9" cy="128.7" r="3"><title>2026-02-21: 5</title></circle>
+              <circle class="line-dot" cx="483.3" cy="100.7" r="3"><title>2026-02-22: 20</title></circle>
+              <circle class="line-dot" cx="516.7" cy="121.2" r="3"><title>2026-02-23: 9</title></circle>
+              <circle class="line-dot" cx="550.1" cy="119.4" r="3"><title>2026-02-24: 10</title></circle>
+              <circle class="line-dot" cx="583.4" cy="119.4" r="3"><title>2026-02-25: 10</title></circle>
+              <circle class="line-dot" cx="616.8" cy="102.6" r="3"><title>2026-02-26: 19</title></circle>
+              <circle class="line-dot" cx="650.2" cy="102.6" r="3"><title>2026-02-27: 19</title></circle>
+              <circle class="line-dot" cx="683.6" cy="2.0" r="3"><title>2026-02-28: 73</title></circle>
+              <circle class="line-dot" cx="717.0" cy="57.9" r="3"><title>2026-03-01: 43</title></circle>
+              <circle class="line-dot" cx="750.3" cy="111.9" r="3"><title>2026-03-02: 14</title></circle>
+              <circle class="line-dot" cx="783.7" cy="95.2" r="3"><title>2026-03-03: 23</title></circle>
+              <circle class="line-dot" cx="817.1" cy="108.2" r="3"><title>2026-03-04: 16</title></circle>
+              <circle class="line-dot" cx="850.5" cy="91.4" r="3"><title>2026-03-05: 25</title></circle>
+              <circle class="line-dot" cx="883.9" cy="89.6" r="3"><title>2026-03-06: 26</title></circle>
+              <circle class="line-dot" cx="917.2" cy="85.8" r="3"><title>2026-03-07: 28</title></circle>
+              <circle class="line-dot" cx="950.6" cy="100.7" r="3"><title>2026-03-08: 20</title></circle>
+              <circle class="line-dot" cx="984.0" cy="102.6" r="3"><title>2026-03-09: 19</title></circle>
+            </svg>
           </div>
         </div>
 
