@@ -1,0 +1,88 @@
+{
+  "date": "2026-02-09",
+  "generatedAt": "2026-03-09T18:18:58.516Z",
+  "commits": [
+    {
+      "repo": "kaizen",
+      "hash": "5f2088ec100dd575cbf56657f77fbaae72cb901f",
+      "shortHash": "5f2088e",
+      "date": "2026-02-09T20:57:56Z",
+      "subject": "Add .vercel and .env*.local to gitignore",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/5f2088ec100dd575cbf56657f77fbaae72cb901f",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "d312e40921fe7841d590a015eef0969ade166593",
+      "shortHash": "d312e40",
+      "date": "2026-02-09T19:54:09Z",
+      "subject": "Remove old planning and TODO files",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/d312e40921fe7841d590a015eef0969ade166593",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "6dd4474e57c7d442f994164260e2255434cecfaf",
+      "shortHash": "6dd4474",
+      "date": "2026-02-09T19:54:02Z",
+      "subject": "Add parent panel password management, simplified credits, and deploy prep",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/6dd4474e57c7d442f994164260e2255434cecfaf",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "0550cb718a410d7bbf9fcf15045b519ab96d5ab3",
+      "shortHash": "0550cb7",
+      "date": "2026-02-09T05:57:36Z",
+      "subject": "feat: Add profile page and PDF generation",
+      "author": "aikaizen",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/0550cb718a410d7bbf9fcf15045b519ab96d5ab3",
+      "type": "feat",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "other": 3,
+      "feat": 1
+    },
+    "byAuthor": {
+      "aikaizen": 4
+    },
+    "byRepo": {
+      "kaizen": 3,
+      "storybookstudio": 1
+    },
+    "total": 4
+  },
+  "summary": {
+    "totalCommits": 4,
+    "activeRepos": [
+      "kaizen",
+      "storybookstudio"
+    ],
+    "primaryTypes": [
+      [
+        "other",
+        3
+      ],
+      [
+        "feat",
+        1
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

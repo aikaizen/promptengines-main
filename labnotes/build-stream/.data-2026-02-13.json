@@ -1,0 +1,203 @@
+{
+  "date": "2026-02-13",
+  "generatedAt": "2026-03-09T18:18:58.516Z",
+  "commits": [
+    {
+      "repo": "storybookstudio",
+      "hash": "147f8d88d965d023049ddef0b91d12b56dc09c03",
+      "shortHash": "147f8d8",
+      "date": "2026-02-13T21:06:38Z",
+      "subject": "feat: Assembly page choice modal, generate-for-slot flow, cover fonts",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/147f8d88d965d023049ddef0b91d12b56dc09c03",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "af1fe785a2c8e9ed0b5f63331e22e7a8837c1302",
+      "shortHash": "af1fe78",
+      "date": "2026-02-13T20:42:15Z",
+      "subject": "feat: Add \"My Books\" button next to logo in navbar",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/af1fe785a2c8e9ed0b5f63331e22e7a8837c1302",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "a24167c8270546c81b35321e5580e6176eca1624",
+      "shortHash": "a24167c",
+      "date": "2026-02-13T18:38:06Z",
+      "subject": "feat: Add Read Mode — book selector library + 3D page-flip reader",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/a24167c8270546c81b35321e5580e6176eca1624",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "fbd6ce12ce4e21cd3e5789f7f0a35af97d568a58",
+      "shortHash": "fbd6ce1",
+      "date": "2026-02-13T06:05:39Z",
+      "subject": "Remove internal app metrics from parent panel",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/fbd6ce12ce4e21cd3e5789f7f0a35af97d568a58",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "64065d7e01df645ca342dd77dae1723fa88d5791",
+      "shortHash": "64065d7",
+      "date": "2026-02-13T06:05:34Z",
+      "subject": "Video Builder v1: provider integrations, API routes, cron worker, UI wiring",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/64065d7e01df645ca342dd77dae1723fa88d5791",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "lifebois_bible",
+      "hash": "62e932a3d443f7e8aecbb8da2a5a1361f9bc6c86",
+      "shortHash": "62e932a",
+      "date": "2026-02-13T05:55:27Z",
+      "subject": "feat: Initialize LifeBois app structure",
+      "author": "aikaizen",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/lifebois_bible/commit/62e932a3d443f7e8aecbb8da2a5a1361f9bc6c86",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "lifebois_bible",
+      "hash": "e23c214687dbb206813c3ad4aa9c1c11e1b8c1c5",
+      "shortHash": "e23c214",
+      "date": "2026-02-13T05:54:32Z",
+      "subject": "Initial commit",
+      "author": "aikaizen",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/lifebois_bible/commit/e23c214687dbb206813c3ad4aa9c1c11e1b8c1c5",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "20724e07af21539f3d7329bc437f5b3b35940207",
+      "shortHash": "20724e0",
+      "date": "2026-02-13T05:51:31Z",
+      "subject": "feat: P2 UX improvements — auto-save, credit tiers, duplicate, clear history",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/20724e07af21539f3d7329bc437f5b3b35940207",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "508ff265ba419d9667be5f6ee6efabdced198211",
+      "shortHash": "508ff26",
+      "date": "2026-02-13T04:47:08Z",
+      "subject": "fix: Prevent blank PDFs, memory leaks, and silent failures",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/508ff265ba419d9667be5f6ee6efabdced198211",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "df2d89acc63c6fcb0b45275fc23087219a00e0a8",
+      "shortHash": "df2d89a",
+      "date": "2026-02-13T04:46:11Z",
+      "subject": "Fix starter credits: write to both credit_pools and global_data",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/df2d89acc63c6fcb0b45275fc23087219a00e0a8",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "b9cdb317faf8a9ed6fda1115d30ce41b3bf4c0b5",
+      "shortHash": "b9cdb31",
+      "date": "2026-02-13T04:35:03Z",
+      "subject": "UX improvements: 20 starter credits, tier buttons, onboarding",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/b9cdb317faf8a9ed6fda1115d30ce41b3bf4c0b5",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "b77fd45d8292a39e2450f2b821f192d07fce33af",
+      "shortHash": "b77fd45",
+      "date": "2026-02-13T03:47:58Z",
+      "subject": "fix: Prevent stuck loading states across multiple components",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/b77fd45d8292a39e2450f2b821f192d07fce33af",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "49eecd83a3fc5ca4062f6e40dc6e61bae6c89b36",
+      "shortHash": "49eecd8",
+      "date": "2026-02-13T03:41:46Z",
+      "subject": "fix: Prevent \"Processing...\" stuck state on project creation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/49eecd83a3fc5ca4062f6e40dc6e61bae6c89b36",
+      "type": "fix",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "feat": 5,
+      "other": 5,
+      "fix": 3
+    },
+    "byAuthor": {
+      "aikaizen": 13
+    },
+    "byRepo": {
+      "storybookstudio": 7,
+      "kaizen": 4,
+      "lifebois_bible": 2
+    },
+    "total": 13
+  },
+  "summary": {
+    "totalCommits": 13,
+    "activeRepos": [
+      "storybookstudio",
+      "kaizen",
+      "lifebois_bible"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        5
+      ],
+      [
+        "other",
+        5
+      ],
+      [
+        "fix",
+        3
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

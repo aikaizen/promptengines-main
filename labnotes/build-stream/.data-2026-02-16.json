@@ -1,0 +1,121 @@
+{
+  "date": "2026-02-16",
+  "generatedAt": "2026-03-09T18:18:58.517Z",
+  "commits": [
+    {
+      "repo": "transcriber",
+      "hash": "050978823092bdc2a34ba1f542e4c46677bbe8b7",
+      "shortHash": "0509788",
+      "date": "2026-02-16T07:27:38Z",
+      "subject": "Initial commit: Meeting Transcriber app",
+      "author": "Adil Islam",
+      "email": "adil@MacBookAir.lan",
+      "htmlUrl": "https://github.com/aikaizen/transcriber/commit/050978823092bdc2a34ba1f542e4c46677bbe8b7",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "6c72564791ab5defa753ca3d1d9053f9a0a411c8",
+      "shortHash": "6c72564",
+      "date": "2026-02-16T06:03:19Z",
+      "subject": "feat: mobile responsiveness Round 3 — sub-component shared TabBar and responsive layouts",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/6c72564791ab5defa753ca3d1d9053f9a0a411c8",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "e1e2b736e6f0879f029f05bf9c5860d0bd869652",
+      "shortHash": "e1e2b73",
+      "date": "2026-02-16T06:00:14Z",
+      "subject": "feat: mobile responsiveness Round 2 — page.tsx responsive layouts",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/e1e2b736e6f0879f029f05bf9c5860d0bd869652",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "fc3035699b81d87da97482e086cf0d12b99c818d",
+      "shortHash": "fc30356",
+      "date": "2026-02-16T05:42:57Z",
+      "subject": "feat: mobile responsiveness Round 1 — foundations and independent components",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/fc3035699b81d87da97482e086cf0d12b99c818d",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "dc90e027642c36628c9c267fe007b73f3cb8a09c",
+      "shortHash": "dc90e02",
+      "date": "2026-02-16T04:17:08Z",
+      "subject": "docs: update TODO for v0.2.0 — reflect completed pipeline + print tiers",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/dc90e027642c36628c9c267fe007b73f3cb8a09c",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "aa045f8ba057546bf6ffcb48ada553c1fbf5e20f",
+      "shortHash": "aa045f8",
+      "date": "2026-02-16T03:22:05Z",
+      "subject": "feat: 3-tier print quality, end-to-end Lulu+Stripe pipeline, dev login",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/aa045f8ba057546bf6ffcb48ada553c1fbf5e20f",
+      "type": "feat",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "other": 1,
+      "feat": 4,
+      "docs": 1
+    },
+    "byAuthor": {
+      "Adil Islam": 1,
+      "aikaizen": 5
+    },
+    "byRepo": {
+      "transcriber": 1,
+      "kaizen": 3,
+      "storybookstudio": 2
+    },
+    "total": 6
+  },
+  "summary": {
+    "totalCommits": 6,
+    "activeRepos": [
+      "kaizen",
+      "storybookstudio",
+      "transcriber"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        4
+      ],
+      [
+        "other",
+        1
+      ],
+      [
+        "docs",
+        1
+      ]
+    ],
+    "activeAuthors": [
+      "Adil Islam",
+      "aikaizen"
+    ]
+  }
+}

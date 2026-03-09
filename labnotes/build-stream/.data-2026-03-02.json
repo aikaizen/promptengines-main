@@ -1,0 +1,217 @@
+{
+  "date": "2026-03-02",
+  "generatedAt": "2026-03-09T18:18:58.519Z",
+  "commits": [
+    {
+      "repo": "storybookstudio",
+      "hash": "8d0b7bf514ec79ad4ccbdf2ae8f48ba103ac8e00",
+      "shortHash": "8d0b7bf",
+      "date": "2026-03-02T21:36:59Z",
+      "subject": "feat: redesign Generate Page — splash page aesthetic, unified model registry, mini-assembly",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/8d0b7bf514ec79ad4ccbdf2ae8f48ba103ac8e00",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "d578305aab4a1feb9778078cdddce529a03b2507",
+      "shortHash": "d578305",
+      "date": "2026-03-02T19:49:43Z",
+      "subject": "fix(flow-education): fix iOS touch interactions, mobile layout, and all STATUS.md issues",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/d578305aab4a1feb9778078cdddce529a03b2507",
+      "type": "fix",
+      "scope": "flow-education"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "83c84e3f2f3d67f9b13dd1c4df4e98ffc2e63455",
+      "shortHash": "83c84e3",
+      "date": "2026-03-02T05:55:06Z",
+      "subject": "design: Convert Flow Education pages to light, parent-friendly palette",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/83c84e3f2f3d67f9b13dd1c4df4e98ffc2e63455",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "eb146908e2f62eca89ee2027231967834dc588ec",
+      "shortHash": "eb14690",
+      "date": "2026-03-02T05:54:10Z",
+      "subject": "feat: generation history, hyper perspective, model selector, e2e tests, and API audit",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/eb146908e2f62eca89ee2027231967834dc588ec",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "0a6984af3cdcb95666391a630a1a7bbe047bcb60",
+      "shortHash": "0a6984a",
+      "date": "2026-03-02T05:52:47Z",
+      "subject": "Fix image paths, unlock lessons, add Continue buttons, fix badge filenames",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/0a6984af3cdcb95666391a630a1a7bbe047bcb60",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "f1649837b0c998d1ea28a4c59e5374e3826d9931",
+      "shortHash": "f164983",
+      "date": "2026-03-02T05:39:41Z",
+      "subject": "Wire up generated image assets into app; add all images to public/",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/f1649837b0c998d1ea28a4c59e5374e3826d9931",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "3c83a26ed518ce5f4a6465d86803f53127fd67b0",
+      "shortHash": "3c83a26",
+      "date": "2026-03-02T03:19:29Z",
+      "subject": "design: Apply Developer Portfolio Craft skill to Flow Education pages",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/3c83a26ed518ce5f4a6465d86803f53127fd67b0",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "4527f1e3707410d5cccb59945817748e6b24f5f4",
+      "shortHash": "4527f1e",
+      "date": "2026-03-02T03:18:25Z",
+      "subject": "design: Apply Developer Portfolio Craft skill to Flow Education pages",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/4527f1e3707410d5cccb59945817748e6b24f5f4",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "9109dee788892bf04bd8f6f88b169621dd33ba36",
+      "shortHash": "9109dee",
+      "date": "2026-03-02T02:57:32Z",
+      "subject": "fix(flow-education): fix React app crash — data mismatch and hooks violations",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/9109dee788892bf04bd8f6f88b169621dd33ba36",
+      "type": "fix",
+      "scope": "flow-education"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "47f7bd4f6c13a80fe12fcf6609579da619b2a710",
+      "shortHash": "47f7bd4",
+      "date": "2026-03-02T02:26:10Z",
+      "subject": "fix(flow-education): redirect Launch App to lesson-plans until React app is built",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/47f7bd4f6c13a80fe12fcf6609579da619b2a710",
+      "type": "fix",
+      "scope": "flow-education"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "5c03914ff0cd8d0ab726da8e9cf0eb61449340e2",
+      "shortHash": "5c03914",
+      "date": "2026-03-02T02:23:49Z",
+      "subject": "fix(flow-education): fix broken links across all pages",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/5c03914ff0cd8d0ab726da8e9cf0eb61449340e2",
+      "type": "fix",
+      "scope": "flow-education"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "32ce3eb8bc0b72cf24f01f98276ca7d530666092",
+      "shortHash": "32ce3eb",
+      "date": "2026-03-02T02:22:09Z",
+      "subject": "refactor: Remove negative 'refuse edutainment' / 'slop' marketing copy",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/32ce3eb8bc0b72cf24f01f98276ca7d530666092",
+      "type": "refactor",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "ac37c2ae3aa1fed16fef382d3217f5c43f9904d7",
+      "shortHash": "ac37c2a",
+      "date": "2026-03-02T00:48:02Z",
+      "subject": "content: Add 3 new skills to published list + expand coming soon",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/ac37c2ae3aa1fed16fef382d3217f5c43f9904d7",
+      "type": "content",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "065128f2e9a830b7ac5ab3225a7aa305d4c7bedf",
+      "shortHash": "065128f",
+      "date": "2026-03-02T00:06:50Z",
+      "subject": "refactor: Andy Stable gets distinct archetypes (not copy-paste from A.I.)",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/065128f2e9a830b7ac5ab3225a7aa305d4c7bedf",
+      "type": "refactor",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "feat": 2,
+      "fix": 4,
+      "other": 5,
+      "refactor": 2,
+      "content": 1
+    },
+    "byAuthor": {
+      "aikaizen": 8,
+      "Andy Stable": 6
+    },
+    "byRepo": {
+      "storybookstudio": 2,
+      "promptengines-main": 12
+    },
+    "total": 14
+  },
+  "summary": {
+    "totalCommits": 14,
+    "activeRepos": [
+      "promptengines-main",
+      "storybookstudio"
+    ],
+    "primaryTypes": [
+      [
+        "other",
+        5
+      ],
+      [
+        "fix",
+        4
+      ],
+      [
+        "feat",
+        2
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen",
+      "Andy Stable"
+    ]
+  }
+}

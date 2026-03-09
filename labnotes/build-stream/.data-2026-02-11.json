@@ -1,0 +1,138 @@
+{
+  "date": "2026-02-11",
+  "generatedAt": "2026-03-09T18:18:58.516Z",
+  "commits": [
+    {
+      "repo": "storybookstudio",
+      "hash": "272cd1aae1a67f710870fb3fd09e23014c34e39f",
+      "shortHash": "272cd1a",
+      "date": "2026-02-11T20:06:01Z",
+      "subject": "feat: Add FAQ page, character editing, and image generator improvements",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/272cd1aae1a67f710870fb3fd09e23014c34e39f",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "358b6664298ca8b0771c69cf7e8da0211abd9ba1",
+      "shortHash": "358b666",
+      "date": "2026-02-11T17:35:59Z",
+      "subject": "Security hardening, billing integrity, and lint fixes",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/358b6664298ca8b0771c69cf7e8da0211abd9ba1",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "90b16341339780ce44c80cb5d70aa8d569f59624",
+      "shortHash": "90b1634",
+      "date": "2026-02-11T06:42:58Z",
+      "subject": "Add 3 new theme variants, view switcher, Storybook Studio, and updated blurbs",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/90b16341339780ce44c80cb5d70aa8d569f59624",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "07d363331e4f6e221d424fcf0ff7532f746c021d",
+      "shortHash": "07d3633",
+      "date": "2026-02-11T06:42:44Z",
+      "subject": "feat: Redesign art styles and add dimension picker icons",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/07d363331e4f6e221d424fcf0ff7532f746c021d",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "25a0980518be0d24136a495664e3b60ae472c409",
+      "shortHash": "25a0980",
+      "date": "2026-02-11T05:07:08Z",
+      "subject": "Add comprehensive app description and update TODO",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/25a0980518be0d24136a495664e3b60ae472c409",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "429e1e34bdcee7d168cbefe3f68ad7720f3f2e1f",
+      "shortHash": "429e1e3",
+      "date": "2026-02-11T04:42:09Z",
+      "subject": "Fix admin credit system: lock down add/set, remove bypass, rename buttons",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/429e1e34bdcee7d168cbefe3f68ad7720f3f2e1f",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "182cd7d71161f5fbb9a2de4dcb4d8c96156dd0c1",
+      "shortHash": "182cd7d",
+      "date": "2026-02-11T04:13:01Z",
+      "subject": "Phase 5 polish: extract components, add Sentry/security, fix auth flow",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/182cd7d71161f5fbb9a2de4dcb4d8c96156dd0c1",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "7c4b696fe5dacc963c6a7b23dff29a2a22d859f9",
+      "shortHash": "7c4b696",
+      "date": "2026-02-11T04:00:13Z",
+      "subject": "feat: Add Lulu Print integration, order flow, and production config",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/7c4b696fe5dacc963c6a7b23dff29a2a22d859f9",
+      "type": "feat",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "feat": 3,
+      "other": 5
+    },
+    "byAuthor": {
+      "aikaizen": 8
+    },
+    "byRepo": {
+      "storybookstudio": 3,
+      "kaizen": 4,
+      "promptengines-main": 1
+    },
+    "total": 8
+  },
+  "summary": {
+    "totalCommits": 8,
+    "activeRepos": [
+      "kaizen",
+      "storybookstudio",
+      "promptengines-main"
+    ],
+    "primaryTypes": [
+      [
+        "other",
+        5
+      ],
+      [
+        "feat",
+        3
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

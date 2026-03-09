@@ -1,0 +1,136 @@
+{
+  "date": "2026-02-08",
+  "generatedAt": "2026-03-09T18:18:58.516Z",
+  "commits": [
+    {
+      "repo": "kaizen",
+      "hash": "a4b73de9e29cde3af44bd657f222851ce06d4112",
+      "shortHash": "a4b73de",
+      "date": "2026-02-08T21:50:56Z",
+      "subject": "Add security hardening, performance fixes, and legal pages",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/a4b73de9e29cde3af44bd657f222851ce06d4112",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "d1f2e70768999a053c7642f9e2b4740fa445157e",
+      "shortHash": "d1f2e70",
+      "date": "2026-02-08T21:41:51Z",
+      "subject": "Add auth gate fixes and parent panel password protection",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/d1f2e70768999a053c7642f9e2b4740fa445157e",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "e072e22b8fb1f88bc99900ad6c24eef24f867a37",
+      "shortHash": "e072e22",
+      "date": "2026-02-08T19:52:28Z",
+      "subject": "Add production setup: login splash, Supabase migration, seed data",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/e072e22b8fb1f88bc99900ad6c24eef24f867a37",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "fbd96d8057a958d3f9bce9a9144a063e75e3d7dd",
+      "shortHash": "fbd96d8",
+      "date": "2026-02-08T14:34:55Z",
+      "subject": "Add detailed README with setup, architecture, and deployment docs",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/fbd96d8057a958d3f9bce9a9144a063e75e3d7dd",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "a2f6f18205820f724fecf838108abad83f16e3af",
+      "shortHash": "a2f6f18",
+      "date": "2026-02-08T05:59:56Z",
+      "subject": "Add multi-tenant production architecture with auth, payments, and parent panel",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/a2f6f18205820f724fecf838108abad83f16e3af",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "5018d372d918a7a9dc6fc926442c3fad1ebf1d91",
+      "shortHash": "5018d37",
+      "date": "2026-02-08T05:45:10Z",
+      "subject": "feat: Enhance text overlay and aspect ratio handling",
+      "author": "aikaizen",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/5018d372d918a7a9dc6fc926442c3fad1ebf1d91",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "1916fbfb772fee3b94f9ffcd90de8642890e876f",
+      "shortHash": "1916fbf",
+      "date": "2026-02-08T03:23:56Z",
+      "subject": "feat: Initialize project structure and dependencies",
+      "author": "aikaizen",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/1916fbfb772fee3b94f9ffcd90de8642890e876f",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "7fbea41f29a346c5c4180b1557d8b0d27a425342",
+      "shortHash": "7fbea41",
+      "date": "2026-02-08T03:23:37Z",
+      "subject": "Initial commit",
+      "author": "aikaizen",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/7fbea41f29a346c5c4180b1557d8b0d27a425342",
+      "type": "other",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "other": 6,
+      "feat": 2
+    },
+    "byAuthor": {
+      "aikaizen": 8
+    },
+    "byRepo": {
+      "kaizen": 5,
+      "storybookstudio": 3
+    },
+    "total": 8
+  },
+  "summary": {
+    "totalCommits": 8,
+    "activeRepos": [
+      "kaizen",
+      "storybookstudio"
+    ],
+    "primaryTypes": [
+      [
+        "other",
+        6
+      ],
+      [
+        "feat",
+        2
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

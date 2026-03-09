@@ -1,0 +1,214 @@
+{
+  "date": "2026-02-20",
+  "generatedAt": "2026-03-09T18:18:58.518Z",
+  "commits": [
+    {
+      "repo": "bible",
+      "hash": "bc61c69b5b5e1cae5b5c6b75382f8cbb7b48ad77",
+      "shortHash": "bc61c69",
+      "date": "2026-02-20T19:38:07Z",
+      "subject": "feat: add weekly rollover cron, test suite, and lifecycle improvements",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/bc61c69b5b5e1cae5b5c6b75382f8cbb7b48ad77",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "b1aa95c3c98eb4166f91df1e39f4014a11af6e35",
+      "shortHash": "b1aa95c",
+      "date": "2026-02-20T17:16:20Z",
+      "subject": "fix: FAL_KEY warning, scroll/zoom on video nodes, update changelog + todo",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/b1aa95c3c98eb4166f91df1e39f4014a11af6e35",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "f63c1304d1d4ae426fdbd25d37afdf7391fa4d4d",
+      "shortHash": "f63c130",
+      "date": "2026-02-20T09:06:20Z",
+      "subject": "feat: image management, HEIC support, AR letterboxing for StoryMaker",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/f63c1304d1d4ae426fdbd25d37afdf7391fa4d4d",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "8899521c0bbd85886acc820d2fea769d45dd72f1",
+      "shortHash": "8899521",
+      "date": "2026-02-20T08:45:11Z",
+      "subject": "fix: bucket fill broken by cross-origin canvas taint",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/8899521c0bbd85886acc820d2fea769d45dd72f1",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "a8c882c9864056ba2fbf37eb969dc3a361cf42de",
+      "shortHash": "a8c882c",
+      "date": "2026-02-20T08:43:01Z",
+      "subject": "feat: client-side polling drives video jobs, remove cron dependency",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/a8c882c9864056ba2fbf37eb969dc3a361cf42de",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "ef524ee6457dee63dd2f08aad2ae7897ebe3c299",
+      "shortHash": "ef524ee",
+      "date": "2026-02-20T08:35:44Z",
+      "subject": "feat: parallel generation, bucket fill diagnostics, cron + docs updates",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/ef524ee6457dee63dd2f08aad2ae7897ebe3c299",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "4acd24c96f9d18a7ccdd3d266a66cf901805d02e",
+      "shortHash": "4acd24c",
+      "date": "2026-02-20T08:33:41Z",
+      "subject": "fix: change video-jobs cron to every 6h (Hobby plan limit)",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/4acd24c96f9d18a7ccdd3d266a66cf901805d02e",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "cf2862ee3f84f5a03cae9686fb167195ca624ef5",
+      "shortHash": "cf2862e",
+      "date": "2026-02-20T01:35:54Z",
+      "subject": "fix: P0 credits, Stripe, and family account fixes",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/cf2862ee3f84f5a03cae9686fb167195ca624ef5",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "d1d29f7b6156dab2531b5d0e76119f298e6b2722",
+      "shortHash": "d1d29f7",
+      "date": "2026-02-20T00:56:05Z",
+      "subject": "docs: add project docs, deploy dashboard, and StoryMaker context",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/d1d29f7b6156dab2531b5d0e76119f298e6b2722",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "3f5557c02360da0753b25b0e26b748b3fb108ce1",
+      "shortHash": "3f5557c",
+      "date": "2026-02-20T00:56:00Z",
+      "subject": "feat: StoryMaker — full story creation and video generation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/3f5557c02360da0753b25b0e26b748b3fb108ce1",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "cbdd4a4c9c5040501629f6906e0bf51dd614551e",
+      "shortHash": "cbdd4a4",
+      "date": "2026-02-20T00:55:49Z",
+      "subject": "feat: UI enhancements across all main components",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/cbdd4a4c9c5040501629f6906e0bf51dd614551e",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "d05345fd8d5095211147353b946f7cf81ef64f34",
+      "shortHash": "d05345f",
+      "date": "2026-02-20T00:55:41Z",
+      "subject": "feat: backend APIs, billing, video pipeline, and achievements",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/d05345fd8d5095211147353b946f7cf81ef64f34",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "ad5021342a84fdbabf2a22e9f7965dfbadb127f2",
+      "shortHash": "ad50213",
+      "date": "2026-02-20T00:55:33Z",
+      "subject": "fix: auth login flow for local dev and LoginSplash component",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/ad5021342a84fdbabf2a22e9f7965dfbadb127f2",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "788bae704800871c3904ff7ac7c02d3f66440339",
+      "shortHash": "788bae7",
+      "date": "2026-02-20T00:55:27Z",
+      "subject": "chore: update dependencies and config",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/788bae704800871c3904ff7ac7c02d3f66440339",
+      "type": "chore",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "feat": 7,
+      "fix": 5,
+      "docs": 1,
+      "chore": 1
+    },
+    "byAuthor": {
+      "aikaizen": 14
+    },
+    "byRepo": {
+      "bible": 1,
+      "kaizen": 13
+    },
+    "total": 14
+  },
+  "summary": {
+    "totalCommits": 14,
+    "activeRepos": [
+      "kaizen",
+      "bible"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        7
+      ],
+      [
+        "fix",
+        5
+      ],
+      [
+        "docs",
+        1
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

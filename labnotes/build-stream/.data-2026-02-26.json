@@ -1,0 +1,275 @@
+{
+  "date": "2026-02-26",
+  "generatedAt": "2026-03-09T18:18:58.519Z",
+  "commits": [
+    {
+      "repo": "kaizen",
+      "hash": "4551deef1d5cc45dae072b7f35b57a9a5c6378b9",
+      "shortHash": "4551dee",
+      "date": "2026-02-26T22:48:33Z",
+      "subject": "fix: add missing game data files, fix .gitignore blocking nested data/ dirs",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/4551deef1d5cc45dae072b7f35b57a9a5c6378b9",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "529bf497c0031d39117b93f1e2a22daf6e8b10d7",
+      "shortHash": "529bf49",
+      "date": "2026-02-26T22:40:03Z",
+      "subject": "docs: add v0.7.0 changelog — MathBattle, video fix, game extraction",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/529bf497c0031d39117b93f1e2a22daf6e8b10d7",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "faa650b7006692176b8659e4a2432cb97971771d",
+      "shortHash": "faa650b",
+      "date": "2026-02-26T22:31:17Z",
+      "subject": "feat: restructure pre-K curriculum to 5 plans with 20 lessons",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/faa650b7006692176b8659e4a2432cb97971771d",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "7f64a762f657e0ce48f6d20db9b05263478faf36",
+      "shortHash": "7f64a76",
+      "date": "2026-02-26T20:27:49Z",
+      "subject": "feat: major lesson plan expansion and English game assets",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/7f64a762f657e0ce48f6d20db9b05263478faf36",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "b8fe4801b8abff35edc7fc35bd840303d50d8ff8",
+      "shortHash": "b8fe480",
+      "date": "2026-02-26T20:07:12Z",
+      "subject": "feat: add games, Google auth backend, expanded lessons and tutors",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/b8fe4801b8abff35edc7fc35bd840303d50d8ff8",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "7eb2de6ee3d8a09f24a99ec523cdbfeebaf86816",
+      "shortHash": "7eb2de6",
+      "date": "2026-02-26T20:06:56Z",
+      "subject": "feat: sandbox login — one-click role switching for demo mode",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/7eb2de6ee3d8a09f24a99ec523cdbfeebaf86816",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "ddfdc179bc37e56a0779f471b8d49ce311519079",
+      "shortHash": "ddfdc17",
+      "date": "2026-02-26T19:06:08Z",
+      "subject": "feat: add teacher Google auth + student PIN login",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/ddfdc179bc37e56a0779f471b8d49ce311519079",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "452a422e6b809b7fdb16901450df0035baef0b04",
+      "shortHash": "452a422",
+      "date": "2026-02-26T17:44:01Z",
+      "subject": "docs: add vision, game ideas, battle plans, marketing roadmap, and cleanup stale docs",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/452a422e6b809b7fdb16901450df0035baef0b04",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "94f83fe2e10ee7e60b88b46ab71c7ea4fd368497",
+      "shortHash": "94f83fe",
+      "date": "2026-02-26T16:21:37Z",
+      "subject": "fix(battle): add credit check/deduct to character generation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/94f83fe2e10ee7e60b88b46ab71c7ea4fd368497",
+      "type": "fix",
+      "scope": "battle"
+    },
+    {
+      "repo": "kaizen",
+      "hash": "6113ffa3f1551af28ba17df5c5b8feb2bcc477ce",
+      "shortHash": "6113ffa",
+      "date": "2026-02-26T05:31:01Z",
+      "subject": "feat: add game extraction infrastructure with registry and module structure",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/6113ffa3f1551af28ba17df5c5b8feb2bcc477ce",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "dff1099fa1ab940fd56a1f5733202a10a35b79f5",
+      "shortHash": "dff1099",
+      "date": "2026-02-26T05:30:53Z",
+      "subject": "feat(battle): add difficulty system, character creator, sprites, and defend mechanic",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/dff1099fa1ab940fd56a1f5733202a10a35b79f5",
+      "type": "feat",
+      "scope": "battle"
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "a4b13085cfbef82ebff08091d7ee88fde4ea4146",
+      "shortHash": "a4b1308",
+      "date": "2026-02-26T05:30:13Z",
+      "subject": "docs: update TODO — mark shipping bugs fixed, add provider toggle status",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/a4b13085cfbef82ebff08091d7ee88fde4ea4146",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "f5c52bf8e0fcb1514dfec09e8bc4b5e7094c87c5",
+      "shortHash": "f5c52bf",
+      "date": "2026-02-26T05:29:24Z",
+      "subject": "fix: unblock video playback in StoryMaker by adding media-src to CSP",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/f5c52bf8e0fcb1514dfec09e8bc4b5e7094c87c5",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "7a13c25ab4cdb581bcbf0ff073f79a5c55beed5a",
+      "shortHash": "7a13c25",
+      "date": "2026-02-26T05:24:13Z",
+      "subject": "feat(battle): add category tree creator with presets, details & prompt preview",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/7a13c25ab4cdb581bcbf0ff073f79a5c55beed5a",
+      "type": "feat",
+      "scope": "battle"
+    },
+    {
+      "repo": "flow",
+      "hash": "1e4e56cb7770c520e9811926c46dc1ff2ca862e9",
+      "shortHash": "1e4e56c",
+      "date": "2026-02-26T05:16:08Z",
+      "subject": "feat: add Shape Sort game asset and wire game components into challenge system",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/1e4e56cb7770c520e9811926c46dc1ff2ca862e9",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "2d8417a5ae24880f31f08e35e3505b4f59c0ea2a",
+      "shortHash": "2d8417a",
+      "date": "2026-02-26T04:32:03Z",
+      "subject": "fix: clean chat UI with iMessage-style spacing and flat bubbles",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/2d8417a5ae24880f31f08e35e3505b4f59c0ea2a",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "6cc058e42d4f2bba59d46886808e58450891e208",
+      "shortHash": "6cc058e",
+      "date": "2026-02-26T04:19:46Z",
+      "subject": "feat: simple mode prompt overhaul, lesson plan markdown, language button, Urdu/JWT support",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/6cc058e42d4f2bba59d46886808e58450891e208",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "cf4a1c1efb117e80355cb88d1f1115a96794d7d9",
+      "shortHash": "cf4a1c1",
+      "date": "2026-02-26T04:05:44Z",
+      "subject": "fix: shipping pipeline bugs + provider toggle for Lulu/Gelato comparison",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/cf4a1c1efb117e80355cb88d1f1115a96794d7d9",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "e02a188bc00b72868aa849c7626d77961c14dc06",
+      "shortHash": "e02a188",
+      "date": "2026-02-26T03:42:44Z",
+      "subject": "feat: redesign student chat and home screen",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/e02a188bc00b72868aa849c7626d77961c14dc06",
+      "type": "feat",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "fix": 5,
+      "docs": 3,
+      "feat": 11
+    },
+    "byAuthor": {
+      "aikaizen": 19
+    },
+    "byRepo": {
+      "kaizen": 8,
+      "flow": 9,
+      "storybookstudio": 2
+    },
+    "total": 19
+  },
+  "summary": {
+    "totalCommits": 19,
+    "activeRepos": [
+      "flow",
+      "kaizen",
+      "storybookstudio"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        11
+      ],
+      [
+        "fix",
+        5
+      ],
+      [
+        "docs",
+        3
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

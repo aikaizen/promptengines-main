@@ -1,0 +1,565 @@
+{
+  "date": "2026-03-01",
+  "generatedAt": "2026-03-09T18:18:58.519Z",
+  "commits": [
+    {
+      "repo": "promptengines-main",
+      "hash": "08247ea25fd985bcccc85fa132beda94274bc3b4",
+      "shortHash": "08247ea",
+      "date": "2026-03-01T23:27:39Z",
+      "subject": "docs: Add comprehensive TODO.md for full app build",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/08247ea25fd985bcccc85fa132beda94274bc3b4",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "bb06ce4f5f8d8be52cf65649014d7044190b7010",
+      "shortHash": "bb06ce4",
+      "date": "2026-03-01T22:58:04Z",
+      "subject": "chore: Force Vercel redeploy",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/bb06ce4f5f8d8be52cf65649014d7044190b7010",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "919a76bf7321d54643152a70d6895b64d25c99c8",
+      "shortHash": "919a76b",
+      "date": "2026-03-01T22:57:24Z",
+      "subject": "fix: Inline styles for mode selector, add debug logging, fix localStorage safety",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/919a76bf7321d54643152a70d6895b64d25c99c8",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "9a9d05d93b8ffd516a18333d49a0bb95ebfbd404",
+      "shortHash": "9a9d05d",
+      "date": "2026-03-01T22:51:08Z",
+      "subject": "feat: Add demo mode switcher and safety fixes for both age modes",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/9a9d05d93b8ffd516a18333d49a0bb95ebfbd404",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "d70881c87917b68335592e42272def9e5e26f709",
+      "shortHash": "d70881c",
+      "date": "2026-03-01T22:49:33Z",
+      "subject": "fix: Improve ErrorBoundary with direct link and safer clear",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/d70881c87917b68335592e42272def9e5e26f709",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "11d4e1d87f1e589f3b6df8b8938646d958c97fb0",
+      "shortHash": "11d4e1d",
+      "date": "2026-03-01T22:49:23Z",
+      "subject": "fix: Add localStorage safety checks for age mode",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/11d4e1d87f1e589f3b6df8b8938646d958c97fb0",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "b3f98b61596cec3ddde96cf4721718b7462dc002",
+      "shortHash": "b3f98b6",
+      "date": "2026-03-01T22:48:51Z",
+      "subject": "fix: Add safety checks to prevent SimpleLessonView crashes",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/b3f98b61596cec3ddde96cf4721718b7462dc002",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "1ae1a8ec456728ffd639a6a689d9c7575151cfb0",
+      "shortHash": "1ae1a8e",
+      "date": "2026-03-01T22:44:28Z",
+      "subject": "fix: Add ErrorBoundary and safety background to prevent black screen",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/1ae1a8ec456728ffd639a6a689d9c7575151cfb0",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "a76a33cdd434004c62a95f940ede872fab5bd69a",
+      "shortHash": "a76a33c",
+      "date": "2026-03-01T22:34:29Z",
+      "subject": "fix: iOS stability - remove aggressive tablet CSS/JS",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/a76a33cdd434004c62a95f940ede872fab5bd69a",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "f85e06bc1af762be6f1428fdbd113bd013480928",
+      "shortHash": "f85e06b",
+      "date": "2026-03-01T22:15:10Z",
+      "subject": "fix: Add explicit asset routes for flow-education app",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/f85e06bc1af762be6f1428fdbd113bd013480928",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "78b1e537eec3f258b4224e4695ff33112f9d70f7",
+      "shortHash": "78b1e53",
+      "date": "2026-03-01T22:14:57Z",
+      "subject": "fix: Serve all static files, not just HTML",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/78b1e537eec3f258b4224e4695ff33112f9d70f7",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "00ecdd51b6fbbbf954476199ef441c29bd49d52c",
+      "shortHash": "00ecdd5",
+      "date": "2026-03-01T22:10:12Z",
+      "subject": "fix: Serve /flow redirect page instead of app directly",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/00ecdd51b6fbbbf954476199ef441c29bd49d52c",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "8e92263d89fead43a1542ba0cdfa38c788916d0c",
+      "shortHash": "8e92263",
+      "date": "2026-03-01T22:08:17Z",
+      "subject": "fix: Safari iOS redirect and asset loading for /flow",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/8e92263d89fead43a1542ba0cdfa38c788916d0c",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "611a8494881bb95f354806264c9d06189f9843ba",
+      "shortHash": "611a849",
+      "date": "2026-03-01T22:06:24Z",
+      "subject": "feat: Add /flow short URL with static redirect",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/611a8494881bb95f354806264c9d06189f9843ba",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "b67e7da36de9d03797721da632b8c5f399954f14",
+      "shortHash": "b67e7da",
+      "date": "2026-03-01T22:06:15Z",
+      "subject": "feat: Add /flow short URL redirect",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/b67e7da36de9d03797721da632b8c5f399954f14",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "7154e9a6cc6b3b6960241e424cd1b7cc2d04d4aa",
+      "shortHash": "7154e9a",
+      "date": "2026-03-01T21:56:54Z",
+      "subject": "feat: Comprehensive tablet optimization for Chrome tablets",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/7154e9a6cc6b3b6960241e424cd1b7cc2d04d4aa",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "71e0a105a0b9ddab946d1510c37f85c44516c5dd",
+      "shortHash": "71e0a10",
+      "date": "2026-03-01T21:19:29Z",
+      "subject": "docs: Update Phase 0 status with 4YO mode",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/71e0a105a0b9ddab946d1510c37f85c44516c5dd",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "2504ef9ccfbc903a677550256e987d511265d03d",
+      "shortHash": "2504ef9",
+      "date": "2026-03-01T21:19:11Z",
+      "subject": "feat: 4-Year-Old Mode — Ultra-simplified for pre-readers",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/2504ef9ccfbc903a677550256e987d511265d03d",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "4eaf5c4dda924f43ebd707d1a5d9a2c2b8fdc011",
+      "shortHash": "4eaf5c4",
+      "date": "2026-03-01T20:47:22Z",
+      "subject": "docs: Update Phase 0 status with pre-reader optimizations",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/4eaf5c4dda924f43ebd707d1a5d9a2c2b8fdc011",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "f4a4a745df055848deef6b5d50a64178d1606424",
+      "shortHash": "f4a4a74",
+      "date": "2026-03-01T20:46:59Z",
+      "subject": "feat: Kid-friendly redesign for pre-readers (ages 5-6)",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/f4a4a745df055848deef6b5d50a64178d1606424",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "eda6791b71a3561ce5bd933bbd0d42cbe4bf120c",
+      "shortHash": "eda6791",
+      "date": "2026-03-01T20:35:33Z",
+      "subject": "docs: Update Phase 0 status with audio improvements",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/eda6791b71a3561ce5bd933bbd0d42cbe4bf120c",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "d56f82132aa823a8694febca80e4a6ac8c18de15",
+      "shortHash": "d56f821",
+      "date": "2026-03-01T20:35:00Z",
+      "subject": "feat: Add streak counter, celebration improvements, find challenge polish",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/d56f82132aa823a8694febca80e4a6ac8c18de15",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "d16548917d8b1f692517e04776401d4e4d80ffc2",
+      "shortHash": "d165489",
+      "date": "2026-03-01T20:34:25Z",
+      "subject": "feat: Enhanced audio, tracing, and accessibility",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/d16548917d8b1f692517e04776401d4e4d80ffc2",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "7058ee0efe85aa93c29ce06452a2d4e994e1ea77",
+      "shortHash": "7058ee0",
+      "date": "2026-03-01T20:32:36Z",
+      "subject": "docs: Add Phase 0 PRD vs Implementation comparison",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/7058ee0efe85aa93c29ce06452a2d4e994e1ea77",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "32c20e9b73d143698d06951aeaab43ff95064677",
+      "shortHash": "32c20e9",
+      "date": "2026-03-01T19:15:53Z",
+      "subject": "feat: Add prominent app launch links to landing page",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/32c20e9b73d143698d06951aeaab43ff95064677",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "880cdf6139a0f9bb7e3983e777c6ec788e2bc1ac",
+      "shortHash": "880cdf6",
+      "date": "2026-03-01T19:15:32Z",
+      "subject": "docs: Add GitHub Actions workflow update instructions",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/880cdf6139a0f9bb7e3983e777c6ec788e2bc1ac",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "0c0d5eabaa6e15ce3aa7b217fd1ef1fa03636c1c",
+      "shortHash": "0c0d5ea",
+      "date": "2026-03-01T19:15:21Z",
+      "subject": "fix: Production-ready React app build",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/0c0d5eabaa6e15ce3aa7b217fd1ef1fa03636c1c",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "0e91cf4a7e51e90d13a061ebc92cd4c8d87ccbe6",
+      "shortHash": "0e91cf4",
+      "date": "2026-03-01T19:14:20Z",
+      "subject": "docs: Add model configuration guide with Qwen 3 status",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/0e91cf4a7e51e90d13a061ebc92cd4c8d87ccbe6",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "76e373fec36e99f824b27ba6f7ff9ae55f8535cc",
+      "shortHash": "76e373f",
+      "date": "2026-03-01T19:09:05Z",
+      "subject": "feat: Complete Phase 0 MVP implementation",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/76e373fec36e99f824b27ba6f7ff9ae55f8535cc",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "7585b7b44f1afc18403deb5c9b9a049055eb8ce3",
+      "shortHash": "7585b7b",
+      "date": "2026-03-01T18:59:09Z",
+      "subject": "feat(app): Phase 0 MVP compliant React app",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/7585b7b44f1afc18403deb5c9b9a049055eb8ce3",
+      "type": "feat",
+      "scope": "app"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "8107797b5825912908f4e7c378eb0f629151ccdb",
+      "shortHash": "8107797",
+      "date": "2026-03-01T18:53:07Z",
+      "subject": "docs: model configuration guide — Qwen3 Coder recommendation for React development",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/8107797b5825912908f4e7c378eb0f629151ccdb",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "1b2b527e542d0a14c5050b4c356199a9a75b5e98",
+      "shortHash": "1b2b527",
+      "date": "2026-03-01T18:50:52Z",
+      "subject": "feat: Flow Education React app + positive Kaizen manifesto + fixed prototype links",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/1b2b527e542d0a14c5050b4c356199a9a75b5e98",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "7e43d4310adcbdc4d15392b975b6093f020f8e08",
+      "shortHash": "7e43d43",
+      "date": "2026-03-01T18:38:03Z",
+      "subject": "ci: test auto-deploy with VERCEL_TOKEN",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/7e43d4310adcbdc4d15392b975b6093f020f8e08",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "e3c95128f865b571543a079315158b89f19b22ee",
+      "shortHash": "e3c9512",
+      "date": "2026-03-01T18:31:54Z",
+      "subject": "ci: add GitHub Actions auto-deploy to Vercel on push to main",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/e3c95128f865b571543a079315158b89f19b22ee",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "4a2b917f0ecc4d19e09ac1f76514cdef44b739d1",
+      "shortHash": "4a2b917",
+      "date": "2026-03-01T18:28:17Z",
+      "subject": "fix(vercel): correct routing paths for prototypes folder",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/4a2b917f0ecc4d19e09ac1f76514cdef44b739d1",
+      "type": "fix",
+      "scope": "vercel"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "68525e5af1eb0c11d058e71c85a5cd0b2822bf34",
+      "shortHash": "68525e5",
+      "date": "2026-03-01T18:27:50Z",
+      "subject": "feat(flow-education): add complete MVP — lesson plans, LP-001, tools, manifesto",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/68525e5af1eb0c11d058e71c85a5cd0b2822bf34",
+      "type": "feat",
+      "scope": "flow-education"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "eabd353cd8b64da7858a2295bcc69db9d66bb25f",
+      "shortHash": "eabd353",
+      "date": "2026-03-01T18:26:42Z",
+      "subject": "chore(labnotes): add .gitignore and .vercelignore for labnotes subdir",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/eabd353cd8b64da7858a2295bcc69db9d66bb25f",
+      "type": "chore",
+      "scope": "labnotes"
+    },
+    {
+      "repo": "kaizen",
+      "hash": "e1c436033d730db76bf07faeb466a3e986bcd6cb",
+      "shortHash": "e1c4360",
+      "date": "2026-03-01T04:46:40Z",
+      "subject": "fix: iPad kid-proof touch hardening for coloring page",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/e1c436033d730db76bf07faeb466a3e986bcd6cb",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "b9fc9bed27cab4203330dedc126adf4292812bf6",
+      "shortHash": "b9fc9be",
+      "date": "2026-03-01T04:20:11Z",
+      "subject": "Fix credibility gaps: real terminal, linked notes, honest follow section",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/b9fc9bed27cab4203330dedc126adf4292812bf6",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "43084ec1d97cf2385dd14871adfc0e324cdfb97d",
+      "shortHash": "43084ec",
+      "date": "2026-03-01T04:03:27Z",
+      "subject": "fix: correct credit pricing for character gen and image-to-sticker",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/43084ec1d97cf2385dd14871adfc0e324cdfb97d",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "bdeabdd458d18cf98eb1bb5591e71642c6f5e6a0",
+      "shortHash": "bdeabdd",
+      "date": "2026-03-01T03:27:19Z",
+      "subject": "Rename Projects dropdown to Experiments, remove standalone Experiments link",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/bdeabdd458d18cf98eb1bb5591e71642c6f5e6a0",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "fd2a139bb0adf3c0a095b31dce4d90284f00a3ec",
+      "shortHash": "fd2a139",
+      "date": "2026-03-01T03:22:37Z",
+      "subject": "feat: add Gemini 3.1 Flash model + redesign sticker mode",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/fd2a139bb0adf3c0a095b31dce4d90284f00a3ec",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "8162b3ddf639df93e8cab5a80f81f1742f8c0184",
+      "shortHash": "8162b3d",
+      "date": "2026-03-01T01:30:45Z",
+      "subject": "fix: remove imagen-3-512 model, default character creator to Gemini Flash",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/8162b3ddf639df93e8cab5a80f81f1742f8c0184",
+      "type": "fix",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "docs": 8,
+      "chore": 2,
+      "fix": 15,
+      "feat": 14,
+      "other": 4
+    },
+    "byAuthor": {
+      "Andy Stable": 34,
+      "aikaizen": 9
+    },
+    "byRepo": {
+      "promptengines-main": 39,
+      "kaizen": 4
+    },
+    "total": 43
+  },
+  "summary": {
+    "totalCommits": 43,
+    "activeRepos": [
+      "promptengines-main",
+      "kaizen"
+    ],
+    "primaryTypes": [
+      [
+        "fix",
+        15
+      ],
+      [
+        "feat",
+        14
+      ],
+      [
+        "docs",
+        8
+      ]
+    ],
+    "activeAuthors": [
+      "Andy Stable",
+      "aikaizen"
+    ]
+  }
+}

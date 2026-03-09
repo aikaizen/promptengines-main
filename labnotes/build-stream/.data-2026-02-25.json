@@ -1,0 +1,162 @@
+{
+  "date": "2026-02-25",
+  "generatedAt": "2026-03-09T18:18:58.518Z",
+  "commits": [
+    {
+      "repo": "flow",
+      "hash": "577e2e9ce4497e679ce25f9f57a3be137059f8a9",
+      "shortHash": "577e2e9",
+      "date": "2026-02-25T23:26:10Z",
+      "subject": "feat: add site-wide password gate",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/577e2e9ce4497e679ce25f9f57a3be137059f8a9",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "b860370c7615ce8c50c0c28f482413dab7dfaa17",
+      "shortHash": "b860370",
+      "date": "2026-02-25T23:16:16Z",
+      "subject": "feat: add Simple/Agent mode toggle for tutor chat",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/b860370c7615ce8c50c0c28f482413dab7dfaa17",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "05b0769b52818ffb7ffb4a6361d7e61149f72879",
+      "shortHash": "05b0769",
+      "date": "2026-02-25T21:23:27Z",
+      "subject": "feat: v0.1 backend hardening, CI, changelog, and ops readiness",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/05b0769b52818ffb7ffb4a6361d7e61149f72879",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "9494cc3b1e0258d8b3b2097d148d986bcd7b7676",
+      "shortHash": "9494cc3",
+      "date": "2026-02-25T19:16:44Z",
+      "subject": "feat: P0 frontend overhaul — auth, admin dashboard, bug fixes, and teacher data wiring",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/9494cc3b1e0258d8b3b2097d148d986bcd7b7676",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "7808f9512b620d428e1456d01a54782f008ce66e",
+      "shortHash": "7808f95",
+      "date": "2026-02-25T06:50:08Z",
+      "subject": "Redesign Lab Notes with taste-skill design system",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/7808f9512b620d428e1456d01a54782f008ce66e",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "658b349d274ecd12b9053a40aa97ccb5c44556cd",
+      "shortHash": "658b349",
+      "date": "2026-02-25T06:23:39Z",
+      "subject": "Add view switcher, fynt-styled lab notes, and two new articles",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/658b349d274ecd12b9053a40aa97ccb5c44556cd",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "896a60655fade254ada4f18859d447ca84cbea1e",
+      "shortHash": "896a606",
+      "date": "2026-02-25T06:19:02Z",
+      "subject": "feat(battle): wire MathBattle into app, add battle mode to type system",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/896a60655fade254ada4f18859d447ca84cbea1e",
+      "type": "feat",
+      "scope": "battle"
+    },
+    {
+      "repo": "kaizen",
+      "hash": "679f6447c4be4a5d9598f0ebe3cb11cb085e993b",
+      "shortHash": "679f644",
+      "date": "2026-02-25T06:15:09Z",
+      "subject": "feat(battle): add main MathBattle orchestrator component",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/679f6447c4be4a5d9598f0ebe3cb11cb085e993b",
+      "type": "feat",
+      "scope": "battle"
+    },
+    {
+      "repo": "kaizen",
+      "hash": "6be1698daba065c959929e81172263f95fd644d6",
+      "shortHash": "6be1698",
+      "date": "2026-02-25T06:14:11Z",
+      "subject": "feat(battle): add UI sub-components for math battle",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/6be1698daba065c959929e81172263f95fd644d6",
+      "type": "feat",
+      "scope": "battle"
+    },
+    {
+      "repo": "kaizen",
+      "hash": "9efbed8b097871b729f4453fb60059b77fd5db39",
+      "shortHash": "9efbed8",
+      "date": "2026-02-25T06:11:43Z",
+      "subject": "feat(battle): add math battle data layer",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/9efbed8b097871b729f4453fb60059b77fd5db39",
+      "type": "feat",
+      "scope": "battle"
+    }
+  ],
+  "stats": {
+    "byType": {
+      "feat": 8,
+      "other": 2
+    },
+    "byAuthor": {
+      "aikaizen": 10
+    },
+    "byRepo": {
+      "flow": 4,
+      "promptengines-main": 2,
+      "kaizen": 4
+    },
+    "total": 10
+  },
+  "summary": {
+    "totalCommits": 10,
+    "activeRepos": [
+      "flow",
+      "kaizen",
+      "promptengines-main"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        8
+      ],
+      [
+        "other",
+        2
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

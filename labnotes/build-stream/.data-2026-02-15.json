@@ -1,0 +1,62 @@
+{
+  "date": "2026-02-15",
+  "generatedAt": "2026-03-09T18:18:58.517Z",
+  "commits": [
+    {
+      "repo": "storybookstudio",
+      "hash": "b82122edade79383bb42e9d0525097f4a952bddf",
+      "shortHash": "b82122e",
+      "date": "2026-02-15T00:37:54Z",
+      "subject": "feat: Lulu Print API + Stripe webhook improvements",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/b82122edade79383bb42e9d0525097f4a952bddf",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "964a6e93a573a577b8be8aa2a2e26bff83ec5f4d",
+      "shortHash": "964a6e9",
+      "date": "2026-02-15T00:33:13Z",
+      "subject": "fix: OAuth login stuck on splash screen + pin esm.sh deps",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/964a6e93a573a577b8be8aa2a2e26bff83ec5f4d",
+      "type": "fix",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "feat": 1,
+      "fix": 1
+    },
+    "byAuthor": {
+      "aikaizen": 2
+    },
+    "byRepo": {
+      "storybookstudio": 2
+    },
+    "total": 2
+  },
+  "summary": {
+    "totalCommits": 2,
+    "activeRepos": [
+      "storybookstudio"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        1
+      ],
+      [
+        "fix",
+        1
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

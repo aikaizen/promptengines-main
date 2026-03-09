@@ -1,0 +1,158 @@
+{
+  "date": "2026-02-23",
+  "generatedAt": "2026-03-09T18:18:58.518Z",
+  "commits": [
+    {
+      "repo": "storybookstudio",
+      "hash": "0421d0aca7ecf534426c3c0ac385c9d31bee5d50",
+      "shortHash": "0421d0a",
+      "date": "2026-02-23T17:38:29Z",
+      "subject": "fix: harden auth — non-blocking login, deterministic OAuth, guardrails",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/0421d0aca7ecf534426c3c0ac385c9d31bee5d50",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "5f812e06bc424170b94dacd4309918c88305858e",
+      "shortHash": "5f812e0",
+      "date": "2026-02-23T17:16:33Z",
+      "subject": "fix: restore detectSessionInUrl, add post-exchange URL cleanup",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/5f812e06bc424170b94dacd4309918c88305858e",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "9414e3a3244fd46ab5ebdec5329ae61a35f5a084",
+      "shortHash": "9414e3a",
+      "date": "2026-02-23T16:59:51Z",
+      "subject": "fix: wrap auth init in try/finally so loading spinner always resolves",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/9414e3a3244fd46ab5ebdec5329ae61a35f5a084",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "94cf8e1df8ea607868ef3341480eea58031c97f7",
+      "shortHash": "94cf8e1",
+      "date": "2026-02-23T16:46:39Z",
+      "subject": "fix: explicit PKCE code exchange to prevent auth breakage on deploy",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/94cf8e1df8ea607868ef3341480eea58031c97f7",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "385e9aeb85780dd510db64fd33e7d67a4c9b4107",
+      "shortHash": "385e9ae",
+      "date": "2026-02-23T16:36:09Z",
+      "subject": "Update website with new designs, consulting page, dashboard app, and docs",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/385e9aeb85780dd510db64fd33e7d67a4c9b4107",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "bb4067e67159b43b070e62e56d5d82d722f1227e",
+      "shortHash": "bb4067e",
+      "date": "2026-02-23T05:18:51Z",
+      "subject": "feat: color palette simplification, story mode row wrap & glow, marketing plan",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/bb4067e67159b43b070e62e56d5d82d722f1227e",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "9aba43013946b03bcae2d0e18016cf6d6d34bfe6",
+      "shortHash": "9aba430",
+      "date": "2026-02-23T04:45:33Z",
+      "subject": "fix: shipping options, share flow, and assembly insert-page feature",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/9aba43013946b03bcae2d0e18016cf6d6d34bfe6",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "c6e5a57c3b9e741cdc78873ce4ff8c0685e7d325",
+      "shortHash": "c6e5a57",
+      "date": "2026-02-23T02:59:31Z",
+      "subject": "docs: comprehensive API endpoints reference + fix story-writer ESM import",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/c6e5a57c3b9e741cdc78873ce4ff8c0685e7d325",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "608a368fb755af69943fd752fed4de38be7c2585",
+      "shortHash": "608a368",
+      "date": "2026-02-23T00:23:48Z",
+      "subject": "feat: add Group link in drawer, merge annotations into Discussion",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/608a368fb755af69943fd752fed4de38be7c2585",
+      "type": "feat",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "fix": 5,
+      "other": 1,
+      "feat": 2,
+      "docs": 1
+    },
+    "byAuthor": {
+      "aikaizen": 9
+    },
+    "byRepo": {
+      "storybookstudio": 6,
+      "promptengines-main": 1,
+      "kaizen": 1,
+      "bible": 1
+    },
+    "total": 9
+  },
+  "summary": {
+    "totalCommits": 9,
+    "activeRepos": [
+      "storybookstudio",
+      "promptengines-main",
+      "kaizen",
+      "bible"
+    ],
+    "primaryTypes": [
+      [
+        "fix",
+        5
+      ],
+      [
+        "feat",
+        2
+      ],
+      [
+        "other",
+        1
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "date": "2026-02-18",
+  "generatedAt": "2026-03-09T18:18:58.517Z",
+  "commits": [
+    {
+      "repo": "kaizen",
+      "hash": "8df08a11dc911c4c0889252b9a8d37a198618b97",
+      "shortHash": "8df08a1",
+      "date": "2026-02-18T17:21:37Z",
+      "subject": "fix: StoryMaker P0 bugs — SVG click-through, space key conflict, blob URL leak, localStorage quota",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/8df08a11dc911c4c0889252b9a8d37a198618b97",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "ebccadf80515e3f75b9708d7746a0f30dc980048",
+      "shortHash": "ebccadf",
+      "date": "2026-02-18T17:07:02Z",
+      "subject": "feat: StoryMaker P1 UX — connection deletion, fit-on-load, editable labels, multi-select drag",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/ebccadf80515e3f75b9708d7746a0f30dc980048",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "5aee5be7cb377863c2cd3df7997a3208ef835006",
+      "shortHash": "5aee5be",
+      "date": "2026-02-18T17:01:46Z",
+      "subject": "feat: add remaining StoryMaker components and upload-media API route",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/5aee5be7cb377863c2cd3df7997a3208ef835006",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "7f42975ce430f429cdb7564ac9d743c8b60d8c59",
+      "shortHash": "7f42975",
+      "date": "2026-02-18T17:01:07Z",
+      "subject": "fix: StoryMaker P0 — upload images to Blob before video gen, add poll timeout, surface errors",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/7f42975ce430f429cdb7564ac9d743c8b60d8c59",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "b03e52fcc91e543f8e629d4ce886fd5a4d14e6d9",
+      "shortHash": "b03e52f",
+      "date": "2026-02-18T16:31:06Z",
+      "subject": "fix: CRITICAL - restore use_credits function search_path (was empty)",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/b03e52fcc91e543f8e629d4ce886fd5a4d14e6d9",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "abb78f33acab4384edc4629dc40cf04712b05f34",
+      "shortHash": "abb78f3",
+      "date": "2026-02-18T05:13:35Z",
+      "subject": "feat: add Bible reader navigation, Read It preview, and book autocomplete",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/abb78f33acab4384edc4629dc40cf04712b05f34",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "59625b8c426aa22b57082b5e19d125b409db5279",
+      "shortHash": "59625b8",
+      "date": "2026-02-18T01:25:40Z",
+      "subject": "docs: update TODO for v0.2.2 — perspective switch + character brainstorm",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/59625b8c426aa22b57082b5e19d125b409db5279",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "91ff4e83fdfcf2007daa6d5bafeb8ce9fb0b2f0d",
+      "shortHash": "91ff4e8",
+      "date": "2026-02-18T01:25:35Z",
+      "subject": "docs: add CLAUDE.md project context",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/91ff4e83fdfcf2007daa6d5bafeb8ce9fb0b2f0d",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "3e3de1e60a8b8075eff32280717b260fbcf2ecbf",
+      "shortHash": "3e3de1e",
+      "date": "2026-02-18T01:19:15Z",
+      "subject": "feat: add discrete admin login via password",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/3e3de1e60a8b8075eff32280717b260fbcf2ecbf",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "069188589be7237754767b04abe255a45a5343f3",
+      "shortHash": "0691885",
+      "date": "2026-02-18T01:11:07Z",
+      "subject": "feat: brainstorm UX — bigger speed icons, expanding fields, credits",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/069188589be7237754767b04abe255a45a5343f3",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "34d08f1f52a926ed30afec237dfcbbdc8f27e353",
+      "shortHash": "34d08f1",
+      "date": "2026-02-18T00:34:01Z",
+      "subject": "fix: redirect to sign-in on 401 API responses",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/34d08f1f52a926ed30afec237dfcbbdc8f27e353",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "ff4c9da1466c7728197b3809763ba5cc2ca91d20",
+      "shortHash": "ff4c9da",
+      "date": "2026-02-18T00:33:15Z",
+      "subject": "fix: loading screen bug for unauthenticated users, typedRoutes warning",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/ff4c9da1466c7728197b3809763ba5cc2ca91d20",
+      "type": "fix",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "fix": 5,
+      "feat": 5,
+      "docs": 2
+    },
+    "byAuthor": {
+      "aikaizen": 12
+    },
+    "byRepo": {
+      "kaizen": 5,
+      "bible": 5,
+      "storybookstudio": 2
+    },
+    "total": 12
+  },
+  "summary": {
+    "totalCommits": 12,
+    "activeRepos": [
+      "kaizen",
+      "bible",
+      "storybookstudio"
+    ],
+    "primaryTypes": [
+      [
+        "fix",
+        5
+      ],
+      [
+        "feat",
+        5
+      ],
+      [
+        "docs",
+        2
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

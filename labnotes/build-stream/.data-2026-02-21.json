@@ -1,0 +1,102 @@
+{
+  "date": "2026-02-21",
+  "generatedAt": "2026-03-09T18:18:58.518Z",
+  "commits": [
+    {
+      "repo": "kaizen",
+      "hash": "5cfb2dc4a5851d4fc47a940dba07dfa3fff08d73",
+      "shortHash": "5cfb2dc",
+      "date": "2026-02-21T22:59:49Z",
+      "subject": "feat: auto-snap nodes to chain tail + mobile Focus Mode for StoryMaker",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/5cfb2dc4a5851d4fc47a940dba07dfa3fff08d73",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "f8e39e7a087c28b921939da1d093437b80165d2f",
+      "shortHash": "f8e39e7",
+      "date": "2026-02-21T22:59:37Z",
+      "subject": "feat: Auto-Book wizard, Text-with-Images mode, ShipBookModal fixes, mobile UI audit",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/f8e39e7a087c28b921939da1d093437b80165d2f",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "3f0c337e151f900349aba977f81f8be619e11544",
+      "shortHash": "3f0c337",
+      "date": "2026-02-21T05:42:48Z",
+      "subject": "fix: change cron schedule to daily for Vercel Hobby plan",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/3f0c337e151f900349aba977f81f8be619e11544",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "6e151a2ee43718ebfa562c43338b5e38df29762f",
+      "shortHash": "6e151a2",
+      "date": "2026-02-21T03:44:06Z",
+      "subject": "fix: P1/P2 UI polish batch + Stripe dev email validation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/6e151a2ee43718ebfa562c43338b5e38df29762f",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "6f1f4cb30c618f8fa637ee1b8de2795fbc46e02e",
+      "shortHash": "6f1f4cb",
+      "date": "2026-02-21T01:46:36Z",
+      "subject": "feat: StoryMaker credit system, video player fix, selectable MetaNode, Stripe setup",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/6f1f4cb30c618f8fa637ee1b8de2795fbc46e02e",
+      "type": "feat",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "feat": 3,
+      "fix": 2
+    },
+    "byAuthor": {
+      "aikaizen": 5
+    },
+    "byRepo": {
+      "kaizen": 3,
+      "storybookstudio": 1,
+      "bible": 1
+    },
+    "total": 5
+  },
+  "summary": {
+    "totalCommits": 5,
+    "activeRepos": [
+      "kaizen",
+      "storybookstudio",
+      "bible"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        3
+      ],
+      [
+        "fix",
+        2
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

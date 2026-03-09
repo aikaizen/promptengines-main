@@ -1,0 +1,277 @@
+{
+  "date": "2026-02-27",
+  "generatedAt": "2026-03-09T18:18:58.519Z",
+  "commits": [
+    {
+      "repo": "flow",
+      "hash": "124ecf7da1d5350d2c8d4f09ea343d09de245921",
+      "shortHash": "124ecf7",
+      "date": "2026-02-27T22:42:38Z",
+      "subject": "feat: rewrite StudentTutors.jsx render to use Playground components",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/124ecf7da1d5350d2c8d4f09ea343d09de245921",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "46d8b135080c650a24868a75a3f77bf1721922fd",
+      "shortHash": "46d8b13",
+      "date": "2026-02-27T22:37:18Z",
+      "subject": "feat: add ActionDock component with dock state machine",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/46d8b135080c650a24868a75a3f77bf1721922fd",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "fa090632ee73e4658a36ac82012a09250100440e",
+      "shortHash": "fa09063",
+      "date": "2026-02-27T22:35:52Z",
+      "subject": "feat: add CelebrationCard component for game/lesson completion",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/fa090632ee73e4658a36ac82012a09250100440e",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "e47990c5b3cf3b79ebc2f419d2b6ff33bfa2a103",
+      "shortHash": "e47990c",
+      "date": "2026-02-27T22:35:51Z",
+      "subject": "feat: add StarCounter with bounce animation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/e47990c5b3cf3b79ebc2f419d2b6ff33bfa2a103",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "8198fba3c5651ec6b9ed6649dfe21faff9df800b",
+      "shortHash": "8198fba",
+      "date": "2026-02-27T22:35:29Z",
+      "subject": "feat: add GameStage overlay component",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/8198fba3c5651ec6b9ed6649dfe21faff9df800b",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "5ddc116f2a52716cfa5400e01794d4227bf3cb93",
+      "shortHash": "5ddc116",
+      "date": "2026-02-27T22:33:53Z",
+      "subject": "feat: add TutorCard component for tutor message cards",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/5ddc116f2a52716cfa5400e01794d4227bf3cb93",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "16c8d1ca34ff89e330fb30cbff047aa1680e702f",
+      "shortHash": "16c8d1c",
+      "date": "2026-02-27T22:32:36Z",
+      "subject": "feat: add StudentPill component for student messages",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/16c8d1ca34ff89e330fb30cbff047aa1680e702f",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "df8f0fb1dab06edcaed3df0ff43f54b6ac7c189f",
+      "shortHash": "df8f0fb",
+      "date": "2026-02-27T22:32:13Z",
+      "subject": "feat: add EmojiReaction component with float-up animation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/df8f0fb1dab06edcaed3df0ff43f54b6ac7c189f",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "5977130e824ac0aadbbc4a52f3c427f3d30e7e66",
+      "shortHash": "5977130",
+      "date": "2026-02-27T22:29:04Z",
+      "subject": "feat: add Playground CSS foundation for student chat redesign",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/5977130e824ac0aadbbc4a52f3c427f3d30e7e66",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "66914593428b5cc0c88d092a9fd069d94f6190f8",
+      "shortHash": "6691459",
+      "date": "2026-02-27T20:16:16Z",
+      "subject": "Redesign hero and activity section with app-grouped commit cards",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/66914593428b5cc0c88d092a9fd069d94f6190f8",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "875a745549915c097e4980c88d4fb135954e3e8d",
+      "shortHash": "875a745",
+      "date": "2026-02-27T18:36:31Z",
+      "subject": "Replace fake telemetry with real GitHub commit data",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/875a745549915c097e4980c88d4fb135954e3e8d",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "f42f1c1b1e3d364f588dd06485ea2b6094aacaa3",
+      "shortHash": "f42f1c1",
+      "date": "2026-02-27T18:31:58Z",
+      "subject": "Add GitHub Action to auto-regenerate activity feed every 6 hours",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/f42f1c1b1e3d364f588dd06485ea2b6094aacaa3",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "1c878611409969a18a90bf093d64c680d8dc9293",
+      "shortHash": "1c87861",
+      "date": "2026-02-27T18:24:19Z",
+      "subject": "Add product launcher buttons, GitHub activity feed, and realtime updates",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/1c878611409969a18a90bf093d64c680d8dc9293",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "853804f36de87ef96498e8290eb55ccbeeea1008",
+      "shortHash": "853804f",
+      "date": "2026-02-27T16:22:12Z",
+      "subject": "fix: add missing Battle button to Numbers game mode selector",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/853804f36de87ef96498e8290eb55ccbeeea1008",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "f168564b0ae3425313fe887f35638c90aabed171",
+      "shortHash": "f168564",
+      "date": "2026-02-27T03:45:43Z",
+      "subject": "docs: add v0.8.0 changelog, update README architecture, add HUD shell design doc",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/f168564b0ae3425313fe887f35638c90aabed171",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "482fd4a7488a775311b24de390ef22438b1bb711",
+      "shortHash": "482fd4a",
+      "date": "2026-02-27T03:39:25Z",
+      "subject": "refactor: unified HUD shell + game modularity",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/482fd4a7488a775311b24de390ef22438b1bb711",
+      "type": "refactor",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "139a8ce80cb7cfd2eee23dbac1d92198dc3d117b",
+      "shortHash": "139a8ce",
+      "date": "2026-02-27T03:15:18Z",
+      "subject": "fix: disable agentic nudges and suppress early challenge cards",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/139a8ce80cb7cfd2eee23dbac1d92198dc3d117b",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "a2fea641fc6b808ffd83062f0669751592990179",
+      "shortHash": "a2fea64",
+      "date": "2026-02-27T01:55:33Z",
+      "subject": "fix: route students to home page so all 20 lessons are visible",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/a2fea641fc6b808ffd83062f0669751592990179",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "flow",
+      "hash": "95d832e94b6483f338bfad0256a2891d9da7d74f",
+      "shortHash": "95d832e",
+      "date": "2026-02-27T01:26:42Z",
+      "subject": "feat: improve learning state, teacher settings, and flow context",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/flow/commit/95d832e94b6483f338bfad0256a2891d9da7d74f",
+      "type": "feat",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "feat": 10,
+      "other": 4,
+      "fix": 3,
+      "docs": 1,
+      "refactor": 1
+    },
+    "byAuthor": {
+      "aikaizen": 19
+    },
+    "byRepo": {
+      "flow": 12,
+      "promptengines-main": 4,
+      "kaizen": 3
+    },
+    "total": 19
+  },
+  "summary": {
+    "totalCommits": 19,
+    "activeRepos": [
+      "flow",
+      "promptengines-main",
+      "kaizen"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        10
+      ],
+      [
+        "other",
+        4
+      ],
+      [
+        "fix",
+        3
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

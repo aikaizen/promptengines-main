@@ -1,0 +1,168 @@
+{
+  "date": "2026-02-24",
+  "generatedAt": "2026-03-09T18:18:58.518Z",
+  "commits": [
+    {
+      "repo": "kaizen",
+      "hash": "a56ee1325766674d0e36d491e46a0445b8725163",
+      "shortHash": "a56ee13",
+      "date": "2026-02-24T19:28:33Z",
+      "subject": "feat: integrate sticker order modal, fix interface mismatches, add payment return handling",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/a56ee1325766674d0e36d491e46a0445b8725163",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "ff4092b6e4baf4c2f063c60c6398dac8a5f5f696",
+      "shortHash": "ff4092b",
+      "date": "2026-02-24T19:19:55Z",
+      "subject": "feat: add StickerOrderModal wizard with all 5 step components",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/ff4092b6e4baf4c2f063c60c6398dac8a5f5f696",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "bf36deb5553f0d1135aad56fb98196517622977d",
+      "shortHash": "bf36deb",
+      "date": "2026-02-24T19:19:46Z",
+      "subject": "feat: add fulfillment provider types, product catalog, factory, and Sticker Mule implementation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/bf36deb5553f0d1135aad56fb98196517622977d",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "4568ef4dc4a0f39f5a0c61294217568983a775e5",
+      "shortHash": "4568ef4",
+      "date": "2026-02-24T19:18:12Z",
+      "subject": "feat: extend Stripe webhook to handle sticker order payments",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/4568ef4dc4a0f39f5a0c61294217568983a775e5",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "de65c4e008acc70ecfc0fdd0bede832ed8a10f80",
+      "shortHash": "de65c4e",
+      "date": "2026-02-24T19:17:39Z",
+      "subject": "feat: add sticker ordering API routes (addresses, orders, cancel, shipping rates)",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/de65c4e008acc70ecfc0fdd0bede832ed8a10f80",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "e93079a51603f91ac37e02492fff6d34b496056d",
+      "shortHash": "e93079a",
+      "date": "2026-02-24T19:04:31Z",
+      "subject": "docs: add sticker ordering implementation plan (18 tasks)",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/e93079a51603f91ac37e02492fff6d34b496056d",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "630d889f10fb6fc59d2f2fb9f4fbacbeda1918ca",
+      "shortHash": "630d889",
+      "date": "2026-02-24T18:34:31Z",
+      "subject": "docs: add sticker ordering system design document",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/630d889f10fb6fc59d2f2fb9f4fbacbeda1918ca",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "1ab4da2fbbcaeb61bc4503c95762dd539e4d8d76",
+      "shortHash": "1ab4da2",
+      "date": "2026-02-24T06:54:05Z",
+      "subject": "fix: merge print API into single endpoint to stay within Vercel 12-function limit",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/1ab4da2fbbcaeb61bc4503c95762dd539e4d8d76",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "6e9c7ffa90c4bdf14aabff4a4be4b9ba145ff6e7",
+      "shortHash": "6e9c7ff",
+      "date": "2026-02-24T06:50:01Z",
+      "subject": "feat: login splash experiments, community remix, auto-book improvements, print provider scaffold",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/6e9c7ffa90c4bdf14aabff4a4be4b9ba145ff6e7",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "7ec6593b7ebb90dc813e72cd839e08eed425fd13",
+      "shortHash": "7ec6593",
+      "date": "2026-02-24T06:48:20Z",
+      "subject": "Update all theme variants and add Lab Notes section",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/7ec6593b7ebb90dc813e72cd839e08eed425fd13",
+      "type": "other",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "feat": 6,
+      "docs": 2,
+      "fix": 1,
+      "other": 1
+    },
+    "byAuthor": {
+      "aikaizen": 10
+    },
+    "byRepo": {
+      "kaizen": 7,
+      "storybookstudio": 2,
+      "promptengines-main": 1
+    },
+    "total": 10
+  },
+  "summary": {
+    "totalCommits": 10,
+    "activeRepos": [
+      "kaizen",
+      "storybookstudio",
+      "promptengines-main"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        6
+      ],
+      [
+        "docs",
+        2
+      ],
+      [
+        "fix",
+        1
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

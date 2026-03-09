@@ -1,0 +1,105 @@
+{
+  "date": "2026-02-10",
+  "generatedAt": "2026-03-09T18:18:58.516Z",
+  "commits": [
+    {
+      "repo": "storybookstudio",
+      "hash": "f379bf691cfd2fac0ea16348a8ecf9fc8fcd1ea7",
+      "shortHash": "f379bf6",
+      "date": "2026-02-10T20:01:57Z",
+      "subject": "chore: Remove dead api/projects.ts (replaced by Supabase client)",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/f379bf691cfd2fac0ea16348a8ecf9fc8fcd1ea7",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "4dfb3178edc393b7aff7938b3fb87074c4f3d324",
+      "shortHash": "4dfb317",
+      "date": "2026-02-10T19:47:20Z",
+      "subject": "feat: Supabase auth, Stripe payments, Vercel deploy config, and UX improvements",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/4dfb3178edc393b7aff7938b3fb87074c4f3d324",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "24cad0c42928479b49a6760cdd850923dcd7d63f",
+      "shortHash": "24cad0c",
+      "date": "2026-02-10T17:08:04Z",
+      "subject": "Fix walkthrough tooltip overlapping spotlight target element",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/24cad0c42928479b49a6760cdd850923dcd7d63f",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "9d256016978771a060ec4f23c6f56a0009eabc58",
+      "shortHash": "9d25601",
+      "date": "2026-02-10T16:28:00Z",
+      "subject": "Add full Google sign-out to profile selector and badge dropdown",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/9d256016978771a060ec4f23c6f56a0009eabc58",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "8feed4e00cc6f2cd18b73490d474acbb355434bf",
+      "shortHash": "8feed4e",
+      "date": "2026-02-10T15:58:36Z",
+      "subject": "Add kid profile page, persist stars, and harden API key security",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/8feed4e00cc6f2cd18b73490d474acbb355434bf",
+      "type": "other",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "chore": 1,
+      "feat": 1,
+      "other": 3
+    },
+    "byAuthor": {
+      "aikaizen": 5
+    },
+    "byRepo": {
+      "storybookstudio": 2,
+      "kaizen": 3
+    },
+    "total": 5
+  },
+  "summary": {
+    "totalCommits": 5,
+    "activeRepos": [
+      "kaizen",
+      "storybookstudio"
+    ],
+    "primaryTypes": [
+      [
+        "other",
+        3
+      ],
+      [
+        "chore",
+        1
+      ],
+      [
+        "feat",
+        1
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

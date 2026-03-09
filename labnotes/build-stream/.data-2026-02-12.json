@@ -1,0 +1,117 @@
+{
+  "date": "2026-02-12",
+  "generatedAt": "2026-03-09T18:18:58.516Z",
+  "commits": [
+    {
+      "repo": "kaizen",
+      "hash": "92e226c54d7f07e5222ae71f1a167c0dcd41ef0a",
+      "shortHash": "92e226c",
+      "date": "2026-02-12T20:27:33Z",
+      "subject": "Update TODO with security hardening and telemetry consolidation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/92e226c54d7f07e5222ae71f1a167c0dcd41ef0a",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "0cae711468f2026f52b81d827f02921d948abedf",
+      "shortHash": "0cae711",
+      "date": "2026-02-12T17:22:55Z",
+      "subject": "feat: Add canvas markup drawing and AI edit to page editor",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/0cae711468f2026f52b81d827f02921d948abedf",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "21877efe450da22d91b0af31bbfd0c3e87461d4d",
+      "shortHash": "21877ef",
+      "date": "2026-02-12T16:51:46Z",
+      "subject": "feat: Add analytics tracking, feedback widget, and dashboard views",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/21877efe450da22d91b0af31bbfd0c3e87461d4d",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "5494a670aff57219e343860d3b41a242804ddd61",
+      "shortHash": "5494a67",
+      "date": "2026-02-12T16:40:55Z",
+      "subject": "Pre-launch features: starter credits, about popup, feedback, metrics cron",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/5494a670aff57219e343860d3b41a242804ddd61",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "33af25f6ee0a6c6c8cb419c9eaa6b271f8f89320",
+      "shortHash": "33af25f",
+      "date": "2026-02-12T04:46:43Z",
+      "subject": "feat: Add toast/confirm system, dark mode, constants, and splash login page",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/33af25f6ee0a6c6c8cb419c9eaa6b271f8f89320",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "ce5c34ff8b3b6d9f42ede6d68c9c44c6024ca299",
+      "shortHash": "ce5c34f",
+      "date": "2026-02-12T03:34:20Z",
+      "subject": "docs: Add metrics tracking plan and fix economics to 5 credits/image",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/ce5c34ff8b3b6d9f42ede6d68c9c44c6024ca299",
+      "type": "docs",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "other": 2,
+      "feat": 3,
+      "docs": 1
+    },
+    "byAuthor": {
+      "aikaizen": 6
+    },
+    "byRepo": {
+      "kaizen": 2,
+      "storybookstudio": 4
+    },
+    "total": 6
+  },
+  "summary": {
+    "totalCommits": 6,
+    "activeRepos": [
+      "storybookstudio",
+      "kaizen"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        3
+      ],
+      [
+        "other",
+        2
+      ],
+      [
+        "docs",
+        1
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

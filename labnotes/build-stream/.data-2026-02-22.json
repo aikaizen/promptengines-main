@@ -1,0 +1,287 @@
+{
+  "date": "2026-02-22",
+  "generatedAt": "2026-03-09T18:18:58.518Z",
+  "commits": [
+    {
+      "repo": "storybookstudio",
+      "hash": "b4bdf518a4789900489fd0a6eb1d24a894a9dfc0",
+      "shortHash": "b4bdf51",
+      "date": "2026-02-22T21:06:26Z",
+      "subject": "fix: add .js extensions to all API local imports for ESM compat",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/b4bdf518a4789900489fd0a6eb1d24a894a9dfc0",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "b7a4d416a6f7b657ed8a90e128770e7ba2fe5ad2",
+      "shortHash": "b7a4d41",
+      "date": "2026-02-22T21:04:32Z",
+      "subject": "test: add .js extension to _rateLimit import in scene-planner",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/b7a4d416a6f7b657ed8a90e128770e7ba2fe5ad2",
+      "type": "test",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "7d4dc861e5f4b62be6ea670ed8e0d00a637ac061",
+      "shortHash": "7d4dc86",
+      "date": "2026-02-22T21:00:43Z",
+      "subject": "fix: inline prompts to fix ERR_MODULE_NOT_FOUND on _prompts import",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/7d4dc861e5f4b62be6ea670ed8e0d00a637ac061",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "9c87db8ec71caae6d9f84835d1382895251f6459",
+      "shortHash": "9c87db8",
+      "date": "2026-02-22T20:15:00Z",
+      "subject": "feat: counting difficulty selector, math visual aids, parent/teacher info, hook fixes",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/9c87db8ec71caae6d9f84835d1382895251f6459",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "adb54942db28c9e255e4015180f7c32472d2e6a8",
+      "shortHash": "adb5494",
+      "date": "2026-02-22T19:51:41Z",
+      "subject": "fix: revert to implicit OAuth flow — PKCE code exchange failing",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/adb54942db28c9e255e4015180f7c32472d2e6a8",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "83f0db48f3fb8988bfd31f16adffc979709f6f33",
+      "shortHash": "83f0db4",
+      "date": "2026-02-22T19:45:50Z",
+      "subject": "feat: rename Squad to Group, add admin member removal",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/83f0db48f3fb8988bfd31f16adffc979709f6f33",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "748f8ffdbf21aa9a574caec3dbf7e421f987ae4c",
+      "shortHash": "748f8ff",
+      "date": "2026-02-22T19:40:15Z",
+      "subject": "feat: switch Fireworks API to Kimi K2.5 + extract prompts to _prompts.ts",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/748f8ffdbf21aa9a574caec3dbf7e421f987ae4c",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "baa67b78721cdb2bd00508614efdc6cc7db68a9f",
+      "shortHash": "baa67b7",
+      "date": "2026-02-22T14:02:21Z",
+      "subject": "fix: P0/P1 security and reliability fixes from code review",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/baa67b78721cdb2bd00508614efdc6cc7db68a9f",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "271bc552bab5d00cf91b47ad509bfe055425baa0",
+      "shortHash": "271bc55",
+      "date": "2026-02-22T13:50:09Z",
+      "subject": "fix: switch to PKCE auth flow, add sign-out button to Profile",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/271bc552bab5d00cf91b47ad509bfe055425baa0",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "3225e8c4efd4380b005e91490b5a66cba5a30647",
+      "shortHash": "3225e8c",
+      "date": "2026-02-22T13:45:41Z",
+      "subject": "feat: tab reorganization, stickers, credit UX, story panel improvements",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/3225e8c4efd4380b005e91490b5a66cba5a30647",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "5049d39fdd25a830e0c89c70589f0a1670513dfb",
+      "shortHash": "5049d39",
+      "date": "2026-02-22T05:22:47Z",
+      "subject": "feat: add Generate Invite Link button to sidebar",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/5049d39fdd25a830e0c89c70589f0a1670513dfb",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "2b81f734cfd327eb04faedb49410e5d790990644",
+      "shortHash": "2b81f73",
+      "date": "2026-02-22T04:29:17Z",
+      "subject": "feat: sync seed verses across groups, fix verse highlight during annotation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/2b81f734cfd327eb04faedb49410e5d790990644",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "eee06fe21a948497acdbe0945a443eaf2df9dfe9",
+      "shortHash": "eee06fe",
+      "date": "2026-02-22T03:04:46Z",
+      "subject": "feat: rename to Read the Bible Together, fix invite links, add voting enhancements",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/eee06fe21a948497acdbe0945a443eaf2df9dfe9",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "00c4d94edf269f0616b9c2406d413c1dd874be1d",
+      "shortHash": "00c4d94",
+      "date": "2026-02-22T02:43:39Z",
+      "subject": "feat: add verse-level highlighting and annotation system",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/00c4d94edf269f0616b9c2406d413c1dd874be1d",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "5a465431c045752fef0a3eb4d4f8ccd220eb6829",
+      "shortHash": "5a46543",
+      "date": "2026-02-22T02:40:04Z",
+      "subject": "fix: add missing generationStage field to StoryNode type",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/5a465431c045752fef0a3eb4d4f8ccd220eb6829",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "2f8486ca249fd1bc40e7cbd083676c4394beaf48",
+      "shortHash": "2f8486c",
+      "date": "2026-02-22T02:34:14Z",
+      "subject": "feat: enhanced onboarding, book preview in Generator, saved shipping address",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/2f8486ca249fd1bc40e7cbd083676c4394beaf48",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "7800fca7b364aabe7264e8dec3e9ce59c70de3a5",
+      "shortHash": "7800fca",
+      "date": "2026-02-22T02:22:40Z",
+      "subject": "feat: \"Continue My Book\" hero card + saved shipping address + Supabase migration",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/7800fca7b364aabe7264e8dec3e9ce59c70de3a5",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "fe5681b3ab8e8a61d27e1e42a5d98222809908d6",
+      "shortHash": "fe5681b",
+      "date": "2026-02-22T01:09:46Z",
+      "subject": "fix: StoryMaker download, video playback, aspect ratios & mobile UX",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/fe5681b3ab8e8a61d27e1e42a5d98222809908d6",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "924d0f6b9ba0c8229775133b1a4b181bde511fb2",
+      "shortHash": "924d0f6",
+      "date": "2026-02-22T01:09:19Z",
+      "subject": "feat: public book sharing, SEO meta tags, community gallery, gifting flow",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/924d0f6b9ba0c8229775133b1a4b181bde511fb2",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "d993da2007315dcfaac9aa38d9de89f8eee36d9a",
+      "shortHash": "d993da2",
+      "date": "2026-02-22T00:52:18Z",
+      "subject": "feat: add refer-a-friend invite system with pending tracking",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/d993da2007315dcfaac9aa38d9de89f8eee36d9a",
+      "type": "feat",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "fix": 7,
+      "test": 1,
+      "feat": 12
+    },
+    "byAuthor": {
+      "aikaizen": 20
+    },
+    "byRepo": {
+      "storybookstudio": 9,
+      "kaizen": 5,
+      "bible": 6
+    },
+    "total": 20
+  },
+  "summary": {
+    "totalCommits": 20,
+    "activeRepos": [
+      "storybookstudio",
+      "bible",
+      "kaizen"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        12
+      ],
+      [
+        "fix",
+        7
+      ],
+      [
+        "test",
+        1
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen"
+    ]
+  }
+}

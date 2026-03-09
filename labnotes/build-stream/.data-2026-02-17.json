@@ -1,0 +1,304 @@
+{
+  "date": "2026-02-17",
+  "generatedAt": "2026-03-09T18:18:58.517Z",
+  "commits": [
+    {
+      "repo": "storybookstudio",
+      "hash": "88921465d76743e8089d3fcc852eb9398d31fba2",
+      "shortHash": "8892146",
+      "date": "2026-02-17T22:50:59Z",
+      "subject": "polish: elevate perspective toggle + brainstorm UX",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/88921465d76743e8089d3fcc852eb9398d31fba2",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "578992a943eb147599cb7a71923d52fa8e6e6d8b",
+      "shortHash": "578992a",
+      "date": "2026-02-17T22:20:32Z",
+      "subject": "feat: replace email login with Google OAuth on client",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/578992a943eb147599cb7a71923d52fa8e6e6d8b",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "806c415b0080c7a4b21f86b7f46bf47e13205d72",
+      "shortHash": "806c415",
+      "date": "2026-02-17T22:19:22Z",
+      "subject": "feat: Hyperborean perspective toggle + Character Brainstorm",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/806c415b0080c7a4b21f86b7f46bf47e13205d72",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "1e75c9d0b0c817383871e159f2a8edbd84a5a456",
+      "shortHash": "1e75c9d",
+      "date": "2026-02-17T22:09:44Z",
+      "subject": "feat: secure all API routes with server-side NextAuth session",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/1e75c9d0b0c817383871e159f2a8edbd84a5a456",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "2cadf2fb360dbad8baeb9bb7d658a5550e81d671",
+      "shortHash": "2cadf2f",
+      "date": "2026-02-17T22:06:01Z",
+      "subject": "feat: add NextAuth config, route handler, and auth helper",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/2cadf2fb360dbad8baeb9bb7d658a5550e81d671",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "1afe5fd2f59a185036e3d5cf019ff4673e3ff3ff",
+      "shortHash": "1afe5fd",
+      "date": "2026-02-17T22:04:12Z",
+      "subject": "feat: add google_id column to users table",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/1afe5fd2f59a185036e3d5cf019ff4673e3ff3ff",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "4348dabd9bec80e02c946a79a39a87883720269f",
+      "shortHash": "4348dab",
+      "date": "2026-02-17T22:02:58Z",
+      "subject": "feat: install next-auth v5 and add env template",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/4348dabd9bec80e02c946a79a39a87883720269f",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "77865698275b881b1334cb4551ca4b847a5ac7c8",
+      "shortHash": "7786569",
+      "date": "2026-02-17T22:02:44Z",
+      "subject": "feat: production hardening — styles, security, UX, content moderation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/77865698275b881b1334cb4551ca4b847a5ac7c8",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "a0e52b4b7fa15d57bf5dea18e233d33d630394ba",
+      "shortHash": "a0e52b4",
+      "date": "2026-02-17T21:58:27Z",
+      "subject": "Add Google OAuth implementation plan",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/a0e52b4b7fa15d57bf5dea18e233d33d630394ba",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "ffdf1dae30b187c790a77bb4370856e360dce7ca",
+      "shortHash": "ffdf1da",
+      "date": "2026-02-17T21:55:41Z",
+      "subject": "Add Google OAuth design document",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/ffdf1dae30b187c790a77bb4370856e360dce7ca",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "d9b04ca65546a6ddb97c3921cebc5f441e868340",
+      "shortHash": "d9b04ca",
+      "date": "2026-02-17T21:03:24Z",
+      "subject": "Update Next.js to 15.5.12 to fix CVE-2025-66478",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/d9b04ca65546a6ddb97c3921cebc5f441e868340",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "ba190150c0dd74a8466ec3f13bbc571d26197257",
+      "shortHash": "ba19015",
+      "date": "2026-02-17T20:53:09Z",
+      "subject": "Add auto-resolve, optimistic voting, passage preview, reroll, and new vote rounds",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/ba190150c0dd74a8466ec3f13bbc571d26197257",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "kaizen",
+      "hash": "cc60af439064c46d8771a06606197fa17dda371a",
+      "shortHash": "cc60af4",
+      "date": "2026-02-17T20:52:41Z",
+      "subject": "docs: update TODO with mobile responsiveness tracking, video event specs, and parent panel cleanup",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/kaizen/commit/cc60af439064c46d8771a06606197fa17dda371a",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "425b8a0640874d42421de64bd176814cca9e4d85",
+      "shortHash": "425b8a0",
+      "date": "2026-02-17T20:25:24Z",
+      "subject": "Initial commit: Bible Vote app with all core features",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/425b8a0640874d42421de64bd176814cca9e4d85",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "transcriber",
+      "hash": "8a9eb064ef9701ff751a5023d1b003038e994245",
+      "shortHash": "8a9eb06",
+      "date": "2026-02-17T20:00:17Z",
+      "subject": "Add UI redesign, Slack summary, AI edit, and transcription model upgrade",
+      "author": "Adil Islam",
+      "email": "adil@MacBookAir.lan",
+      "htmlUrl": "https://github.com/aikaizen/transcriber/commit/8a9eb064ef9701ff751a5023d1b003038e994245",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "64c73891116d754edaafc1ee6be5fc72918aebfb",
+      "shortHash": "64c7389",
+      "date": "2026-02-17T03:59:52Z",
+      "subject": "fix: prevent premature Lulu submission + correct spine page count",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/64c73891116d754edaafc1ee6be5fc72918aebfb",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "2bf7ec037a860b47772d18cd3ad0769c0056e6c9",
+      "shortHash": "2bf7ec0",
+      "date": "2026-02-17T03:56:35Z",
+      "subject": "feat: ShipBookModal generates separate cover + interior PDFs",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/2bf7ec037a860b47772d18cd3ad0769c0056e6c9",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "4444f3142095c7f26add4ecf6276c7d80e76b69a",
+      "shortHash": "4444f31",
+      "date": "2026-02-17T03:55:24Z",
+      "subject": "feat: API routes use separate cover_pdf_url for Lulu",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/4444f3142095c7f26add4ecf6276c7d80e76b69a",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "c8a608f2ab79cb157881472814de3585a5ad1dc5",
+      "shortHash": "c8a608f",
+      "date": "2026-02-17T03:53:54Z",
+      "subject": "feat: add spine width calculation and cover PDF generation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/c8a608f2ab79cb157881472814de3585a5ad1dc5",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "ed7af58646e09ef322270e74e0fc815bf6b48d1c",
+      "shortHash": "ed7af58",
+      "date": "2026-02-17T03:40:28Z",
+      "subject": "docs: cover PDF implementation plan",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/ed7af58646e09ef322270e74e0fc815bf6b48d1c",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "038b336a3fcf9f92f4c0bb5955215cc6f1e48677",
+      "shortHash": "038b336",
+      "date": "2026-02-17T03:38:30Z",
+      "subject": "docs: cover PDF generation design for Lulu Print API",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/038b336a3fcf9f92f4c0bb5955215cc6f1e48677",
+      "type": "docs",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "other": 7,
+      "feat": 10,
+      "docs": 3,
+      "fix": 1
+    },
+    "byAuthor": {
+      "aikaizen": 20,
+      "Adil Islam": 1
+    },
+    "byRepo": {
+      "storybookstudio": 9,
+      "bible": 10,
+      "kaizen": 1,
+      "transcriber": 1
+    },
+    "total": 21
+  },
+  "summary": {
+    "totalCommits": 21,
+    "activeRepos": [
+      "bible",
+      "storybookstudio",
+      "kaizen",
+      "transcriber"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        10
+      ],
+      [
+        "other",
+        7
+      ],
+      [
+        "docs",
+        3
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen",
+      "Adil Islam"
+    ]
+  }
+}

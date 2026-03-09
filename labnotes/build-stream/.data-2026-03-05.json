@@ -1,0 +1,353 @@
+{
+  "date": "2026-03-05",
+  "generatedAt": "2026-03-09T18:18:58.520Z",
+  "commits": [
+    {
+      "repo": "promptengines-main",
+      "hash": "56bb034373d21a47f860f689df7312d04d5d31ae",
+      "shortHash": "56bb034",
+      "date": "2026-03-05T23:56:21Z",
+      "subject": "content(stream): Rewrite March 5 build stream from git commit feed",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/56bb034373d21a47f860f689df7312d04d5d31ae",
+      "type": "content",
+      "scope": "stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "1c989106080ffbdaf7fa8ae8e030c2291c0d15b2",
+      "shortHash": "1c98910",
+      "date": "2026-03-05T23:42:10Z",
+      "subject": "content(stream): Build stream article for March 5, 2026",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/1c989106080ffbdaf7fa8ae8e030c2291c0d15b2",
+      "type": "content",
+      "scope": "stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "d62c664242f82db769936f5fe2864ec017ca9b29",
+      "shortHash": "d62c664",
+      "date": "2026-03-05T22:54:26Z",
+      "subject": "content(lab): Convert March 3 articles to HTML format",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/d62c664242f82db769936f5fe2864ec017ca9b29",
+      "type": "content",
+      "scope": "lab"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "d6d42ef14598c45e7de3e62e32ca2563e76fbb1f",
+      "shortHash": "d6d42ef",
+      "date": "2026-03-05T22:53:49Z",
+      "subject": "chore: Enable Vercel GitHub integration for auto-deploy",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/d6d42ef14598c45e7de3e62e32ca2563e76fbb1f",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "norbu",
+      "hash": "5df672dd4f9a361f9e9be27ff8e45cb247d30160",
+      "shortHash": "5df672d",
+      "date": "2026-03-05T20:57:46Z",
+      "subject": "Replace community deck model with explicit community import flows",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/norbu/commit/5df672dd4f9a361f9e9be27ff8e45cb247d30160",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "norbu",
+      "hash": "5ba1f3e5087713fc02ab640d371fa9ac1bfcf2d7",
+      "shortHash": "5ba1f3e",
+      "date": "2026-03-05T20:27:32Z",
+      "subject": "Propagate shared cards into user decks with batch-safe sync",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/norbu/commit/5ba1f3e5087713fc02ab640d371fa9ac1bfcf2d7",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "norbu",
+      "hash": "51920484b29da0b8402bab627b0f0698831b4937",
+      "shortHash": "5192048",
+      "date": "2026-03-05T19:58:43Z",
+      "subject": "Guarantee starter deck backfill and sanitize Firestore writes",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/norbu/commit/51920484b29da0b8402bab627b0f0698831b4937",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "eb0666a0ce68abb93aa6fa80bd4053076b55df8d",
+      "shortHash": "eb0666a",
+      "date": "2026-03-05T19:38:46Z",
+      "subject": "fix: Enable all nav dropdowns + add prototypes to Prototypes menu",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/eb0666a0ce68abb93aa6fa80bd4053076b55df8d",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "d59101093c5feb08ea5300592b2553762422a255",
+      "shortHash": "d591010",
+      "date": "2026-03-05T19:35:42Z",
+      "subject": "feat: style picker with image cards, featured/browse-all toggle",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/d59101093c5feb08ea5300592b2553762422a255",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "norbu",
+      "hash": "46bfb2ff3d8487ce1f3834f0b0c81f688270ec94",
+      "shortHash": "46bfb2f",
+      "date": "2026-03-05T19:33:47Z",
+      "subject": "Prevent community sync failures from blocking starter deck seed",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/norbu/commit/46bfb2ff3d8487ce1f3834f0b0c81f688270ec94",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "norbu",
+      "hash": "a541accaf04a10f55ea7ebae8d59f8b26d437700",
+      "shortHash": "a541acc",
+      "date": "2026-03-05T18:46:49Z",
+      "subject": "Backfill missing starter cards for existing user clouds",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/norbu/commit/a541accaf04a10f55ea7ebae8d59f8b26d437700",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "norbu",
+      "hash": "da5c8e4b6744cb5cff2bb0ba356ac7ab846baf37",
+      "shortHash": "da5c8e4",
+      "date": "2026-03-05T18:43:24Z",
+      "subject": "Add Firebase auth, cloud sync, and global baseline card propagation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/norbu/commit/da5c8e4b6744cb5cff2bb0ba356ac7ab846baf37",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "f61d726c85c88b4a5786378124e5228fbfd55643",
+      "shortHash": "f61d726",
+      "date": "2026-03-05T18:30:01Z",
+      "subject": "fix: Remove Anima from all pages (renamed to Video Terminal)",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/f61d726c85c88b4a5786378124e5228fbfd55643",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "d9536dfe9db4f4cb693911eec7e537f973d1ba10",
+      "shortHash": "d9536df",
+      "date": "2026-03-05T17:48:15Z",
+      "subject": "feat: Add Video Terminal and Norbu as experiments across all pages",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/d9536dfe9db4f4cb693911eec7e537f973d1ba10",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "918fdc99e2eb771de7cb9f76235ca65a90107b1b",
+      "shortHash": "918fdc9",
+      "date": "2026-03-05T04:17:20Z",
+      "subject": "content(lab): Publish 7 HTML articles + add Vajra-Upaya to prototypes",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/918fdc99e2eb771de7cb9f76235ca65a90107b1b",
+      "type": "content",
+      "scope": "lab"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "69779e7e9704945392d34e6ad0fc8fe1ec4eb891",
+      "shortHash": "69779e7",
+      "date": "2026-03-05T03:50:00Z",
+      "subject": "chore(articles): Remove .md versions after HTML conversion",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/69779e7e9704945392d34e6ad0fc8fe1ec4eb891",
+      "type": "chore",
+      "scope": "articles"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "05804a736c60ec81a095e2dbd1ec4960d2a4a75b",
+      "shortHash": "05804a7",
+      "date": "2026-03-05T03:43:20Z",
+      "subject": "fix(articles): Convert March 4 articles from .md to .html",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/05804a736c60ec81a095e2dbd1ec4960d2a4a75b",
+      "type": "fix",
+      "scope": "articles"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "6944a7f3a7e2257904e9d553f7fde021752bfecd",
+      "shortHash": "6944a7f",
+      "date": "2026-03-05T03:39:27Z",
+      "subject": "revert(ci): Remove workflow file - needs workflow scope PAT",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/6944a7f3a7e2257904e9d553f7fde021752bfecd",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "1110ede25533cc25ebd8edcdc8cc3954c80b58cc",
+      "shortHash": "1110ede",
+      "date": "2026-03-05T02:17:53Z",
+      "subject": "docs: Add Vajra-Upaya vision, MVP PRD, and Phase 1 PRD",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/1110ede25533cc25ebd8edcdc8cc3954c80b58cc",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "24a3e344f70da516f16dba7390fedb49a09b465a",
+      "shortHash": "24a3e34",
+      "date": "2026-03-05T02:16:54Z",
+      "subject": "docs: add testing guide with free vs paid test breakdown",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/24a3e344f70da516f16dba7390fedb49a09b465a",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "64f5136ca07b5468c50051bb041e259ea168291b",
+      "shortHash": "64f5136",
+      "date": "2026-03-05T01:54:40Z",
+      "subject": "feat(ci): Add daily build stream trigger workflow",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/64f5136ca07b5468c50051bb041e259ea168291b",
+      "type": "feat",
+      "scope": "ci"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "5bb17ab143668ef1b46b1bd5e3a64f59931782a4",
+      "shortHash": "5bb17ab",
+      "date": "2026-03-05T01:52:29Z",
+      "subject": "feat(build-stream): Option B automation scripts",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/5bb17ab143668ef1b46b1bd5e3a64f59931782a4",
+      "type": "feat",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "a44bcc987ba74235667dffc033b1c27cceaf303a",
+      "shortHash": "a44bcc9",
+      "date": "2026-03-05T01:09:24Z",
+      "subject": "docs(build-stream): Add README for commit archive",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/a44bcc987ba74235667dffc033b1c27cceaf303a",
+      "type": "docs",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "1a76995f122ad6ebdcbfc0862e3e5fde8f0d62dd",
+      "shortHash": "1a76995",
+      "date": "2026-03-05T01:08:53Z",
+      "subject": "feat(build-stream): Git feed → Markdown + Daily Stream articles",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/1a76995f122ad6ebdcbfc0862e3e5fde8f0d62dd",
+      "type": "feat",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "206306bc3e2527bed27c4486002f10a2c522f0ba",
+      "shortHash": "206306b",
+      "date": "2026-03-05T00:51:34Z",
+      "subject": "refactor(skills): Remove Dandy from skills index",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/206306bc3e2527bed27c4486002f10a2c522f0ba",
+      "type": "refactor",
+      "scope": "skills"
+    }
+  ],
+  "stats": {
+    "byType": {
+      "content": 4,
+      "chore": 2,
+      "other": 7,
+      "fix": 3,
+      "feat": 5,
+      "docs": 3,
+      "refactor": 1
+    },
+    "byAuthor": {
+      "Andy Stable": 12,
+      "aikaizen": 13
+    },
+    "byRepo": {
+      "promptengines-main": 17,
+      "norbu": 6,
+      "storybookstudio": 2
+    },
+    "total": 25
+  },
+  "summary": {
+    "totalCommits": 25,
+    "activeRepos": [
+      "promptengines-main",
+      "norbu",
+      "storybookstudio"
+    ],
+    "primaryTypes": [
+      [
+        "other",
+        7
+      ],
+      [
+        "feat",
+        5
+      ],
+      [
+        "content",
+        4
+      ]
+    ],
+    "activeAuthors": [
+      "Andy Stable",
+      "aikaizen"
+    ]
+  }
+}

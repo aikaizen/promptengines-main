@@ -1,0 +1,243 @@
+{
+  "date": "2026-03-04",
+  "generatedAt": "2026-03-09T18:18:58.520Z",
+  "commits": [
+    {
+      "repo": "storybookstudio",
+      "hash": "a2c1ec1cf94bfb424f8a328212bbf3e697f39f35",
+      "shortHash": "a2c1ec1",
+      "date": "2026-03-04T23:34:35Z",
+      "subject": "feat: fix page count bug, book layout outline preview, 25 Google Fonts",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/a2c1ec1cf94bfb424f8a328212bbf3e697f39f35",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "858c01315b4cec7e3a0a83e630efdc26bc450159",
+      "shortHash": "858c013",
+      "date": "2026-03-04T23:34:29Z",
+      "subject": "feat(skills): Add Dandy coding assistant skill",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/858c01315b4cec7e3a0a83e630efdc26bc450159",
+      "type": "feat",
+      "scope": "skills"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "2b10430bc1195d85948d02daa7c02b582e82cdd9",
+      "shortHash": "2b10430",
+      "date": "2026-03-04T22:26:22Z",
+      "subject": "feat(labnotes): Add Submit Article and Review Queue pages",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/2b10430bc1195d85948d02daa7c02b582e82cdd9",
+      "type": "feat",
+      "scope": "labnotes"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "e393829d4cef323cb0753c3ad911bd530b665952",
+      "shortHash": "e393829",
+      "date": "2026-03-04T21:46:09Z",
+      "subject": "content(lab): Add OpenRAG deployment article",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/e393829d4cef323cb0753c3ad911bd530b665952",
+      "type": "content",
+      "scope": "lab"
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "fd5ff8035f51e14806adee309e0b45f2313e60b9",
+      "shortHash": "fd5ff80",
+      "date": "2026-03-04T20:33:57Z",
+      "subject": "feat: \"Read Me a Story\" narration + story AI model picker + onboarding doc",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/fd5ff8035f51e14806adee309e0b45f2313e60b9",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "9c43eb752a164290a8f40cd445ff828282d5dd34",
+      "shortHash": "9c43eb7",
+      "date": "2026-03-04T18:14:36Z",
+      "subject": "Fix API security vulnerabilities and add audit logging",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/9c43eb752a164290a8f40cd445ff828282d5dd34",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "06561bc14ade5e9a25f524af3142f068a020d6e3",
+      "shortHash": "06561bc",
+      "date": "2026-03-04T18:08:46Z",
+      "subject": "Add reference image categories, action/camera dropdowns, AI recompose, and drawing canvas",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/06561bc14ade5e9a25f524af3142f068a020d6e3",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "73937943527dde50c27d38082ec4c23bc76c9075",
+      "shortHash": "7393794",
+      "date": "2026-03-04T16:22:54Z",
+      "subject": "feat(prototypes): Add Vibes page with 9 design systems",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/73937943527dde50c27d38082ec4c23bc76c9075",
+      "type": "feat",
+      "scope": "prototypes"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "76ca09aea58e6c6437c5c602164521e1b3ae8f05",
+      "shortHash": "76ca09a",
+      "date": "2026-03-04T15:33:33Z",
+      "subject": "feat(prototypes): Add Resources page with top 10 APIs + nav integration",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/76ca09aea58e6c6437c5c602164521e1b3ae8f05",
+      "type": "feat",
+      "scope": "prototypes"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "3c541b30104f188eba0b5bfcfb4d0a6eb290dda2",
+      "shortHash": "3c541b3",
+      "date": "2026-03-04T14:23:54Z",
+      "subject": "content(lab): Add public-apis usefulness review",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/3c541b30104f188eba0b5bfcfb4d0a6eb290dda2",
+      "type": "content",
+      "scope": "lab"
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "d76f620fafd2213855f1c713b83d0953d7adcf41",
+      "shortHash": "d76f620",
+      "date": "2026-03-04T04:08:42Z",
+      "subject": "fix: story generation broken — model deprecated + max_tokens too high",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/d76f620fafd2213855f1c713b83d0953d7adcf41",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "7fd3064e808c406c997d6c372a6b28c738a55e68",
+      "shortHash": "7fd3064",
+      "date": "2026-03-04T03:16:20Z",
+      "subject": "Update AI models reference doc with all current models and rankings",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/7fd3064e808c406c997d6c372a6b28c738a55e68",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "0c05cd361dafe22bcb3cfb526e31c1ce390b398a",
+      "shortHash": "0c05cd3",
+      "date": "2026-03-04T02:40:36Z",
+      "subject": "feat: enable 4 BFL Flux.2 models (Max, Pro, Klein 9B, Klein 4B)",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/0c05cd361dafe22bcb3cfb526e31c1ce390b398a",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "bf9da4e27a8f30451e0792ec51c3b37ddf351e10",
+      "shortHash": "bf9da4e",
+      "date": "2026-03-04T02:33:57Z",
+      "subject": "Add BFL Flux 2 Max and Klein 9B models, fix pricing",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/bf9da4e27a8f30451e0792ec51c3b37ddf351e10",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "46f44964262e78b15208dc81a21e814b5d1dc3a4",
+      "shortHash": "46f4496",
+      "date": "2026-03-04T01:18:04Z",
+      "subject": "fix: handle Fireworks raw binary response in image generation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/46f44964262e78b15208dc81a21e814b5d1dc3a4",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "e3bf56de783f496b77c7f0243c36f20023c00068",
+      "shortHash": "e3bf56d",
+      "date": "2026-03-04T00:52:14Z",
+      "subject": "docs(lab): Add author attribution to all March 3 articles",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/e3bf56de783f496b77c7f0243c36f20023c00068",
+      "type": "docs",
+      "scope": "lab"
+    }
+  ],
+  "stats": {
+    "byType": {
+      "feat": 7,
+      "content": 2,
+      "other": 4,
+      "fix": 2,
+      "docs": 1
+    },
+    "byAuthor": {
+      "aikaizen": 9,
+      "Andy Stable": 7
+    },
+    "byRepo": {
+      "storybookstudio": 5,
+      "promptengines-main": 7,
+      "videoterminal": 4
+    },
+    "total": 16
+  },
+  "summary": {
+    "totalCommits": 16,
+    "activeRepos": [
+      "promptengines-main",
+      "storybookstudio",
+      "videoterminal"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        7
+      ],
+      [
+        "other",
+        4
+      ],
+      [
+        "content",
+        2
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen",
+      "Andy Stable"
+    ]
+  }
+}

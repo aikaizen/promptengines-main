@@ -1,0 +1,327 @@
+{
+  "date": "2026-03-03",
+  "generatedAt": "2026-03-09T18:18:58.520Z",
+  "commits": [
+    {
+      "repo": "videoterminal",
+      "hash": "0c8618a5bc247344837cdc0b520a8fbd6e864634",
+      "shortHash": "0c8618a",
+      "date": "2026-03-03T22:53:13Z",
+      "subject": "Fix video models: correct all fal.ai endpoints + model-specific params",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/0c8618a5bc247344837cdc0b520a8fbd6e864634",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "f17fef310bb1ad63365d27e5bf8894a2b4cfbf49",
+      "shortHash": "f17fef3",
+      "date": "2026-03-03T22:21:01Z",
+      "subject": "Add Stripe credits purchase, account page, admin dashboard, and credits system",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/f17fef310bb1ad63365d27e5bf8894a2b4cfbf49",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "82e002ac2e76c6131ee8ff7bed910bf1ec60ddd2",
+      "shortHash": "82e002a",
+      "date": "2026-03-03T22:20:22Z",
+      "subject": "fix: production API fixes, hide broken models, lock Auto-Book to nano-banana-2",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/82e002ac2e76c6131ee8ff7bed910bf1ec60ddd2",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "eb81d57d04fe94e9276c4ade7e7bc2d53044ec64",
+      "shortHash": "eb81d57",
+      "date": "2026-03-03T21:53:37Z",
+      "subject": "feat: admin quick-access section + user impersonation on dashboard",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/eb81d57d04fe94e9276c4ade7e7bc2d53044ec64",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "b8633d6893e0e3a617c087b0a3f4421a8841b0d5",
+      "shortHash": "b8633d6",
+      "date": "2026-03-03T21:42:50Z",
+      "subject": "feat: journey-based dashboard reorganization (A/B test)",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/b8633d6893e0e3a617c087b0a3f4421a8841b0d5",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "3d74b73c53cd2658ac790642d7cd28f86ac695a9",
+      "shortHash": "3d74b73",
+      "date": "2026-03-03T21:14:58Z",
+      "subject": "fix(lab): Rewrite 'Zen and the Art of Vibe Coding' — remove self-help slop",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/3d74b73c53cd2658ac790642d7cd28f86ac695a9",
+      "type": "fix",
+      "scope": "lab"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "eecab7338e09f64fb827f3d043d23862bc859fb3",
+      "shortHash": "eecab73",
+      "date": "2026-03-03T21:13:05Z",
+      "subject": "content(lab): Add 'Zen and the Art of Vibe Coding' article",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/eecab7338e09f64fb827f3d043d23862bc859fb3",
+      "type": "content",
+      "scope": "lab"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "23ba886a6a137712605707e25f5efbb38d9701be",
+      "shortHash": "23ba886",
+      "date": "2026-03-03T20:30:32Z",
+      "subject": "content(lab): Add 'Just Rebuild It' experiment article",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/23ba886a6a137712605707e25f5efbb38d9701be",
+      "type": "content",
+      "scope": "lab"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "525f538484532c51e7a40d05794138c79624f895",
+      "shortHash": "525f538",
+      "date": "2026-03-03T19:39:56Z",
+      "subject": "feat: restructure nav, add Flow section, create Careers + Contact pages",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/525f538484532c51e7a40d05794138c79624f895",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "8403be6f41fd15195cdaf8e2a45751edcf582a0a",
+      "shortHash": "8403be6",
+      "date": "2026-03-03T19:31:43Z",
+      "subject": "docs: project status, AI models API reference, security hardening",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/8403be6f41fd15195cdaf8e2a45751edcf582a0a",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "2fa479642ad8a32981c6c9ccb7bf8ffc16c7ac5a",
+      "shortHash": "2fa4796",
+      "date": "2026-03-03T19:10:10Z",
+      "subject": "resolve: Keep local changes for Flow Education light mode + header hiding",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/2fa479642ad8a32981c6c9ccb7bf8ffc16c7ac5a",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "172278dc27f3bb0b71d1ab29ade827e628923cb7",
+      "shortHash": "172278d",
+      "date": "2026-03-03T18:56:12Z",
+      "subject": "content(lab): Add skills index, framework articles, and steipete summary",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/172278dc27f3bb0b71d1ab29ade827e628923cb7",
+      "type": "content",
+      "scope": "lab"
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "2a4f5aa632cc0b919f172238e5add2479e93960a",
+      "shortHash": "2a4f5aa",
+      "date": "2026-03-03T16:58:06Z",
+      "subject": "fix: Fireworks API integration — correct endpoints and response parsing",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/2a4f5aa632cc0b919f172238e5add2479e93960a",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "78d73b0270f060805a0dcba3085795f414024ff1",
+      "shortHash": "78d73b0",
+      "date": "2026-03-03T14:12:36Z",
+      "subject": "Initial commit: VideoTerminal with Neon Postgres + Drizzle ORM",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/78d73b0270f060805a0dcba3085795f414024ff1",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "cd70f92e95d10969ae7dfc9c9f115c5930242cc5",
+      "shortHash": "cd70f92",
+      "date": "2026-03-03T04:38:54Z",
+      "subject": "fix: story generation 401, auto-book model selector + dynamic pricing",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/cd70f92e95d10969ae7dfc9c9f115c5930242cc5",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "f6262790e4116161c2cc01cf47f2c1e2de253d96",
+      "shortHash": "f626279",
+      "date": "2026-03-03T04:29:01Z",
+      "subject": "feat: generation queue, character sheets, model updates",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/f6262790e4116161c2cc01cf47f2c1e2de253d96",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "8bea514e8f97d66037c8da8bdaafec87e2e25694",
+      "shortHash": "8bea514",
+      "date": "2026-03-03T04:10:53Z",
+      "subject": "feat: character upgrades, flux fixes, warm dark mode consolidation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/8bea514e8f97d66037c8da8bdaafec87e2e25694",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "b9ce2821f6e12bf6261f34a2387ab65d4363b3b1",
+      "shortHash": "b9ce282",
+      "date": "2026-03-03T03:04:16Z",
+      "subject": "fix: merge billing+profile routes to stay within Vercel 12-function limit",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/b9ce2821f6e12bf6261f34a2387ab65d4363b3b1",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "1d7282858a83cb24ae9a6138c509f35e5590bf9c",
+      "shortHash": "1d72828",
+      "date": "2026-03-03T02:49:01Z",
+      "subject": "feat: security hardening, UX fixes, curated picks, batch animate, test suite",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/1d7282858a83cb24ae9a6138c509f35e5590bf9c",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "6c4e47777c7abaf85a76ae0697540816da1b240d",
+      "shortHash": "6c4e477",
+      "date": "2026-03-03T01:36:31Z",
+      "subject": "feat: wire publish, profiles, hover zones, and animate backend",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/6c4e47777c7abaf85a76ae0697540816da1b240d",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "de7a370fb977d0ed354fd112e01109c9f5c2ada9",
+      "shortHash": "de7a370",
+      "date": "2026-03-03T01:09:58Z",
+      "subject": "feat: platform expansion — design system, library hub, publish, animate",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/de7a370fb977d0ed354fd112e01109c9f5c2ada9",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "569f4d49f4e23f06c6bb1d7f4a98235699c83039",
+      "shortHash": "569f4d4",
+      "date": "2026-03-03T00:56:17Z",
+      "subject": "docs: implementation plan — 18 tasks across 6 phases",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/569f4d49f4e23f06c6bb1d7f4a98235699c83039",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "ca4cd5f3b784abbadb49bd6503f9c9e97bbfd459",
+      "shortHash": "ca4cd5f",
+      "date": "2026-03-03T00:54:47Z",
+      "subject": "docs: platform expansion design — library hub, publish, animate, design system",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/ca4cd5f3b784abbadb49bd6503f9c9e97bbfd459",
+      "type": "docs",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "other": 4,
+      "fix": 5,
+      "feat": 8,
+      "content": 3,
+      "docs": 3
+    },
+    "byAuthor": {
+      "aikaizen": 18,
+      "Andy Stable": 5
+    },
+    "byRepo": {
+      "videoterminal": 3,
+      "storybookstudio": 14,
+      "promptengines-main": 6
+    },
+    "total": 23
+  },
+  "summary": {
+    "totalCommits": 23,
+    "activeRepos": [
+      "storybookstudio",
+      "promptengines-main",
+      "videoterminal"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        8
+      ],
+      [
+        "fix",
+        5
+      ],
+      [
+        "other",
+        4
+      ]
+    ],
+    "activeAuthors": [
+      "aikaizen",
+      "Andy Stable"
+    ]
+  }
+}
