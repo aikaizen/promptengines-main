@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join with Token — Prompt Engines Lab</title>
+  <meta name="description" content="Enter your invitation token to join the Prompt Engines Lab team.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .join-section {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 2rem 0 4rem;
+    }
+
+    .token-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+    }
+
+    .token-card h2 {
+      font-family: var(--sans);
+      font-size: 1.375rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .token-card .subtitle {
+      color: var(--text-3);
+      font-size: 0.9375rem;
+      margin-bottom: 2rem;
+      line-height: 1.55;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+
+    .token-input-wrapper {
+      position: relative;
+    }
+
+    .token-input {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 1.125rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+
+    .token-input::placeholder {
+      color: var(--text-4);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .token-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .token-input.is-error {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    }
+
+    .token-input.is-valid {
+      border-color: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+    }
+
+    .form-hint {
+      margin-top: 0.5rem;
+      font-size: 0.8125rem;
+      color: var(--text-4);
+      font-family: var(--mono);
+    }
+
+    .validate-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.9375rem 1.5rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--sans);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+    }
+
+    .validate-btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .validate-btn:active {
+      transform: translateY(0);
+    }
+
+    .validate-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .validate-btn svg {
+      flex-shrink: 0;
+    }
+
+    .feedback {
+      display: none;
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .feedback.is-error {
+      display: block;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #ef4444;
+    }
+
+    .feedback.is-success {
+      display: block;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      color: #22c55e;
+    }
+
+    .token-info {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .token-info h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 0.75rem;
+    }
+
+    .token-info p {
+      font-size: 0.8125rem;
+      color: var(--text-4);
+      line-height: 1.6;
+    }
+
+    .spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" style="padding: 3rem 0 2rem;">
+      <div class="container">
+        <div class="eyebrow">Join the Lab</div>
+        <h1 style="max-width: 20ch;">Enter your invitation token</h1>
+        <p class="hero-lead" style="max-width: 520px;">
+          Tokens are distributed by the team. If you have one, enter it below to begin your profile setup.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 1rem;">
+      <div class="container">
+        <div class="join-section">
+          <div class="token-card">
+            <h2>Token Validation</h2>
+            <p class="subtitle">Paste your token exactly as received. Tokens are single-use and may be time-limited.</p>
+
+            <div class="feedback" id="feedback"></div>
+
+            <form id="tokenForm">
+              <div class="form-group">
+                <label class="form-label" for="tokenInput">Invitation Token</label>
+                <div class="token-input-wrapper">
+                  <input
+                    type="text"
+                    class="token-input"
+                    id="tokenInput"
+                    name="token"
+                    placeholder="TEAM-XXXX-XXXX-XXXX"
+                    autocomplete="off"
+                    spellcheck="false"
+                    required
+                  >
+                </div>
+                <p class="form-hint">Format: TEAM-XXXX-XXXX-XXXX</p>
+              </div>
+
+              <button type="submit" class="validate-btn" id="validateBtn">
+                <span id="btnText">Validate Token</span>
+                <div class="spinner" id="spinner"></div>
+                <svg id="btnArrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </form>
+
+            <div class="token-info">
+              <h3>How tokens work</h3>
+              <p>
+                Invitation tokens grant access to join the Prompt Engines Lab team.
+                Each token is single-use and may have an expiration date. After validation,
+                you will be guided through profile setup where you can configure your
+                team presence and contributor profile.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" style="border-top: 1px solid var(--border-subtle); margin-top: 2rem;">
+    <div class="container" style="padding: 2rem 0; text-align: center; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab Notes</p>
+    </div>
+  </footer>
+
+  <script>
+    // Demo token for client-side validation
+    const DEMO_TOKEN = 'TEAM-DEMO-2026-JOIN';
+
+    const form = document.getElementById('tokenForm');
+    const input = document.getElementById('tokenInput');
+    const btn = document.getElementById('validateBtn');
+    const btnText = document.getElementById('btnText');
+    const spinner = document.getElementById('spinner');
+    const btnArrow = document.getElementById('btnArrow');
+    const feedback = document.getElementById('feedback');
+
+    // Auto-format token input: insert dashes
+    input.addEventListener('input', function () {
+      let val = this.value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
+      this.value = val;
+      // Clear error state on new input
+      this.classList.remove('is-error', 'is-valid');
+      feedback.className = 'feedback';
+      feedback.style.display = 'none';
+    });
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const token = input.value.trim().toUpperCase();
+
+      if (!token) {
+        showFeedback('Please enter a token.', 'error');
+        input.classList.add('is-error');
+        return;
+      }
+
+      // Token format validation
+      const tokenPattern = /^TEAM-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
+      if (!tokenPattern.test(token)) {
+        showFeedback('Invalid token format. Expected: TEAM-XXXX-XXXX-XXXX', 'error');
+        input.classList.add('is-error');
+        return;
+      }
+
+      // Show loading state
+      btn.disabled = true;
+      btnText.textContent = 'Validating...';
+      spinner.style.display = 'block';
+      btnArrow.style.display = 'none';
+
+      try {
+        // Try the API endpoint first, fall back to client-side check
+        let isValid = false;
+        try {
+          const res = await fetch('/api/tokens/validate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: token })
+          });
+          const data = await res.json();
+          isValid = data.valid;
+        } catch (apiErr) {
+          // API not available — use client-side demo check
+          await new Promise(r => setTimeout(r, 800));
+          isValid = (token === DEMO_TOKEN);
+        }
+
+        if (isValid) {
+          input.classList.add('is-valid');
+          showFeedback('Token validated. Redirecting to profile setup...', 'success');
+          // Store token in sessionStorage for the setup page
+          sessionStorage.setItem('join_token', token);
+          setTimeout(function () {
+            window.location.href = '/labnotes/join/setup/';
+          }, 1200);
+        } else {
+          input.classList.add('is-error');
+          showFeedback('Invalid or expired token. Check with the person who issued it.', 'error');
+        }
+      } catch (err) {
+        showFeedback('Validation failed. Please try again.', 'error');
+        input.classList.add('is-error');
+      } finally {
+        btn.disabled = false;
+        btnText.textContent = 'Validate Token';
+        spinner.style.display = 'none';
+        btnArrow.style.display = '';
+      }
+    });
+
+    function showFeedback(message, type) {
+      feedback.textContent = message;
+      feedback.className = 'feedback';
+      feedback.classList.add(type === 'error' ? 'is-error' : 'is-success');
+    }
+  </script>
+</body>
+</html>

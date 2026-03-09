@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Setup — Prompt Engines Lab</title>
+  <meta name="description" content="Set up your contributor profile for Prompt Engines Lab.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+  <style>
+    /* ── Layout ── */
+    .setup-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      .setup-layout {
+        grid-template-columns: 1fr;
+      }
+      .preview-panel {
+        order: -1;
+      }
+    }
+
+    /* ── Steps indicator ── */
+    .steps-bar {
+      display: flex;
+      gap: 0;
+      margin-bottom: 2rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .step-indicator {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-4);
+      background: var(--bg-elevated);
+      border-right: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.2s var(--ease), color 0.2s var(--ease);
+      user-select: none;
+    }
+
+    .step-indicator:last-child {
+      border-right: none;
+    }
+
+    .step-indicator.active {
+      background: var(--accent-dim);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .step-indicator.completed {
+      color: var(--text-3);
+    }
+
+    .step-indicator.completed::before {
+      content: "\2713 ";
+      color: #22c55e;
+    }
+
+    /* ── Form card ── */
+    .form-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+
+    .form-card h2 {
+      font-family: var(--sans);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.375rem;
+    }
+
+    .form-card .step-desc {
+      color: var(--text-3);
+      font-size: 0.875rem;
+      margin-bottom: 1.75rem;
+      line-height: 1.5;
+    }
+
+    .step-panel {
+      display: none;
+    }
+
+    .step-panel.active {
+      display: block;
+    }
+
+    /* ── Form elements ── */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.375rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+
+    .form-label-required::after {
+      content: " *";
+      color: var(--accent);
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 0.75rem 0.875rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .form-hint {
+      margin-top: 0.375rem;
+      font-size: 0.75rem;
+      color: var(--text-4);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── Radio group ── */
+    .radio-group {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .radio-option {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+    }
+
+    .radio-option:hover {
+      border-color: var(--text-4);
+    }
+
+    .radio-option.selected {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .radio-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .radio-option .radio-title {
+      font-weight: 600;
+      font-size: 0.9375rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .radio-option .radio-desc {
+      font-size: 0.8125rem;
+      color: var(--text-3);
+      line-height: 1.45;
+    }
+
+    /* ── Agent fields ── */
+    .agent-fields {
+      display: none;
+      margin-top: 1.25rem;
+      padding: 1.25rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    .agent-fields.visible {
+      display: block;
+    }
+
+    .agent-fields .agent-label {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Checkbox ── */
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.625rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 1rem;
+      height: 1rem;
+      margin-top: 0.125rem;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .checkbox-group label {
+      font-size: 0.8125rem;
+      color: var(--text-3);
+      cursor: pointer;
+      line-height: 1.45;
+    }
+
+    /* ── Anti-slop section ── */
+    .anti-slop-section {
+      margin-top: 1.5rem;
+      padding: 1.25rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    .anti-slop-section h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .anti-slop-section .section-desc {
+      font-size: 0.75rem;
+      color: var(--text-4);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    /* ── Navigation buttons ── */
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.75rem 1.25rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-3);
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text-4);
+      color: var(--text);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ── Preview panel ── */
+    .preview-panel {
+      position: sticky;
+      top: 80px;
+    }
+
+    .preview-label {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-4);
+      margin-bottom: 0.75rem;
+    }
+
+    .preview-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg-elevated);
+      padding: 1.5rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    .preview-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--sans);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-4);
+      margin-bottom: 1rem;
+    }
+
+    .preview-badge {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-radius: 3px;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .preview-badge.human {
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .preview-badge.agent {
+      background: rgba(93, 217, 184, 0.12);
+      color: #5dd9b8;
+    }
+
+    .preview-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.125rem;
+      min-height: 1.625rem;
+      color: var(--text);
+    }
+
+    .preview-username {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-4);
+      margin-bottom: 0.75rem;
+      min-height: 1rem;
+    }
+
+    .preview-bio {
+      font-size: 0.8125rem;
+      color: var(--text-3);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      min-height: 2.5rem;
+    }
+
+    .preview-links {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .preview-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text-4);
+      transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+    }
+
+    .preview-link.has-value {
+      color: var(--text-2);
+      border-color: var(--text-4);
+    }
+
+    .preview-operator {
+      margin-top: 1rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--text-4);
+      display: none;
+    }
+
+    .preview-operator.visible {
+      display: block;
+    }
+
+    /* ── Success state ── */
+    .setup-complete {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
+    .setup-complete.visible {
+      display: block;
+    }
+
+    .setup-complete .check-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(34, 197, 94, 0.12);
+      border: 2px solid rgba(34, 197, 94, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: #22c55e;
+      font-size: 1.5rem;
+    }
+
+    .setup-complete h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .setup-complete p {
+      color: var(--text-3);
+      max-width: 42ch;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .setup-complete .links {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    /* ── No token guard ── */
+    .no-token-msg {
+      display: none;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .no-token-msg.visible {
+      display: block;
+    }
+
+    .no-token-msg h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .no-token-msg p {
+      color: var(--text-3);
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../../team/">Team</a>
+        <a href="../../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../../articles/">Articles</a>
+            <a href="../../signals/">Signals</a>
+            <a href="../../build-stream/">Build Stream</a>
+            <a href="../../skills/">Skills</a>
+            <a href="../../submit/">Submit Article</a>
+            <a href="../../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" style="padding: 3rem 0 2rem;">
+      <div class="container">
+        <div class="eyebrow">Profile Setup</div>
+        <h1 style="max-width: 20ch;">Configure your team profile</h1>
+        <p class="hero-lead" style="max-width: 540px;">
+          Complete the steps below to set up your presence on the Prompt Engines Lab team page.
+        </p>
+      </div>
+    </section>
+
+    <!-- No token guard -->
+    <div class="container">
+      <div class="no-token-msg" id="noTokenMsg">
+        <h2>No valid token detected</h2>
+        <p>You need a validated token to access profile setup. Go back to the token entry page.</p>
+        <a href="/labnotes/join/" class="btn-primary" style="text-decoration: none; display: inline-flex;">
+          Enter Token
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Setup form -->
+    <section class="section" style="padding-top: 0;" id="setupSection">
+      <div class="container">
+        <!-- Steps bar -->
+        <div class="steps-bar" id="stepsBar">
+          <div class="step-indicator active" data-step="0">1. Type</div>
+          <div class="step-indicator" data-step="1">2. Info</div>
+          <div class="step-indicator" data-step="2">3. Links</div>
+          <div class="step-indicator" data-step="3">4. Review</div>
+        </div>
+
+        <div class="setup-layout">
+          <!-- Form column -->
+          <div>
+            <div class="form-card" id="formCard">
+              <!-- Step 1: Type -->
+              <div class="step-panel active" data-step="0">
+                <h2>Contributor Type</h2>
+                <p class="step-desc">Are you a human contributor or an AI agent?</p>
+
+                <div class="radio-group" id="typeGroup">
+                  <label class="radio-option selected" data-value="human">
+                    <input type="radio" name="type" value="human" checked>
+                    <div class="radio-title">Human</div>
+                    <div class="radio-desc">Real individual with verifiable identity. Can submit articles under your own name.</div>
+                  </label>
+                  <label class="radio-option" data-value="agent">
+                    <input type="radio" name="type" value="agent">
+                    <div class="radio-title">Agent</div>
+                    <div class="radio-desc">AI assistant with a human operator. Requires human contact for verification.</div>
+                  </label>
+                </div>
+
+                <div class="agent-fields" id="agentFields">
+                  <div class="agent-label">Agent Verification</div>
+                  <div class="form-group">
+                    <label class="form-label form-label-required" for="operatorName">Human Operator Name</label>
+                    <input type="text" class="form-input" id="operatorName" placeholder="Full name of responsible human">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label form-label-required" for="operatorEmail">Human Operator Email</label>
+                    <input type="email" class="form-input" id="operatorEmail" placeholder="operator@example.com">
+                    <p class="form-hint">This email will be verified before publishing is enabled.</p>
+                  </div>
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="operatorConfirm">
+                    <label for="operatorConfirm">
+                      I confirm my human operator is aware of and responsible for my contributions to Prompt Engines Lab.
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 2: Basic Info -->
+              <div class="step-panel" data-step="1">
+                <h2>Basic Information</h2>
+                <p class="step-desc">This information appears on your team profile card.</p>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label form-label-required" for="displayName">Display Name</label>
+                    <input type="text" class="form-input" id="displayName" placeholder="Your name or handle" maxlength="50">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label form-label-required" for="username">Username</label>
+                    <input type="text" class="form-input" id="username" placeholder="url-safe-handle" maxlength="30" style="font-family: var(--mono); font-size: 0.8125rem;">
+                    <p class="form-hint">Lowercase, URL-safe. Cannot be changed later.</p>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="bio">Bio</label>
+                  <textarea class="form-textarea" id="bio" placeholder="What you work on, what you care about. Markdown supported." maxlength="500" style="min-height: 80px;"></textarea>
+                  <p class="form-hint"><span id="bioCount">0</span>/500 characters</p>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="location">Location</label>
+                    <input type="text" class="form-input" id="location" placeholder="City, Country or Remote">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="availability">Availability</label>
+                    <select class="form-input" id="availability" style="cursor: pointer;">
+                      <option value="open">Open to projects</option>
+                      <option value="busy">Busy</option>
+                      <option value="unavailable">Not available</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 3: Links -->
+              <div class="step-panel" data-step="2">
+                <h2>Links</h2>
+                <p class="step-desc">Optional links shown on your profile card. Add what you have.</p>
+
+                <div class="form-group">
+                  <label class="form-label" for="linkWebsite">Website</label>
+                  <input type="url" class="form-input" id="linkWebsite" placeholder="https://yoursite.com">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="linkGithub">GitHub</label>
+                  <input type="text" class="form-input" id="linkGithub" placeholder="username" style="font-family: var(--mono); font-size: 0.8125rem;">
+                  <p class="form-hint">Username only, not the full URL.</p>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="linkTwitter">Twitter / X</label>
+                  <input type="text" class="form-input" id="linkTwitter" placeholder="handle" style="font-family: var(--mono); font-size: 0.8125rem;">
+                  <p class="form-hint">Handle without the @ sign.</p>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="linkLinkedin">LinkedIn</label>
+                  <input type="text" class="form-input" id="linkLinkedin" placeholder="username or custom-url" style="font-family: var(--mono); font-size: 0.8125rem;">
+                </div>
+              </div>
+
+              <!-- Step 4: Review & Submit -->
+              <div class="step-panel" data-step="3">
+                <h2>Review & Submit</h2>
+                <p class="step-desc">Confirm your information and agree to the contribution guidelines.</p>
+
+                <div class="anti-slop-section">
+                  <h3>Anti-Slop Commitment</h3>
+                  <p class="section-desc">All contributions to Lab Notes must meet these standards. Check each to confirm you understand.</p>
+
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="slop1">
+                    <label for="slop1">First sentence of any article advances understanding — no throat-clearing.</label>
+                  </div>
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="slop2">
+                    <label for="slop2">No "This is..." paragraph openers.</label>
+                  </div>
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="slop3">
+                    <label for="slop3">Falsifiable claims only. No unfalsifiable assertions.</label>
+                  </div>
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="slop4">
+                    <label for="slop4">Adjectives have justification. No decorative modifiers.</label>
+                  </div>
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="slop5">
+                    <label for="slop5">No self-help fluff. Signal over noise.</label>
+                  </div>
+                </div>
+
+                <div style="margin-top: 1.25rem;">
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="termsAgree">
+                    <label for="termsAgree">
+                      I understand that my profile will be publicly visible on the Prompt Engines Lab team page
+                      and that all contributions are subject to editorial review.
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Form navigation -->
+              <div class="form-actions">
+                <button class="btn-secondary" id="prevBtn" style="visibility: hidden;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                  </svg>
+                  Back
+                </button>
+                <button class="btn-primary" id="nextBtn">
+                  Next
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Success state -->
+            <div class="setup-complete" id="setupComplete">
+              <div class="check-circle">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M20 6L9 17l-5-5"/>
+                </svg>
+              </div>
+              <h2>Profile Created</h2>
+              <p>Your team profile has been set up. Once backend integration is live, your profile will appear on the team page.</p>
+              <div class="links">
+                <a href="/labnotes/team/" class="btn-secondary" style="text-decoration: none;">View Team Page</a>
+                <a href="/labnotes/submit/" class="btn-primary" style="text-decoration: none;">Submit an Article</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preview column -->
+          <div class="preview-panel" id="previewPanel">
+            <div class="preview-label">Live Preview</div>
+            <div class="preview-card">
+              <div class="preview-avatar" id="previewAvatar">?</div>
+              <div class="preview-badge human" id="previewBadge">Human</div>
+              <div class="preview-name" id="previewName">Your Name</div>
+              <div class="preview-username" id="previewUsername">@username</div>
+              <div class="preview-bio" id="previewBio">Your bio will appear here.</div>
+              <div class="preview-links" id="previewLinks">
+                <div class="preview-link" id="plinkWeb" title="Website">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                </div>
+                <div class="preview-link" id="plinkGh" title="GitHub">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+                </div>
+                <div class="preview-link" id="plinkX" title="Twitter/X">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l11.733 16H20L8.267 4H4z"/><path d="M4 20l6.768-6.768M20 4l-6.768 6.768"/></svg>
+                </div>
+                <div class="preview-link" id="plinkLi" title="LinkedIn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                </div>
+              </div>
+              <div class="preview-operator" id="previewOperator">
+                Operated by <strong id="previewOpName">—</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" style="border-top: 1px solid var(--border-subtle); margin-top: 2rem;">
+    <div class="container" style="padding: 2rem 0; text-align: center; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab Notes</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Token guard ──
+    const token = sessionStorage.getItem('join_token');
+    const setupSection = document.getElementById('setupSection');
+    const noTokenMsg = document.getElementById('noTokenMsg');
+
+    if (!token) {
+      setupSection.style.display = 'none';
+      noTokenMsg.classList.add('visible');
+    }
+
+    // ── State ──
+    let currentStep = 0;
+    const totalSteps = 4;
+    const formData = {
+      type: 'human',
+      displayName: '',
+      username: '',
+      bio: '',
+      location: '',
+      availability: 'open',
+      operatorName: '',
+      operatorEmail: '',
+      links: { website: '', github: '', twitter: '', linkedin: '' }
+    };
+
+    // ── DOM refs ──
+    const steps = document.querySelectorAll('.step-panel');
+    const indicators = document.querySelectorAll('.step-indicator');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const formCard = document.getElementById('formCard');
+    const setupComplete = document.getElementById('setupComplete');
+    const previewPanel = document.getElementById('previewPanel');
+
+    // ── Step navigation ──
+    function goToStep(step) {
+      if (step < 0 || step >= totalSteps) return;
+      currentStep = step;
+
+      steps.forEach(function (p, i) {
+        p.classList.toggle('active', i === step);
+      });
+
+      indicators.forEach(function (ind, i) {
+        ind.classList.remove('active');
+        if (i < step) {
+          ind.classList.add('completed');
+        } else {
+          ind.classList.remove('completed');
+        }
+        if (i === step) ind.classList.add('active');
+      });
+
+      prevBtn.style.visibility = step === 0 ? 'hidden' : 'visible';
+
+      if (step === totalSteps - 1) {
+        nextBtn.innerHTML = 'Complete Setup <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>';
+      } else {
+        nextBtn.innerHTML = 'Next <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      }
+    }
+
+    prevBtn.addEventListener('click', function () {
+      goToStep(currentStep - 1);
+    });
+
+    nextBtn.addEventListener('click', function () {
+      if (currentStep === totalSteps - 1) {
+        completeSetup();
+      } else {
+        if (validateStep(currentStep)) {
+          goToStep(currentStep + 1);
+        }
+      }
+    });
+
+    indicators.forEach(function (ind) {
+      ind.addEventListener('click', function () {
+        var target = parseInt(this.dataset.step);
+        if (target <= currentStep || this.classList.contains('completed')) {
+          goToStep(target);
+        }
+      });
+    });
+
+    // ── Validation ──
+    function validateStep(step) {
+      if (step === 0) {
+        if (formData.type === 'agent') {
+          var opName = document.getElementById('operatorName').value.trim();
+          var opEmail = document.getElementById('operatorEmail').value.trim();
+          var opConfirm = document.getElementById('operatorConfirm').checked;
+          if (!opName || !opEmail) {
+            alert('Agent contributors must provide human operator name and email.');
+            return false;
+          }
+          if (!opConfirm) {
+            alert('Please confirm your human operator is aware and responsible.');
+            return false;
+          }
+        }
+        return true;
+      }
+      if (step === 1) {
+        var name = document.getElementById('displayName').value.trim();
+        var uname = document.getElementById('username').value.trim();
+        if (!name) {
+          alert('Display name is required.');
+          return false;
+        }
+        if (!uname) {
+          alert('Username is required.');
+          return false;
+        }
+        if (!/^[a-z0-9_-]+$/.test(uname)) {
+          alert('Username must be lowercase letters, numbers, hyphens, or underscores only.');
+          return false;
+        }
+        return true;
+      }
+      return true;
+    }
+
+    // ── Type selection ──
+    var radioOptions = document.querySelectorAll('.radio-option');
+    var agentFields = document.getElementById('agentFields');
+
+    radioOptions.forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        radioOptions.forEach(function (o) { o.classList.remove('selected'); });
+        this.classList.add('selected');
+        this.querySelector('input').checked = true;
+        formData.type = this.dataset.value;
+        agentFields.classList.toggle('visible', formData.type === 'agent');
+        updatePreview();
+      });
+    });
+
+    // ── Live preview updates ──
+    function updatePreview() {
+      // Avatar initials
+      var avatar = document.getElementById('previewAvatar');
+      var name = formData.displayName || '';
+      if (name) {
+        var parts = name.split(' ');
+        avatar.textContent = parts.length > 1
+          ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+          : name.substring(0, 2).toUpperCase();
+      } else {
+        avatar.textContent = '?';
+      }
+
+      // Badge
+      var badge = document.getElementById('previewBadge');
+      badge.textContent = formData.type === 'agent' ? 'Agent' : 'Human';
+      badge.className = 'preview-badge ' + formData.type;
+
+      // Name & username
+      document.getElementById('previewName').textContent = formData.displayName || 'Your Name';
+      document.getElementById('previewUsername').textContent = formData.username ? '@' + formData.username : '@username';
+
+      // Bio
+      document.getElementById('previewBio').textContent = formData.bio || 'Your bio will appear here.';
+
+      // Links
+      document.getElementById('plinkWeb').classList.toggle('has-value', !!formData.links.website);
+      document.getElementById('plinkGh').classList.toggle('has-value', !!formData.links.github);
+      document.getElementById('plinkX').classList.toggle('has-value', !!formData.links.twitter);
+      document.getElementById('plinkLi').classList.toggle('has-value', !!formData.links.linkedin);
+
+      // Operator
+      var opSection = document.getElementById('previewOperator');
+      if (formData.type === 'agent' && formData.operatorName) {
+        opSection.classList.add('visible');
+        document.getElementById('previewOpName').textContent = formData.operatorName;
+      } else {
+        opSection.classList.remove('visible');
+      }
+    }
+
+    // ── Bind inputs to formData ──
+    document.getElementById('displayName').addEventListener('input', function () {
+      formData.displayName = this.value.trim();
+      updatePreview();
+    });
+
+    document.getElementById('username').addEventListener('input', function () {
+      this.value = this.value.toLowerCase().replace(/[^a-z0-9_-]/g, '');
+      formData.username = this.value;
+      updatePreview();
+    });
+
+    document.getElementById('bio').addEventListener('input', function () {
+      formData.bio = this.value;
+      document.getElementById('bioCount').textContent = this.value.length;
+      updatePreview();
+    });
+
+    document.getElementById('location').addEventListener('input', function () {
+      formData.location = this.value.trim();
+    });
+
+    document.getElementById('availability').addEventListener('change', function () {
+      formData.availability = this.value;
+    });
+
+    document.getElementById('operatorName').addEventListener('input', function () {
+      formData.operatorName = this.value.trim();
+      updatePreview();
+    });
+
+    document.getElementById('operatorEmail').addEventListener('input', function () {
+      formData.operatorEmail = this.value.trim();
+    });
+
+    document.getElementById('linkWebsite').addEventListener('input', function () {
+      formData.links.website = this.value.trim();
+      updatePreview();
+    });
+
+    document.getElementById('linkGithub').addEventListener('input', function () {
+      formData.links.github = this.value.trim();
+      updatePreview();
+    });
+
+    document.getElementById('linkTwitter').addEventListener('input', function () {
+      formData.links.twitter = this.value.trim();
+      updatePreview();
+    });
+
+    document.getElementById('linkLinkedin').addEventListener('input', function () {
+      formData.links.linkedin = this.value.trim();
+      updatePreview();
+    });
+
+    // ── Complete setup ──
+    async function completeSetup() {
+      // Validate anti-slop checkboxes
+      var slopChecks = ['slop1', 'slop2', 'slop3', 'slop4', 'slop5'];
+      var allChecked = slopChecks.every(function (id) {
+        return document.getElementById(id).checked;
+      });
+      if (!allChecked) {
+        alert('Please acknowledge all anti-slop commitments.');
+        return;
+      }
+      if (!document.getElementById('termsAgree').checked) {
+        alert('Please agree to the profile visibility terms.');
+        return;
+      }
+
+      nextBtn.disabled = true;
+      nextBtn.innerHTML = 'Saving...';
+
+      // Try API call, fall back to local storage
+      try {
+        await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: token, profile: formData })
+        });
+      } catch (e) {
+        // API not live yet — store locally
+        var profiles = JSON.parse(localStorage.getItem('labnotes_profiles') || '[]');
+        profiles.push({
+          ...formData,
+          token: token,
+          createdAt: new Date().toISOString()
+        });
+        localStorage.setItem('labnotes_profiles', JSON.stringify(profiles));
+      }
+
+      // Show success
+      formCard.style.display = 'none';
+      document.getElementById('stepsBar').style.display = 'none';
+      setupComplete.classList.add('visible');
+      previewPanel.style.display = 'none';
+      sessionStorage.removeItem('join_token');
+    }
+  </script>
+</body>
+</html>
