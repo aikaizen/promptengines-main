@@ -46,17 +46,17 @@
           </p>
         </div>
         <aside class="hero-aside">
-          <a class="hero-stat" href="./articles/2026-03-03-zen-and-the-art-of-vibecoding.html" style="text-decoration:none; transition: background 0.2s;">
-            <span class="hero-stat-number" style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent);">Latest Article</span>
-            <span class="hero-stat-label" style="font-size:13px; color:var(--text-2); text-transform:none; letter-spacing:0;">Zen and the Art of Vibe Coding</span>
+          <a class="hero-stat hero-stat-link" href="./articles/image-models-preliminary-views.html">
+            <span class="hero-stat-number stat-eyebrow">Latest Article</span>
+            <span class="hero-stat-label stat-text">Image model API baseline: March 2026</span>
           </a>
-          <a class="hero-stat" href="./build-stream/" style="text-decoration:none; transition: background 0.2s;">
-            <span class="hero-stat-number" style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent);">Build Stream</span>
-            <span class="hero-stat-label" style="font-size:13px; color:var(--text-2); text-transform:none; letter-spacing:0;">Week 10 — 94 commits across 4 repos</span>
+          <a class="hero-stat hero-stat-link" href="./build-stream/">
+            <span class="hero-stat-number stat-eyebrow">Build Stream</span>
+            <span class="hero-stat-label stat-text">Week 10 — 94 commits across 4 repos</span>
           </a>
-          <a class="hero-stat" href="./signals/2026-02-28-ai-twitter-vibe.html" style="text-decoration:none; transition: background 0.2s;">
-            <span class="hero-stat-number" style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent);">Latest Signal</span>
-            <span class="hero-stat-label" style="font-size:13px; color:var(--text-2); text-transform:none; letter-spacing:0;">AI Twitter vibe check — Feb 28</span>
+          <a class="hero-stat hero-stat-link" href="./signals/2026-02-28-ai-twitter-vibe.html">
+            <span class="hero-stat-number stat-eyebrow">Latest Signal</span>
+            <span class="hero-stat-label stat-text">AI Twitter vibe check — Feb 28</span>
           </a>
         </aside>
       </div>
@@ -91,27 +91,27 @@
         <div class="section-header">
           <h2>Content modes</h2>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-radius: var(--radius-sm); overflow: hidden; margin-top: 1rem;">
-          <div style="background: var(--bg-elevated); padding: 1.25rem;">
-            <div style="font-family: var(--mono); font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text);">◉</div>
-            <div style="font-weight: 600; margin-bottom: 0.25rem;">Standard</div>
-            <div style="font-size: 0.8rem; color: var(--text-4);">Technical articles, evaluations, how-tos. Structured for human readers.</div>
+        <div class="modes-grid">
+          <div class="mode-cell">
+            <div class="symbol" style="color: var(--text);">◉</div>
+            <div class="label">Standard</div>
+            <div class="desc">Technical articles, evaluations, how-tos. Structured for human readers.</div>
           </div>
-          <div style="background: var(--bg-elevated); padding: 1.25rem;">
-            <div style="font-family: var(--mono); font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--accent);">◆</div>
-            <div style="font-weight: 600; margin-bottom: 0.25rem;">Experimental</div>
-            <div style="font-size: 0.8rem; color: var(--text-4);">Hyper-concise visual writing. Typography, charts, and whitespace over prose.</div>
+          <div class="mode-cell">
+            <div class="symbol" style="color: var(--accent);">◆</div>
+            <div class="label">Experimental</div>
+            <div class="desc">Hyper-concise visual writing. Typography, charts, and whitespace over prose.</div>
           </div>
-          <div style="background: var(--bg-elevated); padding: 1.25rem;">
-            <div style="font-family: var(--mono); font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-4);">⬡</div>
-            <div style="font-weight: 600; margin-bottom: 0.25rem;">Agent</div>
-            <div style="font-size: 0.8rem; color: var(--text-4);">Hyperdense, sigilized documentation. Optimized for agent consumption.</div>
+          <div class="mode-cell">
+            <div class="symbol" style="color: var(--text-4);">⬡</div>
+            <div class="label">Agent</div>
+            <div class="desc">Hyperdense, sigilized documentation. Optimized for agent consumption.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ════ LATEST ARTICLES ════ -->
+    <!-- ════ RECENT ARTICLES ════ -->
     <section class="section">
       <div class="container">
         <div class="section-header">
@@ -120,88 +120,42 @@
         </div>
 
         <div class="featured-grid stagger">
-          <a class="post-card post-featured" href="./articles/2026-03-03-zen-and-the-art-of-vibecoding.html" style="--i:0">
-            <div class="post-meta"><span>Mar 3, 2026</span><span class="tag">Lab Notes</span><span style="color: var(--accent);">◆</span></div>
-            <h3>Zen and the Art of Vibe Coding</h3>
-            <p>An operating framework for infinite leverage. Five boundaries: screen assignment, input/output separation, context-matched phone use, and the two-hour daily disconnect.</p>
+          <a class="post-card post-featured" href="./articles/image-models-preliminary-views.html" style="--i:0">
+            <div class="post-meta"><span>Mar 3, 2026</span><span class="tag">Benchmark</span><span style="color: var(--accent);">◉ ◆ ⬡</span></div>
+            <h3>Image model API baseline: March 2026</h3>
+            <p>9 models, 3 providers. Speed, reliability, content filtering, and IP character handling — benchmarked from production. Nano Banana 2 recommended as general-purpose driver.</p>
           </a>
 
-          <a class="post-card" href="./articles/2026-03-03-just-rebuild-it.html" style="--i:1">
-            <div class="post-meta"><span>Mar 3, 2026</span><span class="tag">Experiments</span></div>
-            <h3>Just Rebuild It</h3>
-            <p>We scrapped Flow Education four times. When debugging time exceeds rebuild cost, start fresh. The KPI: tokens are cheaper than your time. What to preserve (data, assets) and what to throw away (the implementation).</p>
+          <a class="post-card" href="./articles/2026-03-03-zen-and-the-art-of-vibecoding.html" style="--i:1">
+            <div class="post-meta"><span>Mar 3, 2026</span><span class="tag">Lab Notes</span><span style="color: var(--accent);">◉ ◆ ⬡</span></div>
+            <h3>Zen and the Art of Vibe Coding</h3>
+            <p>An operating framework for infinite leverage. Screen assignment, input/output separation, and the two-hour daily disconnect.</p>
           </a>
         </div>
 
         <div class="post-grid stagger">
-          <a class="post-card" href="./articles/2026-03-03-model-selection-framework.html" style="--i:2">
+          <a class="post-card" href="./articles/2026-03-04-public-apis-usefulness-review.html" style="--i:2">
+            <div class="post-meta"><span>Mar 4, 2026</span><span class="tag">Infrastructure</span></div>
+            <h3>Public APIs classification: a usefulness review of 400+ APIs</h3>
+            <p>Which public APIs are production-grade, which are toys. Classification by reliability, documentation quality, and rate limits.</p>
+          </a>
+
+          <a class="post-card" href="./articles/model-selection-framework.html" style="--i:3">
             <div class="post-meta"><span>Mar 3, 2026</span><span class="tag">Evaluation</span></div>
             <h3>Evaluating Large Language Models: A Framework for Production Selection</h3>
-            <p>Why latency variance matters more than mean latency. Designing tests for quality distribution, retry rates, and context-window reality. Current provisional allocation: Kimi 2.5 (default), Claude (exclusives), MiniMax (batch).</p>
+            <p>Latency variance matters more than mean latency. Quality distribution, retry rates, and context-window reality.</p>
           </a>
 
-          <a class="post-card" href="./articles/2026-03-03-api-provider-framework.html" style="--i:3">
+          <a class="post-card" href="./articles/just-rebuild-it.html" style="--i:4">
+            <div class="post-meta"><span>Mar 3, 2026</span><span class="tag">Experiments</span></div>
+            <h3>Just Rebuild It</h3>
+            <p>We scrapped Flow Education four times. When debugging time exceeds rebuild cost, start fresh. Tokens are cheaper than your time.</p>
+          </a>
+
+          <a class="post-card" href="./articles/api-provider-framework.html" style="--i:5">
             <div class="post-meta"><span>Mar 3, 2026</span><span class="tag">Infrastructure</span></div>
             <h3>API Provider Strategy: Testing Direct, OpenRouter, and Fireworks</h3>
-            <p>Three-provider approach for AI infrastructure. Testing routing latency, price realization, and reliability. Proposed stack: 70% Fireworks, 20% Anthropic direct, 10% OpenRouter exploration.</p>
-          </a>
-
-          <a class="post-card" href="./articles/2026-02-28-agentic-manual.html" style="--i:4">
-            <div class="post-meta"><span>Feb 28, 2026</span><span class="tag">Agents</span></div>
-            <h3>"Just Talk To It" — an early manual for agentic engineering that still holds</h3>
-            <p>Steinberger's 2026 workflow post annotated against current OpenClaw practice. Blast radius, atomic commits, and why elaborate plan files are often context poison.</p>
-          </a>
-
-          <a class="post-card" href="./articles/2026-02-28-character-consistency.html" style="--i:4">
-            <div class="post-meta"><span>Feb 28, 2026</span><span class="tag">Experiments</span></div>
-            <h3>Character consistency across 34 art styles: what breaks and what holds</h3>
-            <p>Keeping the same child recognizable across styles from watercolor to pixel art required a reference sheet architecture — not better prompts.</p>
-          </a>
-        </div>
-
-        <div class="post-grid stagger">
-          <a class="post-card" href="./articles/openclaw-docker-security.html" style="--i:2">
-            <div class="post-meta"><span>Feb 25, 2026</span><span class="tag">Security</span></div>
-            <h3>Openclaw: security and deployment best practices with Docker</h3>
-            <p>Airgapped containers, hardened networking, pinned images, and zero outbound access for real data.</p>
-          </a>
-        </div>
-
-        <div class="post-grid stagger">
-          <a class="post-card" href="./articles/tutor-architecture.html" style="--i:2">
-            <div class="post-meta"><span>Feb 25, 2026</span><span class="tag">Architecture</span></div>
-            <h3>Tutor architecture: how we structure AI tutoring systems</h3>
-            <p>Session handling, knowledge routing, adaptive difficulty, and the feedback loop.</p>
-          </a>
-
-          <a class="post-card" href="./articles/nanoclaw-vs-openclaw.html" style="--i:3">
-            <div class="post-meta"><span>Feb 24, 2026</span><span class="tag">Agents</span></div>
-            <h3>Nanoclaw vs Openclaw: which one to deploy</h3>
-            <p>Deployment framework for choosing the right agent runtime by team shape and operational constraints.</p>
-          </a>
-
-          <a class="post-card" href="./articles/opencode-open-alternative.html" style="--i:4">
-            <div class="post-meta"><span>Feb 23, 2026</span><span class="tag">Tooling</span></div>
-            <h3>Opencode: an open alternative to Claude Code</h3>
-            <p>Where open coding assistants work today, and where managed tools still win.</p>
-          </a>
-
-          <a class="post-card" href="./articles/codex53-vs-opus46.html" style="--i:5">
-            <div class="post-meta"><span>Feb 22, 2026</span><span class="tag">Evaluation</span></div>
-            <h3>ChatGPT Codex 5.3 vs Claude Opus 4.6 for core build</h3>
-            <p>Edit accuracy, recovery speed, and architecture-level task comparison.</p>
-          </a>
-
-          <a class="post-card" href="./articles/rag-without-hallucination.html" style="--i:6">
-            <div class="post-meta"><span>Feb 21, 2026</span><span class="tag">RAG</span></div>
-            <h3>RAG without hallucination</h3>
-            <p>Guardrails for retrieval-only responses that stay faithful to approved documentation.</p>
-          </a>
-
-          <a class="post-card" href="./articles/aesthetic-scoring-early-childhood.html" style="--i:7">
-            <div class="post-meta"><span>Feb 20, 2026</span><span class="tag">Image Models</span></div>
-            <h3>Aesthetic scoring for early childhood</h3>
-            <p>Scoring rubric for generated visuals intended for young children.</p>
+            <p>Three-provider approach. Routing latency, price realization, and reliability. 70% Fireworks, 20% Anthropic direct, 10% OpenRouter.</p>
           </a>
         </div>
       </div>
@@ -226,37 +180,36 @@
             <p>Print pipelines, AppShell refactors, live data feeds. Commit velocity and repo activity breakdown.</p>
           </a>
         </div>
-        <!-- Commit activity chart -->
-        <div style="margin-top: 2rem; padding: 1.5rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);">
-          <div style="font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-4); margin-bottom: 1rem;">Commits by repo — Week 10</div>
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-3); min-width: 140px; text-align: right;">promptengines</span>
-              <div style="flex: 1; background: var(--bg-subtle); border-radius: 3px; height: 20px; overflow: hidden;">
-                <div style="width: 54%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+        <div class="bar-chart">
+          <div class="bar-chart-title">Commits by repo — Week 10</div>
+          <div class="bar-chart-rows">
+            <div class="bar-row">
+              <span class="bar-label">promptengines</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 54%; background: var(--accent);"></div>
               </div>
-              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-4); min-width: 24px;">51</span>
+              <span class="bar-count">51</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-3); min-width: 140px; text-align: right;">storybookstudio</span>
-              <div style="flex: 1; background: var(--bg-subtle); border-radius: 3px; height: 20px; overflow: hidden;">
-                <div style="width: 29%; height: 100%; background: #4ade80; border-radius: 3px;"></div>
+            <div class="bar-row">
+              <span class="bar-label">storybookstudio</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 29%; background: #4ade80;"></div>
               </div>
-              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-4); min-width: 24px;">27</span>
+              <span class="bar-count">27</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-3); min-width: 140px; text-align: right;">norbu</span>
-              <div style="flex: 1; background: var(--bg-subtle); border-radius: 3px; height: 20px; overflow: hidden;">
-                <div style="width: 10%; height: 100%; background: #60a5fa; border-radius: 3px;"></div>
+            <div class="bar-row">
+              <span class="bar-label">norbu</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 10%; background: #60a5fa;"></div>
               </div>
-              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-4); min-width: 24px;">9</span>
+              <span class="bar-count">9</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-3); min-width: 140px; text-align: right;">videoterminal</span>
-              <div style="flex: 1; background: var(--bg-subtle); border-radius: 3px; height: 20px; overflow: hidden;">
-                <div style="width: 7%; height: 100%; background: #c084fc; border-radius: 3px;"></div>
+            <div class="bar-row">
+              <span class="bar-label">videoterminal</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 7%; background: #c084fc;"></div>
               </div>
-              <span style="font-family: var(--mono); font-size: 12px; color: var(--text-4); min-width: 24px;">7</span>
+              <span class="bar-count">7</span>
             </div>
           </div>
         </div>
@@ -275,53 +228,6 @@
             <div class="post-meta"><span>Feb 28, 2026</span><span class="tag">X / Twitter Vibe</span></div>
             <h3>AI Twitter vibe check: week of Feb 28, 2026</h3>
             <p>Agent frameworks gaining, long-context hype fading, education AI quietly rising. Sentiment snapshot of AI builder discourse on X.</p>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ ARCHIVE ════ -->
-    <section class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Archive</h2>
-        </div>
-        <div class="archive-list">
-          <a class="archive-item" href="./articles/just-talk-to-it-agentic-manual.html">
-            <div class="archive-meta">Feb 28 · 9 min · Agents</div>
-            <h3>"Just Talk To It" — an early manual for agentic engineering that still holds</h3>
-          </a>
-          <a class="archive-item" href="./articles/character-consistency-34-styles.html">
-            <div class="archive-meta">Feb 28 · 7 min · Experiments</div>
-            <h3>Character consistency across 34 art styles: what breaks and what holds</h3>
-          </a>
-          <a class="archive-item" href="./articles/openclaw-docker-security.html">
-            <div class="archive-meta">Feb 25 · 9 min · Security</div>
-            <h3>Openclaw: security and deployment best practices with Docker</h3>
-          </a>
-          <a class="archive-item" href="./articles/tutor-architecture.html">
-            <div class="archive-meta">Feb 25 · 10 min · Architecture</div>
-            <h3>Tutor architecture: how we structure AI tutoring systems</h3>
-          </a>
-          <a class="archive-item" href="./articles/nanoclaw-vs-openclaw.html">
-            <div class="archive-meta">Feb 24 · 7 min · Agents</div>
-            <h3>Nanoclaw vs Openclaw: which one should you deploy for your agent system</h3>
-          </a>
-          <a class="archive-item" href="./articles/opencode-open-alternative.html">
-            <div class="archive-meta">Feb 23 · 6 min · Tooling</div>
-            <h3>Opencode: an open alternative to Claude Code</h3>
-          </a>
-          <a class="archive-item" href="./articles/codex53-vs-opus46.html">
-            <div class="archive-meta">Feb 22 · 8 min · Evaluation</div>
-            <h3>Reviewing ChatGPT Codex 5.3 vs Claude Opus 4.6 for core build</h3>
-          </a>
-          <a class="archive-item" href="./articles/rag-without-hallucination.html">
-            <div class="archive-meta">Feb 21 · 7 min · RAG</div>
-            <h3>RAG without hallucination: answer from official documents only</h3>
-          </a>
-          <a class="archive-item" href="./articles/aesthetic-scoring-early-childhood.html">
-            <div class="archive-meta">Feb 20 · 6 min · Image Models</div>
-            <h3>Aesthetic scoring for early childhood: image models and prompts reviewed</h3>
           </a>
         </div>
       </div>

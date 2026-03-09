@@ -78,12 +78,37 @@
       </div>
     </section>
 
+    <!-- ════ FEATURED ════ -->
     <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Featured</h2>
+        </div>
+        <div class="featured-grid stagger">
+          <a class="post-card post-featured" href="./image-models-preliminary-views.html" style="--i:0">
+            <div class="post-meta"><span>Mar 3, 2026</span><span class="tag">Benchmark</span><span style="color: var(--accent);">◉ ◆ ⬡</span></div>
+            <h3>Image model API baseline: March 2026</h3>
+            <p>9 models, 3 providers. Speed, reliability, content filtering, and IP character handling — benchmarked from production. Nano Banana 2 as general-purpose driver.</p>
+          </a>
+          <a class="post-card" href="./2026-03-03-zen-and-the-art-of-vibecoding.html" style="--i:1">
+            <div class="post-meta"><span>Mar 3, 2026</span><span class="tag">Lab Notes</span><span style="color: var(--accent);">◉ ◆ ⬡</span></div>
+            <h3>Zen and the Art of Vibe Coding</h3>
+            <p>An operating framework for infinite leverage. Screen assignment, input/output separation, and the two-hour daily disconnect.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ ALL ARTICLES ════ -->
+    <section class="section" style="padding-top: 0;">
       <div class="container">
         <div class="section-header">
           <h2>All articles</h2>
           <span class="section-count">18 notes</span>
         </div>
+
+        <!-- Benchmarks & Evaluations -->
+        <div class="category-group-label">Benchmarks & Evaluations</div>
         <div class="archive-list">
           <a class="archive-item has-modes" href="./image-models-preliminary-views.html">
             <div class="archive-meta">Mar 3 · 7 min · Benchmark</div>
@@ -94,10 +119,23 @@
             <div class="archive-meta">Mar 3 · 9 min · Benchmark</div>
             <h3>Image generation API benchmark: 9 models across 3 providers</h3>
           </a>
-          <a class="archive-item" href="./openrag-deployment-docker-blockers.html">
-            <div class="archive-meta">Mar 4 · 8 min · Experiments</div>
-            <h3>OpenRAG deployment blocked at Docker daemon: what 45 minutes revealed</h3>
+          <a class="archive-item" href="./model-selection-framework.html">
+            <div class="archive-meta">Mar 3 · 9 min · Evaluation</div>
+            <h3>Evaluating large language models: a framework for production selection</h3>
           </a>
+          <a class="archive-item" href="./codex53-vs-opus46.html">
+            <div class="archive-meta">Feb 22 · 8 min · Evaluation</div>
+            <h3>Reviewing ChatGPT Codex 5.3 vs Claude Opus 4.6 for core build</h3>
+          </a>
+          <a class="archive-item" href="./aesthetic-scoring-early-childhood.html">
+            <div class="archive-meta">Feb 20 · 6 min · Image Models</div>
+            <h3>Aesthetic scoring for early childhood: image models and prompts reviewed</h3>
+          </a>
+        </div>
+
+        <!-- Infrastructure & Architecture -->
+        <div class="category-group-label">Infrastructure & Architecture</div>
+        <div class="archive-list">
           <a class="archive-item" href="./public-apis-usefulness-review.html">
             <div class="archive-meta">Mar 4 · 12 min · Infrastructure</div>
             <h3>Public APIs classification: a usefulness review of 400+ APIs</h3>
@@ -106,9 +144,47 @@
             <div class="archive-meta">Mar 3 · 10 min · Infrastructure</div>
             <h3>API provider selection: building a testing framework for production AI infrastructure</h3>
           </a>
-          <a class="archive-item" href="./model-selection-framework.html">
-            <div class="archive-meta">Mar 3 · 9 min · Evaluation</div>
-            <h3>Evaluating large language models: a framework for production selection</h3>
+          <a class="archive-item" href="./tutor-architecture.html">
+            <div class="archive-meta">Feb 25 · 10 min · Architecture</div>
+            <h3>Tutor architecture: how we structure AI tutoring systems</h3>
+          </a>
+          <a class="archive-item" href="./openclaw-docker-security.html">
+            <div class="archive-meta">Feb 25 · 9 min · Security</div>
+            <h3>Openclaw: security and deployment best practices with Docker</h3>
+          </a>
+          <a class="archive-item" href="./rag-without-hallucination.html">
+            <div class="archive-meta">Feb 21 · 7 min · RAG</div>
+            <h3>RAG without hallucination: answer from official documents only</h3>
+          </a>
+        </div>
+
+        <!-- Agents & Tooling -->
+        <div class="category-group-label">Agents & Tooling</div>
+        <div class="archive-list">
+          <a class="archive-item" href="./just-talk-to-it-summary.html">
+            <div class="archive-meta">Mar 3 · 7 min · Agents</div>
+            <h3>Just talk to it: why steipete's agentic coding manual is required reading</h3>
+          </a>
+          <a class="archive-item" href="./just-talk-to-it-agentic-manual.html">
+            <div class="archive-meta">Feb 28 · 9 min · Agents</div>
+            <h3>"Just Talk To It" — an early manual for agentic engineering that still holds</h3>
+          </a>
+          <a class="archive-item" href="./nanoclaw-vs-openclaw.html">
+            <div class="archive-meta">Feb 24 · 7 min · Agents</div>
+            <h3>Nanoclaw vs Openclaw: which one should you deploy for your agent system</h3>
+          </a>
+          <a class="archive-item" href="./opencode-open-alternative.html">
+            <div class="archive-meta">Feb 23 · 6 min · Tooling</div>
+            <h3>Opencode: an open alternative to Claude Code</h3>
+          </a>
+        </div>
+
+        <!-- Experiments & Lab Notes -->
+        <div class="category-group-label">Experiments & Lab Notes</div>
+        <div class="archive-list">
+          <a class="archive-item" href="./openrag-deployment-docker-blockers.html">
+            <div class="archive-meta">Mar 4 · 8 min · Experiments</div>
+            <h3>OpenRAG deployment blocked at Docker daemon: what 45 minutes revealed</h3>
           </a>
           <a class="archive-item has-modes" href="./2026-03-03-zen-and-the-art-of-vibecoding.html">
             <div class="archive-meta">Mar 3 · 4 min · Lab Notes</div>
@@ -119,45 +195,9 @@
             <div class="archive-meta">Mar 3 · 8 min · Experiments</div>
             <h3>Just rebuild it: why we scrapped Flow Education four times</h3>
           </a>
-          <a class="archive-item" href="./just-talk-to-it-summary.html">
-            <div class="archive-meta">Mar 3 · 7 min · Agents</div>
-            <h3>Just talk to it: why steipete's agentic coding manual is required reading</h3>
-          </a>
-          <a class="archive-item" href="./just-talk-to-it-agentic-manual.html">
-            <div class="archive-meta">Feb 28 · 9 min · Agents</div>
-            <h3>"Just Talk To It" — an early manual for agentic engineering that still holds</h3>
-          </a>
           <a class="archive-item" href="./character-consistency-34-styles.html">
             <div class="archive-meta">Feb 28 · 7 min · Experiments</div>
             <h3>Character consistency across 34 art styles: what breaks and what holds</h3>
-          </a>
-          <a class="archive-item" href="./openclaw-docker-security.html">
-            <div class="archive-meta">Feb 25 · 9 min · Security</div>
-            <h3>Openclaw: security and deployment best practices with Docker</h3>
-          </a>
-          <a class="archive-item" href="./tutor-architecture.html">
-            <div class="archive-meta">Feb 25 · 10 min · Architecture</div>
-            <h3>Tutor architecture: how we structure AI tutoring systems</h3>
-          </a>
-          <a class="archive-item" href="./nanoclaw-vs-openclaw.html">
-            <div class="archive-meta">Feb 24 · 7 min · Agents</div>
-            <h3>Nanoclaw vs Openclaw: which one should you deploy for your agent system</h3>
-          </a>
-          <a class="archive-item" href="./opencode-open-alternative.html">
-            <div class="archive-meta">Feb 23 · 6 min · Tooling</div>
-            <h3>Opencode: an open alternative to Claude Code</h3>
-          </a>
-          <a class="archive-item" href="./codex53-vs-opus46.html">
-            <div class="archive-meta">Feb 22 · 8 min · Evaluation</div>
-            <h3>Reviewing ChatGPT Codex 5.3 vs Claude Opus 4.6 for core build</h3>
-          </a>
-          <a class="archive-item" href="./rag-without-hallucination.html">
-            <div class="archive-meta">Feb 21 · 7 min · RAG</div>
-            <h3>RAG without hallucination: answer from official documents only</h3>
-          </a>
-          <a class="archive-item" href="./aesthetic-scoring-early-childhood.html">
-            <div class="archive-meta">Feb 20 · 6 min · Image Models</div>
-            <h3>Aesthetic scoring for early childhood: image models and prompts reviewed</h3>
           </a>
         </div>
       </div>

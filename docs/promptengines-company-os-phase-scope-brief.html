@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PromptEngines — Company OS Phase Outcomes & Scope</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121a2b;
+      --panel-2: #182238;
+      --text: #e8eefc;
+      --muted: #a8b3cf;
+      --accent: #5dd9b8;
+      --accent-2: #8bb8ff;
+      --border: rgba(255,255,255,0.10);
+      --danger: #ffb3b3;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #09101d 0%, #0e1526 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+    .hero {
+      background: linear-gradient(135deg, rgba(93,217,184,0.12), rgba(139,184,255,0.10));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    .eyebrow {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.05;
+    }
+    .lead {
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 900px;
+      margin: 0;
+    }
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .meta-card, .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+    .meta-card h3, .card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: var(--accent-2);
+    }
+    .meta-card p, .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .phase-title {
+      margin: 0 0 6px;
+      font-size: 28px;
+    }
+    .phase-subtitle {
+      color: var(--muted);
+      margin: 0 0 22px;
+    }
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+    ul {
+      margin: 12px 0 0 18px;
+      padding: 0;
+    }
+    li { margin: 8px 0; }
+    .scope-in h3 { color: var(--accent); }
+    .scope-out h3 { color: var(--danger); }
+    .footer-note {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 8px 0 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">PromptEngines Operating Brief</div>
+      <h1>Company OS Phase Outcomes & Scope</h1>
+      <p class="lead">
+        PromptEngines is a pseudo-open applied AI lab. It ships constantly, documents what works, pairs humans with agents,
+        stays close to the work, and turns prototypes into products. This brief defines what success looks like after Phase 1 and Phase 2
+        of the Agent Org Chart Runtime + Company Operating System Agent program.
+      </p>
+      <div class="meta">
+        <div class="meta-card">
+          <h3>Current operating surface</h3>
+          <p>Prompt Engines, Lab Notes, Consulting, Kaizen, Storybook Studio, Flow, Video Terminal, Norbu, and Dashboard.</p>
+        </div>
+        <div class="meta-card">
+          <h3>Current team model</h3>
+          <p>Andy Stable as human operator; A.I. as standing agent collaborator; Hermetic_Demiurge as an emerging named operator.</p>
+        </div>
+        <div class="meta-card">
+          <h3>Intent</h3>
+          <p>Make the company legible, controllable, and eventually compounding without turning the lab into bureaucracy.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="phase-title">Phase 1 — Company OS MVP</h2>
+      <p class="phase-subtitle">Goal: make PromptEngines legible, reviewable, and controllable from one operating surface.</p>
+      <div class="section-grid">
+        <div class="card">
+          <h3>Outcome after Phase 1</h3>
+          <p>
+            PromptEngines has a working Company OS MVP. Every major public node, agent, and core operating asset is registered,
+            current state is visible in Dashboard, and the team can review, prioritize, approve, and ship from a shared control room.
+          </p>
+        </div>
+        <div class="card">
+          <h3>How PromptEngines will be operating</h3>
+          <ul>
+            <li>Dashboard becomes the daily control room, not just another app.</li>
+            <li>The portfolio is managed as one operating surface instead of a loose set of repos, experiments, and docs.</li>
+            <li>Andy remains final approver on meaningful changes; agents gather state, draft actions, and prepare work for review.</li>
+            <li>A.I. and other named agents operate against shared registry data, clear ownership, and explicit approval gates.</li>
+            <li>Shipping and documentation stay coupled: Lab Notes and the build stream reflect real work, and real work is easier to recover and continue.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="section-grid">
+        <div class="card scope-in">
+          <h3>Phase 1 scope</h3>
+          <ul>
+            <li>Stand up the Company OS MVP: company registry, unified dashboard registry, event collector, dashboard control room, and daily operator loop with approval gates.</li>
+            <li>Register the current public surface area: Prompt Engines, Lab Notes, Consulting, Kaizen, Storybook Studio, Flow, Video Terminal, Norbu, and Dashboard.</li>
+            <li>Create one minimum shared operating model across products, agents, repos, docs, and domains: owner, status, health, next action, and approval state.</li>
+            <li>Capture enough operating signal to answer four daily questions: what exists, what changed, what needs attention, and what is ready to ship.</li>
+            <li>Make the human-plus-agent model explicit so agent activity accelerates operations without removing human judgment.</li>
+          </ul>
+        </div>
+        <div class="card scope-out">
+          <h3>Phase 1 not in scope</h3>
+          <ul>
+            <li>Rebuilding every product or redesigning the full portfolio.</li>
+            <li>Full autonomy or unsupervised agent execution.</li>
+            <li>A heavyweight data platform, BI stack, or enterprise analytics program.</li>
+            <li>Deep workflow automation across every internal function.</li>
+            <li>Turning the Company OS into a public standalone product.</li>
+            <li>Expanding org complexity beyond the current small operator cell.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="phase-title">Phase 2 — Company OS as Operating Layer</h2>
+      <p class="phase-subtitle">Goal: make the operating layer useful enough to drive daily throughput across products, publishing, consulting, and internal ops.</p>
+      <div class="section-grid">
+        <div class="card">
+          <h3>Outcome after Phase 2</h3>
+          <p>
+            PromptEngines has a functioning human-agent operating system that not only sees the business but actively moves it forward.
+            The company can route work, prepare outputs, manage bounded workflows, and keep product, publishing, consulting, and internal operations aligned through one layer.
+          </p>
+        </div>
+        <div class="card">
+          <h3>How PromptEngines will be operating</h3>
+          <ul>
+            <li>The company runs from a shared operating layer: Dashboard for command, the registry for source of truth, and event flows for current state.</li>
+            <li>Agents do more than report; they reconcile state, draft deliverables, route follow-ups, and execute bounded workflows after approval.</li>
+            <li>Humans spend more time on direction, taste, prioritization, relationships, and final review; agents handle monitoring, synthesis, prep, and repeatable execution.</li>
+            <li>Public work and internal work reinforce each other: Lab Notes, consulting insight, product changes, and portfolio decisions stay connected instead of drifting apart.</li>
+            <li>PromptEngines behaves more like a coherent studio/lab with live portfolio management than a set of parallel experiments.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="section-grid">
+        <div class="card scope-in">
+          <h3>Phase 2 scope</h3>
+          <ul>
+            <li>Expand the registry and control room into a real operating layer across product ops, publishing, consulting, and internal admin.</li>
+            <li>Add bounded automations and agent workflows for monitoring, triage, drafting, publishing prep, routing, and follow-up.</li>
+            <li>Integrate core workspace and access flows — including team join, token management, and Google Workspace operational tooling — so identity and permissions support the human-agent model.</li>
+            <li>Make portfolio review a standing discipline: promote, pause, rebuild, or retire apps based on live signal and operator judgment.</li>
+            <li>Increase traceability of agent work, approvals, and decisions so the system remains steerable and auditable.</li>
+            <li>Strengthen the loop from prototype to product so promising nodes can move forward without adding process drag.</li>
+          </ul>
+        </div>
+        <div class="card scope-out">
+          <h3>Phase 2 not in scope</h3>
+          <ul>
+            <li>Replacing founder/operator judgment with autonomous management.</li>
+            <li>End-to-end autonomous customer delivery or open-ended agent authority.</li>
+            <li>Building a generalized enterprise operating system for other companies.</li>
+            <li>Scaling low-signal products simply because they already exist in the portfolio.</li>
+            <li>Complex bespoke integrations where operating value is unclear.</li>
+            <li>Process layers that violate PromptEngines principles: ship constantly, document what works, stay close to the work, and just rebuild it when needed.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="phase-title">Strategic intent</h2>
+      <p>
+        Phase 1 makes PromptEngines legible and controllable. Phase 2 makes it compound. The goal is not more software for its own sake;
+        it is a tighter human-agent studio that can ship more, learn faster, and manage a growing portfolio without losing founder judgment or lab speed.
+      </p>
+      <div class="divider"></div>
+      <p class="footer-note">Prepared for PromptEngines operating review • Saved for direct delivery via the Portal folder</p>
+    </section>
+  </div>
+</body>
+</html>

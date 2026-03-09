@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homepage Wireframe — PromptEngines.com</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #162238;
+      --panel-2: #1b2a43;
+      --line: #2a3b59;
+      --text: #e8edf7;
+      --muted: #9fb0cb;
+      --accent: #f17a4a;
+      --accent-soft: rgba(241, 122, 74, 0.18);
+      --signal: #5dd9b8;
+      --mono: "IBM Plex Mono", "SF Mono", monospace;
+      --sans: "Inter", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.5;
+    }
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Wireframe annotations ── */
+    .annotation {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--signal);
+      padding: 6px 10px;
+      border: 1px dashed rgba(93, 217, 184, 0.3);
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .annotation.keep { color: var(--signal); border-color: rgba(93, 217, 184, 0.3); }
+    .annotation.new { color: var(--accent); border-color: rgba(241, 122, 74, 0.4); }
+    .annotation.update { color: #8bb8ff; border-color: rgba(139, 184, 255, 0.3); }
+    .annotation.remove { color: #ffb3b3; border-color: rgba(255, 179, 179, 0.3); }
+
+    .note {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: 8px;
+      padding: 10px 14px;
+      border-left: 2px solid var(--line);
+    }
+
+    /* ── Section blocks ── */
+    .section-block {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    .section-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .section-name {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .section-body {
+      padding: 20px;
+    }
+
+    /* ── Wireframe elements ── */
+    .wire-box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .wire-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .wire-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .wire-text {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+    .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; }
+    @media (max-width: 900px) {
+      .grid-2, .grid-3, .grid-4, .grid-2-1 { grid-template-columns: 1fr; }
+    }
+
+    .placeholder {
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--panel),
+        var(--panel) 8px,
+        rgba(42, 59, 89, 0.4) 8px,
+        rgba(42, 59, 89, 0.4) 16px
+      );
+      border-radius: 8px;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .badge-alpha { background: rgba(241, 122, 74, 0.15); color: var(--accent); }
+    .badge-proto { background: rgba(139, 184, 255, 0.12); color: #8bb8ff; }
+    .badge-live { background: rgba(93, 217, 184, 0.12); color: var(--signal); }
+
+    .divider {
+      border: none;
+      border-top: 1px dashed var(--line);
+      margin: 32px 0;
+    }
+    .zone-label {
+      text-align: center;
+      padding: 24px 0 8px;
+    }
+    .zone-label span {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      background: var(--bg);
+      padding: 0 16px;
+    }
+
+    /* ── Product card wireframe ── */
+    .product-wire {
+      background: linear-gradient(150deg, rgba(27, 42, 67, 0.7), rgba(18, 30, 50, 0.5));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .product-wire:hover {
+      border-color: rgba(241, 122, 74, 0.4);
+    }
+    .product-wire .pw-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .product-wire .pw-name {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .product-wire .pw-pitch {
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 50ch;
+    }
+    .product-wire .pw-features {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .product-wire .pw-feature {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+    .product-wire .pw-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      text-decoration: none;
+      margin-top: 4px;
+    }
+
+    /* ── Pipeline wire ── */
+    .pipeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .pipeline-stage {
+      flex: 1;
+      text-align: center;
+      padding: 14px 12px;
+      border: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .pipeline-stage:first-child { border-radius: 8px 0 0 8px; }
+    .pipeline-stage:last-child { border-radius: 0 8px 8px 0; }
+    .pipeline-stage.active { background: var(--accent-soft); color: var(--accent); border-color: rgba(241, 122, 74, 0.3); }
+    .pipeline-arrow {
+      font-size: 18px;
+      color: var(--muted);
+      padding: 0 2px;
+    }
+
+    /* ── Title bar ── */
+    .title-bar {
+      padding: 40px 0 20px;
+      text-align: center;
+    }
+    .title-bar h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .title-bar p {
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 60ch;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="title-bar">
+      <h1>PromptEngines.com — Homepage Wireframe</h1>
+      <p>Proposed page structure. Top = lab identity (unchanged). Middle = products graduating from the lab. Bottom = platform + writing.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ═══════════════════════════════════════════════════
+         ZONE 1: THE LAB (keep as-is)
+         ═══════════════════════════════════════════════════ -->
+    <div class="zone-label"><span>Zone 1 — The Lab (unchanged)</span></div>
+
+    <!-- VIEW SWITCHER -->
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-name">View Switcher Bar</span>
+        <span class="annotation keep">Keep</span>
+      </div>
+      <div class="section-body">
+        <div class="placeholder" style="min-height: 40px;">Vibes button + theme label</div>
+      </div>
+    </div>
+
+    <!-- NAV -->
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-name">Navigation</span>
+        <span class="annotation keep">Keep</span>
+      </div>
+      <div class="section-body">
+        <div class="placeholder" style="min-height: 50px;">Prompt Engines | Lab | Experiments ▾ | Prototypes ▾ | Careers | Consulting | Contact</div>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-name">Hero</span>
+        <span class="annotation keep">Keep</span>
+      </div>
+      <div class="section-body">
+        <div class="grid-2-1">
+          <div>
+            <div class="wire-label">Eyebrow</div>
+            <div class="wire-title" style="font-size: 48px; line-height: 0.95; margin-bottom: 12px;">We Build.</div>
+            <div class="wire-text" style="margin-bottom: 16px;">Prompt Engines is a lab of humans and agents, prototyping and deploying practical software, media systems, and internal tools.</div>
+            <div class="wire-label">Rotator line</div>
+            <div style="display: flex; gap: 8px; margin: 8px 0 16px; flex-wrap: wrap;">
+              <span class="badge badge-alpha">Kaizen</span>
+              <span class="badge badge-alpha">Storybook Studio</span>
+              <span class="badge badge-alpha">Video Terminal</span>
+              <span class="badge badge-alpha">Norbu</span>
+              <span class="badge badge-alpha">Lab</span>
+              <span class="badge badge-alpha">Consulting</span>
+            </div>
+          </div>
+          <div>
+            <div class="wire-box" style="min-height: 200px;">
+              <div class="wire-label">Live commit terminal</div>
+              <div class="wire-text" style="font-family: var(--mono); font-size: 11px; margin-top: 8px;">
+                [16:45] promptengines: Create README.md<br>
+                [12:48] promptengines: update activity feed<br>
+                [02:38] storybookstudio: docs: update todo<br>
+                [01:35] norbu: Add curriculum section<br>
+                ...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STREAMING EXPERIMENTS -->
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-name">Streaming Experiments — Activity Grid</span>
+        <span class="annotation keep">Keep</span>
+      </div>
+      <div class="section-body">
+        <div class="note">
+          "Live from the lab / Streaming experiments." — 6 app-cards with commit feeds.
+          This is the lab's heartbeat. Unchanged.
+        </div>
+        <div class="grid-3" style="margin-top: 14px;">
+          <div class="wire-box"><div class="wire-label">Prompt Engines</div><div class="wire-text" style="font-size: 12px;">3 recent commits</div></div>
+          <div class="wire-box"><div class="wire-label">Flow</div><div class="wire-text" style="font-size: 12px;">3 recent commits</div></div>
+          <div class="wire-box"><div class="wire-label">Kaizen</div><div class="wire-text" style="font-size: 12px;">3 recent commits</div></div>
+          <div class="wire-box"><div class="wire-label">Storybook Studio</div><div class="wire-text" style="font-size: 12px;">3 recent commits</div></div>
+          <div class="wire-box"><div class="wire-label">Video Terminal</div><div class="wire-text" style="font-size: 12px;">3 recent commits</div></div>
+          <div class="wire-box"><div class="wire-label">Norbu</div><div class="wire-text" style="font-size: 12px;">3 recent commits</div></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ═══════════════════════════════════════════════════
+         ZONE 2: THE PRODUCTS (new)
+         ═══════════════════════════════════════════════════ -->
+    <div class="zone-label"><span>Zone 2 — The Products (new section)</span></div>
+
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-name">Approaching Alpha — Product Spotlights</span>
+        <span class="annotation new">New</span>
+      </div>
+      <div class="section-body">
+        <div class="note">
+          Transition from lab activity to product substance. Two cards for the products
+          closest to launch. Each gets: name, one-line pitch, 3-4 feature chips,
+          status badge, and a CTA. These are no longer just experiments — they're
+          products with real value propositions.
+        </div>
+
+        <div style="margin-top: 16px;">
+          <div class="wire-label" style="margin-bottom: 4px;">Section tag</div>
+          <div class="wire-text" style="color: var(--signal); font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;">From the lab</div>
+          <div class="wire-title" style="font-size: 36px; margin: 8px 0 6px;">Products approaching alpha.</div>
+          <div class="wire-text" style="margin-bottom: 20px;">Built in the lab. Tested against real workloads. Graduating to production.</div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Storybook Studio -->
+          <div class="product-wire">
+            <div class="pw-head">
+              <span class="pw-name">Storybook Studio</span>
+              <span class="badge badge-alpha">Pre-Launch</span>
+            </div>
+            <div class="pw-pitch">AI-powered children's storybook creation. Generate complete illustrated books with consistent characters across 34+ art styles. Digital delivery and print-ready output.</div>
+            <div class="pw-features">
+              <span class="pw-feature">34+ art styles</span>
+              <span class="pw-feature">Character consistency</span>
+              <span class="pw-feature">Print-ready (Lulu / Gelato)</span>
+              <span class="pw-feature">Freemium — 100 free credits</span>
+            </div>
+            <a href="#" class="pw-cta">Try Storybook Studio &rarr;</a>
+          </div>
+
+          <!-- Video Terminal -->
+          <div class="product-wire">
+            <div class="pw-head">
+              <span class="pw-name">Video Terminal</span>
+              <span class="badge badge-alpha">Alpha</span>
+            </div>
+            <div class="pw-pitch">Node-based visual creation tool. Compositing, effects, and AI generation workflows connected through a pipeline editor. Reference images, action prompts, and multi-model output.</div>
+            <div class="pw-features">
+              <span class="pw-feature">Node-based pipeline</span>
+              <span class="pw-feature">Multi-model generation</span>
+              <span class="pw-feature">Reference image categories</span>
+              <span class="pw-feature">Action + camera controls</span>
+            </div>
+            <a href="#" class="pw-cta">Try Video Terminal &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PORTFOLIO PIPELINE -->
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-name">The Portfolio — Graduation Pipeline</span>
+        <span class="annotation new">New — replaces Flow Education spotlight</span>
+      </div>
+      <div class="section-body">
+        <div class="note">
+          Replaces the Flow Education spotlight section. Instead of a deep dive on
+          one prototype, show the full portfolio and how things move through the
+          pipeline. This communicates the studio model: we build, test, graduate,
+          and ship. The pipeline itself is the product philosophy.
+        </div>
+
+        <div style="margin-top: 16px;">
+          <div class="wire-text" style="color: var(--signal); font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;">How we build</div>
+          <div class="wire-title" style="font-size: 36px; margin: 8px 0 6px;">Prototype. Ship. Graduate.</div>
+          <div class="wire-text" style="margin-bottom: 20px;">Every product starts as a prototype. If it survives real use, it graduates to an experiment with its own subdomain. Products that compound get full investment.</div>
+        </div>
+
+        <!-- Pipeline visual -->
+        <div class="pipeline" style="margin-bottom: 20px;">
+          <div class="pipeline-stage">Prototype<br><span style="font-size: 9px; color: var(--muted);">Internal testing</span></div>
+          <span class="pipeline-arrow">&rarr;</span>
+          <div class="pipeline-stage active">Experiment<br><span style="font-size: 9px; color: var(--muted);">Subdomain + users</span></div>
+          <span class="pipeline-arrow">&rarr;</span>
+          <div class="pipeline-stage">Product<br><span style="font-size: 9px; color: var(--muted);">Revenue + growth</span></div>
+        </div>
+
+        <!-- Portfolio grid -->
+        <div class="grid-4">
+          <div class="wire-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span class="wire-label" style="margin: 0;">Storybook Studio</span>
+              <span class="badge badge-alpha">Pre-Launch</span>
+            </div>
+            <div class="wire-text" style="font-size: 12px;">AI storybooks. 34+ styles. Print-ready.</div>
+          </div>
+          <div class="wire-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span class="wire-label" style="margin: 0;">Video Terminal</span>
+              <span class="badge badge-alpha">Alpha</span>
+            </div>
+            <div class="wire-text" style="font-size: 12px;">Node-based visual creation tool.</div>
+          </div>
+          <div class="wire-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span class="wire-label" style="margin: 0;">Kaizen</span>
+              <span class="badge badge-live">Active</span>
+            </div>
+            <div class="wire-text" style="font-size: 12px;">Educational gaming for kids.</div>
+          </div>
+          <div class="wire-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span class="wire-label" style="margin: 0;">Norbu</span>
+              <span class="badge badge-live">Active</span>
+            </div>
+            <div class="wire-text" style="font-size: 12px;">Tibetan language learning.</div>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top: 14px;">
+          <div class="wire-box" style="opacity: 0.7;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span class="wire-label" style="margin: 0;">Flow Education</span>
+              <span class="badge badge-proto">Prototype</span>
+            </div>
+            <div class="wire-text" style="font-size: 12px;">AI-driven kindergarten learning.</div>
+          </div>
+          <div class="wire-box" style="opacity: 0.7;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span class="wire-label" style="margin: 0;">Vajra-Upaya</span>
+              <span class="badge badge-proto">Prototype</span>
+            </div>
+            <div class="wire-text" style="font-size: 12px;">Precision tool-fitting service.</div>
+          </div>
+          <div class="wire-box" style="opacity: 0.7;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span class="wire-label" style="margin: 0;">Consulting</span>
+              <span class="badge badge-live">Active</span>
+            </div>
+            <div class="wire-text" style="font-size: 12px;">Applied AI consulting.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ═══════════════════════════════════════════════════
+         ZONE 3: THE WRITING + PLATFORM (updated)
+         ═══════════════════════════════════════════════════ -->
+    <div class="zone-label"><span>Zone 3 — Writing + Platform (updated)</span></div>
+
+    <!-- PUBLISHED THIS WEEK -->
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-name">Published This Week</span>
+        <span class="annotation update">Update — stale content</span>
+      </div>
+      <div class="section-body">
+        <div class="note">
+          Currently shows articles from Feb 20-28. Update to current articles:
+          Image Model Baseline (3 modes), Zen rewrite (3 modes), Public APIs review.
+          Show the mode dots (◉ ◆ ⬡) for multi-mode articles.
+        </div>
+        <div class="grid-3" style="margin-top: 14px;">
+          <div class="wire-box">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="wire-label" style="margin: 0;">Benchmark</span>
+              <span style="font-family: var(--mono); font-size: 10px; color: var(--accent);">◉ ◆ ⬡</span>
+            </div>
+            <div class="wire-title" style="font-size: 15px; margin-top: 8px;">Image model API baseline: March 2026</div>
+            <div class="wire-text" style="font-size: 12px; margin-top: 4px;">9 models, 3 providers. Speed, reliability, content filtering.</div>
+          </div>
+          <div class="wire-box">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="wire-label" style="margin: 0;">Lab Notes</span>
+              <span style="font-family: var(--mono); font-size: 10px; color: var(--accent);">◉ ◆ ⬡</span>
+            </div>
+            <div class="wire-title" style="font-size: 15px; margin-top: 8px;">Zen and the Art of Vibe Coding</div>
+            <div class="wire-text" style="font-size: 12px; margin-top: 4px;">Operating framework for infinite leverage. Five boundaries.</div>
+          </div>
+          <div class="wire-box">
+            <div class="wire-label">Infrastructure</div>
+            <div class="wire-title" style="font-size: 15px; margin-top: 8px;">Public APIs: a usefulness review of 400+</div>
+            <div class="wire-text" style="font-size: 12px; margin-top: 4px;">Classification by reliability, docs quality, rate limits.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE OPERATING SYSTEM -->
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-name">The Operating System — Company OS Vision</span>
+        <span class="annotation new">New — light version</span>
+      </div>
+      <div class="section-body">
+        <div class="note">
+          A brief section communicating the platform identity. This isn't a product
+          pitch for the OS — it's a statement of how PromptEngines works. Connects
+          the lab, the products, the writing, and the team into one operating surface.
+          Pulled from the phase brief language. Keep it to one card — not a full section.
+        </div>
+
+        <div class="grid-2-1" style="margin-top: 14px;">
+          <div class="wire-box" style="background: linear-gradient(150deg, rgba(93, 217, 184, 0.08), rgba(18, 30, 50, 0.5));">
+            <div class="wire-text" style="color: var(--signal); font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">How we operate</div>
+            <div class="wire-title" style="font-size: 28px;">Humans set direction.<br>Agents handle throughput.</div>
+            <div class="wire-text" style="margin-top: 10px;">
+              PromptEngines runs as a human-agent operating system. Every product, document, and decision flows through a shared control surface. Agents gather state, draft work, and execute bounded tasks. Humans hold judgment, taste, and final approval. The lab compounds because the system does.
+            </div>
+          </div>
+          <div>
+            <div class="wire-box" style="margin-bottom: 14px;">
+              <div class="wire-label">Team model</div>
+              <div class="wire-text" style="font-size: 13px;">1 human operator + 2 named agents. Shared registry. Approval gates. Clear ownership.</div>
+            </div>
+            <div class="wire-box">
+              <div class="wire-label">Daily operating loop</div>
+              <div class="wire-text" style="font-size: 13px;">What exists. What changed. What needs attention. What ships next.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOLLOW -->
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-name">Follow Ongoing Builds — CTA</span>
+        <span class="annotation keep">Keep</span>
+      </div>
+      <div class="section-body">
+        <div class="placeholder" style="min-height: 80px;">Follow ongoing builds. | Lab Notes | GitHub | Consulting | Contact</div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-name">Footer</span>
+        <span class="annotation keep">Keep</span>
+      </div>
+      <div class="section-body">
+        <div class="placeholder" style="min-height: 40px;">© 2026 Prompt Engines | Lab | Experiments | Prototypes | Careers | Consulting | Contact</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ═══════════════════════════════════════════════════
+         SUMMARY
+         ═══════════════════════════════════════════════════ -->
+    <div style="padding: 24px 0 48px;">
+      <div class="wire-title" style="font-size: 22px; margin-bottom: 16px;">Change Summary</div>
+
+      <div class="grid-2" style="margin-bottom: 20px;">
+        <div class="wire-box">
+          <div class="wire-label" style="color: var(--signal);">Unchanged (Zone 1 — Lab)</div>
+          <ul style="color: var(--muted); font-size: 13px; margin: 8px 0 0 16px;">
+            <li>View switcher, nav, hero ("We Build."), commit terminal</li>
+            <li>Streaming Experiments activity grid (6 cards)</li>
+            <li>Follow CTA section, footer</li>
+          </ul>
+        </div>
+        <div class="wire-box">
+          <div class="wire-label" style="color: var(--accent);">New (Zone 2 — Products)</div>
+          <ul style="color: var(--muted); font-size: 13px; margin: 8px 0 0 16px;">
+            <li>"Approaching Alpha" — SBS + VT product spotlights with pitch, features, CTA</li>
+            <li>"Prototype. Ship. Graduate." — portfolio pipeline replacing Flow spotlight</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="wire-box">
+          <div class="wire-label" style="color: #8bb8ff;">Updated (Zone 3 — Writing)</div>
+          <ul style="color: var(--muted); font-size: 13px; margin: 8px 0 0 16px;">
+            <li>"Published this week" — swap stale Feb articles for current content</li>
+            <li>Add mode dots for multi-mode articles</li>
+          </ul>
+        </div>
+        <div class="wire-box">
+          <div class="wire-label" style="color: #8bb8ff;">New (Zone 3 — Platform)</div>
+          <ul style="color: var(--muted); font-size: 13px; margin: 8px 0 0 16px;">
+            <li>Company OS statement — one card, not a full section</li>
+            <li>Team model + daily loop as supporting details</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wire-box" style="margin-top: 20px; border-color: rgba(255, 179, 179, 0.2);">
+        <div class="wire-label" style="color: #ffb3b3;">Removed</div>
+        <ul style="color: var(--muted); font-size: 13px; margin: 8px 0 0 16px;">
+          <li>Flow Education full spotlight (3 info cards) — Flow appears in portfolio grid instead</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
