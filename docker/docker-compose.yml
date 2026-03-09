@@ -1,0 +1,35 @@
+# PromptEngines Docker Compose — GWS Agent Services
+# --------------------------------------------------
+# Usage:
+#   docker compose -f docker/docker-compose.yml up gws-agent
+#
+# Prerequisites:
+#   1. Place service account key at docker/credentials/service-account-key.json
+#   2. Copy docker/.env.example to docker/.env and fill in values
+#
+# The credentials directory is gitignored and must be created manually.
+
+services:
+  gws-agent:
+    build:
+      context: ./gws-agent
+      dockerfile: Dockerfile
+    image: promptengines-gws-agent:latest
+    container_name: pe-gws-agent
+    environment:
+      - GWS_SERVICE_ACCOUNT_KEY=/etc/gws/service-account-key.json
+      - GWS_OUTPUT_FORMAT=${GWS_OUTPUT_FORMAT:-json}
+      - GCP_PROJECT_ID=${GCP_PROJECT_ID:-promptengines-claude}
+    volumes:
+      # Mount credentials read-only — never bake keys into images
+      - ./credentials/service-account-key.json:/etc/gws/service-account-key.json:ro
+      # Mount workspace for agent output
+      - gws-workspace:/workspace
+    restart: "no"
+    # Override CMD at runtime:
+    #   docker compose run gws-agent calendar list
+    command: ["--help"]
+
+volumes:
+  gws-workspace:
+    driver: local

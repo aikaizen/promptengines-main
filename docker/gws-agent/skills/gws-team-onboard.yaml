@@ -1,0 +1,100 @@
+# gws-team-onboard
+# Onboard a new team member using Google Workspace resources.
+#
+# Workflow:
+#   1. Share the team Drive folder with the new member
+#   2. Add them to the team calendar
+#   3. Send a welcome email with links and access info
+#   4. Create an onboarding checklist in Google Docs
+
+name: gws-team-onboard
+description: Onboard a new team member — share Drive, add to Calendar, send welcome email.
+version: 1.0.0
+
+parameters:
+  - name: email
+    type: string
+    required: true
+    description: New team member's email address.
+
+  - name: name
+    type: string
+    required: true
+    description: New team member's display name.
+
+  - name: role
+    type: string
+    required: true
+    description: "Team role: engineer, operator, contributor."
+
+  - name: share_drive
+    type: boolean
+    required: false
+    default: true
+    description: Share the team Drive folder with this member.
+
+  - name: add_calendar
+    type: boolean
+    required: false
+    default: true
+    description: Add member to the team calendar.
+
+  - name: send_welcome
+    type: boolean
+    required: false
+    default: true
+    description: Send the welcome email.
+
+  - name: create_checklist
+    type: boolean
+    required: false
+    default: true
+    description: Create an onboarding checklist document.
+
+permissions:
+  - https://www.googleapis.com/auth/drive
+  - https://www.googleapis.com/auth/calendar
+  - https://www.googleapis.com/auth/gmail.send
+  - https://www.googleapis.com/auth/documents
+
+config:
+  team_drive_folder_id: "${GWS_TEAM_FOLDER_ID}"
+  team_calendar_id: "${GWS_TEAM_CALENDAR_ID}"
+  onboard_template_id: "${GWS_ONBOARD_TEMPLATE_ID}"
+  from_email: "${GWS_TEAM_EMAIL:-team@promptengines.com}"
+
+steps:
+  - id: share_drive_folder
+    action: gws drive share
+    condition: "${share_drive} == true"
+    args:
+      - "--file-id=${config.team_drive_folder_id}"
+      - "--email=${email}"
+      - "--role=writer"
+      - "--send-notification=true"
+      - "--message=Welcome to the PromptEngines team, ${name}."
+
+  - id: add_to_calendar
+    action: gws calendar share
+    condition: "${add_calendar} == true"
+    args:
+      - "--calendar=${config.team_calendar_id}"
+      - "--email=${email}"
+      - "--role=reader"
+
+  - id: create_onboarding_doc
+    action: gws docs create
+    condition: "${create_checklist} == true"
+    args:
+      - "--title=Onboarding: ${name} (${role})"
+      - "--template=${config.onboard_template_id}"
+      - "--parent=${config.team_drive_folder_id}"
+      - "--share-with=${email}"
+
+  - id: send_welcome_email
+    action: gws gmail send
+    condition: "${send_welcome} == true"
+    args:
+      - "--to=${email}"
+      - "--subject=Welcome to PromptEngines, ${name}"
+      - "--body=Hi ${name},\n\nWelcome to the PromptEngines team as ${role}.\n\nHere's what you need to get started:\n\n- Team Drive: ${steps.share_drive_folder.webViewLink}\n- Team Calendar: Added (check your calendar list)\n- Onboarding Checklist: ${steps.create_onboarding_doc.webViewLink}\n- Site: https://promptengines.com\n- Lab Notes: https://promptengines.com/labnotes/\n\nReach out if you need anything.\n\n— PromptEngines Team"

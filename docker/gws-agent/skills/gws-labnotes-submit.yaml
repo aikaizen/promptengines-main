@@ -1,0 +1,77 @@
+# gws-labnotes-submit
+# Submit a Lab Notes article to the review queue via Google Drive.
+#
+# Workflow:
+#   1. Agent writes article HTML to local workspace
+#   2. This skill uploads it to the shared "Lab Notes Drafts" Drive folder
+#   3. Creates a Calendar event for review (optional)
+#   4. Sends a notification via Gmail (optional)
+
+name: gws-labnotes-submit
+description: Upload a Lab Notes article draft to the shared Google Drive review folder.
+version: 1.0.0
+
+parameters:
+  - name: file_path
+    type: string
+    required: true
+    description: Local path to the article HTML file.
+
+  - name: title
+    type: string
+    required: true
+    description: Article title (used for Drive filename and notification subject).
+
+  - name: mode
+    type: string
+    required: false
+    default: standard
+    description: "Content mode: standard, experimental, or agent."
+
+  - name: notify
+    type: boolean
+    required: false
+    default: true
+    description: Send email notification to the review channel.
+
+  - name: schedule_review
+    type: boolean
+    required: false
+    default: false
+    description: Create a 15-minute calendar event for review.
+
+permissions:
+  - https://www.googleapis.com/auth/drive
+  - https://www.googleapis.com/auth/gmail.send
+  - https://www.googleapis.com/auth/calendar
+
+config:
+  drive_folder_id: "${GWS_LABNOTES_FOLDER_ID}"
+  notify_email: "${GWS_REVIEW_EMAIL:-team@promptengines.com}"
+  calendar_id: "${GWS_TEAM_CALENDAR_ID:-primary}"
+
+steps:
+  - id: upload_draft
+    action: gws drive upload
+    args:
+      - "--file=${file_path}"
+      - "--name=${title} [${mode}].html"
+      - "--parent=${config.drive_folder_id}"
+      - "--mime-type=text/html"
+
+  - id: notify_team
+    action: gws gmail send
+    condition: "${notify} == true"
+    args:
+      - "--to=${config.notify_email}"
+      - "--subject=Lab Notes Draft: ${title}"
+      - "--body=New article submitted for review.\n\nTitle: ${title}\nMode: ${mode}\nDrive link: ${steps.upload_draft.webViewLink}"
+
+  - id: create_review_event
+    action: gws calendar insert
+    condition: "${schedule_review} == true"
+    args:
+      - "--calendar=${config.calendar_id}"
+      - "--summary=Review: ${title}"
+      - "--duration=15m"
+      - "--description=Review Lab Notes draft: ${steps.upload_draft.webViewLink}"

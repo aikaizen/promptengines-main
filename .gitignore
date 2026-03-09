@@ -10,3 +10,8 @@ site/
 *.env
 .env*
 todo.md
+/*.png
+.playwright-mcp/
+
+# GWS credentials — never commit keys
+docker/credentials/

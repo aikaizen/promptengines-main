@@ -1,0 +1,69 @@
+# gws-build-stream-generate
+# Generate the daily build stream report and archive to Google Drive.
+#
+# Workflow:
+#   1. Fetch recent commits from all aikaizen repos (via existing scripts)
+#   2. Generate the build stream HTML
+#   3. Upload the report to the shared "Build Stream" Drive folder
+#   4. Update a tracking spreadsheet with daily stats
+
+name: gws-build-stream-generate
+description: Generate daily build stream report, upload to Drive, and update tracking sheet.
+version: 1.0.0
+
+parameters:
+  - name: date
+    type: string
+    required: false
+    default: today
+    description: "Date for the build stream report (YYYY-MM-DD or 'today')."
+
+  - name: upload_to_drive
+    type: boolean
+    required: false
+    default: true
+    description: Upload the generated HTML report to Google Drive.
+
+  - name: update_sheet
+    type: boolean
+    required: false
+    default: true
+    description: Append daily stats to the tracking spreadsheet.
+
+permissions:
+  - https://www.googleapis.com/auth/drive
+  - https://www.googleapis.com/auth/spreadsheets
+
+config:
+  drive_folder_id: "${GWS_BUILD_STREAM_FOLDER_ID}"
+  tracking_sheet_id: "${GWS_BUILD_STREAM_SHEET_ID}"
+  workspace_dir: /workspace
+  scripts_dir: /opt/promptengines/scripts
+
+steps:
+  - id: prepare_data
+    action: exec
+    command: "node ${config.scripts_dir}/prepare-stream-data.js --date=${date}"
+    output: stream_data_path
+
+  - id: build_html
+    action: exec
+    command: "node ${config.scripts_dir}/build-stream-html.js --data=${steps.prepare_data.output}"
+    output: html_path
+
+  - id: upload_report
+    action: gws drive upload
+    condition: "${upload_to_drive} == true"
+    args:
+      - "--file=${steps.build_html.output}"
+      - "--name=build-stream-${date}.html"
+      - "--parent=${config.drive_folder_id}"
+      - "--mime-type=text/html"
+
+  - id: update_tracking
+    action: gws sheets append
+    condition: "${update_sheet} == true"
+    args:
+      - "--spreadsheet=${config.tracking_sheet_id}"
+      - "--range=DailyStats!A:E"
+      - "--values=${date},${steps.prepare_data.commit_count},${steps.prepare_data.repo_count},${steps.prepare_data.contributor_count},${steps.upload_report.webViewLink}"
