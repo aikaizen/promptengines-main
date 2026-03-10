@@ -145,3 +145,35 @@
 ---
 
 **REMINDER**: Check this TODO first thing in the morning. Prioritize security (PAT rotation) before any other work.
+
+---
+
+## 🚀 Bible Reading Companion — DEPLOYED March 10
+
+### Status: Live (In-App Notifications Only)
+**Repo**: `aikaizen/bible` — 13 commits pushed to main
+**URL**: [bible-app.vercel.app](https://bible-app.vercel.app) *(update after DNS)*
+
+**What's Live**:
+- ✅ Group creation & invite tokens
+- ✅ Weekly voting cycle (auto-open Monday, auto-close)
+- ✅ Seed proposals (3 curated passages each week)
+- ✅ Read tracking & discussions with @mentions
+- ✅ In-app notifications (5 types, red dot indicator)
+- ✅ Email infrastructure (dormant, Phase 2 ready)
+
+**Phase 2 (Email) — Need from User**:
+1. Resend API key → https://resend.com
+2. From email address → e.g., `notifications@bibleapp.com`
+3. Production domain → for unsubscribe links
+4. Run SQL migration → Add 5 preference columns + unsubscribe_token
+
+**Deployment Strategy**: See `bible/docs/DEPLOYMENT_STRATEGY.md`
+- Target: 100 users Week 1, 20 groups forming
+- Monitor: Cron reliability, invite acceptance, group sizes
+- Low-tech invites: copy/paste tokens work for initial scale
+
+**Docs Created**:
+- `bible/PROJECT_CONTEXT.md` — Architecture, runbooks, monitoring
+- `bible/docs/DEPLOYMENT_STRATEGY.md` — 100-user scaling plan
+- `bible/docs/user-journey.md` — Existing (unchanged)
