@@ -1,0 +1,313 @@
+{
+  "date": "2026-03-10",
+  "generatedAt": "2026-03-10T12:03:28.184Z",
+  "commits": [
+    {
+      "repo": "promptengines-main",
+      "hash": "ff7677d1dbfbda78a507c3f36b25096086436e1c",
+      "shortHash": "ff7677d",
+      "date": "2026-03-10T06:51:21Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/ff7677d1dbfbda78a507c3f36b25096086436e1c",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "45db346c51f4799b6ac6ef0d016c75480c7b6195",
+      "shortHash": "45db346",
+      "date": "2026-03-10T02:01:26Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/45db346c51f4799b6ac6ef0d016c75480c7b6195",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "05ae2d33e376fdaf6a05f0e3c7aae09b325ac044",
+      "shortHash": "05ae2d3",
+      "date": "2026-03-09T21:16:32Z",
+      "subject": "chore: mark gws setup and entrypoint scripts executable",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/05ae2d33e376fdaf6a05f0e3c7aae09b325ac044",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "80e5ecd5dd32a77c5943c6cae88fadd830bf5d22",
+      "shortHash": "80e5ecd",
+      "date": "2026-03-09T19:01:02Z",
+      "subject": "content: three-mode variants for Great Acceleration, Model Selection, and RAG articles",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/80e5ecd5dd32a77c5943c6cae88fadd830bf5d22",
+      "type": "content",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "5408448a75707846c8dda3b20c0bbdfc56b4b5e0",
+      "shortHash": "5408448",
+      "date": "2026-03-09T18:59:19Z",
+      "subject": "feat: token-based team join — frontend pages + API stubs",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/5408448a75707846c8dda3b20c0bbdfc56b4b5e0",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "aa11f1c96761655641c46d4181db21eaf6906a86",
+      "shortHash": "aa11f1c",
+      "date": "2026-03-09T18:57:45Z",
+      "subject": "feat: GWS CLI integration — Docker setup, scripts, documentation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/aa11f1c96761655641c46d4181db21eaf6906a86",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "af6ac4b1e6310ff97ee7ea579418043419b862a8",
+      "shortHash": "af6ac4b",
+      "date": "2026-03-09T18:57:20Z",
+      "subject": "feat(build-stream): add automated weekly report generation",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/af6ac4b1e6310ff97ee7ea579418043419b862a8",
+      "type": "feat",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "317fdecec897b1bd741486fb8e80c43eb39ce3b8",
+      "shortHash": "317fdec",
+      "date": "2026-03-09T18:53:57Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/317fdecec897b1bd741486fb8e80c43eb39ce3b8",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "4c5238d225d3b0a94bd72de125e85c388c73c842",
+      "shortHash": "4c5238d",
+      "date": "2026-03-09T18:37:37Z",
+      "subject": "Add copy/paste/cut/duplicate keyboard shortcuts",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/4c5238d225d3b0a94bd72de125e85c388c73c842",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "ceaab48f6d00c689aa22f687007274a84bad0414",
+      "shortHash": "ceaab48",
+      "date": "2026-03-09T18:37:35Z",
+      "subject": "feat(build-stream): add SVG line chart overlay with smooth spline + 7-day trend",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/ceaab48f6d00c689aa22f687007274a84bad0414",
+      "type": "feat",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "d565ce69eefc016d3d2e6913184af0f7d6d5fda1",
+      "shortHash": "d565ce6",
+      "date": "2026-03-09T18:29:02Z",
+      "subject": "feat: redesign build stream charts + add Bible across site",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/d565ce69eefc016d3d2e6913184af0f7d6d5fda1",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "ee0a5c7068afceff9aef19c493bc89ac1d943268",
+      "shortHash": "ee0a5c7",
+      "date": "2026-03-09T18:21:12Z",
+      "subject": "feat(build-stream): backfill 30 days of commit data — 479 commits across 9 repos",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/ee0a5c7068afceff9aef19c493bc89ac1d943268",
+      "type": "feat",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "ac9d4bdafbd0fd29613e7315620275371eb727d7",
+      "shortHash": "ac9d4bd",
+      "date": "2026-03-09T16:09:22Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/ac9d4bdafbd0fd29613e7315620275371eb727d7",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "8603e7ab43a790347e3ed99296029e8aa0feb083",
+      "shortHash": "8603e7a",
+      "date": "2026-03-09T16:09:01Z",
+      "subject": "fix: use file-exists check instead of --ignore-missing in feed workflow",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/8603e7ab43a790347e3ed99296029e8aa0feb083",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "0e58832befe9694814cceb80287df194ae97397d",
+      "shortHash": "0e58832",
+      "date": "2026-03-09T16:07:31Z",
+      "subject": "fix: unblock Update Activity Feed workflow — add v2.html, harden git add",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/0e58832befe9694814cceb80287df194ae97397d",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "062b7605730aa226e9b0841c25a48b3ff04f4fc3",
+      "shortHash": "062b760",
+      "date": "2026-03-09T12:03:27Z",
+      "subject": "chore(build-stream): auto-generate daily stream data + HTML",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/062b7605730aa226e9b0841c25a48b3ff04f4fc3",
+      "type": "chore",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "c881bc9e7be024c35f2cc0436956f8d41bb4d30b",
+      "shortHash": "c881bc9",
+      "date": "2026-03-09T06:20:00Z",
+      "subject": "Add Play Mode — column-based sequential video playback",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/c881bc9e7be024c35f2cc0436956f8d41bb4d30b",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "7a9fc0d88650007318a32974cf0b7b913bbfc07d",
+      "shortHash": "7a9fc0d",
+      "date": "2026-03-09T06:05:57Z",
+      "subject": "Add zoom speed fix, route tests, release checklist, and Play Mode design",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/7a9fc0d88650007318a32974cf0b7b913bbfc07d",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "2500c4191983107cf655d676272376db03b27234",
+      "shortHash": "2500c41",
+      "date": "2026-03-09T04:46:38Z",
+      "subject": "feat: homepage redesign — product spotlight, portfolio pipeline, OS vision",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/2500c4191983107cf655d676272376db03b27234",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "6ebe35a96a30903afd62fc3e8963c8233bb7729a",
+      "shortHash": "6ebe35a",
+      "date": "2026-03-09T04:24:15Z",
+      "subject": "Move dev password to env var, add Stripe webhook + transition tests",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/6ebe35a96a30903afd62fc3e8963c8233bb7729a",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "34b6e358b1a741e3f526d03a5c87f213fbbdcf8b",
+      "shortHash": "34b6e35",
+      "date": "2026-03-09T04:15:16Z",
+      "subject": "Add transition node class, freeze-to-start/end, video/image uploads",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/34b6e358b1a741e3f526d03a5c87f213fbbdcf8b",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "6709b2fff907df73caeb9e8c330b7c5d15c84f07",
+      "shortHash": "6709b2f",
+      "date": "2026-03-09T03:35:43Z",
+      "subject": "Add audio backend, admin hardening, observability, vibes, and tests",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/6709b2fff907df73caeb9e8c330b7c5d15c84f07",
+      "type": "other",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "chore": 6,
+      "content": 1,
+      "feat": 7,
+      "other": 6,
+      "fix": 2
+    },
+    "byAuthor": {
+      "github-actions[bot]": 5,
+      "aikaizen": 17
+    },
+    "byRepo": {
+      "promptengines-main": 16,
+      "videoterminal": 6
+    },
+    "total": 22
+  },
+  "summary": {
+    "totalCommits": 22,
+    "activeRepos": [
+      "promptengines-main",
+      "videoterminal"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        7
+      ],
+      [
+        "chore",
+        6
+      ],
+      [
+        "other",
+        6
+      ]
+    ],
+    "activeAuthors": [
+      "github-actions[bot]",
+      "aikaizen"
+    ]
+  }
+}
