@@ -1,0 +1,432 @@
+{
+  "date": "2026-03-11",
+  "generatedAt": "2026-03-11T12:03:39.042Z",
+  "commits": [
+    {
+      "repo": "promptengines-main",
+      "hash": "294610e4ae4694a91d9c4ad75d6521df70b56dbc",
+      "shortHash": "294610e",
+      "date": "2026-03-11T06:54:51Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/294610e4ae4694a91d9c4ad75d6521df70b56dbc",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "0566935d43238eef907597e34b45b2bdea9e1aa7",
+      "shortHash": "0566935",
+      "date": "2026-03-11T03:14:02Z",
+      "subject": "Add [Demo] button with slot-based pre-generated assets",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/0566935d43238eef907597e34b45b2bdea9e1aa7",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "ec9144dafc716eb6dfde2db5e5b6e349b860ffad",
+      "shortHash": "ec9144d",
+      "date": "2026-03-11T02:13:12Z",
+      "subject": "feat(team): replace Prometheus with Dzambhala; deepen Thoth as teacher",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/ec9144dafc716eb6dfde2db5e5b6e349b860ffad",
+      "type": "feat",
+      "scope": "team"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "eab531347b2dfb206b45b942ab5b645ea5d33902",
+      "shortHash": "eab5313",
+      "date": "2026-03-11T02:01:06Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/eab531347b2dfb206b45b942ab5b645ea5d33902",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "85fdb91c40ac944e117c7535bbd09ff3ddcec1d0",
+      "shortHash": "85fdb91",
+      "date": "2026-03-11T01:03:36Z",
+      "subject": "Add production-safe demo mode for live demos",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/85fdb91c40ac944e117c7535bbd09ff3ddcec1d0",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "82a95b59975ca5019a9db8ef325a81025d1dd91f",
+      "shortHash": "82a95b5",
+      "date": "2026-03-10T23:24:58Z",
+      "subject": "feat(team): add Thoth and Prometheus as coming-soon agents",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/82a95b59975ca5019a9db8ef325a81025d1dd91f",
+      "type": "feat",
+      "scope": "team"
+    },
+    {
+      "repo": "bible",
+      "hash": "58d332eada6c3d4ad48e2ecb152a7896a862dcbd",
+      "shortHash": "58d332e",
+      "date": "2026-03-10T20:59:48Z",
+      "subject": "docs: clarify email is future feature, add vercel.json for deployment",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/58d332eada6c3d4ad48e2ecb152a7896a862dcbd",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "pantheon-os",
+      "hash": "6b0baa7d814aa8b89ea4eaff5413281432fa4c09",
+      "shortHash": "6b0baa7",
+      "date": "2026-03-10T19:40:21Z",
+      "subject": "chore: mark pantheon os mvp as mainline",
+      "author": "aikaizen",
+      "email": "aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/pantheon-os/commit/6b0baa7d814aa8b89ea4eaff5413281432fa4c09",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "3620f0cd0b6849578fd16bbc12b239cbab15a8ed",
+      "shortHash": "3620f0c",
+      "date": "2026-03-10T19:40:17Z",
+      "subject": "refactor(ui): warm, community-focused notification preference labels",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/3620f0cd0b6849578fd16bbc12b239cbab15a8ed",
+      "type": "refactor",
+      "scope": "ui"
+    },
+    {
+      "repo": "bible",
+      "hash": "68c17d63b5bf1c5b55c41b198684c58ca0a1ac3f",
+      "shortHash": "68c17d6",
+      "date": "2026-03-10T19:40:08Z",
+      "subject": "refactor(email): warm, scripture-based email templates for Bible community",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/68c17d63b5bf1c5b55c41b198684c58ca0a1ac3f",
+      "type": "refactor",
+      "scope": "email"
+    },
+    {
+      "repo": "bible",
+      "hash": "ef5d11b9190212c530afeb573185146442e870dc",
+      "shortHash": "ef5d11b",
+      "date": "2026-03-10T19:40:02Z",
+      "subject": "fix(service): enrich notification metadata for email context",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/ef5d11b9190212c530afeb573185146442e870dc",
+      "type": "fix",
+      "scope": "service"
+    },
+    {
+      "repo": "pantheon-os",
+      "hash": "f98726a5c12dc55a13e3912fde83950c86ba99e1",
+      "shortHash": "f98726a",
+      "date": "2026-03-10T19:38:39Z",
+      "subject": "docs: add metrics pipeline plan and auth decisions",
+      "author": "aikaizen",
+      "email": "aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/pantheon-os/commit/f98726a5c12dc55a13e3912fde83950c86ba99e1",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "pantheon-os",
+      "hash": "1af7b92281275aaa0e42ceedfb0941b95bf04dba",
+      "shortHash": "1af7b92",
+      "date": "2026-03-10T19:37:03Z",
+      "subject": "feat: apply gated public auth and flow prototype status",
+      "author": "aikaizen",
+      "email": "aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/pantheon-os/commit/1af7b92281275aaa0e42ceedfb0941b95bf04dba",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "803cdd847e64f0679cf97f10cb4ccb55fc628658",
+      "shortHash": "803cdd8",
+      "date": "2026-03-10T19:29:17Z",
+      "subject": "docs: update README with email notification configuration",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/803cdd847e64f0679cf97f10cb4ccb55fc628658",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "bible",
+      "hash": "707c11680563506058ed5695fa23805264fc1cdf",
+      "shortHash": "707c116",
+      "date": "2026-03-10T19:25:54Z",
+      "subject": "feat(integration): send emails when notifications trigger",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/707c11680563506058ed5695fa23805264fc1cdf",
+      "type": "feat",
+      "scope": "integration"
+    },
+    {
+      "repo": "bible",
+      "hash": "29af7f7f093265b03d73177f6c14840468f49e26",
+      "shortHash": "29af7f7",
+      "date": "2026-03-10T19:24:49Z",
+      "subject": "feat(ui): add notification settings panel",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/29af7f7f093265b03d73177f6c14840468f49e26",
+      "type": "feat",
+      "scope": "ui"
+    },
+    {
+      "repo": "bible",
+      "hash": "26510c1bd790457834b43cf9ac673f9d12b06578",
+      "shortHash": "26510c1",
+      "date": "2026-03-10T19:22:46Z",
+      "subject": "feat(api): add user preferences and unsubscribe endpoints",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/26510c1bd790457834b43cf9ac673f9d12b06578",
+      "type": "feat",
+      "scope": "api"
+    },
+    {
+      "repo": "bible",
+      "hash": "c71e781dd65ec26dcc6b091677737fc15a3044f5",
+      "shortHash": "c71e781",
+      "date": "2026-03-10T19:21:36Z",
+      "subject": "feat(api): add email service with notification templates",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/c71e781dd65ec26dcc6b091677737fc15a3044f5",
+      "type": "feat",
+      "scope": "api"
+    },
+    {
+      "repo": "bible",
+      "hash": "918f7c4e28cce984f8e714d3d6cd4ef6dec048b3",
+      "shortHash": "918f7c4",
+      "date": "2026-03-10T19:20:55Z",
+      "subject": "feat(deps): install resend SDK for email delivery",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/918f7c4e28cce984f8e714d3d6cd4ef6dec048b3",
+      "type": "feat",
+      "scope": "deps"
+    },
+    {
+      "repo": "bible",
+      "hash": "671777e5431f12523466facf0f55ddd04d672960",
+      "shortHash": "671777e",
+      "date": "2026-03-10T19:20:27Z",
+      "subject": "feat(db): add notification preferences migration",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/bible/commit/671777e5431f12523466facf0f55ddd04d672960",
+      "type": "feat",
+      "scope": "db"
+    },
+    {
+      "repo": "pantheon-os",
+      "hash": "3dc5c1f351d2ae79f23a60ab04291327960c6826",
+      "shortHash": "3dc5c1f",
+      "date": "2026-03-10T19:18:28Z",
+      "subject": "docs: add mvp wiring checklist and preview",
+      "author": "aikaizen",
+      "email": "aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/pantheon-os/commit/3dc5c1f351d2ae79f23a60ab04291327960c6826",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "pantheon-os",
+      "hash": "d3bd3ee5160c01f6aefbc15ddfc4fb720ea749bf",
+      "shortHash": "d3bd3ee",
+      "date": "2026-03-10T19:13:50Z",
+      "subject": "feat: align mvp dashboard to prompt engines portfolio",
+      "author": "aikaizen",
+      "email": "aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/pantheon-os/commit/d3bd3ee5160c01f6aefbc15ddfc4fb720ea749bf",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "b2943b1c01da38193217b15bbf5714a38a215928",
+      "shortHash": "b2943b1",
+      "date": "2026-03-10T18:48:53Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/b2943b1c01da38193217b15bbf5714a38a215928",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "3f0a9bbb7d32beaa4d6b01c1586cd7fed5c2855e",
+      "shortHash": "3f0a9bb",
+      "date": "2026-03-10T14:54:33Z",
+      "subject": "Polish pass: fix Gemini aspect ratio, screengrab CORS fallback, Play Mode UX, API speed",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/3f0a9bbb7d32beaa4d6b01c1586cd7fed5c2855e",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "resume",
+      "hash": "a239be304109513fbf747579e33ce6e3869beaac",
+      "shortHash": "a239be3",
+      "date": "2026-03-10T14:50:22Z",
+      "subject": "init: Adil and Zach resume site",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/resume/commit/a239be304109513fbf747579e33ce6e3869beaac",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "pantheon-os",
+      "hash": "e1aac342c84fd70f75939122327194b7fb0da357",
+      "shortHash": "e1aac34",
+      "date": "2026-03-10T14:41:38Z",
+      "subject": "Initial Pantheon OS structure with docs from Company OS planning",
+      "author": "aikaizen",
+      "email": "aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/pantheon-os/commit/e1aac342c84fd70f75939122327194b7fb0da357",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "69797e505388beea985d30286e95a240fe972fe8",
+      "shortHash": "69797e5",
+      "date": "2026-03-10T13:01:30Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/69797e505388beea985d30286e95a240fe972fe8",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "ff96f073b21dd7b89fccbebbf1e8638140ec7fb6",
+      "shortHash": "ff96f07",
+      "date": "2026-03-10T12:33:37Z",
+      "subject": "feat: mobile experience overhaul — PageEditor tabs, touch support, mobile-first dashboard",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/ff96f073b21dd7b89fccbebbf1e8638140ec7fb6",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "377cdd3b987763b7607c15b2365245c84c8c1d05",
+      "shortHash": "377cdd3",
+      "date": "2026-03-10T12:03:33Z",
+      "subject": "chore(build-stream): auto-generate daily stream data + HTML",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/377cdd3b987763b7607c15b2365245c84c8c1d05",
+      "type": "chore",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "ff7677d1dbfbda78a507c3f36b25096086436e1c",
+      "shortHash": "ff7677d",
+      "date": "2026-03-10T06:51:21Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/ff7677d1dbfbda78a507c3f36b25096086436e1c",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "45db346c51f4799b6ac6ef0d016c75480c7b6195",
+      "shortHash": "45db346",
+      "date": "2026-03-10T02:01:26Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/45db346c51f4799b6ac6ef0d016c75480c7b6195",
+      "type": "chore",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "chore": 8,
+      "other": 5,
+      "feat": 11,
+      "docs": 4,
+      "refactor": 2,
+      "fix": 1
+    },
+    "byAuthor": {
+      "github-actions[bot]": 7,
+      "aikaizen": 13,
+      "Andy Stable": 11
+    },
+    "byRepo": {
+      "promptengines-main": 9,
+      "videoterminal": 3,
+      "bible": 11,
+      "pantheon-os": 6,
+      "resume": 1,
+      "storybookstudio": 1
+    },
+    "total": 31
+  },
+  "summary": {
+    "totalCommits": 31,
+    "activeRepos": [
+      "bible",
+      "promptengines-main",
+      "pantheon-os",
+      "videoterminal",
+      "resume",
+      "storybookstudio"
+    ],
+    "primaryTypes": [
+      [
+        "feat",
+        11
+      ],
+      [
+        "chore",
+        8
+      ],
+      [
+        "other",
+        5
+      ]
+    ],
+    "activeAuthors": [
+      "github-actions[bot]",
+      "aikaizen",
+      "Andy Stable"
+    ]
+  }
+}
