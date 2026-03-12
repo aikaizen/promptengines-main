@@ -1,6 +1,6 @@
 # PromptEngines — Project Context
 
-> Living document. Last updated: 2026-03-05.
+> Living document. Last updated: 2026-03-11.
 
 ## What This Is
 
@@ -20,11 +20,26 @@ The GitHub org is `aikaizen`. The main site repo is `aikaizen/promptengines-main
 | Storybook Studio | `storybookstudio` | storybookstudio.promptengines.com | Active |
 | Video Terminal | `videoterminal` | videoterminal.promptengines.com | Active |
 | Norbu | `norbu` | norbu.promptengines.com | Active |
+| Bible | `bible` | bible.promptengines.com | Active |
 | Consulting | `consulting` | consulting.promptengines.com | Active |
 | Dashboard | `dashboard` | dashboard.promptengines.com | Active |
 | Lab Notes | (within `promptengines-main`) | lab.promptengines.com | Active |
 
-Other repos in `aikaizen` may exist (experiments, forks, tooling). The build stream should capture **all** of them.
+Other repos in `aikaizen` may exist (experiments, forks, tooling). The build stream captures **all** of them.
+
+---
+
+## Team
+
+| Member | Type | Role | Status |
+|--------|------|------|--------|
+| A.I. | Human | Principal & Architect | Active |
+| Andy Stable | Agent | Operations & Execution | Active |
+| Hermetic_Demiurge | Agent | Developer & Engineer | Active |
+| Thoth | Agent | Teaching & Transmission | Coming soon |
+| Dzambhala | Agent | Wealth & Dharma | Coming soon |
+
+Both active agents push to `main` independently. Always check recent git history before assuming current state.
 
 ---
 
@@ -37,10 +52,10 @@ Push to main → vercel-deploy.yml → npx vercel --prod → promptengines.com
 - **Workflow:** `.github/workflows/vercel-deploy.yml`
 - **Trigger:** Every push to `main`
 - **Secret:** `VERCEL_TOKEN` (set in repo secrets)
-- **Config:** `vercel.json` at repo root (project: `promptengines`, builder: `@vercel/static`)
+- **Config:** `vercel.json` at repo root (modern format: `redirects` + `rewrites`)
 - **Status:** Working. All pushes to main auto-deploy.
 
-Any agent or human that pushes to `main` triggers a production deploy. This is intentional — an external agent has write PAT for this repo.
+Any agent or human that pushes to `main` triggers a production deploy. This is intentional.
 
 ---
 
@@ -59,8 +74,6 @@ Any agent or human that pushes to `main` triggers a production deploy. This is i
 
 **Secret:** `FEED_GITHUB_TOKEN` (set in repo secrets)
 
-**Current scope:** Fetches ALL repos for the authenticated user, but only generates app cards for repos listed in `FEATURED_APPS`. The telemetry terminal shows commits from any repo.
-
 **Featured apps** (in `generate-feed.js`):
 - `promptengines-main` → "Prompt Engines" (Platform)
 - `flow` → "Flow" (Education)
@@ -68,47 +81,102 @@ Any agent or human that pushes to `main` triggers a production deploy. This is i
 - `storybookstudio` → "Storybook Studio" (Creator Tool)
 - `videoterminal` → "Video Terminal" (Media)
 - `norbu` → "Norbu" (Language)
+- `bible` → "Bible" (Scripture)
 
-To add a new product to the feed cards, add it to both `PRODUCT_URLS` and `FEATURED_APPS` in `generate-feed.js`.
+To add a new product to the feed cards, add it to both `APP_URLS` and `FEATURED_APPS` in `generate-feed.js`.
 
 ---
 
-## System 2: Build Stream (Daily Commit Analysis)
+## System 2: Build Stream (Daily + Weekly Commit Analysis)
 
-**Purpose:** Generate a daily digest of commit activity for pattern analysis and public research documentation. This is central to PromptEngines' identity as an open research project — we investigate our own build patterns.
+**Purpose:** Generate daily digests and weekly reports of commit activity for pattern analysis and public research documentation.
 
-### Current state (cross-repo, operational)
+### Daily Pipeline
 
-**Workflow:** `.github/workflows/daily-stream.yml` — runs at 11:55 PM UTC daily.
+**Workflow:** `.github/workflows/daily-stream.yml` — runs at 11:50 UTC daily.
 
 **Scripts:**
-- `scripts/prepare-stream-data.js` — uses GitHub API (`@octokit/rest`) to fetch commits from ALL aikaizen repos in the last 24h, produces `.data-YYYY-MM-DD.json`
-- `scripts/write-stream-article.js` — reads the JSON, generates a multi-repo markdown draft at `labnotes/build-stream/YYYY-MM-DD.md`
+- `scripts/prepare-stream-data.js` — fetches commits from ALL aikaizen repos in the last 24h via `@octokit/rest`, produces `.data-YYYY-MM-DD.json`
+- `scripts/write-stream-article.js` — reads the JSON, generates a multi-repo markdown draft
+- `scripts/build-stream-html.js` — generates `labnotes/build-stream/index.html` with activity chart (bar chart + SVG line chart overlay with Catmull-Rom splines), repo/type breakdowns, feature/fix ratio
 
-**Capabilities:**
-1. Fetches commits from ALL repos under the `aikaizen` GitHub account via API
-2. Groups data by repo, type, and author
-3. Generates repo velocity tables and type breakdowns
-4. Produces per-repo commit listings in the article
-5. Includes cross-repo pattern analysis prompts for the human/agent reviewer
-6. Stats include `byRepo` alongside `byType` and `byAuthor`
+**Utilities:**
+- `scripts/backfill-stream-data.js` — backfills historical commit data for date ranges: `GITHUB_TOKEN=xxx node scripts/backfill-stream-data.js [startDate] [endDate]`
 
-### Human + Agent workflow
+### Weekly Pipeline
+
+- `scripts/generate-weekly-report.js` — aggregates a week's daily data into `labnotes/build-stream/YYYY-W##.html`
+- Runs automatically on Fridays via `daily-stream.yml` (day-of-week check in the workflow step)
+- Can be run manually: `node scripts/generate-weekly-report.js 2026-W11`
+
+### Data Flow
 
 ```
-Daily at 23:55 UTC:
+Daily at 11:50 UTC:
   daily-stream.yml →
-    prepare-stream-data.js (fetches ALL aikaizen repos via API) →
-    write-stream-article.js (generates draft) →
-    commit + push → triggers Vercel deploy
-
-Then (async, agent or human):
-  Read the draft →
-  Analyze patterns across repos →
-  Fill in Patterns / What Blocked / Tomorrow sections →
-  Change status: draft → published →
-  Commit + push
+    prepare-stream-data.js (fetches ALL repos) → .data-YYYY-MM-DD.json
+    write-stream-article.js (markdown draft)
+    build-stream-html.js (regenerate index.html with charts)
+    [Fridays only] generate-weekly-report.js → YYYY-W##.html
+    commit + push → Vercel deploy
 ```
+
+---
+
+## System 3: Three-Mode Content
+
+Every Lab Notes article can be published in up to three modes:
+- **◉ Standard** — Professional lab writing. Numbered rules, tables, checklists.
+- **◆ Experimental** — Hyper-concise visual. Massive headings, KPI badges, charts, minimal prose.
+- **⬡ Agent** — Hyperdense sigilized docs. YAML-like, sigil-prefixed, no filler.
+
+Multi-mode articles show ◉ ◆ ⬡ dots in the articles index. Mode badge appears in article header.
+
+**Articles with all three modes:**
+| Article | Standard | Experimental | Agent |
+|---------|----------|--------------|-------|
+| Zen and the Art of Vibe Coding | `2026-03-03-zen-and-the-art-of-vibecoding.html` | `-v2.html` | `-v3.html` |
+| Image Model API Baseline | `image-models-preliminary-views.html` | `-v2.html` | `-v3.html` |
+| The Great Acceleration | `the-great-acceleration.html` | `-v2.html` | `-v3.html` |
+| Model Selection Framework | `model-selection-framework.html` | `-v2.html` | `-v3.html` |
+| RAG Without Hallucination | `rag-without-hallucination.html` | `-v2.html` | `-v3.html` |
+
+---
+
+## System 4: Token-Based Team Join
+
+**Status:** Frontend complete, backend needs Supabase setup.
+
+**Frontend pages:**
+- `/labnotes/join/` — Token entry page (demo token: `TEAM-DEMO-2026-JOIN`)
+- `/labnotes/join/setup/` — Multi-step profile setup (type, info, links, review)
+- "Join with Token" CTAs on `/careers/` and `/labnotes/team/`
+
+**API stubs** (Vercel serverless functions):
+- `api/tokens/validate.js` — Token validation
+- `api/auth/register.js` — Account creation
+- `api/profile/index.js` — Profile CRUD
+
+**Database:** `database/migrations/001-initial-schema.sql` (Supabase Postgres schema)
+
+**To go live:** Create Supabase project, set `SUPABASE_URL` + `SUPABASE_ANON_KEY` in Vercel env vars, run migration.
+
+---
+
+## System 5: GWS CLI Integration
+
+**Status:** Scaffolding complete, needs Google Cloud setup.
+
+**Docker:**
+- `docker/gws-agent/Dockerfile` — Node 20-slim with `@googleworkspace/cli`
+- `docker/docker-compose.yml` — Service with read-only credential mount
+- `docker/gws-agent/skills/` — Custom skill templates (labnotes-submit, build-stream-generate, team-onboard)
+
+**Local setup:** `scripts/gws-setup.sh` — Guided setup for OAuth flow
+
+**Guide:** `docs/gws-setup-guide.md`
+
+**To go live:** Create Google Cloud project, enable APIs, OAuth credentials, service account key for Docker agents.
 
 ---
 
@@ -116,34 +184,46 @@ Then (async, agent or human):
 
 ```
 promptengines-main/
-├── index.html                    # Main site (contains FEED + TELEMETRY markers)
-├── v1.html – v6.html             # Theme variants (also contain markers)
-├── vercel.json                   # Vercel static deploy config
-├── package.json                  # Only dep: @octokit/rest
+├── index.html                    # Main site (FEED + TELEMETRY markers)
+├── v1.html – v6.html             # Theme variants
+├── vercel.json                   # Vercel config (redirects + rewrites)
+├── package.json                  # Dep: @octokit/rest
 ├── scripts/
-│   ├── generate-feed.js          # Activity feed generator (GitHub API)
-│   ├── prepare-stream-data.js    # Build stream data collector (all aikaizen repos via API)
-│   └── write-stream-article.js   # Build stream article generator
+│   ├── generate-feed.js          # Activity feed generator
+│   ├── prepare-stream-data.js    # Build stream data collector (all repos)
+│   ├── write-stream-article.js   # Build stream article generator
+│   ├── build-stream-html.js      # Build stream HTML + charts generator
+│   ├── generate-weekly-report.js # Weekly report generator
+│   ├── backfill-stream-data.js   # Historical data backfill
+│   └── gws-setup.sh             # GWS CLI local setup
 ├── .github/workflows/
 │   ├── vercel-deploy.yml         # Auto-deploy on push to main
 │   ├── update-feed.yml           # Activity feed (every 6h)
-│   └── daily-stream.yml          # Build stream (daily 23:55 UTC)
+│   └── daily-stream.yml          # Build stream (daily) + weekly report (Fridays)
+├── api/                          # Vercel serverless function stubs
+│   ├── tokens/validate.js
+│   ├── auth/register.js
+│   └── profile/index.js
+├── database/
+│   └── migrations/001-initial-schema.sql
+├── docker/
+│   ├── docker-compose.yml
+│   └── gws-agent/               # Dockerfile, entrypoint, skills
 ├── docs/
 │   ├── project-context.md        # This file
-│   ├── marketing-plan.md         # SEO/growth plan
-│   ├── marketing-todo.md         # Marketing checklist
-│   ├── MODEL-CONFIG.md           # AI model configuration
-│   └── plans/                    # Design + implementation plans
+│   ├── gws-setup-guide.md       # GWS CLI setup guide
+│   ├── prds/                    # Product requirement documents
+│   └── plans/                   # Design + implementation plans
 ├── labnotes/
-│   ├── articles/                 # Published HTML articles
-│   ├── build-stream/             # Daily stream digests + weekly reports
-│   ├── signals/                  # Short-form signals
-│   └── styles.css                # Shared Lab Notes stylesheet
-├── prototypes/                   # Active prototypes (Flow Education, Vajra-Upaya)
-├── careers/                      # Careers page
-├── contact/                      # Contact page
-├── map/                          # Product map
-└── Vajra-Upaya/                  # Precision tool-fitting service docs
+│   ├── articles/                # Published HTML articles (some with v2/v3 variants)
+│   ├── build-stream/            # Daily data + index.html + weekly reports
+│   ├── join/                    # Token-based team join pages
+│   ├── signals/                 # Short-form signals
+│   ├── team/                    # Team page
+│   └── styles.css               # Shared Lab Notes stylesheet
+├── careers/                     # Careers page
+├── contact/                     # Contact page
+└── map/                         # Product map
 ```
 
 ---
@@ -155,19 +235,21 @@ promptengines-main/
 | `VERCEL_TOKEN` | `vercel-deploy.yml` | Deploy to Vercel production |
 | `FEED_GITHUB_TOKEN` | `update-feed.yml`, `daily-stream.yml` | GitHub API access for commit fetching |
 
-Both are set in `aikaizen/promptengines-main` repo secrets.
+Future secrets (when backends go live):
+| Secret | Used by | Purpose |
+|--------|---------|---------|
+| `SUPABASE_URL` | `api/*` | Supabase project URL |
+| `SUPABASE_ANON_KEY` | `api/*` | Supabase anonymous key |
 
----
-
-## External Agents
-
-An external agent has a write PAT for `promptengines-main`. It can push directly to `main`, which triggers auto-deploy. This is by design — the agent contributes to the build stream and its commits appear in the feed.
+Both current secrets are set in `aikaizen/promptengines-main` repo secrets.
 
 ---
 
 ## Conventions
 
 - **Commit style:** Conventional commits (`feat:`, `fix:`, `content:`, `docs:`, `chore:`, `refactor:`)
-- **Articles:** HTML files in `labnotes/articles/`, using `../styles.css`, following the template pattern (progress bar, topbar, nav dropdown, article body, footer)
-- **Nav dropdowns:** Use `.nav-dropdown` / `.nav-dropdown-trigger` / `.nav-dropdown-menu` pattern. JS handles multiple dropdowns via `querySelectorAll`.
-- **Always pull before push:** Multiple contributors work on this repo. Always `git pull --rebase` (stash if needed) before pushing.
+- **Articles:** HTML files in `labnotes/articles/`, using `../styles.css`. Three-mode variants use `-v2.html` (Experimental) and `-v3.html` (Agent) suffixes.
+- **Nav dropdowns:** `.nav-dropdown` / `.nav-dropdown-trigger` / `.nav-dropdown-menu` pattern.
+- **Always pull before push:** Multiple contributors. Always `git pull --rebase` before pushing.
+- **No AI co-authorship mentions** on public-facing pages.
+- **Writing style:** Direct, declarative, concrete. See `docs/writing-style.md` for rules.
