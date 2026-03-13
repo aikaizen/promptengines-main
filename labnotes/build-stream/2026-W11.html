@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build Stream: Week 11, 2026 — Prompt Engines Lab Notes</title>
+  <meta name="description" content="181 commits across 6 repos. Weekly build stream report for Mar 9–Mar 15." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .daily-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .daily-table th, .daily-table td {
+      padding: 0.5rem 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .daily-table th {
+      color: var(--text-4);
+      font-weight: 500;
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .day-name { font-weight: 600; color: var(--text-2); min-width: 40px; }
+    .day-date { color: var(--text-4); min-width: 100px; }
+    .day-count { font-weight: 600; color: var(--text); min-width: 50px; text-align: right; }
+    .day-bar-cell { width: 50%; }
+    .day-bar {
+      height: 8px;
+      background: linear-gradient(90deg, var(--accent) 0%, rgba(240,77,38,0.5) 100%);
+      border-radius: 4px;
+      min-width: 2px;
+    }
+    .peak-row .day-name { color: var(--accent); }
+    .peak-row .day-bar {
+      box-shadow: 0 0 8px var(--accent-glow);
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .stat-card {
+      background: var(--bg-elevated);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .stat-card-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text);
+      font-family: var(--sans);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .stat-card-label {
+      font-size: 0.65rem;
+      color: var(--text-4);
+      font-family: var(--mono);
+      letter-spacing: 0.04em;
+      margin-top: 0.35rem;
+    }
+    @media (max-width: 640px) {
+      .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .daily-table td, .daily-table th { padding: 0.35rem 0.5rem; font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span class="nav-dropdown-trigger">Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row">
+        <span>Mar 15, 2026</span>
+        <span>2 min read</span>
+        <span>Build Stream</span>
+      </div>
+      <h1>Build Stream: Week 11, 2026</h1>
+      <p class="dek">181 commits across 6 active repos. 5 days with activity. Peak day: Fri with 55 commits. Top types: feat (90), chore (29), other (22).</p>
+
+      <article class="content">
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-card-num">181</div>
+            <div class="stat-card-label">Total commits</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-num">6</div>
+            <div class="stat-card-label">Active repos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-num">5</div>
+            <div class="stat-card-label">Days active</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-num">55</div>
+            <div class="stat-card-label">Peak day</div>
+          </div>
+        </div>
+
+        <h2>Repo activity</h2>
+
+        <figure class="figure">
+          <div class="visual visual-matrix">repo                  commits  dominant_type
+videoterminal         57       feat/other
+promptengines-main    53       chore/feat
+storybookstudio       49       feat/fix
+bible                 13       feat/docs
+pantheon-os           8        docs/feat
+resume                1        other</div>
+          <figcaption>Commit volume and dominant type by repo, week of Mar 9–Mar 15.</figcaption>
+        </figure>
+
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:100%"></i><i style="height:93%"></i><i style="height:86%"></i><i style="height:23%"></i><i style="height:14%"></i><i style="height:2%"></i>
+          </div>
+          <figcaption>Relative commit volume: videoterminal (57), promptengines-main (53), storybookstudio (49), bible (13), pantheon-os (8), resume (1).</figcaption>
+        </figure>
+
+        <h2>Daily breakdown</h2>
+
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Date</th>
+              <th>Commits</th>
+              <th>Volume</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="day-name">Mon</td>
+                <td class="day-date">2026-03-09</td>
+                <td class="day-count">19</td>
+                <td class="day-bar-cell"><div class="day-bar" style="width: 35%"></div></td>
+              </tr>
+              <tr>
+                <td class="day-name">Tue</td>
+                <td class="day-date">2026-03-10</td>
+                <td class="day-count">22</td>
+                <td class="day-bar-cell"><div class="day-bar" style="width: 40%"></div></td>
+              </tr>
+              <tr>
+                <td class="day-name">Wed</td>
+                <td class="day-date">2026-03-11</td>
+                <td class="day-count">31</td>
+                <td class="day-bar-cell"><div class="day-bar" style="width: 56%"></div></td>
+              </tr>
+              <tr>
+                <td class="day-name">Thu</td>
+                <td class="day-date">2026-03-12</td>
+                <td class="day-count">54</td>
+                <td class="day-bar-cell"><div class="day-bar" style="width: 98%"></div></td>
+              </tr>
+              <tr class="peak-row">
+                <td class="day-name">Fri</td>
+                <td class="day-date">2026-03-13</td>
+                <td class="day-count">55</td>
+                <td class="day-bar-cell"><div class="day-bar" style="width: 100%"></div></td>
+              </tr>
+              <tr>
+                <td class="day-name">Sat</td>
+                <td class="day-date">2026-03-14</td>
+                <td class="day-count">0</td>
+                <td class="day-bar-cell"><div class="day-bar" style="width: 0%"></div></td>
+              </tr>
+              <tr>
+                <td class="day-name">Sun</td>
+                <td class="day-date">2026-03-15</td>
+                <td class="day-count">0</td>
+                <td class="day-bar-cell"><div class="day-bar" style="width: 0%"></div></td>
+              </tr>
+          </tbody>
+        </table>
+
+        <h2>Commit types</h2>
+
+        <figure class="figure">
+          <div class="visual visual-bars">
+            <i style="height:100%"></i><i style="height:32%"></i><i style="height:24%"></i><i style="height:21%"></i><i style="height:16%"></i><i style="height:6%"></i><i style="height:2%"></i>
+          </div>
+          <figcaption>Commit type distribution: feat (90), chore (29), other (22), fix (19), docs (14), content (5), refactor (2).</figcaption>
+        </figure>
+
+        <figure class="figure">
+          <div class="visual visual-code">week_11_summary:
+  total_commits: 181
+  active_repos: 6
+  days_with_data: 5
+  peak_day: 2026-03-13 (55 commits)
+
+  by_repo:
+    videoterminal: 57
+    promptengines-main: 53
+    storybookstudio: 49
+    bible: 13
+    pantheon-os: 8
+    resume: 1
+
+  by_type:
+    feat: 90
+    chore: 29
+    other: 22
+    fix: 19
+    docs: 14
+    content: 5
+    refactor: 2
+
+  by_author:
+    aikaizen: 143
+    github-actions[bot]: 27
+    Andy Stable: 11</div>
+          <figcaption>Structured summary, week 11.</figcaption>
+        </figure>
+
+      </article>
+
+      <nav class="article-nav">
+        <a href="./index.html">&larr; Build Stream</a>
+        <a href="./2026-W10.html">&larr; Week 10</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Prompt Engines &middot; Lab Notes</div>
+  </footer>
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <script>
+    (function () {
+      var dropdowns = document.querySelectorAll('.nav-dropdown');
+      dropdowns.forEach(function (dropdown) {
+        var trigger = dropdown.querySelector('.nav-dropdown-trigger') || dropdown.querySelector('span');
+        if (!trigger) return;
+        trigger.addEventListener('click', function (e) {
+          e.preventDefault();
+          dropdowns.forEach(function (other) { if (other !== dropdown) other.classList.remove('is-open'); });
+          dropdown.classList.toggle('is-open');
+        });
+      });
+      document.addEventListener('click', function (e) {
+        dropdowns.forEach(function (dd) { if (!dd.contains(e.target)) dd.classList.remove('is-open'); });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') dropdowns.forEach(function (dd) { dd.classList.remove('is-open'); });
+      });
+    })();
+  </script>
+</body>
+</html>
