@@ -4,12 +4,147 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Build Stream: Week 11, 2026 — Prompt Engines Lab Notes</title>
-  <meta name="description" content="181 commits across 6 repos. Weekly build stream report for Mar 9–Mar 15." />
+  <meta name="description" content="181 commits across 6 repos. Build stream analytics for Mar 9–Mar 15." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css" />
   <style>
+    /* ── Stat Cards ── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .stat-card {
+      background: var(--bg-elevated);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    .stat-card-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text);
+      font-family: var(--sans);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .stat-card-label {
+      font-size: 0.6rem;
+      color: var(--text-4);
+      font-family: var(--mono);
+      letter-spacing: 0.04em;
+      margin-top: 0.35rem;
+      text-transform: uppercase;
+    }
+    .stat-card-delta {
+      font-size: 0.65rem;
+      font-family: var(--mono);
+      margin-top: 0.25rem;
+    }
+    .delta-up { color: #34d399; }
+    .delta-down { color: #fb7185; }
+    .delta-flat { color: var(--text-4); }
+    .delta-arrow { font-size: 0.6em; }
+
+    /* ── Chart containers ── */
+    .chart-section {
+      background: var(--bg-elevated);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 1.5rem 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .chart-section h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 1.25rem;
+      font-family: var(--sans);
+      letter-spacing: -0.01em;
+    }
+    .chart-section h3 .chart-sub {
+      color: var(--text-4);
+      font-weight: 400;
+      font-size: 0.8rem;
+    }
+
+    .sparkline-svg { width: 100%; max-width: 320px; height: auto; }
+    .trend-svg { width: 100%; max-width: 460px; height: auto; }
+    .repo-bar-svg { width: 100%; max-width: 520px; height: auto; }
+    .donut-svg { width: 160px; height: 160px; }
+
+    /* ── Velocity section ── */
+    .velocity-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .velocity-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      padding: 0.75rem 0;
+    }
+    .velocity-stat-num {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      font-family: var(--sans);
+    }
+    .velocity-stat-label {
+      font-size: 0.6rem;
+      color: var(--text-4);
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Donut + type legend ── */
+    .donut-row {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .type-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .type-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-3);
+    }
+    .type-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    /* ── Repo bar chart ── */
+    .hhi-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background: var(--bg);
+      color: var(--text-3);
+      border: 1px solid var(--border);
+      margin-left: 0.75rem;
+    }
+
+    /* ── Daily table ── */
     .daily-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
     .daily-table th, .daily-table td {
       padding: 0.5rem 0.75rem;
@@ -40,37 +175,162 @@
       box-shadow: 0 0 8px var(--accent-glow);
       background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
     }
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    .stat-card {
-      background: var(--bg-elevated);
-      border-radius: var(--radius);
-      padding: 1.25rem;
-      text-align: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    }
-    .stat-card-num {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--text);
-      font-family: var(--sans);
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-    }
-    .stat-card-label {
-      font-size: 0.65rem;
+    .weekend-flag {
+      font-size: 0.55rem;
       color: var(--text-4);
-      font-family: var(--mono);
-      letter-spacing: 0.04em;
-      margin-top: 0.35rem;
+      background: var(--bg);
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+      margin-left: 0.3rem;
+      vertical-align: middle;
     }
+
+    /* ── Author table ── */
+    .author-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    .author-table th, .author-table td {
+      padding: 0.4rem 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .author-table th {
+      color: var(--text-4);
+      font-weight: 500;
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .author-name { color: var(--text-2); font-weight: 600; }
+    .author-count { color: var(--text); text-align: right; min-width: 40px; }
+    .author-pct { color: var(--text-4); text-align: right; min-width: 40px; }
+    .author-bar-cell { width: 40%; }
+    .author-bar {
+      height: 6px;
+      background: #818cf8;
+      border-radius: 3px;
+      opacity: 0.7;
+    }
+    .gini-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-4);
+      margin-top: 0.5rem;
+    }
+
+    /* ── WoW table ── */
+    .wow-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    .wow-table th, .wow-table td {
+      padding: 0.5rem 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .wow-table th {
+      color: var(--text-4);
+      font-weight: 500;
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .wow-label { color: var(--text-3); }
+    .wow-this { color: var(--text); font-weight: 600; text-align: right; }
+    .wow-last { color: var(--text-4); text-align: right; }
+    .wow-delta { text-align: right; font-weight: 600; }
+
+    /* ── Focus shifts table ── */
+    .shift-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    .shift-table th, .shift-table td {
+      padding: 0.4rem 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .shift-table th {
+      color: var(--text-4);
+      font-weight: 500;
+      font-size: 0.65rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .shift-repo { color: var(--text-2); font-weight: 600; }
+    .shift-this { color: var(--text-3); text-align: right; }
+    .shift-last { color: var(--text-4); text-align: right; }
+    .shift-delta { text-align: right; font-weight: 600; }
+
+    /* ── Observations / Suggestions ── */
+    .obs-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .obs-list li {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--text-2);
+    }
+    .obs-list li:last-child { border-bottom: none; }
+    .sug-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sug-list li {
+      padding: 0.5rem 0;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: var(--text-3);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .sug-list li:last-child { border-bottom: none; }
+
+    /* ── Partial week banner ── */
+    .partial-banner {
+      background: rgba(245,158,11,0.1);
+      border: 1px solid rgba(245,158,11,0.2);
+      border-radius: var(--radius);
+      padding: 0.6rem 1rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #f59e0b;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Health ratio bar ── */
+    .health-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+    .health-bar {
+      display: flex;
+      flex: 1;
+      height: 8px;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .health-feat { background: #34d399; }
+    .health-fix { background: #fb7185; }
+    .health-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
     @media (max-width: 640px) {
-      .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .stat-card { padding: 1rem; }
+      .stat-card-num { font-size: 1.5rem; }
+      .velocity-grid { grid-template-columns: 1fr; }
+      .donut-row { flex-direction: column; align-items: flex-start; }
       .daily-table td, .daily-table th { padding: 0.35rem 0.5rem; font-size: 0.7rem; }
+      .chart-section { padding: 1.25rem; }
     }
   </style>
 </head>
@@ -101,62 +361,238 @@
   <main class="article">
     <div class="container">
       <div class="meta-row">
-        <span>Mar 15, 2026</span>
-        <span>2 min read</span>
+        <span>Mar 13, 2026</span>
+        <span class="read-time-placeholder">-- min read</span>
         <span>Build Stream</span>
       </div>
       <h1>Build Stream: Week 11, 2026</h1>
-      <p class="dek">181 commits across 6 active repos. 5 days with activity. Peak day: Fri with 55 commits. Top types: feat (90), chore (29), other (22).</p>
+      <p class="dek">181 commits across 5 active days (partial week), up 19% from last week. 6 repos active. Top contributors: videoterminal (57), promptengines-main (53), storybookstudio (49). Feature/fix health ratio: 83%. Peak day: Fri with 55 commits.</p>
 
       <article class="content">
 
+        <div class="partial-banner">Partial week: data available for 5 of 7 days (Mon, Tue, Wed, Thu, Fri). Metrics normalized to active days.</div>
+
+        <!-- ── Key Metrics ── -->
         <div class="stat-grid">
           <div class="stat-card">
             <div class="stat-card-num">181</div>
             <div class="stat-card-label">Total commits</div>
+            <div class="stat-card-delta delta-up"><span class="delta-arrow">▲</span> 19% WoW</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-num">36.2</div>
+            <div class="stat-card-label">Daily avg &plusmn; 15.5</div>
+            <div class="stat-card-delta delta-up"><span class="delta-arrow">▲</span> 67% WoW</div>
           </div>
           <div class="stat-card">
             <div class="stat-card-num">6</div>
             <div class="stat-card-label">Active repos</div>
+            <div class="stat-card-delta delta-up"><span class="delta-arrow">▲</span> 2 WoW</div>
           </div>
           <div class="stat-card">
-            <div class="stat-card-num">5</div>
-            <div class="stat-card-label">Days active</div>
+            <div class="stat-card-num">57%</div>
+            <div class="stat-card-label">Consistency</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-num">83%</div>
+            <div class="stat-card-label">Feat/fix health</div>
           </div>
           <div class="stat-card">
             <div class="stat-card-num">55</div>
-            <div class="stat-card-label">Peak day</div>
+            <div class="stat-card-label">Peak (Fri)</div>
           </div>
         </div>
 
-        <h2>Repo activity</h2>
-
-        <figure class="figure">
-          <div class="visual visual-matrix">repo                  commits  dominant_type
-videoterminal         57       feat/other
-promptengines-main    53       chore/feat
-storybookstudio       49       feat/fix
-bible                 13       feat/docs
-pantheon-os           8        docs/feat
-resume                1        other</div>
-          <figcaption>Commit volume and dominant type by repo, week of Mar 9–Mar 15.</figcaption>
-        </figure>
-
-        <figure class="figure">
-          <div class="visual visual-bars">
-            <i style="height:100%"></i><i style="height:93%"></i><i style="height:86%"></i><i style="height:23%"></i><i style="height:14%"></i><i style="height:2%"></i>
+        <!-- ── Velocity Analysis ── -->
+        <div class="chart-section">
+          <h3>Velocity analysis <span class="chart-sub">— daily commits</span></h3>
+          <svg viewBox="0 0 280 68" class="sparkline-svg">
+      <defs>
+        <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.03"/>
+        </linearGradient>
+      </defs>
+      <path d="M 8.0,36.8 L 52.0,34.4 L 96.0,27.2 L 140.0,8.8 L 184.0,8.0 L 228.0,52.0 L 272.0,52.0 L 272.0,52 L 8.0,52 Z" fill="url(#sparkGrad)"/>
+      <path d="M 8.0,36.8 L 52.0,34.4 L 96.0,27.2 L 140.0,8.8 L 184.0,8.0 L 228.0,52.0 L 272.0,52.0" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="8.0" cy="36.8" r="3" fill="#38bdf8" opacity="0.9"><title>2026-03-09: 19</title></circle>
+      <circle cx="52.0" cy="34.4" r="3" fill="#38bdf8" opacity="0.9"><title>2026-03-10: 22</title></circle>
+      <circle cx="96.0" cy="27.2" r="3" fill="#38bdf8" opacity="0.9"><title>2026-03-11: 31</title></circle>
+      <circle cx="140.0" cy="8.8" r="3" fill="#38bdf8" opacity="0.9"><title>2026-03-12: 54</title></circle>
+      <circle cx="184.0" cy="8.0" r="4" fill="var(--accent)" opacity="0.9"><title>2026-03-13: 55</title></circle>
+      <circle cx="228.0" cy="52.0" r="3" fill="#38bdf8" opacity="0.2"><title>2026-03-14: 0</title></circle>
+      <circle cx="272.0" cy="52.0" r="3" fill="#38bdf8" opacity="0.2"><title>2026-03-15: 0</title></circle>
+      <text x="8.0" y="60" text-anchor="middle" fill="var(--text-4)" font-size="8" font-family="var(--mono)">M</text>
+      <text x="52.0" y="60" text-anchor="middle" fill="var(--text-4)" font-size="8" font-family="var(--mono)">T</text>
+      <text x="96.0" y="60" text-anchor="middle" fill="var(--text-4)" font-size="8" font-family="var(--mono)">W</text>
+      <text x="140.0" y="60" text-anchor="middle" fill="var(--text-4)" font-size="8" font-family="var(--mono)">T</text>
+      <text x="184.0" y="60" text-anchor="middle" fill="var(--text-4)" font-size="8" font-family="var(--mono)">F</text>
+      <text x="228.0" y="60" text-anchor="middle" fill="var(--text-4)" font-size="8" font-family="var(--mono)">S</text>
+      <text x="272.0" y="60" text-anchor="middle" fill="var(--text-4)" font-size="8" font-family="var(--mono)">S</text>
+    </svg>
+          <div class="velocity-grid">
+            <div class="velocity-stat">
+              <span class="velocity-stat-num">36.2</span>
+              <span class="velocity-stat-label">Commits / active day</span>
+            </div>
+            <div class="velocity-stat">
+              <span class="velocity-stat-num">27.8</span>
+              <span class="velocity-stat-label">14-day trailing avg</span>
+            </div>
+            <div class="velocity-stat">
+              <span class="velocity-stat-num">accelerating</span>
+              <span class="velocity-stat-label">28-day trend (slope: 0.65)</span>
+            </div>
+            <div class="velocity-stat">
+              <span class="velocity-stat-num">23.8</span>
+              <span class="velocity-stat-label">4-week trailing avg</span>
+            </div>
           </div>
-          <figcaption>Relative commit volume: videoterminal (57), promptengines-main (53), storybookstudio (49), bible (13), pantheon-os (8), resume (1).</figcaption>
-        </figure>
 
+          <h3 style="margin-top:1.5rem">14-day trailing <span class="chart-sub">— 3-day moving average</span></h3>
+          <svg viewBox="0 0 400 90" class="trend-svg">
+      <defs>
+        <linearGradient id="trendGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.02"/>
+        </linearGradient>
+      </defs>
+      <path d="M 8.0,55.7 L 37.5,45.2 L 67.1,53.4 L 96.6,42.9 L 126.2,41.7 L 155.7,39.4 L 185.2,48.7 L 214.8,49.9 L 244.3,46.4 L 273.8,35.9 L 303.4,9.2 L 332.9,8.0 L 362.5,72.0 L 392.0,72.0 L 392.0,72 L 8.0,72 Z" fill="url(#trendGrad)"/>
+      <path d="M 8.0,55.7 L 37.5,45.2 L 67.1,53.4 L 96.6,42.9 L 126.2,41.7 L 155.7,39.4 L 185.2,48.7 L 214.8,49.9 L 244.3,46.4 L 273.8,35.9 L 303.4,9.2 L 332.9,8.0 L 362.5,72.0 L 392.0,72.0" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <path d="M 8.0,55.7 L 37.5,50.5 L 67.1,51.4 L 96.6,47.2 L 126.2,46.0 L 155.7,41.4 L 185.2,43.3 L 214.8,46.0 L 244.3,48.3 L 273.8,44.1 L 303.4,30.5 L 332.9,17.7 L 362.5,29.7 L 392.0,50.7" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="8.0" y="86" text-anchor="middle" fill="var(--text-4)" font-size="7" font-family="var(--mono)">3/2</text>
+      <text x="214.8" y="86" text-anchor="middle" fill="var(--text-4)" font-size="7" font-family="var(--mono)">3/9</text>
+      <text x="392.0" y="86" text-anchor="middle" fill="var(--text-4)" font-size="7" font-family="var(--mono)">3/15</text>
+    </svg>
+
+        </div>
+
+        <!-- ── Repo Focus ── -->
+        <div class="chart-section">
+          <h3>Repo focus <span class="hhi-badge">Balanced (HHI 0.27)</span></h3>
+          <svg viewBox="0 0 500 204" class="repo-bar-svg">
+      
+      <g transform="translate(0, 0)">
+        <text x="132" y="18" text-anchor="end" fill="var(--text-3)" font-size="11" font-family="var(--mono)">videoterminal</text>
+        <rect x="140" y="2" width="300.0" height="24" rx="4" fill="#34d399" opacity="0.8"/>
+        <text x="448" y="18" fill="var(--text-2)" font-size="12" font-weight="600" font-family="var(--mono)">57</text>
+      </g>
+      <g transform="translate(0, 34)">
+        <text x="132" y="18" text-anchor="end" fill="var(--text-3)" font-size="11" font-family="var(--mono)">promptengines-main</text>
+        <rect x="140" y="2" width="278.9" height="24" rx="4" fill="#818cf8" opacity="0.8"/>
+        <text x="426.94736842105266" y="18" fill="var(--text-2)" font-size="12" font-weight="600" font-family="var(--mono)">53</text>
+      </g>
+      <g transform="translate(0, 68)">
+        <text x="132" y="18" text-anchor="end" fill="var(--text-3)" font-size="11" font-family="var(--mono)">storybookstudio</text>
+        <rect x="140" y="2" width="257.9" height="24" rx="4" fill="#34d399" opacity="0.8"/>
+        <text x="405.89473684210526" y="18" fill="var(--text-2)" font-size="12" font-weight="600" font-family="var(--mono)">49</text>
+      </g>
+      <g transform="translate(0, 102)">
+        <text x="132" y="18" text-anchor="end" fill="var(--text-3)" font-size="11" font-family="var(--mono)">bible</text>
+        <rect x="140" y="2" width="68.4" height="24" rx="4" fill="#34d399" opacity="0.8"/>
+        <text x="216.42105263157896" y="18" fill="var(--text-2)" font-size="12" font-weight="600" font-family="var(--mono)">13</text>
+      </g>
+      <g transform="translate(0, 136)">
+        <text x="132" y="18" text-anchor="end" fill="var(--text-3)" font-size="11" font-family="var(--mono)">pantheon-os</text>
+        <rect x="140" y="2" width="42.1" height="24" rx="4" fill="#f59e0b" opacity="0.8"/>
+        <text x="190.10526315789474" y="18" fill="var(--text-2)" font-size="12" font-weight="600" font-family="var(--mono)">8</text>
+      </g>
+      <g transform="translate(0, 170)">
+        <text x="132" y="18" text-anchor="end" fill="var(--text-3)" font-size="11" font-family="var(--mono)">resume</text>
+        <rect x="140" y="2" width="5.3" height="24" rx="4" fill="#6b7280" opacity="0.8"/>
+        <text x="153.26315789473685" y="18" fill="var(--text-2)" font-size="12" font-weight="600" font-family="var(--mono)">1</text>
+      </g>
+    </svg>
+
+          <h4 style="font-size:0.8rem; color:var(--text-3); margin-top:1.5rem; font-family:var(--sans);">Week-over-week share changes</h4>
+          <table class="shift-table">
+            <thead>
+              <tr>
+                <th>Repo</th>
+                <th style="text-align:right">This week</th>
+                <th style="text-align:right">Last week</th>
+                <th style="text-align:right">Delta</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="shift-repo">promptengines-main</td>
+                <td class="shift-this">53 (29%)</td>
+                <td class="shift-last">99 (65%)</td>
+                <td class="shift-delta delta-down">▼ 36pp</td>
+              </tr>
+              <tr>
+                <td class="shift-repo">videoterminal</td>
+                <td class="shift-this">57 (31%)</td>
+                <td class="shift-last">7 (5%)</td>
+                <td class="shift-delta delta-up">▲ 27pp</td>
+              </tr>
+              <tr>
+                <td class="shift-repo">norbu</td>
+                <td class="shift-this">0 (0%)</td>
+                <td class="shift-last">14 (9%)</td>
+                <td class="shift-delta delta-down">▼ 9pp</td>
+              </tr>
+              <tr>
+                <td class="shift-repo">bible</td>
+                <td class="shift-this">13 (7%)</td>
+                <td class="shift-last">0 (0%)</td>
+                <td class="shift-delta delta-up">▲ 7pp</td>
+              </tr>
+              <tr>
+                <td class="shift-repo">storybookstudio</td>
+                <td class="shift-this">49 (27%)</td>
+                <td class="shift-last">32 (21%)</td>
+                <td class="shift-delta delta-up">▲ 6pp</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+        <!-- ── Commit Type Distribution ── -->
+        <div class="chart-section">
+          <h3>Commit type distribution</h3>
+          <div class="donut-row">
+            <svg viewBox="0 0 160 160" class="donut-svg">
+      <path d="M 80.00 20.00 A 60 60 0 0 1 81.04 139.99 L 80.66 117.99 A 38 38 0 0 0 80.00 42.00 Z" fill="#34d399" opacity="0.85"><title>feat: 90 (50%)</title></path>
+      <path d="M 81.04 139.99 A 60 60 0 0 1 29.86 112.95 L 48.24 100.87 A 38 38 0 0 0 80.66 117.99 Z" fill="#818cf8" opacity="0.85"><title>chore: 29 (16%)</title></path>
+      <path d="M 29.86 112.95 A 60 60 0 0 1 20.99 69.13 L 42.63 73.11 A 38 38 0 0 0 48.24 100.87 Z" fill="#6b7280" opacity="0.85"><title>other: 22 (12%)</title></path>
+      <path d="M 20.99 69.13 A 60 60 0 0 1 40.03 35.25 L 54.69 51.66 A 38 38 0 0 0 42.63 73.11 Z" fill="#fb7185" opacity="0.85"><title>fix: 19 (10%)</title></path>
+      <path d="M 40.03 35.25 A 60 60 0 0 1 65.56 21.76 L 70.86 43.12 A 38 38 0 0 0 54.69 51.66 Z" fill="#f59e0b" opacity="0.85"><title>docs: 14 (8%)</title></path>
+      <path d="M 65.56 21.76 A 60 60 0 0 1 75.84 20.14 L 77.36 42.09 A 38 38 0 0 0 70.86 43.12 Z" fill="#38bdf8" opacity="0.85"><title>content: 5 (3%)</title></path>
+      <path d="M 75.84 20.14 A 60 60 0 0 1 80.00 20.00 L 80.00 42.00 A 38 38 0 0 0 77.36 42.09 Z" fill="#a78bfa" opacity="0.85"><title>refactor: 2 (1%)</title></path>
+      <text x="80" y="76" text-anchor="middle" fill="var(--text)" font-size="20" font-weight="800" font-family="var(--sans)">181</text>
+      <text x="80" y="92" text-anchor="middle" fill="var(--text-4)" font-size="8" font-family="var(--mono)">COMMITS</text>
+    </svg>
+            <div class="type-legend">
+              <span class="type-legend-item"><span class="type-dot" style="background:#34d399"></span>feat 90 (50%)</span>
+              <span class="type-legend-item"><span class="type-dot" style="background:#818cf8"></span>chore 29 (16%)</span>
+              <span class="type-legend-item"><span class="type-dot" style="background:#6b7280"></span>other 22 (12%)</span>
+              <span class="type-legend-item"><span class="type-dot" style="background:#fb7185"></span>fix 19 (10%)</span>
+              <span class="type-legend-item"><span class="type-dot" style="background:#f59e0b"></span>docs 14 (8%)</span>
+              <span class="type-legend-item"><span class="type-dot" style="background:#38bdf8"></span>content 5 (3%)</span>
+              <span class="type-legend-item"><span class="type-dot" style="background:#a78bfa"></span>refactor 2 (1%)</span>
+            </div>
+          </div>
+          <div class="health-row" style="margin-top:1.25rem">
+            <span class="health-label" style="color:#34d399">feat 90</span>
+            <div class="health-bar">
+              <div class="health-feat" style="width:83%"></div>
+              <div class="health-fix" style="width:17%"></div>
+            </div>
+            <span class="health-label" style="color:#fb7185">fix 19</span>
+          </div>
+        </div>
+
+        <!-- ── Daily Breakdown ── -->
         <h2>Daily breakdown</h2>
-
         <table class="daily-table">
           <thead>
             <tr>
               <th>Day</th>
               <th>Date</th>
-              <th>Commits</th>
+              <th style="text-align:right">Commits</th>
               <th>Volume</th>
             </tr>
           </thead>
@@ -206,21 +642,134 @@ resume                1        other</div>
           </tbody>
         </table>
 
-        <h2>Commit types</h2>
+        <!-- ── Author Analysis ── -->
+        <div class="chart-section">
+          <h3>Author analysis</h3>
+          <table class="author-table">
+            <thead>
+              <tr>
+                <th>Author</th>
+                <th style="text-align:right">Commits</th>
+                <th style="text-align:right">Share</th>
+                <th>Volume</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="author-name">aikaizen</td>
+                <td class="author-count">143</td>
+                <td class="author-pct">79%</td>
+                <td class="author-bar-cell"><div class="author-bar" style="width: 100%"></div></td>
+              </tr>
+              <tr>
+                <td class="author-name">github-actions[bot]</td>
+                <td class="author-count">27</td>
+                <td class="author-pct">15%</td>
+                <td class="author-bar-cell"><div class="author-bar" style="width: 19%"></div></td>
+              </tr>
+              <tr>
+                <td class="author-name">Andy Stable</td>
+                <td class="author-count">11</td>
+                <td class="author-pct">6%</td>
+                <td class="author-bar-cell"><div class="author-bar" style="width: 8%"></div></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="gini-label">Author concentration (Gini): 0.49 — moderate</p>
+        </div>
 
-        <figure class="figure">
-          <div class="visual visual-bars">
-            <i style="height:100%"></i><i style="height:32%"></i><i style="height:24%"></i><i style="height:21%"></i><i style="height:16%"></i><i style="height:6%"></i><i style="height:2%"></i>
-          </div>
-          <figcaption>Commit type distribution: feat (90), chore (29), other (22), fix (19), docs (14), content (5), refactor (2).</figcaption>
-        </figure>
+        <!-- ── Week-over-Week ── -->
+        <div class="chart-section">
+          <h3>Week-over-week comparison</h3>
+          <table class="wow-table">
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th style="text-align:right">This week</th>
+                <th style="text-align:right">Last week</th>
+                <th style="text-align:right">Delta</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="wow-label">Total commits</td>
+                <td class="wow-this">181</td>
+                <td class="wow-last">152</td>
+                <td class="wow-delta delta-up"><span class="delta-arrow">▲</span> 19%</td>
+              </tr>
+              <tr>
+                <td class="wow-label">Active repos</td>
+                <td class="wow-this">6</td>
+                <td class="wow-last">4</td>
+                <td class="wow-delta delta-up"><span class="delta-arrow">▲</span> 50%</td>
+              </tr>
+              <tr>
+                <td class="wow-label">Daily average</td>
+                <td class="wow-this">36.2</td>
+                <td class="wow-last">21.7</td>
+                <td class="wow-delta delta-up"><span class="delta-arrow">▲</span> 67%</td>
+              </tr>
+              <tr>
+                <td class="wow-label">Peak day</td>
+                <td class="wow-this">55</td>
+                <td class="wow-last">28</td>
+                <td class="wow-delta delta-up"><span class="delta-arrow">▲</span> 96%</td>
+              </tr>
+              <tr>
+                <td class="wow-label">Days active</td>
+                <td class="wow-this">5</td>
+                <td class="wow-last">7</td>
+                <td class="wow-delta delta-down"><span class="delta-arrow">▼</span> 29%</td>
+              </tr>
+              <tr>
+                <td class="wow-label">Health ratio</td>
+                <td class="wow-this">83%</td>
+                <td class="wow-last">66%</td>
+                <td class="wow-delta delta-up"><span class="delta-arrow">▲</span> 0%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
+        <!-- ── Observations ── -->
+        <h2>Observations</h2>
+        <ul class="obs-list">
+            <li>Commit volume increased 19% week-over-week (152 to 181), indicating accelerating development velocity.</li>
+            <li>Fri (2026-03-13) was a significant spike day with 55 commits (30% of the week's total), more than 1.5x the daily average.</li>
+            <li>Feature-heavy week: 90 feat vs 19 fix commits (83% build ratio). Active construction phase.</li>
+            <li>videoterminal gained significant focus share this week (31% vs 5% last week).</li>
+            <li>promptengines-main saw reduced attention (29% share, down from 65%).</li>
+        </ul>
+
+        <!-- ── Content Suggestions ── -->
+        <h2>Content suggestions</h2>
+        <ul class="sug-list">
+            <li>Based on 57 videoterminal commits (primarily feat), consider writing about feat and agentic.</li>
+            <li>Based on 49 storybookstudio commits (primarily feat), consider writing about feat and spread.</li>
+            <li>Based on 13 bible commits (primarily feat), consider writing about email and notification.</li>
+            <li>6 active repos in one week. A cross-project coordination patterns article could be valuable.</li>
+        </ul>
+
+        <!-- ── Structured Summary ── -->
         <figure class="figure">
           <div class="visual visual-code">week_11_summary:
+  period: 2026-03-09 to 2026-03-15 (partial)
   total_commits: 181
   active_repos: 6
   days_with_data: 5
+  daily_average: 36.2
+  daily_stddev: 15.5
+  consistency_score: 57%
+  health_ratio: 83%
+  repo_concentration: 0.265 (Balanced)
+  author_gini: 0.486
   peak_day: 2026-03-13 (55 commits)
+  trend_28d: accelerating (slope: 0.65)
+
+  wow_delta:
+    commits: up 19%
+    repos: up 2
+    daily_avg: up 67%
 
   by_repo:
     videoterminal: 57
@@ -269,6 +818,16 @@ resume                1        other</div>
       }
       window.addEventListener('scroll', update, { passive: true });
       update();
+    })();
+  </script>
+  <script>
+    // Update read time
+    (function() {
+      var text = document.querySelector('.article').textContent || '';
+      var words = text.trim().split(/\s+/).length;
+      var mins = Math.max(3, Math.ceil(words / 200));
+      var el = document.querySelector('.read-time-placeholder');
+      if (el) el.textContent = mins + ' min read';
     })();
   </script>
   <script>
