@@ -225,6 +225,21 @@
         display: flex;
         align-items: center;
       }
+
+      .nav-dropdown {
+        position: static;
+      }
+
+      .nav-dropdown-menu {
+        position: fixed;
+        top: 120px;
+        left: 16px;
+        right: 16px;
+        min-width: auto;
+        max-width: calc(100% - 32px);
+        max-height: calc(100vh - 140px);
+        overflow-y: auto;
+      }
     }
 
     @media (max-width: 680px) {
@@ -245,11 +260,18 @@
 
       .nav-dropdown-menu {
         position: fixed;
-        top: auto;
+        top: 110px;
         left: 16px;
         right: 16px;
         min-width: auto;
         max-width: calc(100% - 32px);
+        max-height: calc(100vh - 130px);
+        overflow-y: auto;
+      }
+
+      .nav-dropdown-menu a {
+        padding: 12px 14px;
+        font-size: 12px;
       }
     }
 
@@ -794,11 +816,11 @@
     @media (max-width: 680px) {
       .app-card {
         border-radius: 10px;
-        min-height: 100px;
+        min-height: auto;
       }
 
       .app-card-head {
-        padding: 14px;
+        padding: 12px 14px;
       }
 
       .app-card-name {
@@ -810,17 +832,25 @@
         padding: 2px 6px;
       }
 
+      .app-card-commits {
+        max-height: 160px;
+        overflow-y: auto;
+      }
+
       .commit-line {
-        padding: 6px 14px;
+        padding: 8px 14px;
+        gap: 8px;
       }
 
       .commit-time {
         font-size: 9px;
-        min-width: 50px;
+        min-width: 45px;
+        max-width: 25%;
       }
 
       .commit-msg {
         font-size: 11px;
+        white-space: nowrap;
       }
     }
 
