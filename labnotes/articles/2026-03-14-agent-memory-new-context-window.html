@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Memory Is the New Context Window — Prompt Engines Lab</title>
+  <meta name="description" content="As context windows plateau at 1M tokens, agent memory architectures are becoming the real differentiator. IBM's trajectory extraction, Hindsight's learning memory, and NousResearch's Hermes Agent all trended simultaneously—signaling a shift in how agents persist knowledge.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+    .article-content blockquote { border-left: 3px solid var(--accent); padding: 0.5rem 1rem; margin: 1.5rem 0; color: var(--text-3); font-style: italic; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+          March 14, 2026 · 10 min read · Agent Infrastructure
+        </div>
+        
+        <h1>Agent Memory Is the New Context Window</h1>
+        
+        <p>Anthropic shipped 1M context windows in GA this week. OpenAI did the same last week. Gemini has had it since early 2024. The major providers are converged at 1M tokens—and by all signs, they'll stay there for a while.</p>
+        
+        <p>Meanwhile, three projects trending on GitHub this week all solve the same problem from different angles: <strong>how agents remember and learn across sessions</strong>. The implicit message is clear: the bottleneck has shifted from "how much can the model hold" to "how well can the agent retain."</p>
+
+        <h2>The Context Ceiling</h2>
+        
+        <p>Latent Space's swyx put it bluntly in this week's episode with semiconductor analyst Doug O'Laughlin: context windows have been effectively stuck at 1M tokens for two years. The constraint isn't algorithmic—it's physical. There's not enough HBM and DRAM at inference sites to serve larger contexts at scale.</p>
+        
+        <p>The prediction: context windows won't meaningfully exceed 1M in the next two years. Sam Altman's forecast of 100x longer context? "Take the under on that," swyx says.</p>
+        
+        <p>The emerging concept is <strong>context rationing</strong>—a future where free-tier users get tiny context windows (1K tokens, perhaps) while paid tiers compete on how much context they can economically serve. A 1M context window is "a mansion," as O'Laughlin puts it. Not everyone gets one.</p>
+
+        <h2>Three Signals, One Direction</h2>
+        
+        <p>Against this backdrop, three GitHub trending projects from the week of March 8-14 paint a coherent picture:</p>
+
+        <h3>1. vectorize-io/hindsight — "Agent Memory That Learns"</h3>
+        
+        <p>Hindsight (3,736 stars, 595 new this week) takes a pragmatic approach: extract lessons from completed tasks and store them as retrievable memories. The name is telling—it learns <em>after</em> the fact, building a growing library of what worked and what didn't.</p>
+        
+        <p>This is the "experience replay" of the agent world. Instead of stuffing everything into context, Hindsight curates. Past failures become future guardrails. Past successes become reusable patterns.</p>
+
+        <h3>2. NousResearch/hermes-agent — "The Agent That Grows With You"</h3>
+        
+        <p>Hermes Agent (6,813 stars, 4,787 new this week) from NousResearch emphasizes adaptive behavior over time. The framing is agent personalization through accumulated interaction—not fine-tuning weights, but building a persistent behavioral profile.</p>
+        
+        <p>NousResearch has consistently pushed the open-source agent frontier. Their entry here validates the thesis that memory is the next competitive axis for agent platforms.</p>
+
+        <h3>3. IBM's Trajectory-Based Learning (via @dair_ai)</h3>
+        
+        <p>Not a GitHub project but a research signal with hard numbers: IBM extracted reusable strategy, recovery, and optimization tips from agent trajectories. The results on AppWorld benchmarks:</p>
+        
+        <ul>
+          <li><strong>Task completion:</strong> 69.6% → 73.2% (+3.6pp)</li>
+          <li><strong>Scenario goals:</strong> 50.0% → 64.3% (+14.3pp)</li>
+        </ul>
+        
+        <p>The biggest gains came on hard tasks—the ones where brute-force context stuffing fails anyway. This is the strongest evidence yet that curated memory outperforms raw context length.</p>
+
+        <h2>The Memory Taxonomy</h2>
+        
+        <p>Not all agent memory is the same. The emerging landscape breaks down into distinct types:</p>
+        
+        <ul>
+          <li><strong>Episodic:</strong> "What happened in this session" — raw trajectory logs, conversation history. Expensive to store, cheap to retrieve.</li>
+          <li><strong>Semantic:</strong> "What I know about the world" — facts, entity relationships, domain knowledge. The RAG layer.</li>
+          <li><strong>Procedural:</strong> "How to do things" — strategies, recovery patterns, optimization tips. What IBM's work extracts.</li>
+          <li><strong>Behavioral:</strong> "How I should act" — personality, preferences, learned heuristics. What Hermes builds over time.</li>
+        </ul>
+        
+        <p>The projects trending this week span all four types. Hindsight leans procedural. Hermes leans behavioral. IBM's work bridges procedural and semantic. The market is telling us: <strong>agents need all four, and the plumbing doesn't exist yet</strong>.</p>
+
+        <h2>What This Means for Builders</h2>
+        
+        <p>If you're building agent applications today, three practical takeaways:</p>
+        
+        <p><strong>1. Design for context scarcity, not abundance.</strong> Don't assume you'll have 1M tokens of context. Design your agent to work with 32K-128K context and external memory. The winners will be context-efficient, not context-greedy.</p>
+        
+        <p><strong>2. Invest in memory architecture now.</strong> Vector stores for semantic memory, structured logs for episodic memory, prompt-embedded heuristics for procedural memory. The infrastructure is immature—building it yourself today is a competitive advantage that becomes table stakes in 12 months.</p>
+        
+        <p><strong>3. Benchmark memory quality, not just retrieval speed.</strong> The IBM results show that the <em>quality</em> of what agents remember matters more than how fast they retrieve it. Curated, distilled memory beats raw log search.</p>
+
+        <h2>The MCP Angle</h2>
+        
+        <p>Worth noting: the Model Context Protocol conversation this week has been dominated by ergonomics complaints, not capability gaps. As @pamelafox joked, "MCP was pronounced dead on Twitter, after mass exposure to curl." But @llama_index's take cuts deeper: MCP tools are strong for deterministic, centrally maintained APIs with rapidly changing ground truth. Skills are lighter but more failure-prone.</p>
+        
+        <p>The connection to memory is direct: MCP is becoming the transport layer for agent memory systems. New web MCP support in Chrome v146 enables agents to continuously browse and compile contextual summaries. The protocol isn't dead—it's being repurposed from "tool calling" to "memory plumbing."</p>
+
+        <h2>Bottom Line</h2>
+        
+        <p>Context windows hit their physical ceiling. Agent memory is the next scaling dimension. The projects and research trending this week aren't just incremental improvements—they're building the retention layer that the entire agent ecosystem will depend on.</p>
+        
+        <p>The question isn't "how much context do you have." It's "how much do you remember."</p>
+
+        <hr style="margin: 3rem 0; border: none; border-top: 1px solid var(--border);">
+        
+        <p style="font-size: 0.875rem; color: var(--text-4);"><em>Sources: Latent Space AINews (3/13/2026), GitHub Trending (3/8-14/2026), @dair_ai, @llama_index, @pamelafox, Doug O'Laughlin interview via Latent Space podcast.</em></p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">Prompt Engines Lab</div>
+      <div class="footer-links">
+        <a href="https://promptengines.com">PromptEngines.com</a>
+        <a href="../articles/">Articles</a>
+        <a href="../about/">About</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

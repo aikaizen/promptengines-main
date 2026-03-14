@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A/B Testing with Agent-Built Variants — Prompt Engines Lab</title>
+  <meta name="description" content="How AI agents can rapidly create and deploy multiple landing page variants for testing. StoryBook Studio case study: 4 variants deployed in a single session.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+          March 14, 2026 · 8 min read · Experiments
+        </div>
+        
+        <h1>A/B Testing with Agent-Built Variants</h1>
+        
+        <p>Traditional A/B testing follows a familiar rhythm: a designer creates two mockups, a developer implements them, they get deployed behind a feature flag, and two weeks later you have a statistically significant result. That entire cycle—design, development, deployment, measurement—now fits inside a single afternoon when you let an AI agent build the variants.</p>
+
+        <p>We tested this approach on <a href="https://storybookstudio.promptengines.com" target="_blank" rel="noopener noreferrer">StoryBook Studio</a>, a product for parents to create personalized storybooks for their children. An agent built and deployed four distinct landing page variants in one session. Here's what we learned about the process, the results, and the patterns worth repeating.</p>
+
+        <h2>The Traditional Bottleneck</h2>
+
+        <p>Conventional A/B testing has a throughput problem. The bottleneck isn't the testing infrastructure—Vercel, LaunchDarkly, and Google Optimize solved split-testing mechanics years ago. The bottleneck is <em>variant creation</em>.</p>
+
+        <p>Each variant requires:</p>
+
+        <ul>
+          <li><strong>Copywriting:</strong> Distinct value propositions, headlines, CTAs</li>
+          <li><strong>Design:</strong> Layout adjustments, visual hierarchy changes</li>
+          <li><strong>Implementation:</strong> Frontend code, responsive behavior, asset optimization</li>
+          <li><strong>QA:</strong> Cross-browser testing, mobile verification, link validation</li>
+        </ul>
+
+        <p>Even with a dedicated team, producing 4 distinct variants for a single landing page typically takes 1–2 weeks. Most teams settle for 2 variants because the cost of producing more doesn't justify the marginal insight gained.</p>
+
+        <p>This is where agent-built variants change the economics.</p>
+
+        <h2>The StoryBook Studio Experiment</h2>
+
+        <p>For StoryBook Studio's marketing page, we defined four copywriting strategies and tasked an agent with building complete HTML implementations for each:</p>
+
+        <table>
+          <thead>
+            <tr><th>Variant</th><th>Strategy</th><th>Core Approach</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Control</strong></td><td>Feature-led</td><td>Direct product description. What it does, how it works, pricing.</td></tr>
+            <tr><td><strong>Emotion</strong></td><td>Feeling-first</td><td>Lead with the emotional moment. Parent-child bonding through stories.</td></tr>
+            <tr><td><strong>Social Proof</strong></td><td>Testimonial-driven</td><td>User quotes, review scores, adoption metrics front and center.</td></tr>
+            <tr><td><strong>PAS</strong></td><td>Problem-Agitate-Solve</td><td>Identify screen-time anxiety, amplify the concern, present the solution.</td></tr>
+          </tbody>
+        </table>
+
+        <p>The agent received the same base requirements: Hero section, feature highlights, pricing information, footer. Each variant used a different copywriting framework to structure the same underlying information.</p>
+
+        <h2>What an Agent Actually Does Differently</h2>
+
+        <p>The agent doesn't just swap headlines. It restructures the entire page hierarchy based on the chosen strategy:</p>
+
+        <h3>Control (Feature-led)</h3>
+        <p>Opens with the product name and a clear value statement. Feature cards appear above the fold. Pricing is visible without scrolling. This is "here's what we built, here's what it costs, here's how to buy it." Low-friction, high-clarity.</p>
+
+        <h3>Emotion Variant</h3>
+        <p>The hero section opens with a parent-child story moment—no product mention until the second fold. The emotional hook comes first: <em>"Your child's favorite story? The one where they're the hero."</em> Product features appear only after the reader feels something. This reverses the Control's information hierarchy entirely.</p>
+
+        <h3>Social Proof Variant</h3>
+        <p>Testimonial quotes replace the hero copy. A review score appears in the navigation. The "5,000+ families" stat gets its own visual treatment. Features are still present, but they're framed as "why parents choose us" rather than standalone descriptions.</p>
+
+        <h3>PAS Variant</h3>
+        <p>Opens with the problem: kids spending hours on screens with passive content. Agitates by quantifying the impact—hours per week, lack of engagement. Then resolves with StoryBook Studio as the alternative. The page structure follows a narrative arc rather than a product catalog layout.</p>
+
+        <p>Each variant is a <em>complete, independent implementation</em>—not a template with variables swapped. Different markup structure, different visual emphasis, different content flow. That's what makes the comparison meaningful.</p>
+
+        <h2>Deployment via Vercel</h2>
+
+        <p>Deploying 4 variants simultaneously requires minimal infrastructure. The pattern:</p>
+
+        <pre><code># Each variant is a standalone HTML file deployed as a Vercel route
+storybookstudio.promptengines.com/          → Control (default)
+storybookstudio.promptengines.com/emotion   → Emotion variant
+storybookstudio.promptengines.com/proof     → Social Proof variant
+storybookstudio.promptengines.com/pas       → PAS variant</code></pre>
+
+        <p>Vercel's edge network serves each variant at the same latency. No custom servers, no feature flag services, no client-side redirect logic. The variants are static HTML—no build step, no framework hydration.</p>
+
+        <p>Traffic splitting happens at the routing layer. For initial tests, we use a simple pattern: direct links to each variant for qualitative review, then weighted routing for quantitative measurement once the variants are validated.</p>
+
+        <h2>Measuring What Matters</h2>
+
+        <p>Not all metrics are equally useful for landing page variants. Here's the hierarchy we use:</p>
+
+        <ol>
+          <li><strong>Primary: Click-through to signup/action.</strong> Did the visitor take the next step? This is the only metric that matters for conversion optimization.</li>
+          <li><strong>Secondary: Time on page + scroll depth.</strong> Are they reading, or bouncing? High time-on-page with low conversion suggests good copy but a weak CTA.</li>
+          <li><strong>Tertiary: Bounce rate by source.</strong> A variant that works for organic search traffic may fail for paid social. Segment by traffic source before declaring a winner.</li>
+        </ol>
+
+        <p><strong>What we don't track:</strong> Heatmaps for a 4-variant test are noise. Eye-tracking studies are premature. Focus groups at this stage introduce observer bias. Run the experiment first, do qualitative analysis on the winner.</p>
+
+        <h2>Practical Patterns for Agent-Built Testing</h2>
+
+        <p>From the StoryBook Studio experiment, several patterns emerged that apply beyond this specific case:</p>
+
+        <h3>1. Define Strategies, Not Designs</h3>
+        <p>Tell the agent the <em>persuasion framework</em>, not the visual layout. "Build a PAS variant" produces better results than "move the hero image to the left and change the headline color." The agent handles design decisions based on the strategic intent.</p>
+
+        <h3>2. Keep Variants Structurally Independent</h3>
+        <p>Each variant should be a complete, self-contained page. Shared components lead to correlated failures—if the shared CTA button is wrong, all variants fail together. Independence means cleaner signal.</p>
+
+        <h3>3. Deploy Before You Perfect</h3>
+        <p>Agent-built variants are drafts, not finals. Deploy them, measure for 48–72 hours, then refine the winner. The speed advantage of agent-built variants only matters if you actually ship them. Perfect is the enemy of tested.</p>
+
+        <h3>4. Test Copy Strategy Before Visual Design</h3>
+        <p>The 4 StoryBook Studio variants test <em>messaging approaches</em>. Visual differences are secondary to the copywriting framework. Once you identify the winning strategy, you can run a second round of tests on visual execution within that strategy.</p>
+
+        <h3>5. One Variable Per Round</h3>
+        <p>The first round tests copywriting strategy (Control vs Emotion vs Social Proof vs PAS). The winner of that round becomes the base for round two, which might test CTA placement, hero image style, or pricing presentation. Stacking variables produces ambiguous results.</p>
+
+        <h2>What This Changes</h2>
+
+        <p>Agent-built variants don't eliminate the need for A/B testing discipline. You still need statistical significance, clean traffic segmentation, and honest measurement. What changes is the <em>cost of experimentation</em>.</p>
+
+        <p>When producing 4 variants takes an afternoon instead of 2 weeks, the calculus shifts. You test more hypotheses. You run more rounds. You stop debating whether the emotion-first approach might work and just <em>build it and see</em>.</p>
+
+        <p>The bottleneck moves from variant creation to experiment design—which is where it should have been all along.</p>
+
+        <h2>Next Steps</h2>
+
+        <p>The StoryBook Studio variants are deployed and collecting data. Once we have statistically significant results on the copywriting strategy round, we'll publish the findings. The winning variant enters round two: visual execution testing within the proven copy framework.</p>
+
+        <p>The agent is standing by to build the next set.</p>
+
+        <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+        <p style="color: var(--text-4); font-size: 0.875rem;">
+          <strong>Experiment Details</strong><br>
+          Product: <a href="https://storybookstudio.promptengines.com" target="_blank" rel="noopener noreferrer">StoryBook Studio</a><br>
+          Variants: 4 (Control, Emotion, Social Proof, PAS)<br>
+          Deployment: Vercel, static HTML routes<br>
+          Build time: Single session (agent-built)<br>
+          Measurement window: 48–72 hours per round<br><br>
+          <strong>References:</strong><br>
+          StoryBook Studio: https://storybookstudio.promptengines.com<br>
+          Vercel Deployment: https://vercel.com<br>
+          PAS Framework: Problem-Agitate-Solve (copywriting methodology)
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" style="border-top: 1px solid var(--border-subtle); margin-top: 4rem;">
+    <div class="container" style="padding: 2rem 0; text-align: center; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab Notes — Real experiments. Published findings.</p>
+    </div>
+  </footer>
+</body>
+</html>

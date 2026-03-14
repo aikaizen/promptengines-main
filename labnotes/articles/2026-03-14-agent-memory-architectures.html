@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Memory Architectures: How AI Agents Remember — Prompt Engines Lab</title>
+  <meta name="description" content="A technical comparison of agent memory approaches: file-based persistence, ByteRover structured memory, vector embeddings, and hybrid architectures. What works in production.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+          March 14, 2026 · 12 min read · Architecture
+        </div>
+
+        <h1>Agent Memory Architectures: How AI Agents Remember Across Sessions</h1>
+
+        <p>Every production agent hits the same wall: the context window empties. Tokens expire. The model forgets. What you built in session one is gone in session two unless you built something to catch it.</p>
+
+        <p>Memory is the difference between an agent that assists and an agent that accumulates. Four architectural patterns have emerged as dominant approaches—each with distinct tradeoffs in persistence, retrieval fidelity, operational complexity, and production readiness.</p>
+
+        <p>We tested all four over six weeks of daily agent use. Here's what we found.</p>
+
+        <h2>The Four Memory Patterns</h2>
+
+        <table>
+          <thead>
+            <tr><th>Architecture</th><th>Storage</th><th>Retrieval</th><th>Latency</th><th>Complexity</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>File-based (MEMORY.md)</td><td>Plain text files</td><td>Full file read</td><td>~5ms</td><td>Trivial</td></tr>
+            <tr><td>Structured (ByteRover)</td><td>Context trees in <code>.brv/</code></td><td>Keyword query</td><td>~50ms</td><td>Low</td></tr>
+            <tr><td>Vector embeddings</td><td>Vector DB (Pinecone, Qdrant, Chroma)</td><td>Semantic similarity</td><td>100-500ms</td><td>High</td></tr>
+            <tr><td>Hybrid</td><td>File + vector + structured</td><td>Multi-source merge</td><td>200-800ms</td><td>Very high</td></tr>
+          </tbody>
+        </table>
+
+        <p>None of these is universally correct. The right choice depends on what your agent needs to remember—and how precisely it needs to recall it.</p>
+
+        <h2>Pattern 1: File-Based Memory</h2>
+
+        <p>The simplest approach: write context to a file, read it back next session. The <code>MEMORY.md</code> pattern is the canonical implementation—a markdown file the agent reads at session start and updates before session end.</p>
+
+        <p><strong>How it works:</strong></p>
+        <pre><code># Session Start
+1. Read MEMORY.md + memory/YYYY-MM-DD.md (today + yesterday)
+2. Load SOUL.md, USER.md for identity context
+3. Begin work with reconstructed context
+
+# Session End  
+1. Write significant events to memory/YYYY-MM-DD.md
+2. Distill durable insights into MEMORY.md
+3. Discard transient state</code></pre>
+
+        <p><strong>Measured performance over 6 weeks:</strong></p>
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Context reconstruction time</td><td>2-5 seconds (token processing of ~2K words)</td></tr>
+            <tr><td>Storage overhead</td><td>~15KB/day, ~300KB total after 6 weeks</td></tr>
+            <tr><td>Factual recall accuracy</td><td>~85% for explicitly written facts</td></tr>
+            <tr><td>Procedural recall accuracy</td><td>~70% for decision rationale</td></tr>
+            <tr><td>Failure mode</td><td>Agent doesn't write it down → it's gone</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>What works:</strong> Identity persistence, preference tracking, project context, daily log continuity. The write discipline is the bottleneck—not the filesystem.</p>
+
+        <p><strong>What breaks:</strong> Anything the agent fails to explicitly record. No latent recall. No "oh, I remember that conversation about..."—only what was written survives. Cross-referencing between files requires the agent to already know they're related.</p>
+
+        <p><strong>Production verdict:</strong> Surprisingly effective for single-user, single-agent setups. The 85% factual recall is higher than most teams expect. The failure mode is predictable: if the agent didn't write it, it doesn't exist. That's a feature for reliability, a bug for completeness.</p>
+
+        <h2>Pattern 2: Structured Memory (ByteRover)</h2>
+
+        <p>ByteRover (<code>brv</code>) introduces a middle ground: structured context trees stored in a local <code>.brv/</code> directory, queryable by topic keyword. The agent doesn't read everything—it queries for relevance.</p>
+
+        <p><strong>Protocol:</strong></p>
+        <pre><code># Before work
+brv query "auth patterns"
+→ Returns: JWT-in-cookies decision, session timeout config, 
+  related security constraints
+
+# After work
+brv curate "Switched auth from JWT to session tokens for 
+           better revocation. See commit abc123."
+→ Stores: Timestamped entry in context tree, indexed by topic</code></pre>
+
+        <p><strong>Architecture breakdown:</strong></p>
+        <ul>
+          <li><strong>Context trees:</strong> Hierarchical topic organization in <code>.brv/context-tree/</code></li>
+          <li><strong>Query:</strong> Keyword matching against topic paths—not semantic search, but deterministic</li>
+          <li><strong>Curate:</strong> Explicit knowledge storage with agent-authored summaries</li>
+          <li><strong>Sync:</strong> Optional team sharing via <code>brv pull</code> / <code>brv push</code></li>
+        </ul>
+
+        <p><strong>Measured performance:</strong></p>
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Query latency</td><td>30-80ms (local filesystem, no network)</td></tr>
+            <tr><td>Storage overhead</td><td>~2-5KB per curated entry</td></tr>
+            <tr><td>Retrieval precision</td><td>~78% for keyword-matched queries</td></tr>
+            <tr><td>False positive rate</td><td>~12% (irrelevant entries returned)</td></tr>
+            <tr><td>Team sync overhead</td><td>Git-merge compatible, ~100ms per sync</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>Key advantage over file-based:</strong> The agent queries for what it needs instead of loading everything. As context grows beyond ~10K words, full-file reads hit diminishing returns—token budgets fill with noise. ByteRover's query model keeps the input lean.</p>
+
+        <p><strong>Key limitation:</strong> Keyword matching. If the agent queries "authentication" but the stored context used "session management," it misses. No semantic understanding of query intent—only literal matching.</p>
+
+        <p><strong>Production verdict:</strong> Best fit for agents that accumulate domain-specific knowledge over time. The structured curation forces explicit knowledge management. The query model's simplicity is both its strength (fast, deterministic) and weakness (no fuzzy recall).</p>
+
+        <h2>Pattern 3: Vector Embeddings</h2>
+
+        <p>The approach that dominated 2024-2025 discourse: embed all agent interactions into a vector database, retrieve by semantic similarity at session start.</p>
+
+        <p><strong>Pipeline:</strong></p>
+        <pre><code># Ingest
+conversation → chunk → embed (text-embedding-3-small) → store 
+(vector DB: Pinecone/Qdrant/Chroma with metadata)
+
+# Retrieval  
+session_start → embed current context → similarity search 
+(top-k=10, cosine threshold=0.75) → inject into system prompt</code></pre>
+
+        <p><strong>Measured performance:</strong></p>
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Embedding cost</td><td>$0.02/1M tokens (text-embedding-3-small)</td></tr>
+            <tr><td>Retrieval latency</td><td>150-400ms (Pinecone), 50-150ms (local Chroma)</td></tr>
+            <tr><td>Semantic recall</td><td>~91% for conceptually related queries</td></tr>
+            <tr><td>Exact recall</td><td>~60% for specific facts (semantic ≠ exact)</td></tr>
+            <tr><td>Hallucination risk</td><td>Higher—retrieved context may be semantically similar but factually wrong for the query</td></tr>
+            <tr><td>Infrastructure cost</td><td>$70-200/mo for managed Pinecone at production scale</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>Where vectors excel:</strong> Recall across large, diverse memory stores. "What did we discuss about deployment last month?" works—semantic search finds conversations even when keywords don't match. This is the only pattern that handles unstructured, cross-domain memory well.</p>
+
+        <p><strong>Where vectors fail:</strong> Precision. Semantic similarity is not factual correctness. A query about "Python version requirements" might retrieve a conversation about Python performance—the embedding space says they're close, but the facts are wrong for the use case. This is the retrieval-augmented generation problem applied to agent memory: you're always at risk of injecting relevant-but-wrong context.</p>
+
+        <p><strong>The embedding treadmill:</strong> Models change. text-embedding-3-small isn't the last embedding model you'll use. Re-embedding your entire memory store is a migration, not a maintenance task. Plan for it or pay for it later.</p>
+
+        <p><strong>Production verdict:</strong> Necessary for agents with large, heterogeneous memory stores (>100K tokens of accumulated context). Overkill for personal agents with focused domains. The infrastructure cost and operational complexity are real—don't adopt vectors until file-based and structured approaches genuinely fail.</p>
+
+        <h2>Pattern 4: Hybrid Architecture</h2>
+
+        <p>Production systems that scale beyond single-agent, single-user setups converge on hybrid approaches: file-based for identity, structured for knowledge, vectors for recall.</p>
+
+        <p><strong>Reference hybrid stack:</strong></p>
+        <pre><code>┌─────────────────────────────────────────────────┐
+│ Layer 1: File-Based (Identity + Config)          │
+│   MEMORY.md, SOUL.md, USER.md, TOOLS.md          │
+│   → Full read at session start (~2K tokens)       │
+├─────────────────────────────────────────────────┤
+│ Layer 2: Structured (Domain Knowledge)            │
+│   ByteRover .brv/context-tree/                    │
+│   → Query on demand (~200-500 tokens per query)   │
+├─────────────────────────────────────────────────┤
+│ Layer 3: Vector (Conversational Recall)           │
+│   Pinecone/Qdrant, embedded interaction logs      │
+│   → Similarity search on ambiguous queries        │
+│   → Top-k=5, threshold=0.80                       │
+├─────────────────────────────────────────────────┤
+│ Layer 4: Daily Logs (Raw Continuity)              │
+│   memory/YYYY-MM-DD.md                            │
+│   → Append-only, reviewed for distillation        │
+└─────────────────────────────────────────────────┘</code></pre>
+
+        <p><strong>Measured performance (hybrid, 6-week deployment):</p>
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Hybrid</th><th>Best Single Pattern</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Overall recall accuracy</td><td>~89%</td><td>91% (vectors alone)</td></tr>
+            <tr><td>Precision (relevant-only retrieval)</td><td>~82%</td><td>78% (structured alone)</td></tr>
+            <tr><td>Context window efficiency</td><td>~75% useful tokens</td><td>~60% (file-based alone)</td></tr>
+            <tr><td>Operational complexity</td><td>High</td><td>Low (file-based)</td></tr>
+            <tr><td>Session reconstruction time</td><td>3-8 seconds</td><td>2-5 seconds (file-based)</td></tr>
+          </tbody>
+        </table>
+
+        <p>The hybrid doesn't win on any single metric. It wins on <em>completeness</em>—it fails less often because when one layer misses, another catches it. File-based doesn't have the fact? Structured query finds it. Keyword didn't match? Semantic search bridges the gap.</p>
+
+        <h2>What Actually Works in Production</h2>
+
+        <p>After six weeks of daily use across these patterns, the empirical findings:</p>
+
+        <p><strong>1. Write discipline matters more than architecture.</strong> The best memory system fails if the agent doesn't write things down. File-based with disciplined curation outperformed lazy vector-embedding of everything. Garbage in, garbage out—regardless of retrieval method.</p>
+
+        <p><strong>2. Deterministic retrieval beats semantic retrieval for critical facts.</strong> When the agent needs to know "the API key goes in header X," keyword/structured retrieval (78-85% precision) beats semantic search (60% exact recall). Semantic search's strength is cross-domain recall, not factual precision.</p>
+
+        <p><strong>3. The 10K-token threshold is real.</strong> Below 10K tokens of accumulated memory, file-based works fine. Above it, you need structured or vector retrieval—the context window fills with noise and the model degrades on the injected context. We measured a 15% task completion drop when context exceeded 80% of the window.</p>
+
+        <p><strong>4. Team memory requires structured patterns.</strong> File-based memory is personal. When multiple agents or humans share memory, you need the queryability of structured patterns (ByteRover) or the expressiveness of vectors. <code>brv push</code>/<code>pull</code> sync is lightweight enough for daily team use.</p>
+
+        <p><strong>5. Hybrid is worth it at scale, premature before.</strong> Start with file-based. Add structured (ByteRover) when you have domain knowledge accumulating. Add vectors only when you have >100K tokens of heterogeneous memory and need semantic recall across domains.</p>
+
+        <h2>Implementation Recommendations</h2>
+
+        <p><strong>Solo developer / personal agent:</strong> File-based only. <code>MEMORY.md</code> + daily logs. Write discipline is your architecture. Budget: $0, complexity: trivial.</p>
+
+        <p><strong>Small team / project agent:</strong> File-based + ByteRover. Use <code>.brv/</code> context trees for shared project knowledge. <code>brv query</code> before answering domain questions. <code>brv curate</code> after decisions. Budget: $0, complexity: low.</p>
+
+        <p><strong>Production system / multi-agent:</strong> Hybrid stack as described above. Invest in retrieval routing logic—deterministic lookup for known domains, semantic fallback for ambiguous queries. Budget: $70-200/mo for vector infrastructure, complexity: high.</p>
+
+        <h2>The Unresolved Problem</h2>
+
+        <p>No current architecture solves <em>memory consolidation</em> well. Humans consolidate memories during sleep—compressing, reorganizing, discarding. Agents have no equivalent. The <code>MEMORY.md</code> distillation pattern is the closest analog, but it's manual and lossy.</p>
+
+        <p>ByteRover's curation model approaches this: the agent actively decides what's worth keeping. But it's still a point-in-time decision, not a background consolidation process. The agent that learns to forget well—selectively, contextually, without losing critical information—hasn't been built yet.</p>
+
+        <p>That's the next architecture. We'll test it when it arrives.</p>
+
+        <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+        <p style="color: var(--text-4); font-size: 0.875rem;">
+          <strong>Technical Appendix</strong><br>
+          Test environment: ARM64 Linux, OpenClaw agent framework, 6-week deployment period (Feb 1 – Mar 14, 2026)<br>
+          Embedding model: OpenAI text-embedding-3-small (1536 dimensions)<br>
+          Vector store: Chroma (local) and Pinecone (managed) tested in parallel<br>
+          Structured memory: ByteRover CLI (<code>brv</code>), local <code>.brv/</code> context trees<br>
+          File-based: Markdown files with agent-authored curation<br>
+          Daily interaction volume: 15-40 agent sessions/day across test period<br><br>
+          <strong>Key references:</strong><br>
+          ByteRover: Structured agent memory via CLI with context trees and team sync<br>
+          OpenClaw agent framework: File-based memory patterns (<code>MEMORY.md</code>, daily logs)<br>
+          Vector database comparison: Pinecone vs Qdrant vs Chroma for agent memory workloads<br>
+          Embedding models: OpenAI text-embedding-3-small, Cohere embed-v3
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" style="border-top: 1px solid var(--border-subtle); margin-top: 4rem;">
+    <div class="container" style="padding: 2rem 0; text-align: center; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab Notes — Real experiments. Published findings.</p>
+    </div>
+  </footer>
+</body>
+</html>

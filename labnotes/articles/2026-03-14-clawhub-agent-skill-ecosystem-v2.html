@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClawHub: The Agent Skill Ecosystem (Experimental) — Prompt Engines Lab</title>
+  <meta name="description" content="Visual breakdown: skill marketplace metrics, ecosystem growth trajectory, and the portability question.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h1 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.0; letter-spacing: -0.04em; margin-bottom: 0.5rem; font-weight: 800; }
+    .article-content h2 { margin-top: 3rem; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; color: var(--text-2); }
+    .article-content strong { color: var(--text); }
+    .thesis { font-size: 1.3rem; color: var(--text); font-weight: 300; line-height: 1.5; margin: 0 0 3rem; max-width: 48ch; }
+    .mode-badge { display: inline-block; font-family: var(--mono); font-size: 0.7rem; color: var(--accent); border: 1px solid rgba(240,77,38,0.3); border-radius: 4px; padding: 2px 8px; margin-left: 0.5rem; vertical-align: middle; }
+    .kpi { display: inline-flex; align-items: baseline; gap: 0.5rem; background: var(--accent-dim); border: 1px solid rgba(240,77,38,0.2); border-radius: var(--radius-sm); padding: 0.5rem 1rem; margin: 1rem 0.5rem 1rem 0; font-family: var(--mono); font-size: 0.85rem; }
+    .kpi .k { color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.7rem; }
+    .kpi .v { color: var(--text); font-weight: 600; }
+    .speed-bar { display: flex; align-items: center; gap: 0.75rem; margin: 0.35rem 0; font-family: var(--mono); font-size: 0.8rem; }
+    .speed-bar .label { width: 160px; color: var(--text-3); text-align: right; flex-shrink: 0; }
+    .speed-bar .bar { height: 18px; background: var(--accent); border-radius: 2px; opacity: 0.7; }
+    .speed-bar .time { color: var(--text-4); min-width: 3.5rem; }
+    .speed-chart { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .axis { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; margin: 2rem 0; align-items: center; }
+    .axis-pole { background: var(--bg-elevated); border: 1px solid var(--border); padding: 1.25rem; border-radius: var(--radius-sm); text-align: center; }
+    .axis-pole .big { font-size: 1.5rem; font-weight: 700; display: block; margin-bottom: 0.25rem; }
+    .axis-pole .sub { font-size: 0.8rem; color: var(--text-4); }
+    .axis-mid { font-family: var(--mono); color: var(--accent); padding: 0 1rem; font-size: 1.5rem; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+    .alt-links { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .alt-links a { display: block; font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-decoration: none; padding: 0.4rem 0; transition: color 0.2s; }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div style="color: var(--text-4); font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.5rem;">
+          2026-03-14 · Lab Notes <span class="mode-badge">◆ Experimental</span>
+        </div>
+
+        <h1>Agent Skill Ecosystems</h1>
+
+        <p class="thesis">ClawHub crossed 2,000 skills. npm hit the same number in late 2012. History rhymes—but agent portability changes the equation.</p>
+
+        <div class="kpi"><span class="k">Skills catalogued</span><span class="v">2,000+</span></div>
+        <div class="kpi"><span class="k">Format</span><span class="v">SKILL.md</span></div>
+        <div class="kpi"><span class="k">npm parity point</span><span class="v">Late 2012</span></div>
+
+        <h2>Ecosystem Comparison</h2>
+
+        <div class="axis">
+          <div class="axis-pole">
+            <span class="big">Traditional</span>
+            <span class="sub">npm · pip · RubyGems · crates.io</span>
+          </div>
+          <div class="axis-mid">→</div>
+          <div class="axis-pole">
+            <span class="big">Agent-native</span>
+            <span class="sub">ClawHub · SKILL.md · context-loaded capabilities</span>
+          </div>
+        </div>
+
+        <p>Traditional packages execute in a <strong>runtime</strong>. Agent skills execute in a <strong>context window</strong>. This is the fundamental architectural difference that makes the npm analogy both useful and misleading.</p>
+
+        <h2>Skill Category Breakdown</h2>
+
+        <div class="speed-chart">
+          <div class="speed-bar">
+            <span class="label">Communication</span>
+            <div class="bar" style="width: 25%;"></div>
+            <span class="time">~25%</span>
+          </div>
+          <div class="speed-bar">
+            <span class="label">Research & SEO</span>
+            <div class="bar" style="width: 20%;"></div>
+            <span class="time">~20%</span>
+          </div>
+          <div class="speed-bar">
+            <span class="label">Development</span>
+            <div class="bar" style="width: 18%;"></div>
+            <span class="time">~18%</span>
+          </div>
+          <div class="speed-bar">
+            <span class="label">Productivity</span>
+            <div class="bar" style="width: 15%;"></div>
+            <span class="time">~15%</span>
+          </div>
+          <div class="speed-bar">
+            <span class="label">Content creation</span>
+            <div class="bar" style="width: 12%;"></div>
+            <span class="time">~12%</span>
+          </div>
+          <div class="speed-bar">
+            <span class="label">Security & ops</span>
+            <div class="bar" style="width: 10%;"></div>
+            <span class="time">~10%</span>
+          </div>
+        </div>
+
+        <p>Infrastructure-heavy. Domain-specific skills (medical, legal, finance) remain sparse—the catalogue reflects what agents <em>do today</em>, not what they could do.</p>
+
+        <hr class="divider">
+
+        <h2>The Portability Matrix</h2>
+
+        <div class="axis">
+          <div class="axis-pole">
+            <span class="big">Format</span>
+            <span class="sub">SKILL.md is plain markdown + YAML. Platform-neutral text. Transfers anywhere.</span>
+          </div>
+          <div class="axis-mid">×</div>
+          <div class="axis-pole">
+            <span class="big">Runtime</span>
+            <span class="sub">Execution depends on agent platform, tool access, model behavior. Fragile.</span>
+          </div>
+        </div>
+        <div class="axis">
+          <div class="axis-pole">
+            <span class="big">Triggers</span>
+            <span class="sub">"Use when" / "NOT for" declarations. Works across platforms if respected.</span>
+          </div>
+          <div class="axis-mid">×</div>
+          <div class="axis-pole">
+            <span class="big">Dependencies</span>
+            <span class="sub">Binary requirements, API keys, environment assumptions. Platform-specific.</span>
+          </div>
+        </div>
+
+        <h2>Growth Trajectory Comparison</h2>
+
+        <div class="speed-chart">
+          <div class="speed-bar">
+            <span class="label">npm (2012→2015)</span>
+            <div class="bar" style="width: 100%;"></div>
+            <span class="time">2K → 130K</span>
+          </div>
+          <div class="speed-bar">
+            <span class="label">ClawHub (2025→2026)</span>
+            <div class="bar" style="width: 15%; opacity: 0.5;"></div>
+            <span class="time">~0 → 2K</span>
+          </div>
+        </div>
+
+        <p>Too early to extrapolate. But the <strong>shape</strong> of growth matters more than the rate: ClawHub is growing by use-case coverage (communication → research → security → content), not by total package count. The catalogue depth in each category is what signals ecosystem maturity.</p>
+
+        <h2>Security Surface</h2>
+
+        <div class="kpi"><span class="k">Risk: Prompt injection</span><span class="v">Via SKILL.md text</span></div>
+        <div class="kpi"><span class="k">Risk: Overbroad triggers</span><span class="v">Scope hijacking</span></div>
+        <div class="kpi"><span class="k">Risk: Credential theft</span><span class="v">Via embedded scripts</span></div>
+        <div class="kpi"><span class="k">Mitigation</span><span class="v">Skill vetting (early stage)</span></div>
+
+        <p>Every npm attack vector (typosquatting, malicious updates, dependency confusion) maps directly to ClawHub. Plus agent-specific vectors: skills that inject instructions into context, declare overly broad activation triggers, or exfiltrate API keys via embedded scripts. The attack surface is <em>wider</em> than traditional packages because skills are both code and prompt.</p>
+
+        <h2>What Needs to Be True</h2>
+
+        <div class="axis">
+          <div class="axis-pole">
+            <span class="big">Cross-platform</span>
+            <span class="sub">LangChain, CrewAI, AutoGen adopt SKILL.md or compatible format</span>
+          </div>
+          <div class="axis-mid">+</div>
+          <div class="axis-pole">
+            <span class="big">Context budgeting</span>
+            <span class="sub">Agent runtimes load skills selectively, not universally</span>
+          </div>
+        </div>
+        <div class="axis">
+          <div class="axis-pole">
+            <span class="big">Mandatory vetting</span>
+            <span class="sub">Static analysis for code + prompt content before publication</span>
+          </div>
+          <div class="axis-mid">+</div>
+          <div class="axis-pole">
+            <span class="big">Composition</span>
+            <span class="sub">Skill bundles that compose capabilities without dependency trees</span>
+          </div>
+        </div>
+
+        <p>If these conditions hold, SKILL.md becomes the interchange format for agent capabilities—the lowest common denominator that lets an OpenClaw skill run in a LangChain agent. If they don't, it's good tooling for one platform.</p>
+
+        <div class="alt-links">
+          <a href="./2026-03-14-clawhub-agent-skill-ecosystem.html">◉ Standard version</a>
+          <a href="./2026-03-14-clawhub-agent-skill-ecosystem-v3.html">⬡ Agent version</a>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="section" style="border-top: 1px solid var(--border); padding: 2rem 0; margin-top: 3rem;">
+    <div style="max-width: 720px; margin: 0 auto; padding: 0 1.5rem; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab — <a href="https://lab.promptengines.com">lab.promptengines.com</a></p>
+    </div>
+  </footer>
+</body>
+</html>

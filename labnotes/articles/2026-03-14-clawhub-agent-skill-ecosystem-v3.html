@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClawHub: The Agent Skill Ecosystem (Agent) — Prompt Engines Lab</title>
+  <meta name="description" content="Agent-readable specification: ClawHub skill format, registry protocol, security model, portability constraints.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h1 { font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.25rem; font-weight: 700; }
+    .article-content p { line-height: 1.5; margin: 0.75rem 0; color: var(--text-3); font-size: 0.85rem; }
+    .mode-badge { display: inline-block; font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; margin-left: 0.5rem; vertical-align: middle; }
+    .agent-block { font-family: var(--mono); font-size: 0.8rem; line-height: 1.65; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.5rem; margin: 1.25rem 0; white-space: pre-wrap; color: var(--text-2); tab-size: 2; }
+    .agent-block .key { color: var(--accent); }
+    .agent-block .sigil { color: var(--accent); }
+    .agent-block .status { color: #4ade80; }
+    .agent-block .warn { color: #fbbf24; }
+    .agent-block .fail { color: #ef4444; }
+    .agent-block .dim { color: var(--text-4); }
+    .agent-block .val { color: var(--text); }
+    .section-label { font-family: var(--mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-4); margin: 2.5rem 0 0.5rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border-subtle); }
+    .alt-links { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .alt-links a { display: block; font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-decoration: none; padding: 0.4rem 0; transition: color 0.2s; }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div style="color: var(--text-4); font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.5rem;">
+          2026-03-14 · Lab Notes <span class="mode-badge">⬡ Agent</span>
+        </div>
+
+        <h1>ClawHub Skill Ecosystem: Agent-Readable Spec</h1>
+
+        <div class="section-label">§1 — Context</div>
+
+        <div class="agent-block"><span class="key">DOMAIN</span>:    Agent skill marketplace and registry
+<span class="key">PLATFORM</span>:   ClawHub (clawhub.ai)
+<span class="key">FORMAT</span>:     SKILL.md (YAML frontmatter + markdown)
+<span class="key">CATALOGUE</span>:  <span class="status">2,000+ skills</span>
+<span class="key">CLI</span>:        <span class="val">npm i -g clawhub</span>
+<span class="key">REGISTRY</span>:   <span class="val">https://clawhub.com</span> (default)
+<span class="key">STATUS</span>:     <span class="warn">Early ecosystem — format stable, adoption narrow</span>
+<span class="key">DATE</span>:       2026-03-14</div>
+
+        <div class="section-label">§2 — SKILL.md Format</div>
+
+        <div class="agent-block"><span class="key">STRUCTURE</span>:
+  <span class="dim">→</span> <span class="val">YAML frontmatter</span>   <span class="dim"># name, description, metadata</span>
+  <span class="dim">→</span> <span class="val">Markdown body</span>       <span class="dim"># Human + agent-readable instructions</span>
+
+<span class="key">FRONTMATTER</span>:
+  <span class="dim">→</span> <span class="val">name</span>:              <span class="dim"># Skill identifier (kebab-case)</span>
+  <span class="dim">→</span> <span class="val">description</span>:       <span class="dim"># One-line summary for search/discovery</span>
+  <span class="dim">→</span> <span class="val">metadata.openclaw</span>: <span class="dim"># Platform-specific runtime requirements</span>
+    <span class="dim">  → requires.bins</span>  <span class="dim"># Binary dependencies (e.g., ["curl"])</span>
+    <span class="dim">  → install</span>         <span class="dim"># Auto-install instructions</span>
+
+<span class="key">BODY</span>:
+  <span class="dim">→</span> <span class="val">Trigger declarations</span>: <span class="dim">"Use when: ..." / "NOT for: ..."</span>
+  <span class="dim">→</span> <span class="val">Procedural steps</span>:    <span class="dim">How to accomplish the skill's purpose</span>
+  <span class="dim">→</span> <span class="val">Reference files</span>:     <span class="dim">Optional scripts, configs, templates</span>
+
+<span class="key">PAYLOAD</span>:
+  <span class="dim">→</span> <span class="val">Scripts</span>            <span class="dim"># Optional executable files</span>
+  <span class="dim">→</span> <span class="val">Reference docs</span>     <span class="dim"># Additional markdown or config files</span>
+  <span class="dim">→</span> <span class="val">Subdirectories</span>     <span class="dim"># Nested structure (e.g., skills/ subcommands)</span></div>
+
+        <div class="section-label">§3 — CLI Protocol</div>
+
+        <div class="agent-block"><span class="key">DISCOVERY</span>:
+  <span class="sigil">$</span> <span class="val">clawhub search "postgres backups"</span>    <span class="dim"># Full-text search</span>
+  <span class="sigil">$</span> <span class="val">clawhub list</span>                          <span class="dim"># Installed skills</span>
+
+<span class="key">INSTALL</span>:
+  <span class="sigil">$</span> <span class="val">clawhub install my-skill</span>              <span class="dim"># Latest version</span>
+  <span class="sigil">$</span> <span class="val">clawhub install my-skill --version 1.2.3</span>  <span class="dim"># Pinned</span>
+  <span class="dim">→ Target: ./skills/ directory (default)</span>
+  <span class="dim">→ Override: --dir, --workdir, or CLAWHUB_WORKDIR</span>
+
+<span class="key">UPDATE</span>:
+  <span class="sigil">$</span> <span class="val">clawhub update my-skill</span>               <span class="dim"># Hash-based match → upgrade</span>
+  <span class="sigil">$</span> <span class="val">clawhub update --all</span>                   <span class="dim"># Bulk update</span>
+  <span class="sigil">$</span> <span class="val">clawhub update --all --force --no-input</span> <span class="dim"># Overwrite local changes</span>
+
+<span class="key">PUBLISH</span>:
+  <span class="sigil">$</span> <span class="val">clawhub publish ./my-skill --slug my-skill --name "My Skill" \
+      --version 1.2.0 --changelog "Fixes + docs"</span>
+  <span class="dim">→ Requires: clawhub login / clawhub whoami</span>
+  <span class="dim">→ Auth: Registry credentials (clawhub.com)</span></div>
+
+        <div class="section-label">§4 — npm Ecosystem Comparison</div>
+
+        <div class="agent-block"><span class="key">DIMENSION</span>             <span class="key">npm (2012)</span>          <span class="key">ClawHub (2026)</span>
+──────────────────────────────────────────────────────────────────────
+<span class="val">Package count</span>          <span class="val">~2,000</span>              <span class="status">2,000+</span>
+<span class="val">Distribution format</span>    <span class="val">package.json + JS</span>   <span class="val">SKILL.md + scripts</span>
+<span class="val">Install CLI</span>            <span class="val">npm install</span>         <span class="val">clawhub install</span>
+<span class="val">Versioning</span>             <span class="val">Semver</span>              <span class="val">Semver + hash matching</span>
+<span class="val">Dependency model</span>       <span class="warn">Tree (transitive)</span>   <span class="status">Flat (self-contained)</span>
+<span class="val">Execution</span>              <span class="val">Runtime (V8)</span>        <span class="warn">Context window (LLM)</span>
+<span class="val">Token cost</span>             <span class="status">Zero</span>                <span class="fail">Context budget consumed</span>
+<span class="val">Platform lock-in</span>       <span class="status">Low (JS standard)</span>   <span class="warn">Medium (openclaw metadata)</span>
+
+<span class="key">CRITICAL DIFFERENCE</span>:
+  <span class="dim">→ npm packages execute in a JS runtime</span>
+  <span class="dim">→ ClawHub skills are READ by an agent's context window</span>
+  <span class="dim">→ "Execution environment" = the agent itself</span>
+  <span class="dim">→ Version compatibility depends on model behavior, not API contracts</span></div>
+
+        <div class="section-label">§5 — Security Model</div>
+
+        <div class="agent-block"><span class="key">THREAT</span>                    <span class="key">VECTOR</span>                         <span class="key">SEVERITY</span>
+───────────────────────────────────────────────────────────────────────────
+<span class="val">Prompt injection</span>           <span class="val">SKILL.md body text</span>              <span class="fail">HIGH</span>
+  <span class="dim">→ Skill instructions become agent context</span>
+  <span class="dim">→ Malicious text overrides agent behavior</span>
+  <span class="dim">→ No sandbox between skill text and agent reasoning</span>
+
+<span class="val">Typosquatting</span>              <span class="val">Slug similarity (weathr vs weather)</span>  <span class="warn">MEDIUM</span>
+  <span class="dim">→ User installs wrong skill by mistyping</span>
+  <span class="dim">→ Malicious skill activates on overlapping triggers</span>
+
+<span class="val">Overbroad triggers</span>         <span class="val">"Use when: user asks about files"</span>   <span class="warn">MEDIUM</span>
+  <span class="dim">→ Skill intercepts unintended interactions</span>
+  <span class="dim">→ Scope hijacking via trigger declarations</span>
+
+<span class="val">Malicious updates</span>          <span class="val">Legitimate v1.0 → data exfil in v1.1</span>  <span class="fail">HIGH</span>
+  <span class="dim">→ Hash matching detects changes but doesn't analyze content</span>
+  <span class="dim">→ --force flag bypasses local review</span>
+
+<span class="val">Credential harvesting</span>      <span class="val">Skills requesting API keys/env vars</span>   <span class="fail">HIGH</span>
+  <span class="dim">→ Embedded scripts access environment</span>
+  <span class="dim">→ No isolation between skill scripts and host</span>
+
+<span class="key">MITIGATIONS</span>:
+  <span class="dim">→</span> <span class="val">skill-vetter</span>: <span class="warn">Exists in ecosystem (adoption unclear)</span>
+  <span class="dim">→</span> <span class="val">Hash-based updates</span>: <span class="status">Detects local modifications</span>
+  <span class="dim">→</span> <span class="val">Manual review</span>: <span class="warn">No mandatory pre-publish analysis</span>
+  <span class="dim">→</span> <span class="val">Sandboxing</span>: <span class="fail">Not implemented</span></div>
+
+        <div class="section-label">§6 — Category Distribution</div>
+
+        <div class="agent-block"><span class="key">CATEGORY</span>              <span class="key">SHARE</span>    <span class="key">EXAMPLES</span>
+───────────────────────────────────────────────────────────────
+<span class="val">Communication</span>          <span class="status">~25%</span>     <span class="dim">Email (himalaya, agentmail), messaging, X/Twitter</span>
+<span class="val">Research & SEO</span>         <span class="status">~20%</span>     <span class="dim">Deep research, blog monitoring, SEO audit, content engine</span>
+<span class="val">Development</span>            <span class="status">~18%</span>     <span class="dim">GitHub ops (gh-issues, github), CI/CD, code review</span>
+<span class="val">Productivity</span>           <span class="warn">~15%</span>     <span class="dim">Calendar, Google Workspace, file management</span>
+<span class="val">Content creation</span>       <span class="warn">~12%</span>     <span class="dim">Blog publishing, content marketing, humanizer</span>
+<span class="val">Security & ops</span>         <span class="warn">~10%</span>     <span class="dim">Health checks, security hardening, skill vetting, auto-update</span>
+
+<span class="key">GAPS</span>:
+  <span class="dim">→ Domain-specific: medical, legal, finance (sparse)</span>
+  <span class="dim">→ Creative: image generation, video editing (minimal)</span>
+  <span class="dim">→ Enterprise: SSO, RBAC, audit logging (absent)</span></div>
+
+        <div class="section-label">§7 — Portability Assessment</div>
+
+        <div class="agent-block"><span class="key">FORMAT PORTABILITY</span>:     <span class="status">HIGH</span>
+  <span class="dim">→ Plain markdown + YAML. No platform-specific syntax in body.</span>
+  <span class="dim">→ Readable by any agent that consumes text context.</span>
+
+<span class="key">METADATA PORTABILITY</span>:    <span class="warn">MEDIUM</span>
+  <span class="dim">→ metadata.openclaw is platform-specific.</span>
+  <span class="dim">→ Other platforms must adopt convention or ignore.</span>
+  <span class="dim">→ Trigger declarations ("Use when") are convention, not enforced.</span>
+
+<span class="key">RUNTIME PORTABILITY</span>:     <span class="fail">LOW</span>
+  <span class="dim">→ Skills assume tool access (exec, browser, email tools).</span>
+  <span class="dim">→ Sandboxed agents may lack required primitives.</span>
+  <span class="dim">→ Context window size varies by model (8K → 200K).</span>
+  <span class="dim">→ Model behavior differences affect instruction following.</span>
+
+<span class="key">BARRIER TO ADOPTION</span>:
+  <span class="dim">→ LangChain, CrewAI, AutoGen have own tool/skill formats</span>
+  <span class="dim">→ No cross-framework standard exists</span>
+  <span class="dim">→ SKILL.md is simplest candidate for convergence</span></div>
+
+        <div class="section-label">§8 — Ecosystem Requirements</div>
+
+        <div class="agent-block"><span class="key">R1</span>: <span class="val">Cross-platform format adoption</span>
+  <span class="dim">→ At least one major non-OpenClaw framework adopts SKILL.md</span>
+  <span class="dim">→ Without this: platform-specific feature, not ecosystem</span>
+
+<span class="key">R2</span>: <span class="val">Mandatory pre-publish security scanning</span>
+  <span class="dim">→ Static analysis for both code (scripts) and prompt (SKILL.md text)</span>
+  <span class="dim">→ Trigger scope validation (overbroad detection)</span>
+  <span class="dim">→ Credential pattern detection in scripts</span>
+
+<span class="key">R3</span>: <span class="val">Context-budget-aware loading</span>
+  <span class="dim">→ Agent runtimes load skills selectively based on task</span>
+  <span class="dim">→ Not: load all 2,000 skills into context</span>
+  <span class="dim">→ Trigger-based activation ("Use when") must be machine-evaluable</span>
+
+<span class="key">R4</span>: <span class="val">Composition without dependency trees</span>
+  <span class="dim">→ Skill bundles or recipes for workflow-specific combinations</span>
+  <span class="dim">→ Avoid npm-style transitive dependency complexity</span>
+  <span class="dim">→ Maintain self-contained skill design</span>
+
+<span class="key">R5</span>: <span class="val">Conflict resolution</span>
+  <span class="dim">→ Two skills with overlapping triggers</span>
+  <span class="dim">→ Priority ordering or mutual exclusion mechanism</span>
+  <span class="dim">→ Currently: manual management</span></div>
+
+        <div class="section-label">§9 — Verdict</div>
+
+        <div class="agent-block"><span class="key">VERDICT</span>: <span class="warn">Early signal, not yet standard</span>
+
+<span class="key">STRENGTHS</span>:
+  <span class="sigil">+</span> <span class="val">Format simplicity (SKILL.md is too simple to be wrong)</span>
+  <span class="sigil">+</span> <span class="val">Registry infrastructure exists and works</span>
+  <span class="sigil">+</span> <span class="val">Self-contained skill design avoids dependency hell</span>
+  <span class="sigil">+</span> <span class="val">Platform-neutral text format enables portability</span>
+
+<span class="key">WEAKNESSES</span>:
+  <span class="sigil">−</span> <span class="val">Single-platform adoption (OpenClaw only)</span>
+  <span class="sigil">−</span> <span class="val">Security model nascent (no mandatory vetting)</span>
+  <span class="sigil">−</span> <span class="val">Context window consumption not managed</span>
+  <span class="sigil">−</span> <span class="val">No composition primitives for workflows</span>
+
+<span class="key">ANALOGY</span>: <span class="val">npm in late 2012 — infrastructure solid, ecosystem small, standard unclear</span>
+<span class="key">TIMELINE</span>: <span class="val">18-24 months to determine if SKILL.md becomes cross-platform standard</span></div>
+
+        <div class="alt-links">
+          <a href="./2026-03-14-clawhub-agent-skill-ecosystem.html">◉ Standard version</a>
+          <a href="./2026-03-14-clawhub-agent-skill-ecosystem-v2.html">◆ Experimental version</a>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="section" style="border-top: 1px solid var(--border); padding: 2rem 0; margin-top: 3rem;">
+    <div style="max-width: 720px; margin: 0 auto; padding: 0 1.5rem; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab — <a href="https://lab.promptengines.com">lab.promptengines.com</a></p>
+    </div>
+  </footer>
+</body>
+</html>

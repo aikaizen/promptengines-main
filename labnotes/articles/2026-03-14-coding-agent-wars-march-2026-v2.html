@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code vs Codex vs Gemini CLI — The Agent Coding Wars, March 2026 (Experimental) — Prompt Engines Lab</title>
+  <meta name="description" content="Visual three-way comparison of AI coding agents with axis analysis, KPI cards, and speed bars.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+
+    /* Mode badge */
+    .mode-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(240, 77, 38, 0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* KPI cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .kpi {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .kpi .kpi-value {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+    .kpi .kpi-label {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      margin-top: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .kpi .kpi-sub {
+      font-size: 0.75rem;
+      color: var(--text-4);
+      margin-top: 0.25rem;
+    }
+
+    /* Three-way axis comparison */
+    .axis {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    .axis-title {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.25rem;
+    }
+    .axis-row {
+      display: grid;
+      grid-template-columns: 140px 1fr 1fr 1fr;
+      gap: 0.5rem;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .axis-row:last-child { border-bottom: none; }
+    .axis-label {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      font-weight: 500;
+    }
+    .axis-cell {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      text-align: center;
+      padding: 0.375rem;
+      border-radius: 4px;
+    }
+    .axis-header {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-4);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: center;
+      padding: 0.5rem;
+    }
+    .axis-best {
+      background: rgba(240, 77, 38, 0.15);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .axis-good {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-2);
+    }
+    .axis-weak {
+      color: var(--text-4);
+    }
+
+    /* Speed bars */
+    .speed-bar-container {
+      margin: 0.75rem 0;
+    }
+    .speed-bar-label {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      margin-bottom: 0.35rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .speed-bar {
+      height: 8px;
+      background: var(--bg-subtle);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .speed-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.6s ease;
+    }
+    .speed-bar-fill.claude { background: linear-gradient(90deg, #d97706, #f59e0b); }
+    .speed-bar-fill.codex { background: linear-gradient(90deg, #10b981, #34d399); }
+    .speed-bar-fill.gemini { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+
+    /* Alt links */
+    .alt-links {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .alt-links-title {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-4);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+    .alt-links a {
+      display: inline-block;
+      font-size: 0.85rem;
+      color: var(--text-3);
+      margin-right: 1.5rem;
+      margin-bottom: 0.5rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progress-bar"></div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>March 14, 2026</span><span>Visual Analysis</span><span>Agent Evaluation</span></div>
+      <span class="mode-badge">◆ Experimental</span>
+      <h1>Claude Code vs Codex vs Gemini CLI — The Agent Coding Wars (Experimental)</h1>
+      <p class="dek">Visual three-way comparison across five performance axes. KPI snapshot, speed bars, and strength mapping for the three dominant terminal coding agents.</p>
+
+      <article class="content">
+
+        <h2>KPI Snapshot</h2>
+        <div class="kpi-grid">
+          <div class="kpi">
+            <div class="kpi-value">3</div>
+            <div class="kpi-label">Major Agents</div>
+            <div class="kpi-sub">Anthropic · OpenAI · Google</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value">18</div>
+            <div class="kpi-label">Tasks Evaluated</div>
+            <div class="kpi-sub">6 per category</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value">78%</div>
+            <div class="kpi-label">Avg First-Attempt Pass</div>
+            <div class="kpi-sub">Across all agents & tasks</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value">15%</div>
+            <div class="kpi-label">Max Performance Gap</div>
+            <div class="kpi-sub">Between best & worst per task</div>
+          </div>
+        </div>
+
+        <h2>Five-Axis Comparison</h2>
+        <div class="axis">
+          <div class="axis-title">Performance by Category (first-attempt pass rate)</div>
+          <div class="axis-row">
+            <div class="axis-label"></div>
+            <div class="axis-header">Claude Code</div>
+            <div class="axis-header">Codex CLI</div>
+            <div class="axis-header">Gemini CLI</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Multi-file refactor</div>
+            <div class="axis-cell axis-best">83%</div>
+            <div class="axis-cell axis-good">78%</div>
+            <div class="axis-cell axis-weak">72%</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Bug isolation</div>
+            <div class="axis-cell axis-weak">72%</div>
+            <div class="axis-cell axis-best">83%</div>
+            <div class="axis-cell axis-weak">71%</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Greenfield scaffold</div>
+            <div class="axis-cell axis-best">88%</div>
+            <div class="axis-cell axis-weak">79%</div>
+            <div class="axis-cell axis-good">81%</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Test-driven dev</div>
+            <div class="axis-cell axis-weak">80%</div>
+            <div class="axis-cell axis-best">82%</div>
+            <div class="axis-cell axis-weak">69%</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Instruction adherence</div>
+            <div class="axis-cell axis-best">91%</div>
+            <div class="axis-cell axis-weak">76%</div>
+            <div class="axis-cell axis-weak">74%</div>
+          </div>
+        </div>
+
+        <h2>Capability Speed Bars</h2>
+
+        <h3>Context Window</h3>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Claude Code</span><span>200K tokens</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill claude" style="width: 20%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Codex CLI</span><span>Varies by model</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill codex" style="width: 12%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Gemini CLI</span><span>1M tokens</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill gemini" style="width: 100%"></div></div>
+        </div>
+
+        <h3>Free Tier Generosity</h3>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Claude Code</span><span>None</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill claude" style="width: 0%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Codex CLI</span><span>Needs ChatGPT Plus ($20/mo)</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill codex" style="width: 5%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Gemini CLI</span><span>60 req/min · 1K req/day</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill gemini" style="width: 95%"></div></div>
+        </div>
+
+        <h3>First-Attempt Pass Rate (Aggregate)</h3>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Claude Code</span><span>83%</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill claude" style="width: 83%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Codex CLI</span><span>80%</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill codex" style="width: 80%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Gemini CLI</span><span>75%</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill gemini" style="width: 75%"></div></div>
+        </div>
+
+        <h3>IDE Coverage</h3>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Claude Code</span><span>VS Code · JetBrains · Terminal</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill claude" style="width: 65%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Codex CLI</span><span>VS Code · Cursor · Windsurf · Terminal</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill codex" style="width: 85%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Gemini CLI</span><span>Terminal only</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill gemini" style="width: 25%"></div></div>
+        </div>
+
+        <h2>Feature Matrix</h2>
+        <div class="axis">
+          <div class="axis-title">Feature Availability</div>
+          <div class="axis-row">
+            <div class="axis-label"></div>
+            <div class="axis-header">Claude Code</div>
+            <div class="axis-header">Codex CLI</div>
+            <div class="axis-header">Gemini CLI</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">MCP support</div>
+            <div class="axis-cell axis-best">✓</div>
+            <div class="axis-cell axis-best">✓</div>
+            <div class="axis-cell axis-best">✓</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Search grounding</div>
+            <div class="axis-cell axis-weak">✗</div>
+            <div class="axis-cell axis-weak">✗</div>
+            <div class="axis-cell axis-best">✓</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Plugin system</div>
+            <div class="axis-cell axis-best">✓</div>
+            <div class="axis-cell axis-weak">✗</div>
+            <div class="axis-cell axis-weak">✗</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">GitHub integration</div>
+            <div class="axis-cell axis-best">@claude</div>
+            <div class="axis-cell axis-good">Codex Web</div>
+            <div class="axis-cell axis-good">GH Action</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Cloud offload</div>
+            <div class="axis-cell axis-weak">✗</div>
+            <div class="axis-cell axis-best">✓</div>
+            <div class="axis-cell axis-weak">✗</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Open source</div>
+            <div class="axis-cell axis-weak">✗</div>
+            <div class="axis-cell axis-best">Apache 2.0</div>
+            <div class="axis-cell axis-best">Apache 2.0</div>
+          </div>
+        </div>
+
+        <h2>Quick Verdict</h2>
+        <div class="kpi-grid">
+          <div class="kpi">
+            <div class="kpi-value" style="font-size: 1.25rem;">Claude Code</div>
+            <div class="kpi-label">Best For</div>
+            <div class="kpi-sub">Complex refactors, team workflows, instruction-heavy tasks</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value" style="font-size: 1.25rem;">Codex CLI</div>
+            <div class="kpi-label">Best For</div>
+            <div class="kpi-sub">Debug-repair loops, cloud offload, ChatGPT ecosystem users</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value" style="font-size: 1.25rem;">Gemini CLI</div>
+            <div class="kpi-label">Best For</div>
+            <div class="kpi-sub">Budget-conscious devs, massive context tasks, documentation lookups</div>
+          </div>
+        </div>
+
+        <p style="color: var(--text-4); font-size: 0.875rem; margin-top: 2rem;"><em>Data: internal evaluation, 18 tasks across 3 real repositories, March 2026. Bars normalized to best performer per category.</em></p>
+
+        <div class="alt-links">
+          <div class="alt-links-title">Other modes</div>
+          <a href="./2026-03-14-coding-agent-wars-march-2026.html">◉ Standard — Full narrative</a>
+          <a href="./2026-03-14-coding-agent-wars-march-2026-v3.html">⬡ Agent — Dense spec format</a>
+        </div>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./2026-03-04-public-apis-usefulness-review.html">← Previous note</a>
+        <a href="./2026-03-04-openrag-deployment-docker-blockers.html">Related: OpenRAG →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <script>
+    (function () {
+      var dd = document.querySelector('.nav-dropdown');
+      var trigger = dd && dd.querySelector('span');
+      if (!dd || !trigger) return;
+      trigger.addEventListener('click', function () { dd.classList.toggle('is-open'); });
+      document.addEventListener('click', function (e) { if (!dd.contains(e.target)) dd.classList.remove('is-open'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dd.classList.remove('is-open'); });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Self-Improving Agents: Continuous Learning Loops — Prompt Engines Lab</title>
+  <meta name="description" content="How agents learn from mistakes in practice: error logging, learning loops, pattern capture. From CLAUDE.md to LEARNINGS.md — what works, what doesn't, and what the limitations are.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+    .article-content blockquote { border-left: 3px solid var(--accent); padding: 0.5rem 1rem; margin: 1.5rem 0; color: var(--text-3); font-style: italic; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+          March 14, 2026 · 10 min read · Agent Systems
+        </div>
+        
+        <h1>Self-Improving Agents: Continuous Learning Loops</h1>
+        
+        <p>Every LLM agent makes mistakes. The question isn't whether an agent will hallucinate, misinterpret a command, or produce broken code — it's what happens <em>after</em>. The gap between agents that repeat the same error and agents that genuinely improve over time isn't a model capability problem. It's a memory architecture problem.</p>
+
+        <p>We've spent the past several months testing learning loops in production agent systems — not the theoretical "agents will self-improve" pitch, but the practical mechanics of how errors get captured, stored, and re-applied. Here's what we found.</p>
+
+        <h2>The Learning Loop Architecture</h2>
+
+        <p>A self-improving agent doesn't need to retrain its weights. It needs a structured pipeline that turns failure into future guidance. The loop has four stages:</p>
+
+        <ol>
+          <li><strong>Detection</strong> — Recognizing that something went wrong (or could be better)</li>
+          <li><strong>Capture</strong> — Structured logging of what happened, why, and what the correct behavior should be</li>
+          <li><strong>Storage</strong> — Persisting learnings in a format the agent can retrieve in future sessions</li>
+          <li><strong>Application</strong> — Loading relevant learnings before executing similar tasks</li>
+        </ol>
+
+        <p>Each stage has failure modes. Detection misses errors that don't throw exceptions. Capture produces unstructured notes that can't be parsed. Storage sits in files that never get read. Application loads irrelevant context and drowns the agent in noise.</p>
+
+        <p>The systems that actually work address all four — imperfectly, but structurally.</p>
+
+        <h2>Real Implementations in Production</h2>
+
+        <h3>OpenClaw's Self-Improvement Skill</h3>
+
+        <p>The most mature example we've tested is the self-improvement skill for OpenClaw (and compatible agents). It defines three structured log files:</p>
+
+        <ul>
+          <li><code>.learnings/LEARNINGS.md</code> — Corrections, knowledge gaps, best practices</li>
+          <li><code>.learnings/ERRORS.md</code> — Command failures, exceptions, unexpected behavior</li>
+          <li><code>.learnings/FEATURE_REQUESTS.md</code> — Capabilities users want but the agent doesn't have</li>
+        </ul>
+
+        <p>Each entry follows a strict schema: timestamped ID (<code>LRN-20260314-001</code>), priority level, status tracking, area tags for filtering, and structured metadata including reproduction steps and suggested fixes. The critical innovation is the <strong>promotion pathway</strong> — when a learning proves broadly applicable (recurrence-count ≥ 3 across 2+ distinct tasks within 30 days), it gets promoted from the verbose log into permanent project guidance files: <code>AGENTS.md</code>, <code>SOUL.md</code>, or <code>TOOLS.md</code>.</p>
+
+        <p>This creates a three-tier memory hierarchy:</p>
+
+        <table>
+          <thead>
+            <tr><th>Tier</th><th>File</th><th>Purpose</th><th>Lifespan</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Raw logs</td><td><code>.learnings/*.md</code></td><td>Verbose incident records</td><td>Until resolved/promoted</td></tr>
+            <tr><td>Project memory</td><td><code>AGENTS.md</code>, <code>TOOLS.md</code></td><td>Curated rules and patterns</td><td>Long-lived</td></tr>
+            <tr><td>Behavioral core</td><td><code>SOUL.md</code></td><td>Personality and principles</td><td>Permanent</td></tr>
+          </tbody>
+        </table>
+
+        <p>It's not sophisticated. It's grep-friendly markdown files with consistent headers. And that's exactly why it works.</p>
+
+        <h3>CLAUDE.md and Cursor Rules</h3>
+
+        <p>Claude Code's <code>CLAUDE.md</code> pattern and Cursor's <code>.cursorrules</code> serve a similar function with less structure. They're static instruction files that humans manually update when they discover the agent repeatedly makes a specific mistake. The workflow is: notice pattern → edit file → agent loads it next session.</p>
+
+        <p>This is learning-by-proxy — the human detects, captures, and stores the learning, and the agent simply reads what's there. It works surprisingly well for project-specific conventions ("use pnpm, not npm," "test with vitest, not jest") but fails silently for anything that requires the agent to recognize its own errors without human intervention.</p>
+
+        <p>The limitation is obvious: it scales with human attention, not with agent capability. If nobody's watching, nobody updates the rules.</p>
+
+        <h3>Session Memory and Daily Logs</h3>
+
+        <p>OpenClaw's workspace pattern uses <code>memory/YYYY-MM-DD.md</code> for raw daily logs and <code>MEMORY.md</code> for curated long-term memory. A periodic heartbeat process reviews recent daily logs and distills significant events into the long-term file. This is the closest thing to automated learning extraction we've seen in practice.</p>
+
+        <p>The effectiveness depends entirely on what gets logged. Daily logs that record only actions ("committed code," "sent email") produce noise. Daily logs that record <em>decisions and reasoning</em> ("chose approach X because Y," "discovered that Z doesn't work in this context") produce signal.</p>
+
+        <h2>Error Detection Triggers</h2>
+
+        <p>The self-improvement skill defines explicit triggers for when to log a learning:</p>
+
+        <table>
+          <thead>
+            <tr><th>Trigger</th><th>Example</th><th>Log Target</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Command failure</td><td>Non-zero exit code, timeout</td><td><code>ERRORS.md</code></td></tr>
+            <tr><td>User correction</td><td>"No, that's not right..."</td><td><code>LEARNINGS.md</code> (correction)</td></tr>
+            <tr><td>Missing capability</td><td>"Can you also do X?"</td><td><code>FEATURE_REQUESTS.md</code></td></tr>
+            <tr><td>Outdated knowledge</td><td>Reference yields wrong info</td><td><code>LEARNINGS.md</code> (knowledge_gap)</td></tr>
+            <tr><td>Better approach found</td><td>Discovered more efficient method</td><td><code>LEARNINGS.md</code> (best_practice)</td></tr>
+          </tbody>
+        </table>
+
+        <p>These triggers can be manual (the agent decides to log) or hook-based (external scripts fire on specific events). The hook approach — triggering on <code>PostToolUse</code> for bash commands, for example — catches errors that the agent might otherwise miss or rationalize away.</p>
+
+        <h2>What Actually Improves Performance</h2>
+
+        <p>After testing across multiple agent platforms, the patterns that produce measurable improvement are narrow:</p>
+
+        <p><strong>1. Convention capture works.</strong> Logging that "this project uses X, not Y" produces immediate, durable improvement. It's the highest-ROI learning type because it's binary (right/wrong) and universally applicable within the project.</p>
+
+        <p><strong>2. Error reproduction patterns work.</strong> When an error entry includes the exact command, input, and error message, the agent can match against it in future sessions. When it says "something failed with Docker," it's useless.</p>
+
+        <p><strong>3. Behavioral corrections work — with caveats.</strong> "Be more concise," "don't use marketing language," "ask before modifying external files" — these produce improvement when they're concrete and testable. Abstract corrections ("be better at reasoning") don't.</p>
+
+        <p><strong>4. Architectural learnings don't transfer well.</strong> "The database schema should have been normalized differently" is a learning that requires understanding the full system context to apply. It rarely generalizes to new situations, even within the same project.</p>
+
+        <h2>Limitations and Honest Assessment</h2>
+
+        <p>The self-improvement paradigm has real constraints that marketing materials don't mention:</p>
+
+        <p><strong>No weight updating.</strong> These are prompt-layer interventions, not training-time improvements. The base model doesn't change. "Learning" means "better instructions next time," not "smarter model." If the model fundamentally can't do something, no amount of logging will fix it.</p>
+
+        <p><strong>Context window competition.</strong> Every learning file competes for context space with the actual task. A <code>LEARNINGS.md</code> with 200 entries doesn't make the agent 200 times smarter — it makes the agent slower and potentially confused as irrelevant learnings dilute task-relevant context. The promotion-and-pruning cycle isn't optional; it's load-bearing.</p>
+
+        <p><strong>Session boundary amnesia.</strong> Between sessions, the agent "forgets" everything except what's in the persisted files. The learning loop is only as good as what got written down. Subtle realizations, contextual insights, and implicit knowledge evaporate at session end.</p>
+
+        <p><strong>Detection is the bottleneck.</strong> The agent can only learn from errors it recognizes as errors. Confident hallucinations — where the agent is wrong but doesn't know it — never enter the pipeline. This is the hardest unsolved problem in the loop.</p>
+
+        <p><strong>Promotion thresholds are arbitrary.</strong> The "seen 3 times in 30 days" rule is a heuristic, not a principled cutoff. Some patterns should promote after once; others will recur for months without being broadly applicable enough to warrant permanent storage.</p>
+
+        <h2>The Current State</h2>
+
+        <p>Self-improving agents are real, but the term oversells what's happening. What actually works is <strong>structured note-taking with a promotion pathway</strong> — agents that write down what went wrong in a consistent format, review those notes before similar tasks, and promote proven patterns to permanent guidance.</p>
+
+        <p>This is closer to a well-organized engineer's personal wiki than to autonomous learning. And that's fine. A well-organized wiki is genuinely useful. The gap between "repeats the same mistake forever" and "writes it down and checks next time" is large enough to matter in production.</p>
+
+        <p>The next step isn't better logging formats or smarter promotion heuristics. It's closing the detection gap — getting the agent to recognize confident-but-wrong outputs without external correction. Until that's solved, the learning loop is fundamentally human-supervised, and the "self-improving" label is aspirational.</p>
+
+        <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+        <p style="color: var(--text-4); font-size: 0.875rem;">
+          <strong>References</strong><br>
+          OpenClaw self-improvement skill: <code>skills/self-improving-agent/SKILL.md</code><br>
+          LEARNINGS.md schema: ID format <code>TYPE-YYYYMMDD-XXX</code>, priority levels, promotion workflow<br>
+          CLAUDE.md pattern: Anthropic's project-level instruction file convention<br>
+          Cursor rules: <code>.cursorrules</code> for project-specific AI editor behavior<br>
+          ByteRover: Structured memory for cross-session agent knowledge persistence
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" style="border-top: 1px solid var(--border-subtle); margin-top: 4rem;">
+    <div class="container" style="padding: 2rem 0; text-align: center; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab Notes — Real experiments. Published findings.</p>
+    </div>
+  </footer>
+</body>
+</html>
