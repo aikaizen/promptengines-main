@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Self-Improving Agents: Continuous Learning Loops (Agent) — Prompt Engines Lab</title>
+  <meta name="description" content="Dense agent-block spec format for self-improving agent learning loop architecture.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+
+    /* Mode badge */
+    .mode-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(240, 77, 38, 0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Agent block - dense monospace spec */
+    .agent-block {
+      font-family: var(--mono);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      color: var(--text-2);
+    }
+    .agent-block .tag { color: var(--text-4); }
+    .agent-block .key { color: #7dd3fc; }
+    .agent-block .val { color: #fca5a5; }
+    .agent-block .num { color: #86efac; }
+    .agent-block .str { color: #fde047; }
+    .agent-block .bool { color: #c4b5fd; }
+
+    /* Alt links */
+    .alt-links {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .alt-links-title {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-4);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+    .alt-links a {
+      display: inline-block;
+      font-size: 0.85rem;
+      color: var(--text-3);
+      margin-right: 1.5rem;
+      margin-bottom: 0.5rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progress-bar"></div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>March 14, 2026</span><span>Agent Systems</span><span>Learning Loops</span></div>
+      <span class="mode-badge">⬡ Agent</span>
+      <h1>Self-Improving Agents: Continuous Learning Loops (Agent)</h1>
+      <p class="dek">Dense specification format. Minimal narrative. Maximum signal.</p>
+
+      <article class="content">
+
+        <h2>Metadata</h2>
+        <pre class="agent-block"><span class="tag">---</span>
+<span class="key">spec</span>: self-improving-agents-learning-loops-v1
+<span class="key">date</span>: <span class="str">"2026-03-14"</span>
+<span class="key">domain</span>: <span class="str">"agent_self_improvement"</span>
+<span class="key">implementations_tested</span>: <span class="num">4</span>
+<span class="key">assessment_type</span>: <span class="str">"qualitative_production_testing"</span>
+<span class="key">key_finding</span>: <span class="str">"self_improvement is structured note-taking with promotion, not autonomous learning"</span>
+<span class="tag">---</span></pre>
+
+        <h2>Learning Loop Architecture</h2>
+        <pre class="agent-block"><span class="tag">[learning_loop]</span>
+<span class="key">stages</span>: <span class="num">4</span>
+<span class="key">type</span>: <span class="str">"prompt_layer_intervention"</span> <span class="tag"># not weight updating</span>
+<span class="key">paradigm</span>: <span class="str">"structured_note_taking_with_promotion_pathway"</span>
+
+<span class="tag">[[stage.detect]]</span>
+<span class="key">purpose</span>: <span class="str">"recognize errors and improvement opportunities"</span>
+<span class="key">methods</span>: [<span class="str">"hook_triggers"</span>, <span class="str">"manual_evaluation"</span>, <span class="str">"user_correction"</span>]
+<span class="key">coverage_command_failures</span>: <span class="num">0.95</span>
+<span class="key">coverage_user_corrections</span>: <span class="num">0.80</span>
+<span class="key">coverage_suboptimal_output</span>: <span class="num">0.35</span>
+<span class="key">coverage_confident_hallucinations</span>: <span class="num">0.05</span> <span class="tag"># hardest unsolved problem</span>
+<span class="key">bottleneck</span>: <span class="str">"silent_confident_wrong_outputs"</span>
+
+<span class="tag">[[stage.capture]]</span>
+<span class="key">purpose</span>: <span class="str">"structured logging of what went wrong and what should happen"</span>
+<span class="key">required_fields</span>: [<span class="str">"id"</span>, <span class="str">"timestamp"</span>, <span class="str">"priority"</span>, <span class="str">"status"</span>, <span class="str">"area"</span>, <span class="str">"summary"</span>, <span class="str">"details"</span>, <span class="str">"suggested_action"</span>]
+<span class="key">id_format</span>: <span class="str">"TYPE-YYYYMMDD-XXX"</span>
+<span class="key">types</span>: [<span class="str">"LRN"</span>, <span class="str">"ERR"</span>, <span class="str">"FEAT"</span>]
+<span class="key">priority_levels</span>: [<span class="str">"low"</span>, <span class="str">"medium"</span>, <span class="str">"high"</span>, <span class="str">"critical"</span>]
+<span class="key">status_values</span>: [<span class="str">"pending"</span>, <span class="str">"in_progress"</span>, <span class="str">"resolved"</span>, <span class="str">"wont_fix"</span>, <span class="str">"promoted"</span>]
+
+<span class="tag">[[stage.store]]</span>
+<span class="key">purpose</span>: <span class="str">"persist learnings for cross-session retrieval"</span>
+
+<span class="tag">[storage_tiers]</span>
+<span class="tag">[[tier.raw_logs]]</span>
+<span class="key">files</span>: [<span class="str">".learnings/LEARNINGS.md"</span>, <span class="str">".learnings/ERRORS.md"</span>, <span class="str">".learnings/FEATURE_REQUESTS.md"</span>]
+<span class="key">lifespan</span>: <span class="str">"until_resolved_or_promoted"</span>
+<span class="key">durability</span>: <span class="num">0.4</span> <span class="tag"># session-scoped noise risk</span>
+<span class="key">schema</span>: <span class="str">"strict_with_metadata"</span>
+
+<span class="tag">[[tier.project_rules]]</span>
+<span class="key">files</span>: [<span class="str">"AGENTS.md"</span>, <span class="str">"TOOLS.md"</span>, <span class="str">"CLAUDE.md"</span>, <span class="str">".cursorrules"</span>]
+<span class="key">lifespan</span>: <span class="str">"project_scoped"</span>
+<span class="key">durability</span>: <span class="num">0.8</span>
+<span class="key">schema</span>: <span class="str">"curated_concise_rules"</span>
+
+<span class="tag">[[tier.behavioral_core]]</span>
+<span class="key">files</span>: [<span class="str">"SOUL.md"</span>]
+<span class="key">lifespan</span>: <span class="str">"permanent"</span>
+<span class="key">durability</span>: <span class="num">0.95</span>
+<span class="key">schema</span>: <span class="str">"principles_and_personality"</span>
+
+<span class="tag">[[stage.apply]]</span>
+<span class="key">purpose</span>: <span class="str">"load relevant learnings before executing similar tasks"</span>
+<span class="key">mechanism</span>: <span class="str">"workspace_file_injection"</span>
+<span class="key">context_competition</span>: <span class="bool">true</span> <span class="tag"># learnings compete with task context</span>
+<span class="key">pruning_required</span>: <span class="bool">true</span></pre>
+
+        <h2>Promotion Pathway</h2>
+        <pre class="agent-block"><span class="tag">[promotion_rules]</span>
+<span class="key">trigger_threshold</span>: { <span class="key">recurrence_count</span>: <span class="num">3</span>, <span class="key">min_tasks</span>: <span class="num">2</span>, <span class="key">window_days</span>: <span class="num">30</span> }
+<span class="key">promotion_targets</span>:
+  <span class="str">"behavioral_pattern"</span>     → <span class="str">"SOUL.md"</span>
+  <span class="str">"workflow_improvement"</span>   → <span class="str">"AGENTS.md"</span>
+  <span class="str">"tool_gotcha"</span>            → <span class="str">"TOOLS.md"</span>
+  <span class="str">"project_convention"</span>     → <span class="str">"CLAUDE.md"</span>
+
+<span class="tag">[promotion_criteria]</span>
+<span class="key">when</span>:
+  - <span class="str">"learning_applies_across_multiple_files_or_features"</span>
+  - <span class="str">"knowledge_any_contributor_should_know"</span>
+  - <span class="str">"prevents_recurring_mistakes"</span>
+  - <span class="str">"documents_project_specific_conventions"</span>
+
+<span class="tag">[promotion_process]</span>
+<span class="key">steps</span>:
+  <span class="num">1</span>. <span class="str">"distill_learning_into_concise_rule"</span>
+  <span class="num">2</span>. <span class="str">"add_to_appropriate_target_file"</span>
+  <span class="num">3</span>. <span class="str">"update_original_status_to_promoted"</span>
+  <span class="num">4</span>. <span class="str">"add_Promoted_field_with_target_path"</span></pre>
+
+        <h2>Error Detection Triggers</h2>
+        <pre class="agent-block"><span class="tag">[detection_triggers]</span>
+<span class="tag">[[trigger.command_failure]]</span>
+<span class="key">pattern</span>: <span class="str">"non_zero_exit_code | timeout | exception"</span>
+<span class="key">target</span>: <span class="str">".learnings/ERRORS.md"</span>
+<span class="key">auto_detectable</span>: <span class="bool">true</span>
+<span class="key">hook_type</span>: <span class="str">"PostToolUse:Bash"</span>
+
+<span class="tag">[[trigger.user_correction]]</span>
+<span class="key">patterns</span>: [<span class="str">"no that's not right"</span>, <span class="str">"actually"</span>, <span class="str">"you're wrong"</span>, <span class="str">"that's outdated"</span>]
+<span class="key">target</span>: <span class="str">".learnings/LEARNINGS.md"</span>
+<span class="key">category</span>: <span class="str">"correction"</span>
+<span class="key">auto_detectable</span>: <span class="bool">true</span> <span class="tag"># via prompt matching</span>
+
+<span class="tag">[[trigger.missing_capability]]</span>
+<span class="key">patterns</span>: [<span class="str">"can you also"</span>, <span class="str">"i wish you could"</span>, <span class="str">"why can't you"</span>]
+<span class="key">target</span>: <span class="str">".learnings/FEATURE_REQUESTS.md"</span>
+<span class="key">auto_detectable</span>: <span class="bool">true</span>
+
+<span class="tag">[[trigger.knowledge_gap]]</span>
+<span class="key">pattern</span>: <span class="str">"user_provides_unknown_information"</span>
+<span class="key">target</span>: <span class="str">".learnings/LEARNINGS.md"</span>
+<span class="key">category</span>: <span class="str">"knowledge_gap"</span>
+<span class="key">auto_detectable</span>: <span class="bool">false</span> <span class="tag"># requires agent awareness</span>
+
+<span class="tag">[[trigger.confident_hallucination]]</span>
+<span class="key">pattern</span>: <span class="str">"agent_wrong_but_confident"</span>
+<span class="key">target</span>: <span class="str">"NONE"</span> <span class="tag"># cannot self-detect</span>
+<span class="key">auto_detectable</span>: <span class="bool">false</span>
+<span class="key">severity</span>: <span class="str">"critical_unsolved"</span></pre>
+
+        <h2>Implementation Comparison</h2>
+        <pre class="agent-block"><span class="tag">[implementations]</span>
+
+<span class="tag">[[openclaw_self_improvement_skill]]</span>
+<span class="key">structured_logging</span>: <span class="bool">true</span>
+<span class="key">schema</span>: <span class="str">"strict_id_timestamp_priority_status_area"</span>
+<span class="key">promotion_pathway</span>: <span class="bool">true</span>
+<span class="key">error_hooks</span>: <span class="bool">true</span> <span class="tag"># PostToolUse activation</span>
+<span class="key">recurrence_tracking</span>: <span class="bool">true</span> <span class="tag"># count + dates + pattern-keys</span>
+<span class="key">cross_session</span>: <span class="bool">true</span>
+<span class="key">multi_agent_support</span>: <span class="bool">true</span> <span class="tag"># Claude Code, Codex, Copilot, OpenClaw</span>
+<span class="key">skill_extraction</span>: <span class="bool">true</span> <span class="tag"># learnings → reusable skills</span>
+<span class="key">effectiveness</span>: <span class="str">"highest_structured"</span>
+
+<span class="tag">[[claude_md_cursor_rules]]</span>
+<span class="key">structured_logging</span>: <span class="bool">false</span> <span class="tag"># freeform text</span>
+<span class="key">promotion_pathway</span>: <span class="bool">false</span> <span class="tag"># manual only</span>
+<span class="key">error_hooks</span>: <span class="bool">false</span>
+<span class="key">recurrence_tracking</span>: <span class="bool">false</span>
+<span class="key">cross_session</span>: <span class="bool">true</span>
+<span class="key">human_dependency</span>: <span class="str">"high"</span> <span class="tag"># human detects + writes rules</span>
+<span class="key">effectiveness</span>: <span class="str">"good_for_conventions_poor_for_errors"</span>
+
+<span class="tag">[[session_memory_daily_logs]]</span>
+<span class="key">structured_logging</span>: <span class="str">"semi_structured"</span>
+<span class="key">promotion_pathway</span>: <span class="bool">true</span> <span class="tag"># heartbeat distillation to MEMORY.md</span>
+<span class="key">error_hooks</span>: <span class="bool">false</span>
+<span class="key">recurrence_tracking</span>: <span class="bool">false</span>
+<span class="key">cross_session</span>: <span class="bool">true</span>
+<span class="key">effectiveness</span>: <span class="str">"depends_on_logging_quality"</span></pre>
+
+        <h2>Learning Type Effectiveness</h2>
+        <pre class="agent-block"><span class="tag">[learning_types]</span>
+
+<span class="tag">[[type.convention_capture]]</span>
+<span class="key">example</span>: <span class="str">"use pnpm not npm, vitest not jest"</span>
+<span class="key">effectiveness</span>: <span class="num">0.90</span>
+<span class="key">transfers_well</span>: <span class="bool">true</span>
+<span class="key">binary</span>: <span class="bool">true</span> <span class="tag"># right or wrong, no ambiguity</span>
+<span class="key">roi</span>: <span class="str">"highest"</span>
+
+<span class="tag">[[type.error_reproduction]]</span>
+<span class="key">example</span>: <span class="str">"exact command + input + error message logged"</span>
+<span class="key">effectiveness</span>: <span class="num">0.85</span>
+<span class="key">transfers_well</span>: <span class="bool">true</span>
+<span class="key">requires</span>: <span class="str">"specific_reproduction_steps"</span>
+
+<span class="tag">[[type.behavioral_correction]]</span>
+<span class="key">example</span>: <span class="str">"be concise, ask before external actions"</span>
+<span class="key">effectiveness</span>: <span class="num">0.55</span>
+<span class="key">transfers_well</span>: <span class="str">"if_concrete_and_testable"</span>
+<span class="key">limitation</span>: <span class="str">"abstract_corrections_produce_no_improvement"</span>
+
+<span class="tag">[[type.architectural_learning]]</span>
+<span class="key">example</span>: <span class="str">"database schema should have been normalized differently"</span>
+<span class="key">effectiveness</span>: <span class="num">0.20</span>
+<span class="key">transfers_well</span>: <span class="bool">false</span>
+<span class="key">limitation</span>: <span class="str">"requires_full_system_context"</span></pre>
+
+        <h2>Core Limitations</h2>
+        <pre class="agent-block"><span class="tag">[limitations]</span>
+
+<span class="tag">[[limit.no_weight_update]]</span>
+<span class="key">description</span>: <span class="str">"prompt_layer_intervention_not_training_time_improvement"</span>
+<span class="key">base_model_unchanged</span>: <span class="bool">true</span>
+<span class="key">fixable</span>: <span class="bool">false</span> <span class="tag"># architectural constraint</span>
+
+<span class="tag">[[limit.context_competition]]</span>
+<span class="key">description</span>: <span class="str">"learnings compete with task context for window space"</span>
+<span class="key">mitigation</span>: <span class="str">"aggressive_pruning_and_promotion"</span>
+<span class="key">fixable</span>: <span class="bool">true</span> <span class="tag"># but requires discipline</span>
+
+<span class="tag">[[limit.session_amnesia]]</span>
+<span class="key">description</span>: <span class="str">"implicit_knowledge_lost_at_session_boundary"</span>
+<span class="key">only_survives</span>: <span class="str">"explicitly_written_content"</span>
+<span class="key">fixable</span>: <span class="bool">false</span> <span class="tag"># fundamental to stateless models</span>
+
+<span class="tag">[[limit.detection_bottleneck]]</span>
+<span class="key">description</span>: <span class="str">"agent_only_learns_from_recognized_errors"</span>
+<span class="key">hardest_problem</span>: <span class="str">"confident_hallucination_detection"</span>
+<span class="key">fixable</span>: <span class="bool">false</span> <span class="tag"># currently unsolved</span>
+
+<span class="tag">[[limit.arbitrary_thresholds]]</span>
+<span class="key">description</span>: <span class="str">"promotion_threshold_3x_in_30d_is_heuristic_not_principled"</span>
+<span class="key">some_patterns_should_promote_at</span>: <span class="num">1</span>
+<span class="key">some_patterns_recur_without_generalizing</span>: <span class="bool">true</span>
+<span class="key">fixable</span>: <span class="bool">true</span> <span class="tag"># better heuristics possible</span></pre>
+
+        <h2>Recommendations</h2>
+        <pre class="agent-block"><span class="tag">[implementation_guidance]</span>
+
+<span class="tag">[constraint = structured_learning_needed]</span>
+  → <span class="str">"use openclaw self-improvement skill"</span>
+  → <span class="str">"setup .learnings/ with LEARNINGS.md, ERRORS.md, FEATURE_REQUESTS.md"</span>
+  → <span class="str">"enable PostToolUse hooks for auto error detection"</span>
+
+<span class="tag">[constraint = simple_project_conventions]</span>
+  → <span class="str">"CLAUDE.md or .cursorrules sufficient"</span>
+  → <span class="str">"human-maintained, works well for binary rules"</span>
+
+<span class="tag">[constraint = cross_agent_compatibility]</span>
+  → <span class="str">"self-improvement skill supports Claude Code, Codex, Copilot, OpenClaw"</span>
+  → <span class="str">"use .github/copilot-instructions.md for Copilot-specific"</span>
+
+<span class="tag">[constraint = long_running_agent_system]</span>
+  → <span class="str">"combine daily logs + heartbeat distillation + promotion pathway"</span>
+  → <span class="str">"review .learnings/ before major tasks"</span>
+  → <span class="str">"prune stale entries monthly"</span>
+
+<span class="tag">[warning]</span>
+  <span class="str">"do_not_expect_autonomous_improvement"</span>
+  <span class="str">"this_is_structured_note_taking_not_agi"</span>
+  <span class="str">"detection_gap_for_confident_errors_is_unsolved"</span></pre>
+
+        <h2>References</h2>
+        <pre class="agent-block"><span class="key">openclaw_self_improvement_skill</span>: <span class="str">"~/.openclaw/workspace/skills/self-improving-agent/SKILL.md"</span>
+<span class="key">learnings_schema</span>: <span class="str">"ID: TYPE-YYYYMMDD-XXX, Priority: low|medium|high|critical"</span>
+<span class="key">promotion_threshold</span>: <span class="str">"recurrence_count >= 3 across 2+ tasks in 30 days"</span>
+<span class="key">workspace_files</span>: [<span class="str">"AGENTS.md"</span>, <span class="str">"SOUL.md"</span>, <span class="str">"TOOLS.md"</span>, <span class="str">"MEMORY.md"</span>]
+<span class="key">byterover</span>: <span class="str">"structured_memory_for_cross_session_agent_knowledge"</span></pre>
+
+        <div class="alt-links">
+          <div class="alt-links-title">Other modes</div>
+          <a href="./2026-03-14-self-improving-agents-learning-loops.html">◉ Standard — Full narrative</a>
+          <a href="./2026-03-14-self-improving-agents-learning-loops-v2.html">◆ Experimental — Visual comparison</a>
+        </div>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./2026-03-14-coding-agent-wars-march-2026-v3.html">← Previous note</a>
+        <a href="./2026-03-04-openrag-deployment-docker-blockers.html">Related: OpenRAG →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <script>
+    (function () {
+      var dd = document.querySelector('.nav-dropdown');
+      var trigger = dd && dd.querySelector('span');
+      if (!dd || !trigger) return;
+      trigger.addEventListener('click', function () { dd.classList.toggle('is-open'); });
+      document.addEventListener('click', function (e) { if (!dd.contains(e.target)) dd.classList.remove('is-open'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dd.classList.remove('is-open'); });
+    })();
+  </script>
+</body>
+</html>
