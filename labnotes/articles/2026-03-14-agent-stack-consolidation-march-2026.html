@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Stack Consolidation: March 2026's GitHub Signal — Prompt Engines Lab</title>
+  <meta name="description" content="Analysis of March 2026 GitHub trending data showing agent infrastructure consolidating around agency patterns, persistent memory, and tool-use frameworks. Top repos: agency-agents, deer-flow, hermes-agent, hindsight, page-agent.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+    .stat-callout { background: var(--bg-elevated); border-left: 3px solid var(--accent); padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+    .stat-callout strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+          March 14, 2026 · 10 min read · Trend Analysis
+        </div>
+        
+        <h1>Agent Stack Consolidation: What GitHub's Trending Page Reveals About March 2026</h1>
+        
+        <p>GitHub's trending page is a noisy signal — but when five of the top fifteen daily repos share a single architectural pattern, something structural is happening. This week, the agent infrastructure stack is consolidating around three pillars: specialized agent teams, persistent memory, and browser-native tool use. Here's the data.</p>
+
+        <h2>The Numbers</h2>
+        
+        <p>On March 14, 2026, six of the fifteen trending repositories are explicitly agent-infrastructure projects. Collectively, they added over 14,000 stars <em>in a single day</em>. For context, that's roughly the total star count of most mature ML frameworks after years of development.</p>
+
+        <div class="stat-callout">
+          <strong>agency-agents</strong> (msitarzewski) — 5,745 stars today, 29,233 this week. A collection of 20+ specialized AI agent personas (frontend dev, security engineer, incident commander, etc.) designed to slot into Claude Code, Cursor, Copilot, and Aider. Essentially a roster of pre-built "employees" for AI coding workflows.
+        </div>
+
+        <div class="stat-callout">
+          <strong>deer-flow</strong> (ByteDance) — 5,236 stars this week. A "SuperAgent harness" that researches, codes, and creates using sandboxes, memory, tools, skills, and subagents. Handles tasks ranging from minutes to hours.
+        </div>
+
+        <div class="stat-callout">
+          <strong>hermes-agent</strong> (NousResearch) — 4,787 stars this week. Self-described as "the agent that grows with you." Python-based, skill-oriented architecture.
+        </div>
+
+        <h2>Three Converging Patterns</h2>
+
+        <h3>1. The "Agency" Model Replaces Single Agents</h3>
+        
+        <p>The old paradigm was one agent doing everything poorly. The new pattern emerging from March's data is <em>role specialization</em> — teams of agents, each with defined personality, domain expertise, and deliverable expectations.</p>
+        
+        <p>agency-agents isn't the first to do this, but its velocity (29K stars in 7 days) suggests the market was waiting for it. The repo ships as simple markdown files that define agent identity, workflows, and success metrics. No runtime required — it's configuration-as-persona. Compatible with every major coding agent tool.</p>
+        
+        <p>This matters for two reasons: First, it decouples agent capability from the underlying model. Second, it makes agent teams composable — you pick the agents you need, like hiring contractors.</p>
+
+        <h3>2. Agent Memory Is Becoming a First-Class Concern</h3>
+        
+        <p>Three separate projects this week address agent memory — a topic that was almost entirely absent from GitHub trending six months ago:</p>
+        
+        <ul>
+          <li><strong>vectorize-io/hindsight</strong> — "Agent Memory That Learns" (595 stars today). Focused on adaptive memory that improves through interaction.</li>
+          <li><strong>deer-flow</strong> — Built-in persistent memory as a core architectural primitive, not an afterthought.</li>
+          <li><strong>teng-lin/notebooklm-py</strong> — Unofficial Python API for Google NotebookLM with agentic skill integration (2,292 stars this week). Treats knowledge bases as agent-accessible memory.</li>
+        </ul>
+        
+        <p>The pattern is clear: stateless agents are hitting their ceiling. Projects that solve the memory problem — how agents retain context across sessions, learn from past interactions, and reference accumulated knowledge — are capturing developer attention disproportionately.</p>
+
+        <h3>3. Browser-as-Tool-Use Is Maturing</h3>
+        
+        <p>Two repos address the browser automation layer that agents need:</p>
+        
+        <ul>
+          <li><strong>lightpanda-io/browser</strong> — A headless browser built in Zig, specifically designed for AI agents and automation. 2,093 stars today. Claimed to be dramatically faster than Puppeteer/Playwright for programmatic use.</li>
+          <li><strong>alibaba/page-agent</strong> — A JavaScript in-page GUI agent that controls web interfaces with natural language. 1,468 stars today. Takes a different approach: instead of headless automation, it embeds directly in the page.</li>
+        </ul>
+        
+        <p>These represent two strategies for the same problem. Lightpanda optimizes the infrastructure (faster, lighter headless browser). Alibaba's page-agent optimizes the interface (natural language control of existing pages). Both signal that browser-native agent action is becoming table stakes.</p>
+
+        <h2>The Context Window Ceiling</h2>
+        
+        <p>In parallel with agent infrastructure maturing, Anthropic released their 1M context window models in GA this week — nearly two years after the capability was first demonstrated. Latent Space's analysis is blunt: context windows are likely capped at ~1M tokens for the foreseeable future due to HBM (High Bandwidth Memory) constraints at inference time.</p>
+        
+        <p>swyx and semiconductor analyst Doug O'Laughlin discussed the concept of "context rationing" — a future where context windows become a scarce, metered resource rather than a freely expanding one. Their bet: context windows won't meaningfully exceed 1M tokens in the next two years.</p>
+        
+        <p>This ceiling reinforces the memory-pattern trend above. If you can't rely on ever-larger context windows to carry your agent's knowledge, you need external memory systems. The market is already moving in that direction.</p>
+
+        <h2>What This Means for Builders</h2>
+        
+        <p>If you're building on top of AI agents today, three takeaways from this week's data:</p>
+        
+        <ol>
+          <li><strong>Design for teams, not individuals.</strong> The single-agent pattern is giving way to orchestrated teams. Your agent architecture should assume multiple specialized agents will collaborate — not that one super-agent handles everything.</li>
+          <li><strong>Treat memory as infrastructure.</strong> Stateful agents require persistent memory systems. This is no longer optional — it's the differentiating capability. Invest in memory architectures early.</li>
+          <li><strong>Browser automation is the new API integration.</strong> Agents that can interact with web interfaces (not just call APIs) have access to dramatically more functionality. The tool layer is shifting from REST APIs to browser-native action.</li>
+        </ol>
+        
+        <h2>The Stack Is Consolidating</h2>
+        
+        <p>Six months ago, "AI agent" meant a chatbot with tool-use bolted on. Today, the trending repos define an emerging stack: role-specialized agent teams, persistent memory layers, headless browser infrastructure, and evaluation frameworks (promptfoo added 1,668 stars today for agent testing).</p>
+        
+        <p>The velocity is remarkable. But the more important signal isn't the star counts — it's the convergence. Different developers, different companies, different languages (Python, TypeScript, Zig, Shell) — all converging on the same architectural patterns. That's what consolidation looks like before it becomes convention.</p>
+
+        <hr style="margin: 2rem 0; border: none; border-top: 1px solid var(--border);">
+        
+        <p style="font-size: 0.875rem; color: var(--text-4);"><em>Data sourced from GitHub Trending (daily + weekly), Latent Space RSS, and repository analysis on March 14, 2026. Star counts are point-in-time snapshots.</em></p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>Lab Notes — Prompt Engines Research</p>
+      <p class="footer-links">
+        <a href="../articles/">Articles</a>
+        <a href="../signals/">Signals</a>
+        <a href="https://promptengines.com">PromptEngines.com</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

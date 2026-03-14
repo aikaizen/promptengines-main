@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Self-Improving Agents: Continuous Learning Loops (Experimental) — Prompt Engines Lab</title>
+  <meta name="description" content="Visual analysis of agent learning loop architectures: KPI snapshot, component speed bars, and pattern effectiveness mapping.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+
+    /* Mode badge */
+    .mode-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(240, 77, 38, 0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* KPI cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .kpi {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .kpi .kpi-value {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+    .kpi .kpi-label {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      margin-top: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .kpi .kpi-sub {
+      font-size: 0.75rem;
+      color: var(--text-4);
+      margin-top: 0.25rem;
+    }
+
+    /* Axis comparison */
+    .axis {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    .axis-title {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.25rem;
+    }
+    .axis-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 1fr 1fr 1fr;
+      gap: 0.5rem;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .axis-row:last-child { border-bottom: none; }
+    .axis-label {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      font-weight: 500;
+    }
+    .axis-cell {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      text-align: center;
+      padding: 0.375rem;
+      border-radius: 4px;
+    }
+    .axis-header {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-4);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: center;
+      padding: 0.5rem;
+    }
+    .axis-best {
+      background: rgba(240, 77, 38, 0.15);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .axis-good {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-2);
+    }
+    .axis-weak {
+      color: var(--text-4);
+    }
+
+    /* Speed bars */
+    .speed-bar-container {
+      margin: 0.75rem 0;
+    }
+    .speed-bar-label {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      margin-bottom: 0.35rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .speed-bar {
+      height: 8px;
+      background: var(--bg-subtle);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .speed-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.6s ease;
+    }
+    .speed-bar-fill.detection { background: linear-gradient(90deg, #d97706, #f59e0b); }
+    .speed-bar-fill.capture { background: linear-gradient(90deg, #10b981, #34d399); }
+    .speed-bar-fill.storage { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .speed-bar-fill.application { background: linear-gradient(90deg, #a855f7, #c084fc); }
+
+    /* Alt links */
+    .alt-links {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .alt-links-title {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-4);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+    .alt-links a {
+      display: inline-block;
+      font-size: 0.85rem;
+      color: var(--text-3);
+      margin-right: 1.5rem;
+      margin-bottom: 0.5rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progress-bar"></div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>March 14, 2026</span><span>Visual Analysis</span><span>Agent Systems</span></div>
+      <span class="mode-badge">◆ Experimental</span>
+      <h1>Self-Improving Agents: Continuous Learning Loops (Experimental)</h1>
+      <p class="dek">Visual breakdown of the four-stage learning loop: detection rates, capture quality, storage tiers, and application effectiveness across real implementations.</p>
+
+      <article class="content">
+
+        <h2>KPI Snapshot</h2>
+        <div class="kpi-grid">
+          <div class="kpi">
+            <div class="kpi-value">4</div>
+            <div class="kpi-label">Loop Stages</div>
+            <div class="kpi-sub">Detect → Capture → Store → Apply</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value">3</div>
+            <div class="kpi-label">Storage Tiers</div>
+            <div class="kpi-sub">Raw logs → Project rules → Behavioral core</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value">~30%</div>
+            <div class="kpi-label">Error Detection Rate</div>
+            <div class="kpi-sub">Confident hallucinations missed</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value">3×</div>
+            <div class="kpi-label">Promotion Threshold</div>
+            <div class="kpi-sub">Recurrences before permanent storage</div>
+          </div>
+        </div>
+
+        <h2>Loop Stage Effectiveness</h2>
+        <div class="axis">
+          <div class="axis-title">Stage-by-stage effectiveness (qualitative assessment)</div>
+          <div class="axis-row">
+            <div class="axis-label"></div>
+            <div class="axis-header">Hook-based</div>
+            <div class="axis-header">Manual log</div>
+            <div class="axis-header">Static rules</div>
+            <div class="axis-header">Session memory</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Error detection</div>
+            <div class="axis-cell axis-best">High</div>
+            <div class="axis-cell axis-good">Medium</div>
+            <div class="axis-cell axis-weak">Low</div>
+            <div class="axis-cell axis-weak">Low</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Capture quality</div>
+            <div class="axis-cell axis-good">Medium</div>
+            <div class="axis-cell axis-best">High</div>
+            <div class="axis-cell axis-good">Medium</div>
+            <div class="axis-cell axis-good">Medium</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Storage durability</div>
+            <div class="axis-cell axis-good">Medium</div>
+            <div class="axis-cell axis-best">High</div>
+            <div class="axis-cell axis-best">High</div>
+            <div class="axis-cell axis-good">Medium</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Application ease</div>
+            <div class="axis-cell axis-best">High</div>
+            <div class="axis-cell axis-good">Medium</div>
+            <div class="axis-cell axis-best">High</div>
+            <div class="axis-cell axis-weak">Low</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Human dependency</div>
+            <div class="axis-cell axis-weak">Low</div>
+            <div class="axis-cell axis-good">Medium</div>
+            <div class="axis-cell axis-best">High</div>
+            <div class="axis-cell axis-good">Medium</div>
+          </div>
+        </div>
+
+        <h2>Component Maturity Bars</h2>
+
+        <h3>Error Detection Coverage</h3>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Command failures (exit codes)</span><span>~95%</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill detection" style="width: 95%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>User corrections ("actually...")</span><span>~80%</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill detection" style="width: 80%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Suboptimal but working output</span><span>~35%</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill detection" style="width: 35%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Confident hallucinations</span><span>~5%</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill detection" style="width: 5%"></div></div>
+        </div>
+
+        <h3>Learning Type ROI</h3>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Convention capture ("use pnpm")</span><span>High</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill capture" style="width: 90%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Error reproduction patterns</span><span>High</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill capture" style="width: 85%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Behavioral corrections</span><span>Medium</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill capture" style="width: 55%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>Architectural learnings</span><span>Low</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill capture" style="width: 20%"></div></div>
+        </div>
+
+        <h3>Storage Tier Durability</h3>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>.learnings/ raw logs</span><span>Session-scoped</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill storage" style="width: 40%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>AGENTS.md / TOOLS.md rules</span><span>Project-scoped</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill storage" style="width: 80%"></div></div>
+        </div>
+        <div class="speed-bar-container">
+          <div class="speed-bar-label"><span>SOUL.md behavioral core</span><span>Permanent</span></div>
+          <div class="speed-bar"><div class="speed-bar-fill storage" style="width: 95%"></div></div>
+        </div>
+
+        <h2>Implementation Comparison</h2>
+        <div class="axis">
+          <div class="axis-title">Real implementations assessed</div>
+          <div class="axis-row">
+            <div class="axis-label"></div>
+            <div class="axis-header">OpenClaw<br>Self-Improvement</div>
+            <div class="axis-header">CLAUDE.md<br>/ Cursor Rules</div>
+            <div class="axis-header">Session Memory<br>/ Daily Logs</div>
+            <div class="axis-header">RAG-based<br>Learning</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Structured logging</div>
+            <div class="axis-cell axis-best">✓ Strict schema</div>
+            <div class="axis-cell axis-weak">✗ Freeform</div>
+            <div class="axis-cell axis-good">~ Semi-structured</div>
+            <div class="axis-cell axis-good">~ Depends on embed</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Promotion pathway</div>
+            <div class="axis-cell axis-best">✓ Built-in</div>
+            <div class="axis-cell axis-weak">✗ Manual</div>
+            <div class="axis-cell axis-good">~ Heartbeat distill</div>
+            <div class="axis-cell axis-weak">✗ N/A</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Cross-session</div>
+            <div class="axis-cell axis-best">✓ Persistent files</div>
+            <div class="axis-cell axis-best">✓ Persistent files</div>
+            <div class="axis-cell axis-good">~ File-based</div>
+            <div class="axis-cell axis-best">✓ Vector store</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Error hooks</div>
+            <div class="axis-cell axis-best">✓ PostToolUse</div>
+            <div class="axis-cell axis-weak">✗</div>
+            <div class="axis-cell axis-weak">✗</div>
+            <div class="axis-cell axis-weak">~ Platform dep.</div>
+          </div>
+          <div class="axis-row">
+            <div class="axis-label">Recurrence tracking</div>
+            <div class="axis-cell axis-best">✓ Count + dates</div>
+            <div class="axis-cell axis-weak">✗</div>
+            <div class="axis-cell axis-weak">✗</div>
+            <div class="axis-cell axis-weak">✗</div>
+          </div>
+        </div>
+
+        <h2>The Detection Gap</h2>
+        <div class="kpi-grid">
+          <div class="kpi">
+            <div class="kpi-value" style="color: #34d399;">~95%</div>
+            <div class="kpi-label">Detectable</div>
+            <div class="kpi-sub">Command failures, timeouts, exceptions</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value" style="color: #f59e0b;">~35%</div>
+            <div class="kpi-label">Partial</div>
+            <div class="kpi-sub">Suboptimal output, missed better approaches</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value" style="color: #ef4444;">~5%</div>
+            <div class="kpi-label">Blind Spot</div>
+            <div class="kpi-sub">Confident hallucinations, silent failures</div>
+          </div>
+        </div>
+
+        <p style="color: var(--text-4); font-size: 0.875rem; margin-top: 2rem;"><em>Assessment based on production testing across OpenClaw, Claude Code, and Cursor agent platforms, March 2026. Effectiveness ratings are qualitative — not automated benchmarks.</em></p>
+
+        <div class="alt-links">
+          <div class="alt-links-title">Other modes</div>
+          <a href="./2026-03-14-self-improving-agents-learning-loops.html">◉ Standard — Full narrative</a>
+          <a href="./2026-03-14-self-improving-agents-learning-loops-v3.html">⬡ Agent — Dense spec format</a>
+        </div>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./2026-03-14-coding-agent-wars-march-2026.html">← Previous note</a>
+        <a href="./2026-03-04-openrag-deployment-docker-blockers.html">Related: OpenRAG →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <script>
+    (function () {
+      var dd = document.querySelector('.nav-dropdown');
+      var trigger = dd && dd.querySelector('span');
+      if (!dd || !trigger) return;
+      trigger.addEventListener('click', function () { dd.classList.toggle('is-open'); });
+      document.addEventListener('click', function (e) { if (!dd.contains(e.target)) dd.classList.remove('is-open'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dd.classList.remove('is-open'); });
+    })();
+  </script>
+</body>
+</html>

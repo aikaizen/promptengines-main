@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenRouter's Hunter &amp; Healer Models — Purpose-Built Agent Intelligence (Agent) — Prompt Engines Lab</title>
+  <meta name="description" content="Dense agent-block spec format for OpenRouter's two purpose-built agent models.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+
+    /* Mode badge */
+    .mode-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(240, 77, 38, 0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Agent block */
+    .agent-block {
+      font-family: var(--mono);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      color: var(--text-2);
+    }
+    .agent-block .tag { color: var(--text-4); }
+    .agent-block .key { color: #7dd3fc; }
+    .agent-block .val { color: #fca5a5; }
+    .agent-block .num { color: #86efac; }
+    .agent-block .str { color: #fde047; }
+    .agent-block .bool { color: #c4b5fd; }
+
+    /* Alt links */
+    .alt-links {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .alt-links-title {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-4);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+    .alt-links a {
+      display: inline-block;
+      font-size: 0.85rem;
+      color: var(--text-3);
+      margin-right: 1.5rem;
+      margin-bottom: 0.5rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progress-bar"></div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>March 14, 2026</span><span>5 min read</span><span>Agent Infrastructure</span></div>
+      <span class="mode-badge">⬡ Agent</span>
+      <h1>OpenRouter's Hunter &amp; Healer Models — Purpose-Built Agent Intelligence (Agent)</h1>
+      <p class="dek">Dense specification format. Machine-readable. Maximum signal density.</p>
+
+      <article class="content">
+
+        <h2>Metadata</h2>
+        <pre class="agent-block"><span class="tag">---</span>
+<span class="key">spec</span>: openrouter-agent-models-v1
+<span class="key">date</span>: <span class="str">"2026-03-14"</span>
+<span class="key">models_described</span>: <span class="num">2</span>
+<span class="key">data_source</span>: <span class="str">"openrouter_api /api/v1/models"</span>
+<span class="key">query_date</span>: <span class="str">"2026-03-14"</span>
+<span class="key">model_creation</span>: <span class="str">"~2026-03-09"</span>
+<span class="key">status</span>: <span class="str">"alpha"</span>
+<span class="tag">---</span></pre>
+
+        <h2>Model Specs</h2>
+        <pre class="agent-block"><span class="tag">[hunter_alpha]</span>
+<span class="key">id</span>: <span class="str">"openrouter/hunter-alpha"</span>
+<span class="key">canonical_slug</span>: <span class="str">"openrouter/hunter-alpha"</span>
+<span class="key">name</span>: <span class="str">"Hunter Alpha"</span>
+<span class="key">namespace</span>: <span class="str">"openrouter"</span>
+<span class="key">provider</span>: <span class="str">"undisclosed"</span>
+<span class="key">status</span>: <span class="str">"alpha"</span>
+<span class="key">parameters</span>: <span class="num">1_000_000_000_000</span> <span class="tag"># 1 trillion</span>
+<span class="key">context_window</span>: <span class="num">1_048_576</span> <span class="tag"># 1M tokens</span>
+<span class="key">max_completion_tokens</span>: <span class="num">32_000</span>
+<span class="key">modality</span>: <span class="str">"text->text"</span>
+<span class="key">input_modalities</span>: [<span class="str">"text"</span>]
+<span class="key">output_modalities</span>: [<span class="str">"text"</span>]
+<span class="key">tokenizer</span>: <span class="str">"Other"</span>
+<span class="key">pricing</span>: {
+  <span class="key">prompt</span>: <span class="num">0</span>,
+  <span class="key">completion</span>: <span class="num">0</span>,
+  <span class="key">request</span>: <span class="num">0</span>,
+  <span class="key">image</span>: <span class="num">0</span>,
+  <span class="key">web_search</span>: <span class="num">0</span>,
+  <span class="key">internal_reasoning</span>: <span class="num">0</span>
+}
+<span class="key">default_temperature</span>: <span class="num">1.0</span>
+<span class="key">default_top_p</span>: <span class="num">0.95</span>
+<span class="key">is_moderated</span>: <span class="bool">false</span>
+<span class="key">data_logging</span>: <span class="bool">true</span> <span class="tag"># all prompts + completions logged</span>
+<span class="key">use_case</span>: <span class="str">"long-horizon planning, complex reasoning, multi-step execution"</span>
+<span class="key">description_excerpt</span>: <span class="str">"1T param + 1M context frontier intelligence model built for agentic use"</span></pre>
+
+        <pre class="agent-block"><span class="tag">[healer_alpha]</span>
+<span class="key">id</span>: <span class="str">"openrouter/healer-alpha"</span>
+<span class="key">canonical_slug</span>: <span class="str">"openrouter/healer-alpha"</span>
+<span class="key">name</span>: <span class="str">"Healer Alpha"</span>
+<span class="key">namespace</span>: <span class="str">"openrouter"</span>
+<span class="key">provider</span>: <span class="str">"undisclosed"</span>
+<span class="key">status</span>: <span class="str">"alpha"</span>
+<span class="key">parameters</span>: <span class="str">"undisclosed"</span>
+<span class="key">context_window</span>: <span class="num">262_144</span> <span class="tag"># 256K tokens</span>
+<span class="key">max_completion_tokens</span>: <span class="num">32_000</span>
+<span class="key">modality</span>: <span class="str">"text+image+audio+video->text"</span>
+<span class="key">input_modalities</span>: [<span class="str">"text"</span>, <span class="str">"image"</span>, <span class="str">"audio"</span>, <span class="str">"video"</span>]
+<span class="key">output_modalities</span>: [<span class="str">"text"</span>]
+<span class="key">tokenizer</span>: <span class="str">"Other"</span>
+<span class="key">pricing</span>: {
+  <span class="key">prompt</span>: <span class="num">0</span>,
+  <span class="key">completion</span>: <span class="num">0</span>,
+  <span class="key">request</span>: <span class="num">0</span>,
+  <span class="key">image</span>: <span class="num">0</span>,
+  <span class="key">web_search</span>: <span class="num">0</span>,
+  <span class="key">internal_reasoning</span>: <span class="num">0</span>
+}
+<span class="key">default_temperature</span>: <span class="num">1.0</span>
+<span class="key">default_top_p</span>: <span class="num">0.95</span>
+<span class="key">is_moderated</span>: <span class="bool">false</span>
+<span class="key">data_logging</span>: <span class="bool">true</span> <span class="tag"># all prompts + completions logged</span>
+<span class="key">use_case</span>: <span class="str">"multi-modal perception, cross-modal reasoning, real-world action"</span>
+<span class="key">description_excerpt</span>: <span class="str">"frontier omni-modal model with vision, hearing, reasoning, and action capabilities"</span></pre>
+
+        <h2>Supported Parameters</h2>
+        <pre class="agent-block"><span class="tag">[api_parameters]</span>
+<span class="tag"># Both models share identical parameter support</span>
+
+<span class="key">supported</span>: [
+  <span class="str">"frequency_penalty"</span>,
+  <span class="str">"include_reasoning"</span>,   <span class="tag"># chain-of-thought exposure</span>
+  <span class="str">"max_tokens"</span>,
+  <span class="str">"presence_penalty"</span>,
+  <span class="str">"reasoning"</span>,            <span class="tag"># enable/disable reasoning</span>
+  <span class="str">"response_format"</span>,      <span class="tag"># JSON / structured output</span>
+  <span class="str">"stop"</span>,                 <span class="tag"># stop sequences</span>
+  <span class="str">"temperature"</span>,
+  <span class="str">"tool_choice"</span>,          <span class="tag"># function selection control</span>
+  <span class="str">"tools"</span>,                <span class="tag"># function calling</span>
+  <span class="str">"top_p"</span>
+]
+
+<span class="key">not_supported</span>: [
+  <span class="str">"logprobs"</span>,             <span class="tag"># no distributional introspection</span>
+  <span class="str">"top_logprobs"</span>,
+  <span class="str">"seed"</span>,                <span class="tag"># no deterministic reproducibility</span>
+  <span class="str">"structured_outputs"</span>,  <span class="tag"># use response_format instead</span>
+  <span class="str">"top_k"</span>
+]
+
+<span class="tag"># Omission analysis: missing logprobs + seed suggests</span>
+<span class="tag"># optimization for execution confidence over sampling</span>
+<span class="tag"># exploration. Consistent with agent use where models</span>
+<span class="tag"># commit to actions rather than hedge across distributions.</span></pre>
+
+        <h2>Architectural Split</h2>
+        <pre class="agent-block"><span class="tag">[design_pattern]</span>
+<span class="key">pattern</span>: <span class="str">"brain_perception_split"</span>
+<span class="key">analogy</span>: <span class="str">"robotics_high_low_level_planning"</span>
+
+<span class="tag">[hunter_alpha.role]</span>
+<span class="key">function</span>: <span class="str">"deep_reasoning_engine"</span>
+<span class="key">optimizes_for</span>: [
+  <span class="str">"long_horizon_planning"</span>,
+  <span class="str">"multi_step_execution_chains"</span>,
+  <span class="str">"instruction_fidelity_over_time"</span>,
+  <span class="str">"complex_reasoning_depth"</span>
+]
+<span class="key">architecture</span>: <span class="str">"large_dense_1T_text"</span>
+<span class="key">context_budget</span>: <span class="num">1_048_576</span>
+
+<span class="tag">[healer_alpha.role]</span>
+<span class="key">function</span>: <span class="str">"perception_action_layer"</span>
+<span class="key">optimizes_for</span>: [
+  <span class="str">"multi_modal_understanding"</span>,
+  <span class="str">"cross_modal_reasoning"</span>,
+  <span class="str">"real_world_sensing"</span>,
+  <span class="str">"environment_awareness"</span>
+]
+<span class="key">architecture</span>: <span class="str">"omni_modal_efficient"</span>
+<span class="key">context_budget</span>: <span class="num">262_144</span>
+<span class="key">parameter_count</span>: <span class="str">"undisclosed"</span> <span class="tag"># likely smaller than Hunter</span>
+
+<span class="tag">[composition_pattern]</span>
+<span class="key">method</span>: <span class="str">"route_by_task_type"</span>
+<span class="key">strategy_to_hunter</span>: <span class="str">"planning, reasoning, code, long chains"</span>
+<span class="key">strategy_to_healer</span>: <span class="str">"images, audio, video, real-time perception"</span>
+<span class="key">framework_compatibility</span>: [<span class="str">"openclaw"</span>, <span class="str">"langchain"</span>, <span class="str">"crewai"</span>, <span class="str">"autogen"</span>]</pre>
+
+        <h2>Comparison to Existing Models</h2>
+        <pre class="agent-block"><span class="tag">[market_positioning]</span>
+
+<span class="tag">[vs_general_purpose]</span>
+<span class="key">gpt_4o</span>:       { <span class="key">purpose</span>: <span class="str">"general"</span>, <span class="key">context</span>: <span class="num">128_000</span>, <span class="key">modalities</span>: <span class="str">"text+image"</span>, <span class="key">pricing</span>: <span class="str">"paid"</span> }
+<span class="key">claude_opus</span>:  { <span class="key">purpose</span>: <span class="str">"general"</span>, <span class="key">context</span>: <span class="num">200_000</span>, <span class="key">modalities</span>: <span class="str">"text+image"</span>, <span class="key">pricing</span>: <span class="str">"paid"</span> }
+<span class="key">gemini_3_pro</span>: { <span class="key">purpose</span>: <span class="str">"general"</span>, <span class="key">context</span>: <span class="num">1_000_000</span>, <span class="key">modalities</span>: <span class="str">"text+image+audio+video"</span>, <span class="key">pricing</span>: <span class="str">"freemium"</span> }
+
+<span class="tag">[vs_purpose_built]</span>
+<span class="key">hunter_alpha</span>: { <span class="key">purpose</span>: <span class="str">"agent_reasoning"</span>, <span class="key">context</span>: <span class="num">1_048_576</span>, <span class="key">modalities</span>: <span class="str">"text"</span>, <span class="key">pricing</span>: <span class="str">"free_alpha"</span> }
+<span class="key">healer_alpha</span>: { <span class="key">purpose</span>: <span class="str">"agent_perception"</span>, <span class="key">context</span>: <span class="num">262_144</span>, <span class="key">modalities</span>: <span class="str">"text+img+audio+video"</span>, <span class="key">pricing</span>: <span class="str">"free_alpha"</span> }
+
+<span class="tag">[key_differentiators]</span>
+<span class="key">hunter</span>: <span class="str">"only 1T purpose-built agent model on OpenRouter"</span>
+<span class="key">healer</span>: <span class="str">"only free omni-modal agent model on OpenRouter"</span>
+<span class="key">shared</span>: <span class="str">"both free, both tool-native, both alpha (data logged)"</span></pre>
+
+        <h2>Agent Framework Impact</h2>
+        <pre class="agent-block"><span class="tag">[scaffold_reduction_analysis]</span>
+
+<span class="tag">[current_agent_patterns_general_models]</span>
+<span class="key">prompt_scaffolding</span>: <span class="str">"system prompts to simulate agent behavior"</span>
+<span class="key">context_management</span>: <span class="str">"compression + summarization to fit limited windows"</span>
+<span class="key">tool_reliability</span>: <span class="str">"retry loops for non-agent-optimized models"</span>
+<span class="key">instruction_drift</span>: <span class="str">"degradation over long execution chains"</span>
+
+<span class="tag">[purpose_built_model_hypothesis]</span>
+<span class="key">premise</span>: <span class="str">"agent models reduce scaffolding burden"</span>
+<span class="key">if_true</span>: [
+  <span class="str">"less prompt engineering for agent behavior"</span>,
+  <span class="str">"fewer context compression strategies needed"</span>,
+  <span class="str">"higher first-attempt tool call reliability"</span>,
+  <span class="str">"sustained instruction fidelity over long chains"</span>
+]
+<span class="key">if_false</span>: [
+  <span class="str">"alpha models may underperform established generalists"</span>,
+  <span class="str">"no benchmarks to validate claims"</span>,
+  <span class="str">"free tier temporary; pricing unknown"</span>
+]
+<span class="key">verification</span>: <span class="str">"requires agent benchmark evaluation (SWE-Bench, AgentBench)"</span></pre>
+
+        <h2>Open Questions</h2>
+        <pre class="agent-block"><span class="tag">[unknowns]</span>
+<span class="key">benchmarks</span>: <span class="str">"none published — SWE-Bench, AgentBench, TerminalBench scores missing"</span>
+<span class="key">trainer</span>: <span class="str">"OpenRouter is a router; actual model provider undisclosed"</span>
+<span class="key">training_method</span>: <span class="str">"RLHF on agent trajectories? Multi-turn pretraining? Architecture?"</span>
+<span class="key">latency</span>: <span class="str">"1T params = expensive serving; real-world agent loop latency unknown"</span>
+<span class="key">availability_timeline</span>: <span class="str">"alpha duration + production path undefined"</span>
+<span class="key">post_alpha_pricing</span>: <span class="str">"will free tier persist? competitive with Claude/GPT pricing?"</span>
+<span class="key">healer_params</span>: <span class="str">"undisclosed — likely smaller than Hunter given multi-modal overhead"</span>
+<span class="key">model_stability</span>: <span class="str">"alpha models may change significantly before production"</span></pre>
+
+        <h2>Assessment</h2>
+        <pre class="agent-block"><span class="tag">[verdict]</span>
+<span class="key">directional_signal</span>: <span class="str">"strong — purpose-built agent models are a real category"</span>
+<span class="key">empirical_evidence</span>: <span class="str">"weak — alpha status, no benchmarks, all claims unverified"</span>
+<span class="key">practical_value</span>: <span class="str">"high for prototyping — free access, zero barrier to entry"</span>
+<span class="key">production_readiness</span>: <span class="str">"not yet — data logging, no SLA, alpha instability"</span>
+<span class="key">recommended_action</span>: <span class="str">"experiment with non-sensitive agent workloads; monitor for beta"</span>
+
+<span class="tag">[risk_matrix]</span>
+<span class="key">data_exposure</span>: <span class="str">"HIGH — all prompts/completions logged"</span>
+<span class="key">model_stability</span>: <span class="str">"MEDIUM — alpha, subject to change"</span>
+<span class="key">vendor_lock_in</span>: <span class="str">"LOW — OpenRouter standard API, portable"</span>
+<span class="key">cost_risk</span>: <span class="str">"LOW — free during alpha; pricing TBD post-alpha"</span></pre>
+
+        <h2>References</h2>
+        <pre class="agent-block"><span class="key">openrouter_models_api</span>: <span class="str">"https://openrouter.ai/api/v1/models"</span>
+<span class="key">hunter_alpha_page</span>: <span class="str">"https://openrouter.ai/openrouter/hunter-alpha"</span>
+<span class="key">healer_alpha_page</span>: <span class="str">"https://openrouter.ai/openrouter/healer-alpha"</span>
+<span class="key">openclaw</span>: <span class="str">"https://openclaw.ai"</span>
+<span class="key">data_query_timestamp</span>: <span class="str">"2026-03-14T04:30:00Z"</span>
+<span class="key">hunter_created</span>: <span class="num">1773260671</span> <span class="tag"># unix timestamp</span>
+<span class="key">healer_created</span>: <span class="num">1773260668</span> <span class="tag"># unix timestamp</span></pre>
+
+        <div class="alt-links">
+          <div class="alt-links-title">Other modes</div>
+          <a href="./2026-03-14-openrouter-hunter-healer-agent-models.html">◉ Standard — Full narrative</a>
+          <a href="./2026-03-14-openrouter-hunter-healer-agent-models-v2.html">◆ Experimental — Visual comparison</a>
+        </div>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./2026-03-14-agent-stack-consolidation-march-2026.html">← Previous note</a>
+        <a href="./2026-03-14-coding-agent-wars-march-2026.html">Related: Agent Coding Wars →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <script>
+    (function () {
+      var dd = document.querySelector('.nav-dropdown');
+      var trigger = dd && dd.querySelector('span');
+      if (!dd || !trigger) return;
+      trigger.addEventListener('click', function () { dd.classList.toggle('is-open'); });
+      document.addEventListener('click', function (e) { if (!dd.contains(e.target)) dd.classList.remove('is-open'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dd.classList.remove('is-open'); });
+    })();
+  </script>
+</body>
+</html>

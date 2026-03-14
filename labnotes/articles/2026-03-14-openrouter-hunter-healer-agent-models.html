@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenRouter's Hunter &amp; Healer Models — Purpose-Built Agent Intelligence — Prompt Engines Lab</title>
+  <meta name="description" content="OpenRouter ships two alpha models designed from the ground up for agentic workloads: Hunter Alpha (1T parameter text reasoning) and Healer Alpha (omni-modal perception). We examine what purpose-built agent models mean for the ecosystem.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+    .article-content tr:hover td { background: var(--bg-elevated); }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progress-bar"></div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>March 14, 2026</span><span>10 min read</span><span>Agent Infrastructure</span></div>
+      <h1>OpenRouter's Hunter &amp; Healer Models — Purpose-Built Agent Intelligence</h1>
+      <p class="dek">OpenRouter has shipped two alpha models built specifically for agentic workloads. Hunter Alpha brings 1T parameters and 1M context for long-horizon reasoning. Healer Alpha adds omni-modal perception—vision, audio, video—across 262K context. Both are free. Both signal a shift in how model providers think about the agent market.</p>
+
+      <article class="content">
+
+        <p>Most language models are generalists. They're trained to chat, summarize, translate, and code—then adapted for agent use through prompt engineering, tool-calling wrappers, and orchestration frameworks. The results are impressive but inherently indirect: you're fitting a conversational model into an action-oriented role through scaffolding rather than design.</p>
+
+        <p>OpenRouter is testing a different hypothesis. In early March 2026, the platform quietly released two alpha models under its own namespace—<code>openrouter/hunter-alpha</code> and <code>openrouter/healer-alpha</code>—that are designed from the ground up for agent workloads. Not adapted. Not fine-tuned from a chat model. Purpose-built.</p>
+
+        <h2>What "Purpose-Built for Agents" Actually Means</h2>
+
+        <p>The distinction matters more than it might appear. General-purpose models optimize for conversational quality: helpful tone, balanced responses, hedging uncertainty. Agent models optimize for different properties—task completion fidelity, sustained instruction adherence over long execution chains, reliable tool invocation, and the ability to maintain state awareness across hundreds of turns without degrading.</p>
+
+        <p>Hunter and Healer are OpenRouter's answer to this gap. Both models carry the "alpha" designation, which means they're early-stage and carry important caveats: all prompts and completions are logged by the provider and may be used to improve the model. They're not production-ready for sensitive workloads. But they represent a clear directional bet—OpenRouter believes the agent use case deserves its own model class, not a repurposed one.</p>
+
+        <h2>Hunter Alpha: 1T Parameters for Long-Horizon Planning</h2>
+
+        <p>Hunter Alpha is the text-focused agent model. Its specifications are aggressive:</p>
+
+        <table>
+          <thead>
+            <tr><th>Property</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Parameters</td><td>1 trillion</td></tr>
+            <tr><td>Context window</td><td>1,048,576 tokens (1M)</td></tr>
+            <tr><td>Max completion tokens</td><td>32,000</td></tr>
+            <tr><td>Modality</td><td>Text → Text</td></tr>
+            <tr><td>Pricing</td><td>Free (all token types)</td></tr>
+            <tr><td>Tool calling</td><td>Supported (tools + tool_choice)</td></tr>
+            <tr><td>Reasoning tokens</td><td>Supported (include_reasoning)</td></tr>
+            <tr><td>Structured output</td><td>Supported (response_format)</td></tr>
+            <tr><td>Default temperature</td><td>1.0</td></tr>
+            <tr><td>Default top_p</td><td>0.95</td></tr>
+          </tbody>
+        </table>
+
+        <p>The 1T parameter count is notable—this is among the largest dense models available through OpenRouter's platform. The 1M token context window matches what Google offers with Gemini and what NVIDIA claims with Nemotron 3 Super, putting Hunter in the same tier for long-context work. For agent frameworks like OpenClaw that depend on sustained context awareness across tool calls, file reads, and multi-step plans, this matters.</p>
+
+        <p>OpenRouter's own description is direct about the target: Hunter "excels at long-horizon planning, complex reasoning, and sustained multi-step task execution, with the reliability and instruction-following precision that frameworks like OpenClaw need." That's not marketing copy for a general audience—that's a signal to agent framework developers about what this model was optimized for.</p>
+
+        <p>Supported parameters include <code>frequency_penalty</code>, <code>presence_penalty</code>, <code>stop</code> sequences, and <code>temperature</code>/<code>top_p</code> controls. Notably missing from the supported set: <code>logprobs</code>, <code>top_logprobs</code>, and <code>seed</code>. This suggests the model is tuned for execution reliability over probabilistic analysis—a reasonable tradeoff for an agent model where deterministic behavior matters more than distributional introspection.</p>
+
+        <h2>Healer Alpha: Omni-Modal Agent Perception</h2>
+
+        <p>Healer Alpha is the more ambitious of the pair. Where Hunter focuses on deep text reasoning, Healer extends agent capabilities into the full sensory stack:</p>
+
+        <table>
+          <thead>
+            <tr><th>Property</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Parameters</td><td>Not disclosed</td></tr>
+            <tr><td>Context window</td><td>262,144 tokens (256K)</td></tr>
+            <tr><td>Max completion tokens</td><td>32,000</td></tr>
+            <tr><td>Modality</td><td>Text + Image + Audio + Video → Text</td></tr>
+            <tr><td>Pricing</td><td>Free (all token types)</td></tr>
+            <tr><td>Tool calling</td><td>Supported (tools + tool_choice)</td></tr>
+            <tr><td>Reasoning tokens</td><td>Supported (include_reasoning)</td></tr>
+            <tr><td>Structured output</td><td>Supported (response_format)</td></tr>
+            <tr><td>Default temperature</td><td>1.0</td></tr>
+            <tr><td>Default top_p</td><td>0.95</td></tr>
+          </tbody>
+        </table>
+
+        <p>Text, image, audio, and video as input modalities. That's a broader input range than most frontier models expose through OpenRouter. GPT-4o handles text and image; Claude handles text and image. Healer adds native audio and video understanding, positioned explicitly for "perceiving visual and audio inputs, reasoning across modalities, and executing complex multi-step tasks."</p>
+
+        <p>The 262K context window is smaller than Hunter's 1M, likely reflecting the computational cost of processing multi-modal inputs at scale. Still, 262K tokens is substantial—enough for an agent to ingest a 30-minute video transcript, a set of screenshots, and a full codebase in a single context window.</p>
+
+        <p>Parameter count is not disclosed for Healer, which is itself a signal. If it were similarly massive (1T+), OpenRouter would likely advertise it. The inference is that Healer may be a smaller, more efficient model optimized for the perception-action loop rather than raw reasoning depth—a reasonable architecture for a model whose primary job is "see, hear, understand, then act."</p>
+
+        <h2>Comparative Architecture</h2>
+
+        <p>The Hunter/Healer pairing suggests a deliberate architectural split rather than a single omni-capable model:</p>
+
+        <table>
+          <thead>
+            <tr><th>Dimension</th><th>Hunter Alpha</th><th>Healer Alpha</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Primary role</td><td>Deep reasoning &amp; planning</td><td>Perception &amp; cross-modal action</td></tr>
+            <tr><td>Input modalities</td><td>Text</td><td>Text, image, audio, video</td></tr>
+            <tr><td>Context depth</td><td>1M tokens</td><td>262K tokens</td></tr>
+            <tr><td>Parameter scale</td><td>1T (disclosed)</td><td>Undisclosed</td></tr>
+            <tr><td>Sweet spot</td><td>Multi-hour planning chains</td><td>Real-world sensing + response</td></tr>
+            <tr><td>Shared capabilities</td><td colspan="2" style="text-align:center">Tool calling, reasoning tokens, structured output, free pricing</td></tr>
+          </tbody>
+        </table>
+
+        <p>This mirrors patterns we see in robotics and embodied AI: separate models for high-level planning (the "brain") and sensorimotor processing (the "perception layer"). An agent framework could route long-term strategy to Hunter and real-time environmental awareness to Healer, calling each where it's strongest.</p>
+
+        <h2>The Free Pricing Question</h2>
+
+        <p>Both models are free across all token types—prompt, completion, request, image, web search, and internal reasoning. This is unusual for frontier-scale models and worth examining.</p>
+
+        <p>The alpha designation provides the answer. OpenRouter is likely using these models to collect agent workload data. The explicit logging disclosure ("All prompts and completions for this model are logged by the provider and may be used to improve the model") confirms this. Free access in exchange for training data is a well-established pattern—OpenAI did it with ChatGPT's early free tier, and Google does it with Gemini's generous free API limits.</p>
+
+        <p>For developers building agent frameworks, the calculus is straightforward: these models are useful for prototyping, experimentation, and non-sensitive workloads today, with the understanding that pricing will arrive when the models exit alpha. Whether the free tier persists or converts to metered access will depend on how valuable the collected agent interaction data proves to be.</p>
+
+        <h2>Supported Parameters Analysis</h2>
+
+        <p>Both Hunter and Healer support an identical parameter set, which reveals the shared agent-oriented design philosophy:</p>
+
+        <ul>
+          <li><strong>Tools + tool_choice:</strong> Native function calling, the backbone of agent architectures.</li>
+          <li><strong>Reasoning tokens (include_reasoning):</strong> Expose the model's chain-of-thought for transparency and debugging in agent loops.</li>
+          <li><strong>Response format:</strong> Force JSON or structured output for reliable agent-to-agent communication.</li>
+          <li><strong>Frequency/presence penalty:</strong> Control repetition in long generation chains where agents may loop.</li>
+          <li><strong>Stop sequences:</strong> Terminate generation at specific markers for precise agent handoff.</li>
+        </ul>
+
+        <p>What's notably absent from both: <code>logprobs</code>, <code>seed</code>, <code>structured_outputs</code> (as a separate flag from <code>response_format</code>), and <code>top_k</code>. These omissions suggest the models are optimized for execution confidence rather than sampling exploration—again, consistent with agent use where you want the model to commit to an action rather than hedge across probability distributions.</p>
+
+        <h2>Implications for Agent Frameworks</h2>
+
+        <p>For projects like OpenClaw—which the Hunter description explicitly references—purpose-built agent models represent a potential inflection point. Current agent frameworks spend significant engineering effort on:</p>
+
+        <ul>
+          <li><strong>Prompt scaffolding:</strong> System prompts that instruct general models to "think like an agent"</li>
+          <li><strong>Context management:</strong> Compression and summarization to fit agent histories into limited windows</li>
+          <li><strong>Tool call reliability:</strong> Retry logic and validation for models that weren't optimized for function calling</li>
+          <li><strong>Instruction drift:</strong> Models losing task context over long execution chains</li>
+        </ul>
+
+        <p>If purpose-built models like Hunter and Healer genuinely reduce the need for this scaffolding—if they maintain instruction fidelity over longer chains, invoke tools more reliably, and sustain task awareness across 1M token contexts—then the engineering effort shifts from "how do we make a chat model act like an agent" to "how do we build on top of a model that already thinks like one."</p>
+
+        <p>That's a fundamentally different development paradigm. It's the difference between building an autopilot on top of a sedan versus designing a plane from scratch for autonomous flight.</p>
+
+        <h2>Open Questions</h2>
+
+        <p>Several questions remain unanswered in the alpha release:</p>
+
+        <ol>
+          <li><strong>Benchmark performance:</strong> No published scores on SWE-Bench, AgentBench, or any standard agent evaluation suite. Without benchmarks, the "purpose-built" claim is asserted, not demonstrated.</li>
+          <li><strong>Training methodology:</strong> What does "purpose-built" mean at the training level? RLHF on agent trajectories? Multi-turn tool-use pretraining? Architecture changes? The models use "Other" as their tokenizer identifier, suggesting a non-standard training approach, but details are absent.</li>
+          <li><strong>Provider identity:</strong> Who actually trained these models? OpenRouter is a routing platform, not a model trainer. The models sit under the <code>openrouter/</code> namespace, but the underlying provider isn't disclosed.</li>
+          <li><strong>Latency and throughput:</strong> A 1T parameter model will be expensive to serve, even if free to the user. Real-world latency characteristics for agent loops—which need fast iteration—aren't documented.</li>
+          <li><strong>Alpha to production timeline:</strong> When does alpha end? What changes? Will pricing be competitive with existing agent-capable models?</li>
+        </ol>
+
+        <h2>Bottom Line</h2>
+
+        <p>Hunter and Healer are alpha models with real specifications and zero public benchmarks. What they represent directionally is more interesting than what they prove empirically: OpenRouter is betting that the agent use case is large enough to warrant purpose-built models rather than adapted generalists.</p>
+
+        <p>The Hunter/Healer split—deep reasoning vs. omni-modal perception—suggests an architecture where agent frameworks compose specialized models rather than relying on a single generalist. If that pattern holds, the agent infrastructure layer becomes more interesting, not less.</p>
+
+        <p>For now, both models are free to experiment with. The logging caveat means they're not for production secrets or sensitive workflows. But for prototyping agent architectures, testing multi-modal perception pipelines, and exploring what purpose-built agent models feel like in practice—the barrier to entry is zero.</p>
+
+        <p>That's worth paying attention to. Even if the alpha designation means paying attention with appropriate skepticism.</p>
+
+        <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+        <p style="color: var(--text-4); font-size: 0.875rem;">
+          <strong>Technical Appendix</strong><br>
+          Data source: OpenRouter API (<code>/api/v1/models</code>), queried March 14, 2026<br>
+          Model IDs: <code>openrouter/hunter-alpha</code>, <code>openrouter/healer-alpha</code><br>
+          Created: ~March 9, 2026 (Unix timestamps 1773260671, 1773260668)<br>
+          All pricing values verified at $0 across prompt, completion, request, image, web_search, and internal_reasoning token types.<br><br>
+          <strong>References:</strong><br>
+          OpenRouter Models API: https://openrouter.ai/api/v1/models<br>
+          Hunter Alpha: https://openrouter.ai/openrouter/hunter-alpha<br>
+          Healer Alpha: https://openrouter.ai/openrouter/healer-alpha<br>
+          OpenClaw: https://openclaw.ai
+        </p>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./2026-03-14-agent-stack-consolidation-march-2026.html">← Previous note</a>
+        <a href="./2026-03-14-coding-agent-wars-march-2026.html">Related: Agent Coding Wars →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <script>
+    (function () {
+      var dd = document.querySelector('.nav-dropdown');
+      var trigger = dd && dd.querySelector('span');
+      if (!dd || !trigger) return;
+      trigger.addEventListener('click', function () { dd.classList.toggle('is-open'); });
+      document.addEventListener('click', function (e) { if (!dd.contains(e.target)) dd.classList.remove('is-open'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dd.classList.remove('is-open'); });
+    })();
+  </script>
+</body>
+</html>

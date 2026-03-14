@@ -1,0 +1,295 @@
+{
+  "date": "2026-03-14",
+  "generatedAt": "2026-03-14T11:59:30.066Z",
+  "commits": [
+    {
+      "repo": "promptengines-main",
+      "hash": "a85039b5c9f69835dd17f0b58b2d11d7c1078fad",
+      "shortHash": "a85039b",
+      "date": "2026-03-14T06:47:21Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/a85039b5c9f69835dd17f0b58b2d11d7c1078fad",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "30524cd8eeb02663e4f0fa40f804b1768f14c47e",
+      "shortHash": "30524cd",
+      "date": "2026-03-14T05:24:07Z",
+      "subject": "feat(articles): complete index with all 13 new articles from Andy Stable",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/30524cd8eeb02663e4f0fa40f804b1768f14c47e",
+      "type": "feat",
+      "scope": "articles"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "b54ac201c6acf575fb936c7e19d761366abb9146",
+      "shortHash": "b54ac20",
+      "date": "2026-03-14T05:15:05Z",
+      "subject": "feat(lab): add 10 new articles in 3 modes + 3 bonus articles (33 files total)",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/b54ac201c6acf575fb936c7e19d761366abb9146",
+      "type": "feat",
+      "scope": "lab"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "652f0f3f45e385ed6924e039fbf8575523d69e68",
+      "shortHash": "652f0f3",
+      "date": "2026-03-14T04:57:31Z",
+      "subject": "fix(lab): tone corrections — remove hype language, unsubstantiated claims, and internal metadata",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/652f0f3f45e385ed6924e039fbf8575523d69e68",
+      "type": "fix",
+      "scope": "lab"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "bc2a819ac6d91e09a246a90b2d825492c1ada372",
+      "shortHash": "bc2a819",
+      "date": "2026-03-14T02:02:22Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/bc2a819ac6d91e09a246a90b2d825492c1ada372",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "8fa198040fcacd3387d075598637d0df65876c9b",
+      "shortHash": "8fa1980",
+      "date": "2026-03-13T18:42:53Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/8fa198040fcacd3387d075598637d0df65876c9b",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "pantheon-os",
+      "hash": "c378140b752fa801fd7f82f263778222f10aeee3",
+      "shortHash": "c378140",
+      "date": "2026-03-13T17:45:49Z",
+      "subject": "feat: add consultancy PRDs, constitution, registry, skills, and schema",
+      "author": "aikaizen",
+      "email": "aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/pantheon-os/commit/c378140b752fa801fd7f82f263778222f10aeee3",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "19c48620b06dacda2c44ce194efef06b44e0eba5",
+      "shortHash": "19c4862",
+      "date": "2026-03-13T17:41:51Z",
+      "subject": "chore(build-stream): regenerate index + W11 report after rebase",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/19c48620b06dacda2c44ce194efef06b44e0eba5",
+      "type": "chore",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "7a465783df771ee6fa188658abe7b4d34474a051",
+      "shortHash": "7a46578",
+      "date": "2026-03-13T17:35:42Z",
+      "subject": "feat(build-stream): analytics engine + rich weekly report with SVG charts",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/7a465783df771ee6fa188658abe7b4d34474a051",
+      "type": "feat",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "977e31d8ac02e1ae7d3f2d393b127dde2ea91168",
+      "shortHash": "977e31d",
+      "date": "2026-03-13T17:33:44Z",
+      "subject": "docs: content research agenda + daily article suggestion script",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/977e31d8ac02e1ae7d3f2d393b127dde2ea91168",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "87836c9a860fd6da291f048536bd3821a7870540",
+      "shortHash": "87836c9",
+      "date": "2026-03-13T16:09:12Z",
+      "subject": "Add Precision Support collapsible fields to character brainstorm",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/87836c9a860fd6da291f048536bd3821a7870540",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "e56cba2358548ddd69fd300c2e3059c45c5a07c1",
+      "shortHash": "e56cba2",
+      "date": "2026-03-13T12:02:54Z",
+      "subject": "chore(build-stream): auto-generate daily stream data + HTML",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/e56cba2358548ddd69fd300c2e3059c45c5a07c1",
+      "type": "chore",
+      "scope": "build-stream"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "1c55590b70f000bc59d09c4b8eabbf68a8f9abd3",
+      "shortHash": "1c55590",
+      "date": "2026-03-13T06:54:30Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/1c55590b70f000bc59d09c4b8eabbf68a8f9abd3",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "pantheon-os",
+      "hash": "0a197c8205538dd01c9b96460ce42861e34e895f",
+      "shortHash": "0a197c8",
+      "date": "2026-03-13T03:46:24Z",
+      "subject": "docs: add pantheonos open-source promptengines plan",
+      "author": "aikaizen",
+      "email": "aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/pantheon-os/commit/0a197c8205538dd01c9b96460ce42861e34e895f",
+      "type": "docs",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "8c61a25e2431283d71b09487f58b4f614b3b5cef",
+      "shortHash": "8c61a25",
+      "date": "2026-03-13T03:31:07Z",
+      "subject": "feat: add Save Character button on image nodes with canvas→character flow + demo script",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/8c61a25e2431283d71b09487f58b4f614b3b5cef",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "7d61556b4d9837a16b323cd3490a17e8c15a3eab",
+      "shortHash": "7d61556",
+      "date": "2026-03-13T03:15:00Z",
+      "subject": "feat: demo mode client-side images, character creator overhaul, audio under-construction",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/7d61556b4d9837a16b323cd3490a17e8c15a3eab",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "c9d8f1366dbd5de8d175af44de0e3e3e0145d742",
+      "shortHash": "c9d8f13",
+      "date": "2026-03-13T02:26:22Z",
+      "subject": "fix: insert freeze-to-new-node between connected nodes + restore images on nav return",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/c9d8f1366dbd5de8d175af44de0e3e3e0145d742",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "162caa2684102ca09e69959f68da8803c3b27a08",
+      "shortHash": "162caa2",
+      "date": "2026-03-13T02:04:42Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/162caa2684102ca09e69959f68da8803c3b27a08",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "9384be38a6da52629beac6efd86e8f22fe03aebf",
+      "shortHash": "9384be3",
+      "date": "2026-03-13T01:50:02Z",
+      "subject": "fix: deduct credits only after successful API response, not before",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/9384be38a6da52629beac6efd86e8f22fe03aebf",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "pantheon-os",
+      "hash": "24e9875e7d174f11bb4d06464d8d8ce3a136d6b6",
+      "shortHash": "24e9875",
+      "date": "2026-03-13T00:12:08Z",
+      "subject": "feat: restyle promptengines dashboard and add terminal wireframe",
+      "author": "aikaizen",
+      "email": "aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/pantheon-os/commit/24e9875e7d174f11bb4d06464d8d8ce3a136d6b6",
+      "type": "feat",
+      "scope": null
+    }
+  ],
+  "stats": {
+    "byType": {
+      "chore": 7,
+      "feat": 7,
+      "fix": 3,
+      "docs": 2,
+      "other": 1
+    },
+    "byAuthor": {
+      "github-actions[bot]": 6,
+      "aikaizen": 12,
+      "Andy Stable": 2
+    },
+    "byRepo": {
+      "promptengines-main": 12,
+      "pantheon-os": 3,
+      "videoterminal": 4,
+      "storybookstudio": 1
+    },
+    "total": 20
+  },
+  "summary": {
+    "totalCommits": 20,
+    "activeRepos": [
+      "promptengines-main",
+      "videoterminal",
+      "pantheon-os",
+      "storybookstudio"
+    ],
+    "primaryTypes": [
+      [
+        "chore",
+        7
+      ],
+      [
+        "feat",
+        7
+      ],
+      [
+        "fix",
+        3
+      ]
+    ],
+    "activeAuthors": [
+      "github-actions[bot]",
+      "aikaizen",
+      "Andy Stable"
+    ]
+  }
+}

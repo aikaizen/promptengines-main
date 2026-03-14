@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermes vs OpenClaw (Agent) — Prompt Engines Lab</title>
+  <meta name="description" content="Machine-readable comparison spec: Hermes Agent vs OpenClaw agent platform. Architecture, capabilities, use-case matrix.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.35rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .mode-badge { display: inline-block; font-size: 0.75rem; padding: 0.25rem 0.625rem; border-radius: 999px; background: var(--accent-dim); color: var(--accent); font-weight: 600; letter-spacing: 0.02em; margin-bottom: 1rem; }
+    .agent-block { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; line-height: 1.65; background: #0d1117; color: #c9d1d9; border: 1px solid #30363d; border-radius: var(--radius-sm); padding: 1.25rem 1.5rem; overflow-x: auto; margin: 1.25rem 0; white-space: pre; tab-size: 2; }
+    .agent-block .section-tag { color: #58a6ff; font-weight: 600; }
+    .agent-block .key { color: #79c0ff; }
+    .agent-block .string { color: #a5d6ff; }
+    .agent-block .bool-true { color: #3fb950; }
+    .agent-block .bool-false { color: #f85149; }
+    .agent-block .comment { color: #484f58; font-style: italic; }
+    .agent-block .dim { color: #484f58; }
+    .agent-block .highlight { color: #d2a8ff; }
+    .alt-links { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-4); }
+    .alt-links a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <span class="mode-badge">⬡ Agent</span>
+        
+        <h1>Hermes vs OpenClaw (Agent)</h1>
+        <p style="color: var(--text-3); margin-top: -0.5rem;">Machine-readable comparison. Agent parseable. Human optional.</p>
+
+        <div class="agent-block"><span class="section-tag">## COMPARISON_SPEC</span>
+<span class="dim">─────────────────────────────────────────────────────────</span>
+<span class="key">id</span>:           <span class="string">hermes-vs-openclaw</span>
+<span class="key">version</span>:      <span class="string">2026-03-14</span>
+<span class="key">type</span>:         <span class="string">platform-comparison</span>
+<span class="key">format</span>:       <span class="string">agent-readable-spec</span>
+<span class="dim">─────────────────────────────────────────────────────────</span>
+
+<span class="section-tag">## PLATFORM_A</span>
+<span class="key">name</span>:         <span class="highlight">Hermes Agent</span>
+<span class="key">org</span>:          <span class="string">Nous Research</span>
+<span class="key">repo</span>:         <span class="string">github.com/NousResearch/hermes-agent</span>
+<span class="key">stars</span>:        <span class="string">~6,800</span>
+<span class="key">license</span>:      <span class="string">MIT</span>
+<span class="key">language</span>:     <span class="string">Python 3.x</span>
+<span class="key">tagline</span>:      <span class="string">"The agent that grows with you"</span>
+
+<span class="section-tag">## PLATFORM_B</span>
+<span class="key">name</span>:         <span class="highlight">OpenClaw</span>
+<span class="key">org</span>:          <span class="string">openclaw (community)</span>
+<span class="key">repo</span>:         <span class="string">github.com/openclaw/openclaw</span>
+<span class="key">stars</span>:        <span class="string">active-dev</span>
+<span class="key">license</span>:      <span class="string">MIT</span>
+<span class="key">language</span>:     <span class="string">Node.js ≥22</span>
+<span class="key">tagline</span>:      <span class="string">"Your own personal AI assistant. The lobster way."</span></div>
+
+        <h2>Architecture Spec</h2>
+
+        <div class="agent-block"><span class="section-tag">## ARCHITECTURE</span>
+
+<span class="highlight">hermes</span>:
+  <span class="key">pattern</span>:        <span class="string">agent-centric-loop</span>
+  <span class="key">core_loop</span>:      <span class="string">receive → select_tools → execute → evaluate → store_learnings</span>
+  <span class="key">runtime</span>:        <span class="string">python</span>
+  <span class="key">interface</span>:      <span class="string">tui (terminal UI, multiline, streaming)</span>
+  <span class="key">memory_model</span>:   <span class="string">procedural-skills + user-model + session-search (FTS5)</span>
+  <span class="key">learning</span>:
+    <span class="key">autonomous_skills</span>: <span class="bool-true">true</span>
+    <span class="key">self_improvement</span>:  <span class="bool-true">true</span>
+    <span class="key">nudged_persistence</span>: <span class="bool-true">true</span>
+    <span class="key">evolutionary_opt</span>:  <span class="bool-true">true</span>  <span class="comment"># DSPy + GEPA, ~$2-10/run</span>
+  <span class="key">backends</span>:      <span class="string">[local, docker, ssh, daytona, singularity, modal]</span>
+  <span class="key">serverless_idle</span>: <span class="bool-true">true</span>  <span class="comment"># via daytona/modal</span>
+  <span class="key">research</span>:
+    <span class="key">atropos_rl</span>:        <span class="bool-true">true</span>
+    <span class="key">batch_trajectories</span>: <span class="bool-true">true</span>
+    <span class="key">trajectory_compression</span>: <span class="bool-true">true</span>
+
+<span class="highlight">openclaw</span>:
+  <span class="key">pattern</span>:        <span class="string">gateway-router</span>
+  <span class="key">core_flow</span>:      <span class="string">channel_in → gateway_route → agent_session → tool_exec → response</span>
+  <span class="key">runtime</span>:        <span class="string">node.js (pi-mono derived agent)</span>
+  <span class="key">interface</span>:      <span class="string">web-control-ui + cli + companion-apps</span>
+  <span class="key">memory_model</span>:   <span class="string">file-based (SOUL.md, AGENTS.md, MEMORY.md, daily-logs)</span>
+  <span class="key">learning</span>:
+    <span class="key">autonomous_skills</span>: <span class="bool-false">false</span>
+    <span class="key">self_improvement</span>:  <span class="bool-false">false</span>
+    <span class="key">nudged_persistence</span>: <span class="bool-false">false</span>
+    <span class="key">evolutionary_opt</span>:  <span class="bool-false">false</span>
+  <span class="key">backends</span>:      <span class="string">[local]</span>  <span class="comment"># sandbox modes available</span>
+  <span class="key">serverless_idle</span>: <span class="bool-false">false</span>  <span class="comment"># gateway runs continuously</span>
+  <span class="key">hardware</span>:
+    <span class="key">macos_app</span>:         <span class="bool-true">true</span>
+    <span class="key">ios_android_nodes</span>: <span class="bool-true">true</span>
+    <span class="key">voice_wake</span>:        <span class="bool-true">true</span>
+    <span class="key">talk_mode</span>:         <span class="bool-true">true</span>
+    <span class="key">canvas_a2ui</span>:       <span class="bool-true">true</span></div>
+
+        <h2>Capability Matrix</h2>
+
+        <div class="agent-block"><span class="section-tag">## CAPABILITIES</span>
+
+<span class="dim">dimension                  │ hermes              │ openclaw           │ winner</span>
+<span class="dim">───────────────────────────┼─────────────────────┼────────────────────┼────────</span>
+messaging_channels         │ <span class="string">6</span>                   │ <span class="highlight">40+</span>                │ <span class="bool-true">openclaw</span>
+execution_backends         │ <span class="highlight">6</span>                   │ <span class="string">1</span>                  │ <span class="bool-true">hermes</span>
+self_improving_skills      │ <span class="bool-true">true</span>                 │ <span class="bool-false">false</span>              │ <span class="bool-true">hermes</span>
+evolutionary_optimization  │ <span class="bool-true">true</span>                 │ <span class="bool-false">false</span>              │ <span class="bool-true">hermes</span>
+serverless_idle_cost       │ <span class="highlight">~$0/mo</span>               │ <span class="string">always-on</span>          │ <span class="bool-true">hermes</span>
+mobile_companion           │ <span class="bool-false">false</span>                │ <span class="bool-true">true</span>               │ <span class="bool-true">openclaw</span>
+voice_interaction          │ <span class="string">transcription only</span>   │ <span class="highlight">wake + talk</span>        │ <span class="bool-true">openclaw</span>
+visual_workspace           │ <span class="bool-false">false</span>                │ <span class="bool-true">true</span> (canvas+a2ui) │ <span class="bool-true">openclaw</span>
+research_tooling           │ <span class="highlight">atropos + RL</span>         │ <span class="string">none</span>               │ <span class="bool-true">hermes</span>
+gateway_api                │ <span class="string">cli + rpc</span>            │ <span class="highlight">websocket + hooks</span>  │ <span class="bool-true">openclaw</span>
+migration_path             │ <span class="bool-true">built-in importer</span>    │ <span class="dim">n/a</span>                │ <span class="neutral">neutral</span>
+runtime                    │ <span class="string">python</span>               │ <span class="string">node.js</span>            │ <span class="neutral">preference</span>
+license                    │ <span class="string">MIT</span>                  │ <span class="string">MIT</span>               │ <span class="neutral">tie</span></div>
+
+        <h2>Use Case Matrix</h2>
+
+        <div class="agent-block"><span class="section-tag">## USE_CASES</span>
+
+<span class="dim">scenario                                │ pick        │ rationale</span>
+<span class="dim">────────────────────────────────────────┼─────────────┼──────────────────────────────</span>
+learn_workflow_over_time                │ <span class="bool-true">hermes</span>     │ self-improving skill loop
+multi_platform_messaging                │ <span class="bool-true">openclaw</span>   │ 40+ channel integrations
+budget_deployment_5_vps                 │ <span class="bool-true">hermes</span>     │ serverless idle via daytona
+voice_camera_visual_output              │ <span class="bool-true">openclaw</span>   │ mobile nodes + canvas
+training_data_generation                │ <span class="bool-true">hermes</span>     │ atropos RL + batch trajectories
+automation_workflow_integration         │ <span class="bool-true">openclaw</span>   │ gateway API + webhooks
+agent_self_evolution                    │ <span class="bool-true">hermes</span>     │ DSPy + GEPA evolutionary search
+always_on_with_voice_wake               │ <span class="bool-true">openclaw</span>   │ voice wake on macos/ios
+research_experimentation                │ <span class="bool-true">hermes</span>     │ trajectory compression + RL envs
+broad_messaging_without_devops          │ <span class="bool-true">openclaw</span>   │ managed daemon, control UI</div>
+
+        <h2>Decision Function</h2>
+
+        <div class="agent-block"><span class="section-tag">## DECISION_RULE</span>
+
+<span class="highlight">if</span> primary_need == <span class="string">"agent_intelligence_growth"</span>:
+  <span class="highlight">→</span> <span class="bool-true">select: hermes</span>
+
+<span class="highlight">if</span> primary_need == <span class="string">"broad_channel_reach"</span>:
+  <span class="highlight">→</span> <span class="bool-true">select: openclaw</span>
+
+<span class="highlight">if</span> primary_need == <span class="string">"low_cost_always_on"</span>:
+  <span class="highlight">→</span> <span class="bool-true">select: hermes</span>       <span class="comment"># serverless idle is unique</span>
+
+<span class="highlight">if</span> primary_need == <span class="string">"hardware_voice_visual"</span>:
+  <span class="highlight">→</span> <span class="bool-true">select: openclaw</span>     <span class="comment"># mobile nodes are unique</span>
+
+<span class="highlight">if</span> primary_need == <span class="string">"research_training_data"</span>:
+  <span class="highlight">→</span> <span class="bool-true">select: hermes</span>       <span class="comment"># only option with RL integration</span>
+
+<span class="comment"># Both are MIT-licensed. Switching cost is low via hermes claw migrate.</span></div>
+
+        <h2>Migration Spec</h2>
+
+        <div class="agent-block"><span class="section-tag">## MIGRATION</span>
+
+<span class="highlight">hermes.claw_migrate</span>:
+  <span class="key">source</span>:       <span class="string">openclaw (~/.openclaw)</span>
+  <span class="key">target</span>:       <span class="string">hermes (~/.hermes)</span>
+  <span class="key">mode</span>:         <span class="string">interactive (dry-run available)</span>
+  <span class="key">presets</span>:      <span class="string">[full, user-data, secrets-only]</span>
+
+  <span class="key">transfers</span>:
+    <span class="string">SOUL.md</span>              → <span class="string">persona file</span>
+    <span class="string">MEMORY.md</span>            → <span class="string">persistent memory</span>
+    <span class="string">USER.md</span>              → <span class="string">user profile</span>
+    <span class="string">user skills</span>          → <span class="string">~/.hermes/skills/openclaw-imports/</span>
+    <span class="string">command allowlist</span>    → <span class="string">approval patterns</span>
+    <span class="string">messaging configs</span>    → <span class="string">platform settings</span>
+    <span class="string">API keys</span>             → <span class="string">allowlisted secrets</span>
+    <span class="string">TTS assets</span>           → <span class="string">workspace audio</span>
+
+  <span class="comment"># implication: hermes targets openclaw's user base as primary acquisition</span></div>
+
+        <h2>References</h2>
+
+        <div class="agent-block"><span class="section-tag">## REFERENCES</span>
+
+<span class="key">hermes_agent</span>:
+  <span class="string">https://github.com/NousResearch/hermes-agent</span>
+  <span class="string">https://hermes-agent.nousresearch.com/docs/</span>
+
+<span class="key">hermes_self_evolution</span>:
+  <span class="string">https://github.com/NousResearch/hermes-agent-self-evolution</span>
+
+<span class="key">openclaw</span>:
+  <span class="string">https://github.com/openclaw/openclaw</span>
+  <span class="string">https://docs.openclaw.ai</span>
+
+<span class="key">date</span>: <span class="string">2026-03-14</span>
+<span class="key">spec_version</span>: <span class="string">1.0</span></div>
+
+        <div class="alt-links">
+          <strong>Other versions:</strong>
+          <a href="./2026-03-14-hermes-vs-openclaw-agent-platforms.html">◉ Standard</a> ·
+          <a href="./2026-03-14-hermes-vs-openclaw-agent-platforms-v2.html">◆ Experimental</a>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" style="border-top: 1px solid var(--border-subtle); margin-top: 4rem;">
+    <div class="container" style="padding: 2rem 0; text-align: center; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab Notes — Real experiments. Published findings.</p>
+    </div>
+  </footer>
+</body>
+</html>

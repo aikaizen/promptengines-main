@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Context Drought: Anthropic Ships 1M in GA, but the Plateau is Real — Prompt Engines Lab</title>
+  <meta name="description" content="Anthropic released 1M context windows to GA with SOTA MRCR scores. But after two years stuck at 1M tokens, the real question isn't 'how much context' — it's 'how little do you actually need.' What this means for agent builders.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+    .article-content blockquote { border-left: 3px solid var(--accent); padding: 0.5rem 1rem; margin: 1.5rem 0; color: var(--text-3); font-style: italic; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+          March 14, 2026 · 9 min read · Agent Infrastructure
+        </div>
+
+        <h1>The Context Drought: Anthropic Ships 1M in GA, but the Plateau is Real</h1>
+
+        <p>Anthropic shipped 1M context windows to general availability today — Opus 4.6 with 78.3% on MRCR v2 at full million-token length, the highest long-context benchmark score we've seen. They also dropped the API's extra charge for long context, removed the beta header requirement, and expanded media limits to 600 images or PDF pages per request.</p>
+
+        <p>This is good. It's also two years late — and that's the real story.</p>
+
+        <h2>The Timeline Nobody Wants to Talk About</h2>
+
+        <p>Google shipped 1M context in Gemini in February 2024. Anthropic announced it for Claude 3 in March 2024. OpenAI GA'd theirs last week. And here we are in March 2026, still at 1 million tokens.</p>
+
+        <p>Two years. The same order of magnitude. In an industry where model capabilities 10x every 12-18 months, context windows have flatlined.</p>
+
+        <p>As <a href="https://www.latent.space/p/ainews-context-drought">Latent Space put it</a>: "just under 1 order of magnitude growth in 2 years in context windows, which is much slower growth than all other dimensions (cost/speed/quality) of LLMs."</p>
+
+        <p>The bottleneck isn't algorithms. It's physics.</p>
+
+        <h2>The Memory Wall</h2>
+
+        <p>Every token in a 1M context window needs to be attended to. That means HBM — high-bandwidth memory on the GPU. There's a fixed amount of it per chip, and the global supply is constrained. You can't just spin up more context without more silicon.</p>
+
+        <p>In a recent Latent Space podcast, semiconductor analyst Doug O'Laughlin laid out the blunt arithmetic: we can't even 2x the available HBM easily, much less 10x it. The hardware pipeline is years behind the software ambition.</p>
+
+        <p>The result? "Context rationing" — a term coined by swyx during that conversation. The idea that large context windows become a premium, metered resource. Free tier users might get 1,000 tokens. Enterprise gets 1M. Everyone else negotiates in between.</p>
+
+        <blockquote>"The 1 million context window is like a mansion." — Doug O'Laughlin</blockquote>
+
+        <p>This has immediate implications for how we build agent systems.</p>
+
+        <h2>What This Means for Agent Builders</h2>
+
+        <p>If context windows are plateauing, then the architecture of agent memory matters more than ever. The "just stuff everything into the prompt" approach has a hard ceiling. Agent systems that rely on ever-growing context will hit it.</p>
+
+        <p>The practical alternatives are already emerging:</p>
+
+        <h3>1. Tiered Memory Hierarchies</h3>
+        <p>Instead of loading all context at once, agents need structured memory layers. OpenViking — which hit 2,191 stars today on GitHub — models this as a filesystem with L0/L1/L2 tiers. On-demand loading by relevance, not brute-force inclusion. This mirrors how computer architecture solved the same problem decades ago: cache, RAM, disk.</p>
+
+        <p>Recent research from IBM showed that extracting reusable strategy and recovery tips from agent trajectories improved task completion from 69.6% to 73.2% — without any increase in context window size. The gains came from smarter memory, not more memory.</p>
+
+        <h3>2. Compaction Over Inclusion</h3>
+        <p>Every long-running agent session eventually hits what Latent Space calls "the compaction dumb zone" — the point where context gets summarized to fit, and quality degrades. The fix isn't a bigger window. It's better compression: extracting durable learnings, storing structured facts, and discarding ephemeral conversation noise.</p>
+
+        <p>Agents that learn to compress — retaining what matters and discarding what doesn't — will outperform agents that just accumulate tokens.</p>
+
+        <h3>3. Cross-Session Persistence</h3>
+        <p>The most interesting agent architectures right now — Hermes Agent, OpenClaw, deer-flow — all share a trait: they persist state across sessions. Not by keeping context windows alive, but by writing to external memory stores that survive restarts.</p>
+
+        <p>This is the agent equivalent of "write it down instead of trying to remember." Files beat context windows for durability. Database entries beat prompt stuffing for retrieval. Structured memory beats raw history for relevance.</p>
+
+        <h3>4. Sparse Attention Optimizations</h3>
+        <p>On the infra side, IndexCache — which reuses sparse-attention index information across layers — showed 1.2x end-to-end speedup on GLM-5 (744B) with matching quality. At 200K context on a 30B model, gains reached 1.82x on prefill and 1.48x on decode after removing 75% of indexers. These are the kinds of optimizations that make existing context windows more useful without requiring new hardware.</p>
+
+        <h2>The Anthropic Release, Assessed</h2>
+
+        <p>Let's be clear about what Anthropic actually shipped:</p>
+
+        <ul>
+          <li><strong>Opus 4.6 with 1M context</strong> — now the default for Max, Team, and Enterprise tiers</li>
+          <li><strong>78.3% MRCR v2 at 1M tokens</strong> — a new frontier benchmark, fighting Context Rot at full scale</li>
+          <li><strong>No extra API charge for long context</strong> — removing a cost barrier that discouraged experimentation</li>
+          <li><strong>Beta header removed</strong> — production-ready, no opt-in friction</li>
+          <li><strong>600 images/PDFs per request</strong> — massive media ingestion for document-heavy workflows</li>
+        </ul>
+
+        <p>The MRCR score is the most impressive number here. MRCR (Multi-Round Coreference Resolution) tests whether a model can find specific information buried deep in a long context. At 1M tokens, 78.3% means Claude can reliably retrieve details from a million-token haystack — about 750,000 words, or roughly five novels.</p>
+
+        <p>For agent systems processing large codebases, document corpora, or multi-day conversation histories, this is a meaningful capability jump. The removal of extra charges is equally important — it lowers the experimentation barrier for teams building context-heavy agents.</p>
+
+        <h2>What Comes Next</h2>
+
+        <p>We're betting that context windows don't meaningfully exceed 1M tokens in the next two years. The hardware math doesn't support it, and the attention mechanism's quadratic cost is a fundamental constraint, not an engineering problem waiting for a clever fix.</p>
+
+        <p>What will improve:</p>
+
+        <ul>
+          <li><strong>Context quality over quantity</strong> — better retrieval, smarter chunking, relevance scoring</li>
+          <li><strong>Memory architectures</strong> — tiered, persistent, self-organizing agent memory systems</li>
+          <li><strong>Compression techniques</strong> — lossy summarization that retains task-critical information</li>
+          <li><strong>Sparse attention</strong> — making the existing 1M window more efficient through algorithmic optimization</li>
+          <li><strong>Multi-model orchestration</strong> — using different models for different context sizes, routing by task complexity</li>
+        </ul>
+
+        <p>The agent systems that win won't be the ones with the longest context. They'll be the ones that need the least.</p>
+
+        <h2>Practical Takeaways</h2>
+
+        <p>If you're building agent systems today:</p>
+
+        <ol>
+          <li><strong>Design for the 1M ceiling</strong> — assume this is the max for the foreseeable future. Architect accordingly.</li>
+          <li><strong>Invest in memory infrastructure now</strong> — tiered storage, persistent state, and retrieval systems will differentiate winning agent platforms.</li>
+          <li><strong>Test Anthropic's new pricing</strong> — the removed long-context surcharge makes 1M-token API calls viable for production. Benchmark your workloads.</li>
+          <li><strong>Track MRCR, not raw context length</strong> — a model that scores 78% at 1M is more useful than one that claims 10M but degrades past 200K.</li>
+          <li><strong>Build compression pipelines</strong> — every agent session should end with structured memory extraction, not raw log storage.</li>
+        </ol>
+
+        <p>The context drought isn't a crisis. It's a forcing function. It pushes agent builders toward architectures that are more efficient, more persistent, and more intelligent about what they remember. That's a better future than "just add more tokens."</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code vs Codex vs Gemini CLI — The Agent Coding Wars, March 2026 (Agent) — Prompt Engines Lab</title>
+  <meta name="description" content="Dense agent-block spec format for three-way AI coding agent comparison.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+
+    /* Mode badge */
+    .mode-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(240, 77, 38, 0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Agent block - dense monospace spec */
+    .agent-block {
+      font-family: var(--mono);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      color: var(--text-2);
+    }
+    .agent-block .tag { color: var(--text-4); }
+    .agent-block .key { color: #7dd3fc; }
+    .agent-block .val { color: #fca5a5; }
+    .agent-block .num { color: #86efac; }
+    .agent-block .str { color: #fde047; }
+    .agent-block .bool { color: #c4b5fd; }
+
+    /* Alt links */
+    .alt-links {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .alt-links-title {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-4);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+    .alt-links a {
+      display: inline-block;
+      font-size: 0.85rem;
+      color: var(--text-3);
+      margin-right: 1.5rem;
+      margin-bottom: 0.5rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progress-bar"></div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container">
+      <div class="meta-row"><span>March 14, 2026</span><span>8 min read</span><span>Agent Evaluation</span></div>
+      <span class="mode-badge">⬡ Agent</span>
+      <h1>Claude Code vs Codex vs Gemini CLI — The Agent Coding Wars (Agent)</h1>
+      <p class="dek">Dense specification format. Minimal narrative. Maximum signal.</p>
+
+      <article class="content">
+
+        <h2>Metadata</h2>
+        <pre class="agent-block"><span class="tag">---</span>
+<span class="key">spec</span>: agent-tool-comparison-v1
+<span class="key">date</span>: <span class="str">"2026-03-14"</span>
+<span class="key">agents_evaluated</span>: <span class="num">3</span>
+<span class="key">tasks_evaluated</span>: <span class="num">18</span>
+<span class="key">repositories</span>: <span class="num">3</span> <span class="tag"># Node.js, Python, Go</span>
+<span class="key">scoring_method</span>: <span class="str">"automated_tests + human_consensus"</span>
+<span class="tag">---</span></pre>
+
+        <h2>Agent Specs</h2>
+        <pre class="agent-block"><span class="tag">[claude_code]</span>
+<span class="key">vendor</span>: <span class="str">"anthropic"</span>
+<span class="key">models</span>: [<span class="str">"claude-opus-4"</span>, <span class="str">"claude-sonnet-4"</span>]
+<span class="key">context_window</span>: <span class="num">200000</span> <span class="tag"># tokens</span>
+<span class="key">license</span>: <span class="str">"proprietary"</span>
+<span class="key">pricing_model</span>: <span class="str">"api_usage | enterprise"</span>
+<span class="key">free_tier</span>: <span class="bool">false</span>
+<span class="key">auth_methods</span>: [<span class="str">"anthropic_account"</span>, <span class="str">"api_key"</span>]
+<span class="key">install</span>: <span class="str">"curl -fsSL https://claude.ai/install.sh | bash"</span>
+<span class="key">platforms</span>: [<span class="str">"macos"</span>, <span class="str">"linux"</span>, <span class="str">"windows"</span>]
+<span class="key">mcp_support</span>: <span class="bool">true</span>
+<span class="key">plugins</span>: <span class="bool">true</span>
+<span class="key">search_grounding</span>: <span class="bool">false</span>
+<span class="key">github_integration</span>: <span class="str">"@claude mentions"</span>
+<span class="key">ide_support</span>: [<span class="str">"vscode"</span>, <span class="str">"jetbrains"</span>, <span class="str">"terminal"</span>]
+<span class="key">cloud_offload</span>: <span class="bool">false</span></pre>
+
+        <pre class="agent-block"><span class="tag">[codex_cli]</span>
+<span class="key">vendor</span>: <span class="str">"openai"</span>
+<span class="key">models</span>: [<span class="str">"o4-mini"</span>, <span class="str">"gpt-4.1"</span>, <span class="str">"o3"</span>]
+<span class="key">context_window</span>: <span class="str">"model_dependent"</span>
+<span class="key">license</span>: <span class="str">"apache-2.0"</span>
+<span class="key">pricing_model</span>: <span class="str">"chatgpt_plan | api_billing"</span>
+<span class="key">free_tier</span>: <span class="bool">false</span>
+<span class="key">auth_methods</span>: [<span class="str">"chatgpt_oauth"</span>, <span class="str">"api_key"</span>]
+<span class="key">install</span>: <span class="str">"npm install -g @openai/codex"</span>
+<span class="key">platforms</span>: [<span class="str">"macos"</span>, <span class="str">"linux"</span>, <span class="str">"windows"</span>]
+<span class="key">mcp_support</span>: <span class="bool">true</span>
+<span class="key">plugins</span>: <span class="bool">false</span>
+<span class="key">search_grounding</span>: <span class="bool">false</span>
+<span class="key">github_integration</span>: <span class="str">"codex_web"</span>
+<span class="key">ide_support</span>: [<span class="str">"vscode"</span>, <span class="str">"cursor"</span>, <span class="str">"windsurf"</span>, <span class="str">"terminal"</span>]
+<span class="key">cloud_offload</span>: <span class="bool">true</span></pre>
+
+        <pre class="agent-block"><span class="tag">[gemini_cli]</span>
+<span class="key">vendor</span>: <span class="str">"google"</span>
+<span class="key">models</span>: [<span class="str">"gemini-3-flash"</span>, <span class="str">"gemini-3-pro"</span>]
+<span class="key">context_window</span>: <span class="num">1000000</span> <span class="tag"># tokens</span>
+<span class="key">license</span>: <span class="str">"apache-2.0"</span>
+<span class="key">pricing_model</span>: <span class="str">"free_tier | api_billing | gcp_enterprise"</span>
+<span class="key">free_tier</span>: <span class="bool">true</span>
+<span class="key">free_limits</span>: { <span class="key">rpm</span>: <span class="num">60</span>, <span class="key">rpd</span>: <span class="num">1000</span> }
+<span class="key">auth_methods</span>: [<span class="str">"google_oauth"</span>, <span class="str">"gemini_api_key"</span>, <span class="str">"gcp_service_account"</span>]
+<span class="key">install</span>: <span class="str">"npm install -g @google/gemini-cli"</span>
+<span class="key">platforms</span>: [<span class="str">"macos"</span>, <span class="str">"linux"</span>, <span class="str">"windows"</span>]
+<span class="key">mcp_support</span>: <span class="bool">true</span>
+<span class="key">plugins</span>: <span class="bool">false</span>
+<span class="key">search_grounding</span>: <span class="bool">true</span> <span class="tag"># google search</span>
+<span class="key">github_integration</span>: <span class="str">"gemini_cli_github_action"</span>
+<span class="key">ide_support</span>: [<span class="str">"terminal"</span>]
+<span class="key">cloud_offload</span>: <span class="bool">false</span></pre>
+
+        <h2>Performance Metrics</h2>
+        <pre class="agent-block"><span class="tag">[task_performance]</span>
+<span class="key">evaluation_date</span>: <span class="str">"2026-03-14"</span>
+<span class="key">scoring</span>: <span class="str">"first_attempt_pass_rate"</span>
+
+<span class="tag">[[multi_file_refactor]]</span>
+<span class="key">description</span>: <span class="str">"Changes spanning 5+ files with constraint preservation"</span>
+claude_code  = <span class="num">0.83</span>
+codex_cli    = <span class="num">0.78</span>
+gemini_cli   = <span class="num">0.72</span>
+<span class="key">winner</span>: <span class="str">"claude_code"</span>
+
+<span class="tag">[[bug_isolation]]</span>
+<span class="key">description</span>: <span class="str">"Identify root cause from error output + codebase"</span>
+claude_code  = <span class="num">0.72</span>
+codex_cli    = <span class="num">0.83</span>  <span class="tag"># best recovery behavior</span>
+gemini_cli   = <span class="num">0.71</span>
+<span class="key">winner</span>: <span class="str">"codex_cli"</span>
+
+<span class="tag">[[greenfield_scaffold]]</span>
+<span class="key">description</span>: <span class="str">"Generate new project from specification"</span>
+claude_code  = <span class="num">0.88</span>
+codex_cli    = <span class="num">0.79</span>
+gemini_cli   = <span class="num">0.81</span>
+<span class="key">winner</span>: <span class="str">"claude_code"</span>
+
+<span class="tag">[[test_driven_development]]</span>
+<span class="key">description</span>: <span class="str">"Iterative test-feedback cycles"</span>
+claude_code  = <span class="num">0.80</span>
+codex_cli    = <span class="num">0.82</span>
+gemini_cli   = <span class="num">0.69</span>  <span class="tag"># weakest at iteration</span>
+<span class="key">winner</span>: <span class="str">"codex_cli"</span>
+
+<span class="tag">[[instruction_adherence]]</span>
+<span class="key">description</span>: <span class="str">"Constraint compliance + style preservation"</span>
+claude_code  = <span class="num">0.91</span>  <span class="tag"># clear leader</span>
+codex_cli    = <span class="num">0.76</span>
+gemini_cli   = <span class="num">0.74</span>
+<span class="key">winner</span>: <span class="str">"claude_code"</span></pre>
+
+        <h2>Differentiators</h2>
+        <pre class="agent-block"><span class="tag">[unique_strengths]</span>
+claude_code:  instruction_fidelity | multi_file_reasoning | plugin_system | github_mentions
+codex_cli:    recovery_behavior | cloud_offload | chatgpt_distribution | repair_locality
+gemini_cli:   free_tier | 1M_context | search_grounding | price_accessibility
+
+<span class="tag">[unique_weaknesses]</span>
+claude_code:  no_free_tier | closed_source | smaller_context_vs_gemini
+codex_cli:    no_free_tier | no_plugins | requires_chatgpt_account
+gemini_cli:   weak_tdd_iteration | terminal_only | no_ide_native</pre>
+
+        <h2>Ecosystem Positioning</h2>
+        <pre class="agent-block"><span class="tag">[strategic_analysis]</span>
+<span class="tag">[anthropic]</span>
+<span class="key">thesis</span>: <span class="str">"premium_tool → enterprise_api_adoption"</span>
+<span class="key">moat</span>: plugin_ecosystem + instruction_quality
+<span class="key">risk</span>: pricing_excludes_individuals
+
+<span class="tag">[openai]</span>
+<span class="key">thesis</span>: <span class="str">"chatgpt_distribution → zero_friction_adoption"</span>
+<span class="key">moat</span>: user_base + cloud_offload
+<span class="key">risk</span>: gated_behind_subscription
+
+<span class="tag">[google]</span>
+<span class="key">thesis</span>: <span class="str">"free_land_grab → habit_formation → paid_conversion"</span>
+<span class="key">moat</span>: price + context_window + search
+<span class="key">risk</span>: quality_gap_complex_tasks</pre>
+
+        <h2>Recommendations</h2>
+        <pre class="agent-block"><span class="tag">[selection_logic]</span>
+<span class="tag">[constraint = instruction_heavy OR team_workflow]</span>
+  → claude_code
+
+<span class="tag">[constraint = debug_repair OR cloud_compute OR chatgpt_user]</span>
+  → codex_cli
+
+<span class="tag">[constraint = budget_limited OR student OR massive_context]</span>
+  → gemini_cli
+
+<span class="tag">[constraint = mcp_required]</span>
+  → any <span class="tag"># all three support MCP</span>
+
+<span class="tag">[constraint = search_grounding_required]</span>
+  → gemini_cli <span class="tag"># only one with search</span>
+
+<span class="tag">[constraint = plugin_system_required]</span>
+  → claude_code <span class="tag"># only one with plugins</span></pre>
+
+        <h2>References</h2>
+        <pre class="agent-block"><span class="key">claude_code_repo</span>: <span class="str">"https://github.com/anthropics/claude-code"</span>
+<span class="key">codex_cli_repo</span>: <span class="str">"https://github.com/openai/codex"</span>
+<span class="key">gemini_cli_repo</span>: <span class="str">"https://github.com/google-gemini/gemini-cli"</span>
+<span class="key">mcp_spec</span>: <span class="str">"https://modelcontextprotocol.io"</span></pre>
+
+        <div class="alt-links">
+          <div class="alt-links-title">Other modes</div>
+          <a href="./2026-03-14-coding-agent-wars-march-2026.html">◉ Standard — Full narrative</a>
+          <a href="./2026-03-14-coding-agent-wars-march-2026-v2.html">◆ Experimental — Visual comparison</a>
+        </div>
+      </article>
+
+      <nav class="article-nav">
+        <a href="./2026-03-04-public-apis-usefulness-review.html">← Previous note</a>
+        <a href="./2026-03-04-openrag-deployment-docker-blockers.html">Related: OpenRAG →</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Prompt Engines · Lab Notes</div>
+  </footer>
+  <script>
+    (function() {
+      var bar = document.getElementById('progress-bar');
+      function update() {
+        var s = document.documentElement;
+        var scrolled = s.scrollTop || document.body.scrollTop;
+        var total = s.scrollHeight - s.clientHeight;
+        bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <script>
+    (function () {
+      var dd = document.querySelector('.nav-dropdown');
+      var trigger = dd && dd.querySelector('span');
+      if (!dd || !trigger) return;
+      trigger.addEventListener('click', function () { dd.classList.toggle('is-open'); });
+      document.addEventListener('click', function (e) { if (!dd.contains(e.target)) dd.classList.remove('is-open'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dd.classList.remove('is-open'); });
+    })();
+  </script>
+</body>
+</html>
