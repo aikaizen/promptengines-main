@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Prompt Engines — Applied AI Lab</title>
   <meta
     name="description"
@@ -570,6 +570,16 @@
       min-height: 322px;
     }
 
+    .hero-actions-cta {
+      margin-top: 8px;
+    }
+
+    .hero-actions-cta .btn {
+      padding: 14px 28px;
+      font-size: 13px;
+      min-height: 52px;
+    }
+
     @media (max-width: 900px) {
       .hero {
         padding: 40px 0 50px;
@@ -595,6 +605,19 @@
         font-size: 10px;
         padding: 6px 12px;
       }
+
+      .hero-actions-cta {
+        flex-wrap: wrap;
+        overflow-x: visible;
+        margin-right: 0;
+        padding-right: 0;
+      }
+
+      .hero-actions-cta .btn {
+        flex: 1 1 calc(50% - 5px);
+        min-width: 140px;
+        justify-content: center;
+      }
     }
 
     @media (max-width: 680px) {
@@ -612,6 +635,17 @@
         line-height: 1.55;
       }
 
+      .hero-actions-cta {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .hero-actions-cta .btn {
+        flex: none;
+        width: 100%;
+        max-width: 320px;
+      }
+
       .hero-terminal {
         min-height: 240px;
         border-radius: 10px;
@@ -627,20 +661,6 @@
 
       .terminal-line {
         font-size: 10px;
-      }
-
-      .rotator-line {
-        font-size: 10px;
-        padding: 8px 12px;
-        flex-wrap: wrap;
-        gap: 6px;
-        max-width: 100%;
-      }
-
-      .rotator-value {
-        min-width: auto;
-        font-size: 10px;
-        max-width: 100%;
       }
     }
 
@@ -2013,17 +2033,9 @@
             Prompt Engines is a lab of humans and agents, prototyping and deploying practical software, media systems, and internal tools.
             We ship constantly, document what works, and keep the surface close to the work.
           </p>
-          <div class="rotator-line" aria-live="polite">
-            <span>Track:</span>
-            <span class="rotator-value" id="rotator-value">Kaizen</span>
-          </div>
-          <div class="hero-actions">
-            <a href="https://kaizen.promptengines.com" class="btn btn-product" target="_blank" data-track="Kaizen">Kaizen</a>
-            <a href="https://storybookstudio.promptengines.com" class="btn btn-product" target="_blank" data-track="Storybook Studio">Storybook Studio</a>
-            <a href="https://videoterminal.promptengines.com" class="btn btn-product" target="_blank" data-track="Video Terminal">Video Terminal</a>
-            <a href="https://norbu.promptengines.com" class="btn btn-product" target="_blank" data-track="Norbu">Norbu</a>
-            <a href="https://lab.promptengines.com" class="btn btn-product" target="_blank" data-track="Lab">Lab</a>
-            <a href="https://consulting.promptengines.com" class="btn btn-product" target="_blank" data-track="Consulting">Consulting</a>
+          <div class="hero-actions hero-actions-cta">
+            <a href="https://lab.promptengines.com" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Explore Lab</a>
+            <a href="https://lab.promptengines.com/articles/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Read Articles</a>
           </div>
         </div>
 
