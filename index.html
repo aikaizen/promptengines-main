@@ -1076,7 +1076,7 @@
     @media (max-width: 1080px) {
       .hero-grid,
       .follow-card {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
 
       .weekly-chip {
@@ -1086,11 +1086,11 @@
 
     @media (max-width: 900px) {
       .activity-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
 
       .flow-info-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
 
       .nav-inner {
@@ -1141,13 +1141,7 @@
 
     @media (max-width: 680px) {
       .container {
-        width: calc(100% - 40px);
-        max-width: 100%;
-        overflow: hidden;
-      }
-
-      .hero-grid {
-        overflow: hidden;
+        width: calc(100% - 32px);
       }
 
       .hero-lead {

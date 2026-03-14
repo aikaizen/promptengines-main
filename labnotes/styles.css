@@ -689,7 +689,7 @@ body::after {
    ═══════════════════════════════════════════ */
 @media (max-width: 900px) {
   .hero-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 32px;
   }
 
@@ -700,11 +700,11 @@ body::after {
   .hero-stat { flex: 1; }
 
   .featured-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .post-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .archive-item {
