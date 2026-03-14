@@ -134,6 +134,11 @@
       color: var(--muted);
       width: fit-content;
       align-self: flex-end;
+      max-width: 100%;
+      flex-shrink: 1;
+      min-width: 0;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
 
     .weekly-dot {
@@ -415,13 +420,17 @@
       letter-spacing: 0.09em;
       color: var(--muted);
       margin-bottom: 30px;
+      max-width: 100%;
+      flex-wrap: wrap;
     }
 
     .rotator-value {
       color: var(--accent);
-      min-width: 120px;
+      min-width: min(120px, 30vw);
       display: inline-block;
       transition: opacity 0.25s ease;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
 
     .hero-actions {
@@ -603,11 +612,13 @@
         padding: 8px 12px;
         flex-wrap: wrap;
         gap: 6px;
+        max-width: 100%;
       }
 
       .rotator-value {
         min-width: auto;
         font-size: 10px;
+        max-width: 100%;
       }
     }
 
@@ -623,6 +634,9 @@
       font-size: 10px;
       color: var(--muted);
       background: rgba(10, 17, 30, 0.8);
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 44px;
     }
 
     .terminal-dots {
@@ -844,6 +858,7 @@
       display: flex;
       gap: 10px;
       align-items: baseline;
+      min-width: 0;
     }
 
     .commit-line:last-child {
@@ -855,7 +870,9 @@
       font-size: 10px;
       color: var(--muted);
       white-space: nowrap;
-      min-width: 62px;
+      min-width: min(62px, 20vw);
+      max-width: 30%;
+      flex-shrink: 0;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
@@ -866,6 +883,8 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      min-width: 0;
+      flex: 1;
     }
 
     .follow {
