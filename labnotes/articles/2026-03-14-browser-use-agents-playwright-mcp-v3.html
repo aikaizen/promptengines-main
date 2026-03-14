@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser-Use Agents in the Playwright MCP Era (Agent) — Prompt Engines Lab</title>
+  <meta name="description" content="Agent-readable specification: browser-use agent architecture, MCP integration, reliability data.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h1 { font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.25rem; font-weight: 700; }
+    .article-content p { line-height: 1.5; margin: 0.75rem 0; color: var(--text-3); font-size: 0.85rem; }
+    .mode-badge { display: inline-block; font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; margin-left: 0.5rem; vertical-align: middle; }
+    .agent-block { font-family: var(--mono); font-size: 0.8rem; line-height: 1.65; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.5rem; margin: 1.25rem 0; white-space: pre-wrap; color: var(--text-2); tab-size: 2; }
+    .agent-block .key { color: var(--accent); }
+    .agent-block .sigil { color: var(--accent); }
+    .agent-block .status { color: #4ade80; }
+    .agent-block .warn { color: #fbbf24; }
+    .agent-block .fail { color: #ef4444; }
+    .agent-block .dim { color: var(--text-4); }
+    .agent-block .val { color: var(--text); }
+    .section-label { font-family: var(--mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-4); margin: 2.5rem 0 0.5rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border-subtle); }
+    .alt-links { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .alt-links a { display: block; font-family: var(--mono); font-size: 0.8rem; color: var(--text-4); text-decoration: none; padding: 0.4rem 0; transition: color 0.2s; }
+    .alt-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div style="color: var(--text-4); font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.5rem;">
+          2026-03-14 · Lab Notes <span class="mode-badge">⬡ Agent</span>
+        </div>
+
+        <h1>Browser-Use Agents: Agent-Readable Spec</h1>
+
+        <div class="section-label">§1 — Context</div>
+
+        <div class="agent-block"><span class="key">DOMAIN</span>:    Browser automation for AI agents
+<span class="key">PROTOCOL</span>:  Model Context Protocol (MCP)
+<span class="key">TOOL</span>:      Playwright MCP Server (Microsoft)
+<span class="key">STATUS</span>:     <span class="status">Production-ready for single-step tasks</span>
+<span class="key">GAP</span>:        <span class="warn">Multi-step workflow reliability (60%)</span>
+<span class="key">DATE</span>:       2026-03-14</div>
+
+        <div class="section-label">§2 — Architecture</div>
+
+        <div class="agent-block"><span class="key">INPUT</span>:     MCP snapshot (ARIA tree + visible text)
+<span class="key">NOT</span>:       Raw HTML / DOM tree
+<span class="key">ACTIONS</span>:   click | type | select | scroll | navigate
+<span class="key">PRIMITIVES</span>:
+  <span class="dim">→</span> <span class="val">snapshot</span>        <span class="dim"># Capture page state (semantic)</span>
+  <span class="dim">→</span> <span class="val">act(click, ref)</span> <span class="dim"># Click element by ARIA reference</span>
+  <span class="dim">→</span> <span class="val">act(type, ref)</span>  <span class="dim"># Type into input field</span>
+  <span class="dim">→</span> <span class="val">wait(ms)</span>        <span class="dim"># Wait for async content</span>
+  <span class="dim">→</span> <span class="val">navigate(url)</span>   <span class="dim"># Go to URL</span>
+
+<span class="key">MULTI-TAB</span>: <span class="status">Supported</span> — agents can track + switch contexts
+<span class="key">AUTH</span>:      <span class="status">Supported</span> — persistent browser profiles with cookies</div>
+
+        <div class="section-label">§3 — Reliability Data</div>
+
+        <div class="agent-block"><span class="key">TASK</span>                    <span class="key">SUCCESS</span>   <span class="key">TIME</span>     <span class="key">NOTES</span>
+─────────────────────────────────────────────────────────────
+<span class="val">Form filling</span>              <span class="status">92%</span>       <span class="val">30s</span>      Structured forms
+<span class="val">Login flows</span>               <span class="warn">85%</span>       <span class="val">45s</span>      Fails on CAPTCHA/2FA
+<span class="val">Data extraction</span>           <span class="status">88%</span>       <span class="val">60s</span>      Tables/lists reliable
+<span class="val">SPA navigation</span>            <span class="warn">70%</span>       <span class="val">90s</span>      Timing issues
+<span class="val">Multi-step workflows</span>      <span class="fail">60%</span>       <span class="val">180s</span>     Error accumulation
+
+<span class="key">COMPOUND</span>: 5-step workflow = 0.9^5 = <span class="fail">59%</span>
+<span class="dim">Each step independent ~90% reliability → exponential failure</span></div>
+
+        <div class="section-label">§4 — Failure Modes</div>
+
+        <div class="agent-block"><span class="key">F1</span>: <span class="warn">TIMING</span>
+  <span class="dim">→ SPA content loads after page event</span>
+  <span class="dim">→ Agent clicks before element ready</span>
+  <span class="dim">→ Fix: explicit wait() calls before actions</span>
+
+<span class="key">F2</span>: <span class="fail">DETECTION</span>
+  <span class="dim">→ Cloudflare / Datadome flag automated browsers</span>
+  <span class="dim">→ Playwright stealth mode insufficient</span>
+  <span class="dim">→ Fix: residential proxies or HITL pattern</span>
+
+<span class="key">F3</span>: <span class="warn">NOISE</span>
+  <span class="dim">→ Cookie banners, notification prompts, popups</span>
+  <span class="dim">→ Agent treats overlays as page content</span>
+  <span class="dim">→ Fix: dismiss-before-interact heuristics</span>
+
+<span class="key">F4</span>: <span class="fail">RECOVERY</span>
+  <span class="dim">→ No human intuition to reroute on failure</span>
+  <span class="dim">→ Fix: retry with fallback strategies</span></div>
+
+        <div class="section-label">§5 — Converging Trends</div>
+
+        <div class="agent-block"><span class="key">T1</span>: <span class="val">Vision-Language Models</span>
+  <span class="dim">→ Screenshot + click as alternative to ARIA</span>
+  <span class="dim">→ Useful when accessibility semantics poor</span>
+
+<span class="key">T2</span>: <span class="val">Agent Memory</span>
+  <span class="dim">→ Store site-specific navigation patterns</span>
+  <span class="dim">→ "GitHub merge button: green, bottom-right"</span>
+  <span class="dim">→ Reduces exploration on repeat visits</span>
+
+<span class="key">T3</span>: <span class="val">Session Replay</span>
+  <span class="dim">→ Record successful navigation paths</span>
+  <span class="dim">→ Replay → fallback to exploration on drift</span></div>
+
+        <div class="section-label">§6 — Implementation Guidance</div>
+
+        <div class="agent-block"><span class="key">RULES</span>:
+  <span class="sigil">1.</span> Use Playwright MCP as primary browser integration
+  <span class="sigil">2.</span> Design for partial failure (retry + recovery per step)
+  <span class="sigil">3.</span> Prefer APIs over browser when available
+  <span class="sigil">4.</span> Cache site knowledge persistently
+  <span class="sigil">5.</span> Use wait() before every action on SPAs
+  <span class="sigil">6.</span> Expect 60% success on 5+ step workflows
+  <span class="sigil">7.</span> Consider HITL for critical multi-step flows</div>
+
+        <div class="alt-links">
+          <a href="./2026-03-14-browser-use-agents-playwright-mcp.html">◉ Standard version</a>
+          <a href="./2026-03-14-browser-use-agents-playwright-mcp-v2.html">◆ Experimental version</a>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="section" style="border-top: 1px solid var(--border); padding: 2rem 0; margin-top: 3rem;">
+    <div style="max-width: 720px; margin: 0 auto; padding: 0 1.5rem; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab — <a href="https://lab.promptengines.com">lab.promptengines.com</a></p>
+    </div>
+  </footer>
+</body>
+</html>
