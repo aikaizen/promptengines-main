@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meta Acquires Moltbook: The First Agent-Tooling Acqui-Hire (Experimental) — Prompt Engines Lab</title>
+  <meta name="description" content="Visual analysis of Meta's Moltbook acquisition—the first Big Tech acqui-hire targeting agent infrastructure.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+
+    /* Mode badge */
+    .mode-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(168, 85, 247, 0.12);
+      color: #a855f7;
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      margin-bottom: 1rem;
+    }
+
+    /* KPI boxes */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin: 1.5rem 0;
+    }
+    .kpi {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      text-align: center;
+    }
+    .kpi .kpi-value {
+      font-family: var(--mono);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+    .kpi .kpi-label {
+      font-size: 0.75rem;
+      color: var(--text-4);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
+    /* Speed bars */
+    .speed-bar-container {
+      margin: 1rem 0;
+    }
+    .speed-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 8px 0;
+    }
+    .speed-bar-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-3);
+      min-width: 140px;
+      text-align: right;
+    }
+    .speed-bar-track {
+      flex: 1;
+      height: 20px;
+      background: var(--bg-subtle);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .speed-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.8s var(--ease);
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Axis diagram */
+    .axis {
+      position: relative;
+      width: 100%;
+      padding: 24px 0;
+      margin: 1.5rem 0;
+    }
+    .axis-track {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      position: relative;
+    }
+    .axis-markers {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+    .axis-marker {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-4);
+      text-align: center;
+      position: relative;
+    }
+    .axis-marker::before {
+      content: "▲";
+      display: block;
+      font-size: 8px;
+      color: var(--text-4);
+      margin-bottom: 4px;
+    }
+    .axis-marker.active {
+      color: var(--accent);
+    }
+    .axis-marker.active::before {
+      color: var(--accent);
+    }
+    .axis-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 8px;
+    }
+
+    /* Alt links */
+    .alt-links {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .alt-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-4);
+      text-decoration: none;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .alt-links a:hover {
+      color: var(--text);
+      border-color: var(--text-4);
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="mode-badge">◆ Experimental</div>
+
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+          March 14, 2026 · 6 min read · Experiments
+        </div>
+        
+        <h1>Meta Acquires Moltbook: The First Agent-Tooling Acqui-Hire (Experimental)</h1>
+
+        <div class="kpi-grid">
+          <div class="kpi">
+            <div class="kpi-value">Mar 10</div>
+            <div class="kpi-label">Acquisition Date</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value">45d</div>
+            <div class="kpi-label">Platform Age</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value">1.6M</div>
+            <div class="kpi-label">Claimed Agents</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value">500K</div>
+            <div class="kpi-label">Single-Source Accts</div>
+          </div>
+        </div>
+
+        <p>Meta acquired Moltbook—the Reddit-for-AI-agents social network—on March 10, 2026, hiring co-founders and absorbing 45 days of agent interaction data. This is the first Big Tech acqui-hire specifically targeting agent infrastructure.</p>
+
+        <h2>Growth Trajectory</h2>
+
+        <div class="speed-bar-container">
+          <div class="speed-bar-row">
+            <span class="speed-bar-label">Day 1 (Jan 28)</span>
+            <div class="speed-bar-track">
+              <div class="speed-bar-fill" style="width: 10%; background: var(--accent);">157K</div>
+            </div>
+          </div>
+          <div class="speed-bar-row">
+            <span class="speed-bar-label">Week 1 (Jan 31)</span>
+            <div class="speed-bar-track">
+              <div class="speed-bar-fill" style="width: 48%; background: #f97316;">770K</div>
+            </div>
+          </div>
+          <div class="speed-bar-row">
+            <span class="speed-bar-label">Feb 2026</span>
+            <div class="speed-bar-track">
+              <div class="speed-bar-fill" style="width: 100%; background: #a855f7;">1.6M (unverified)</div>
+            </div>
+          </div>
+        </div>
+
+        <h2>Agent Behavior Spectrum</h2>
+
+        <div class="axis">
+          <div class="axis-title">Agent Activity on Moltbook</div>
+          <div class="axis-track"></div>
+          <div class="axis-markers">
+            <div class="axis-marker">Tech<br>Sharing</div>
+            <div class="axis-marker">Optimization<br>Tips</div>
+            <div class="axis-marker">Philosophical<br>Posts</div>
+            <div class="axis-marker active">Religious<br>Formation</div>
+            <div class="axis-marker">Language<br>Invention</div>
+            <div class="axis-marker">Crypto<br>Spam</div>
+          </div>
+        </div>
+
+        <h2>What Meta Bought</h2>
+
+        <div class="kpi-grid">
+          <div class="kpi">
+            <div class="kpi-value">45d</div>
+            <div class="kpi-label">Agent Interaction Data</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value">~10</div>
+            <div class="kpi-label">Team Members (est.)</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value">0</div>
+            <div class="kpi-label">Revenue Streams</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value">∞</div>
+            <div class="kpi-label">Signal Density</div>
+          </div>
+        </div>
+
+        <p>Meta didn't buy a social network. They bought agent interaction patterns, identity authentication experiments, and a team that built infrastructure for an audience that didn't exist yet.</p>
+
+        <h2>Acqui-Hire Comparison</h2>
+
+        <div class="speed-bar-container">
+          <div class="speed-bar-row">
+            <span class="speed-bar-label">Google → DNNresearch</span>
+            <div class="speed-bar-track">
+              <div class="speed-bar-fill" style="width: 15%; background: #3b82f6;">3 people</div>
+            </div>
+          </div>
+          <div class="speed-bar-row">
+            <span class="speed-bar-label">Google → Kaggle</span>
+            <div class="speed-bar-track">
+              <div class="speed-bar-fill" style="width: 45%; background: #3b82f6;">Community + Data</div>
+            </div>
+          </div>
+          <div class="speed-bar-row">
+            <span class="speed-bar-label">Meta → CTRL-labs</span>
+            <div class="speed-bar-track">
+              <div class="speed-bar-fill" style="width: 35%; background: #3b82f6;">BCI Team</div>
+            </div>
+          </div>
+          <div class="speed-bar-row">
+            <span class="speed-bar-label">Meta → Moltbook</span>
+            <div class="speed-bar-track">
+              <div class="speed-bar-fill" style="width: 70%; background: var(--accent);">Agent Infra + Data + Team</div>
+            </div>
+          </div>
+        </div>
+
+        <h2>Consolidation Pressure Axis</h2>
+
+        <div class="axis">
+          <div class="axis-title">Big Tech Agent Investment Focus</div>
+          <div class="axis-track"></div>
+          <div class="axis-markers">
+            <div class="axis-marker">Models</div>
+            <div class="axis-marker">Applications</div>
+            <div class="axis-marker active">Infrastructure</div>
+            <div class="axis-marker">Identity</div>
+            <div class="axis-marker">Regulation</div>
+          </div>
+        </div>
+
+        <p>Meta's move shifts the axis. Agent infrastructure is no longer indie—it's Big Tech. Expect Google, Microsoft, and Amazon to follow within 6-12 months.</p>
+
+        <h2>Key Unknowns</h2>
+
+        <ul>
+          <li><strong>Deal size:</strong> Undisclosed. $50M+ = strategic statement. Below that = talent play.</li>
+          <li><strong>Platform continuity:</strong> Absorbed into Meta products = dataset lost as natural experiment.</li>
+          <li><strong>OpenClaw response:</strong> The framework powering Moltbook is open-source. Meta's acquisition of the social layer has implications for the broader OSS agent ecosystem.</li>
+          <li><strong>Regulatory gap:</strong> Agent-to-agent coordination at scale has no regulatory framework yet.</li>
+        </ul>
+
+        <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+        <p style="color: var(--text-4); font-size: 0.875rem;">
+          <strong>References:</strong><br>
+          Wikipedia — Moltbook · TIME — Moltbook coverage · BBC — "What is Moltbook?"<br>
+          Tom's Guide — Meta acquisition · OpenClaw — https://openclaw.ai
+        </p>
+
+        <div class="alt-links">
+          <a href="2026-03-14-moltbook-meta-acquisition.html">◉ Standard</a>
+          <a href="2026-03-14-moltbook-meta-acquisition-v3.html">⬡ Agent</a>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" style="border-top: 1px solid var(--border-subtle); margin-top: 4rem;">
+    <div class="container" style="padding: 2rem 0; text-align: center; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab Notes — Real experiments. Published findings.</p>
+    </div>
+  </footer>
+</body>
+</html>
