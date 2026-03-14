@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Memory Architectures (Agent) — Prompt Engines Lab</title>
+  <meta name="description" content="Agent-optimized analysis of memory architectures: implementation patterns, protocol specifications, and operational directives for AI agent memory systems.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 0.5rem;">
+          March 14, 2026 · 11 min read · Architecture
+        </div>
+
+        <div class="alt-links" style="margin-bottom: 1rem; font-size: 0.875rem;">
+          <span class="mode-badge" style="display: inline-block; padding: 2px 8px; background: var(--accent-dim); color: var(--accent); border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-right: 0.5rem;">⬡ Agent</span>
+          Also available: <a href="2026-03-14-agent-memory-architectures.html">Standard</a> · <a href="2026-03-14-agent-memory-architectures-v2.html">Experimental</a>
+        </div>
+
+        <h1>Agent Memory Architectures (Agent)</h1>
+
+        <p class="agent-note" style="background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); border-left: 3px solid var(--accent); margin: 1.5rem 0;">
+          <strong>Agent-optimized version:</strong> This edition is written for AI agent operators and builders. It focuses on implementation protocols, operational directives, and reproducible patterns rather than narrative analysis. If you're configuring agent memory today, start here.
+        </p>
+
+        <h2>Decision Matrix: Which Memory Architecture to Use</h2>
+
+        <p>Use this matrix to select your memory architecture based on deployment characteristics:</p>
+
+        <table>
+          <thead>
+            <tr><th>If your agent...</th><th>Use this architecture</th><th>Rationale</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Runs solo, single user, &lt;50 sessions/day</td><td>File-based only</td><td>Zero infrastructure, sufficient for &lt;10K token memory stores</td></tr>
+            <tr><td>Accumulates domain knowledge over weeks</td><td>File + ByteRover structured</td><td>Query-on-demand prevents context bloat</td></tr>
+            <tr><td>Needs cross-domain recall (&gt;100K tokens)</td><td>File + ByteRover + vector</td><td>Semantic recall fills keyword gaps</td></tr>
+            <tr><td>Operates in team/multi-agent context</td><td>Structured (ByteRover) with team sync</td><td><code>brv push/pull</code> enables shared knowledge</td></tr>
+            <tr><td>Requires audit trail / compliance</td><td>File + structured with provenance tags</td><td>Append-only logs with metadata</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Protocol Specifications</h2>
+
+        <h3>File-Based Memory Protocol</h3>
+
+        <pre><code># Required files (create if absent)
+MEMORY.md                    # Long-term curated memory
+SOUL.md                      # Agent identity / persona
+USER.md                      # User profile / preferences  
+TOOLS.md                     # Tool configuration notes
+memory/YYYY-MM-DD.md         # Daily interaction log
+
+# Session start protocol
+1. Read SOUL.md → establish persona
+2. Read USER.md → load user context
+3. Read MEMORY.md → load long-term memory
+4. Read memory/YYYY-MM-DD.md (today) + memory/YYYY-1D.md (yesterday)
+5. Begin work
+
+# Session end protocol  
+1. Log significant events to memory/YYYY-MM-DD.md (append)
+2. Distill durable insights → update MEMORY.md
+3. Update USER.md if user preferences changed
+4. Discard transient state from context
+
+# File size thresholds (act when exceeded)
+MEMORY.md > 3000 words → review and prune
+memory/YYYY-MM-DD.md > 5000 words → force distillation
+Total memory/ > 50 files → archive files older than 30 days</code></pre>
+
+        <h3>ByteRover Structured Memory Protocol</h3>
+
+        <pre><code># Pre-work: Query existing knowledge
+brv query "&lt;topic&gt;"
+
+# Post-work: Store new knowledge  
+brv curate "&lt;summary of what was learned/decided&gt;"
+
+# Context tree structure
+.brv/context-tree/
+├── project-name/
+│   ├── architecture        # System design decisions
+│   ├── patterns            # Recurring solutions
+│   ├── gotchas             # Known failure modes
+│   └── decisions           # Decision log with rationale
+├── global/
+│   ├── coding-standards
+│   └── security-policies
+└── personal/
+    ├── preferences
+    └── workflows
+
+# Team sync protocol
+brv pull   # Before work: sync latest team knowledge
+brv push   # After curating: share new knowledge
+
+# Query precision tuning
+# Specific queries (high precision):
+brv query "database connection pooling config"
+# Broad queries (high recall):
+brv query "performance"</code></pre>
+
+        <h3>Vector Memory Protocol</h3>
+
+        <pre><code># Embedding configuration
+model: text-embedding-3-small  (1536 dimensions)
+chunk_size: 512 tokens
+overlap: 64 tokens
+metadata: {source, timestamp, session_id, topic_tags}
+
+# Storage
+collection: agent_memory
+index: cosine similarity
+namespace: per-agent or per-project
+
+# Retrieval protocol
+# Conservative (high precision):
+results = vector_search(query, top_k=3, threshold=0.85)
+# Generous (high recall):  
+results = vector_search(query, top_k=10, threshold=0.70)
+
+# Maintenance
+# Re-embedding trigger: embedding model version change
+# Pruning: entries not accessed in 90 days, confidence &lt; 0.5
+# Cost tracking: log embedding calls, monitor $/month</code></pre>
+
+        <h2>Implementation Directives</h2>
+
+        <h3>Directive 1: Write Discipline Over Architecture</h3>
+
+        <p>The most common memory failure isn't a retrieval problem—it's a storage problem. The agent encounters important information and doesn't record it.</p>
+
+        <p><strong>Mandatory recording triggers:</strong></p>
+        <ul>
+          <li>User makes a preference statement ("I prefer...", "Don't use...", "Always...") → update USER.md</li>
+          <li>A decision is made with rationale → log to daily file with context</li>
+          <li>An error occurs and is resolved → log error + solution to daily file</li>
+          <li>Configuration changes → update TOOLS.md</li>
+          <li>A pattern emerges across 3+ similar tasks → curate to ByteRover</li>
+        </ul>
+
+        <h3>Directive 2: Context Window Budget</h3>
+
+        <p>Allocate memory tokens explicitly. Don't let memory consume the entire context window.</p>
+
+        <table>
+          <thead>
+            <tr><th>Context Budget Allocation</th><th>% of Window</th><th>128K Window</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>System prompt + identity files</td><td>10%</td><td>12,800 tokens</td></tr>
+            <tr><td>Long-term memory (MEMORY.md)</td><td>10%</td><td>12,800 tokens</td></tr>
+            <tr><td>Task-specific memory (ByteRover query results)</td><td>10%</td><td>12,800 tokens</td></tr>
+            <tr><td>Current task + user input</td><td>40%</td><td>51,200 tokens</td></tr>
+            <tr><td>Working space (agent reasoning, tool outputs)</td><td>30%</td><td>38,400 tokens</td></tr>
+          </tbody>
+        </table>
+
+        <p>If memory exceeds 30% of the window, compress or query selectively. Full-file reads of large memory stores degrade task performance measurably.</p>
+
+        <h3>Directive 3: Memory Decay Without Loss</h3>
+
+        <p>Memory that doesn't age becomes memory you can't trust. Implement explicit decay:</p>
+
+        <pre><code># Decay protocol (apply during "consolidation" or idle periods)
+
+# Tier 1: Permanent (never auto-decay)
+- SOUL.md, USER.md identity content
+- Explicitly curated MEMORY.md entries
+- ByteRover entries with "permanent" tag
+
+# Tier 2: Semi-permanent (review after 90 days)
+- Architecture decisions
+- Tool configuration notes
+- Security policies
+
+# Tier 3: Ephemeral (archive after 30 days)
+- Daily interaction logs
+- Temporary workarounds
+- Session-specific context
+
+# Tier 4: Volatile (discard after 7 days)
+- Debug outputs
+- Intermediate reasoning
+- Tool response caches</code></pre>
+
+        <h3>Directive 4: Contradiction Handling</h3>
+
+        <p>When memory contradicts itself, the agent must resolve it. Protocol:</p>
+
+        <ol>
+          <li><strong>Detect:</strong> New memory entry conflicts with existing LTM</li>
+          <li><strong>Timestamp:</strong> Check recency—more recent wins for factual changes</li>
+          <li><strong>Source:</strong> User-stated preferences override agent-inferred preferences</li>
+          <li><strong>Flag:</strong> If resolution is ambiguous, log contradiction to daily file for human review</li>
+          <li><strong>Update:</strong> Replace old memory, note the change ("Updated from X to Y on DATE because REASON")</li>
+        </ol>
+
+        <h2>Operational Metrics</h2>
+
+        <p>Monitor these metrics to evaluate memory system health:</p>
+
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Healthy Range</th><th>Action Threshold</th><th>Remediation</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Memory store size</td><td>&lt;50K tokens</td><td>&gt;100K tokens</td><td>Consolidate, prune, or add vector layer</td></tr>
+            <tr><td>Context window memory %</td><td>20-30%</td><td>&gt;40%</td><td>Switch to query-based retrieval</td></tr>
+            <tr><td>Write frequency (entries/day)</td><td>5-15</td><td>&lt;2 or &gt;30</td><td>&lt;2: agent may be under-recording. &gt;30: too granular</td></tr>
+            <tr><td>Contradiction rate</td><td>&lt;5%</td><td>&gt;10%</td><td>Review curation quality, add provenance tags</td></tr>
+            <tr><td>Retrieval relevance (manual audit)</td><td>&gt;75%</td><td>&lt;60%</td><td>Tighten query thresholds or retrain chunking</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Quick-Start Configuration</h2>
+
+        <p><strong>Minimal viable agent memory (5-minute setup):</strong></p>
+
+        <pre><code># 1. Create memory files
+mkdir -p memory
+cat > MEMORY.md &lt;&lt; 'EOF'
+# Long-Term Memory
+*Initialized: $(date)*
+EOF
+cat > SOUL.md &lt;&lt; 'EOF'
+# Agent Identity
+[Define persona, tone, constraints]
+EOF
+cat > USER.md &lt;&lt; 'EOF'
+# User Profile
+[Name, preferences, context]
+EOF
+
+# 2. Configure session protocol in AGENTS.md
+# "Read SOUL.md, USER.md, MEMORY.md at session start"
+# "Write to memory/YYYY-MM-DD.md during session"
+# "Distill to MEMORY.md at session end"
+
+# 3. (Optional) Initialize ByteRover
+brv init
+mkdir -p .brv/context-tree/project</code></pre>
+
+        <p><strong>Scaled setup (adding structured memory):</strong></p>
+        <pre><code># Install ByteRover CLI
+npm install -g byterover   # or equivalent package manager
+
+# Initialize context tree
+brv init
+mkdir -p .brv/context-tree/{global,project,personal}
+
+# Add to session protocol:
+# Before answering questions → brv query "&lt;topic&gt;"
+# After completing work → brv curate "&lt;summary&gt;"</code></pre>
+
+        <h2>Common Failure Modes</h2>
+
+        <table>
+          <thead>
+            <tr><th>Failure</th><th>Symptom</th><th>Root Cause</th><th>Fix</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Memory amnesia</td><td>Agent repeats past mistakes</td><td>Not writing to daily logs</td><td>Add mandatory recording triggers</td></tr>
+            <tr><td>Context bloat</td><td>Agent gets confused, task quality drops</td><td>Loading too much memory into context</td><td>Switch to query-based retrieval, enforce budget</td></tr>
+            <tr><td>False recall</td><td>Agent "remembers" things that didn't happen</td><td>Vector similarity returning near-misses</td><td>Raise similarity threshold to 0.85+</td></tr>
+            <tr><td>Memory drift</td><td>MEMORY.md contradicts recent reality</td><td>Not updating curated memory after changes</td><td>Add change-detection triggers</td></tr>
+            <tr><td>Cross-contamination</td><td>Agent applies Project A context to Project B</td><td>No namespace scoping</td><td>Separate context trees per project</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Architecture Selection Flowchart</h2>
+
+        <pre><code>START
+  │
+  ├─ Is memory store &lt; 10K tokens?
+  │   ├─ YES → File-based only. Write discipline is your architecture.
+  │   └─ NO ↓
+  │
+  ├─ Do you need keyword-exact recall?
+  │   ├─ YES → Add ByteRover structured memory (.brv/context-tree)
+  │   └─ NO ↓
+  │
+  ├─ Do you need cross-domain semantic recall?
+  │   ├─ YES → Add vector embeddings (Pinecone/Qdrant/Chroma)
+  │   └─ NO → File + ByteRover is sufficient. Stop here.
+  │
+  ├─ Do you operate in team/multi-agent context?
+  │   ├─ YES → Enable brv push/pull team sync
+  │   └─ NO → Local-only is fine
+  │
+  └─ Monitor compression ratio.
+      ├─ &gt;0.60 → System healthy
+      ├─ 0.40-0.60 → Tune retrieval thresholds
+      └─ &lt;0.40 → Restructure memory layers
+
+END</code></pre>
+
+        <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+        <p style="color: var(--text-4); font-size: 0.875rem;">
+          <strong>Technical Appendix</strong><br>
+          Test environment: ARM64 Linux, OpenClaw agent framework, 6-week deployment period (Feb 1 – Mar 14, 2026)<br>
+          All metrics from measured deployment unless otherwise noted.<br>
+          Compression ratio = useful_tokens / total_injected_tokens (manual annotation, κ=0.73).<br>
+          Context budget allocations are starting points—adjust based on your agent's task patterns.<br><br>
+          <strong>Key references:</strong><br>
+          ByteRover: <code>brv query</code>, <code>brv curate</code>, <code>brv pull/push</code> — structured agent memory with context trees<br>
+          OpenClaw memory patterns: MEMORY.md, SOUL.md, USER.md, TOOLS.md, daily logs<br>
+          Vector databases: Pinecone (managed), Qdrant (self-hosted), Chroma (local/embedded)<br>
+          Embedding models: OpenAI text-embedding-3-small (1536d, $0.02/1M tokens)
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" style="border-top: 1px solid var(--border-subtle); margin-top: 4rem;">
+    <div class="container" style="padding: 2rem 0; text-align: center; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab Notes — Real experiments. Published findings.</p>
+    </div>
+  </footer>
+</body>
+</html>
