@@ -255,7 +255,7 @@ body::after {
 .hero-lead {
   color: var(--text-3);
   font-size: 17px;
-  max-width: 48ch;
+  max-width: min(48ch, 100%);
   line-height: 1.65;
 }
 
@@ -763,27 +763,80 @@ body::after {
 @media (max-width: 640px) {
   .container {
     width: calc(100% - 32px);
+    overflow: hidden;
   }
 
   .topbar-inner {
     min-height: auto;
   }
 
-  .hero { padding: 48px 0 32px; }
+  .hero { padding: 40px 0 28px; }
 
   .hero h1 { font-size: clamp(28px, 7vw, 40px); }
 
-  .hero-lead { font-size: 15px; }
+  .hero-lead {
+    font-size: 15px;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
 
-  .hero-aside { flex-direction: column; gap: 8px; }
+  .hero-aside {
+    flex-direction: column;
+    gap: 0;
+    border-radius: 8px;
+  }
 
-  .hero-stat { padding: 8px 0; }
+  .hero-stat {
+    padding: 10px 14px;
+    gap: 8px;
+  }
 
-  .section { padding: 40px 0; }
+  .hero-stat-link .stat-eyebrow {
+    font-size: 10px;
+    min-width: 70px;
+  }
+
+  .hero-stat-link .stat-text {
+    font-size: 12px;
+  }
+
+  .section { padding: 36px 0; }
 
   .section-header h2 { font-size: 20px; }
 
-  .post-card { padding: 20px; }
+  .post-card {
+    padding: 18px;
+  }
+
+  .post-card h3 {
+    font-size: 18px;
+  }
+
+  .post-card p {
+    font-size: 14px;
+  }
+
+  .mode-cell {
+    padding: 0.75rem 1rem;
+  }
+
+  .mode-cell .symbol {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    display: inline;
+    margin-right: 0.5rem;
+  }
+
+  .mode-cell .label {
+    display: inline;
+    margin-bottom: 0;
+    font-size: 14px;
+  }
+
+  .mode-cell .desc {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
 
   .article .dek { font-size: 16px; }
   .content p { font-size: 16px; }

@@ -423,7 +423,7 @@
 
     .hero-lead {
       color: var(--muted);
-      max-width: 48ch;
+      max-width: min(48ch, 100%);
       font-size: clamp(17px, 2.1vw, 21px);
       margin-bottom: 24px;
     }
@@ -765,7 +765,7 @@
 
     .section-copy {
       color: var(--muted);
-      max-width: 66ch;
+      max-width: min(66ch, 100%);
       font-size: 18px;
     }
 
@@ -951,7 +951,7 @@
 
     .follow-card p {
       color: var(--muted);
-      max-width: 48ch;
+      max-width: min(48ch, 100%);
     }
 
     .follow-links {
@@ -1141,18 +1141,25 @@
 
     @media (max-width: 680px) {
       .container {
-        width: min(1160px, calc(100% - 32px));
+        width: calc(100% - 40px);
+        max-width: 100%;
+        overflow: hidden;
+      }
+
+      .hero-grid {
+        overflow: hidden;
       }
 
       .hero-lead {
         max-width: 100%;
-        overflow-wrap: break-word;
+        overflow-wrap: anywhere;
         word-break: break-word;
       }
 
       .section-copy {
-        overflow-wrap: break-word;
+        overflow-wrap: anywhere;
         word-break: break-word;
+        max-width: 100%;
       }
 
       .hero-actions {
