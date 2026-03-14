@@ -10,13 +10,81 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    .archive-item.has-modes { grid-template-columns: 200px 1fr auto; }
-    .mode-dots { display: flex; flex-direction: column; gap: 3px; align-items: center; padding: 2px 0; font-family: var(--mono); font-size: 10px; line-height: 1; }
-    .mode-dots .dot-std { color: var(--text); }
-    .mode-dots .dot-exp { color: var(--accent); }
-    .mode-dots .dot-agt { color: var(--text-4); }
+    .articles-list { border-top: 1px solid var(--border); }
+
+    .article-row {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: all 0.2s var(--ease);
+    }
+    .article-row:hover { padding-left: 8px; }
+    .article-row:hover .article-title { color: var(--accent); }
+
+    .article-top-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .article-meta {
+      color: var(--text-4);
+      font-family: var(--mono);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .article-modes {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .article-modes .mode-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1;
+      border: 1px solid transparent;
+    }
+    .mode-badge.mode-std {
+      color: var(--text-2);
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .mode-badge.mode-exp {
+      color: var(--accent);
+      background: rgba(255,107,53,0.08);
+      border-color: rgba(255,107,53,0.15);
+    }
+    .mode-badge.mode-agt {
+      color: var(--text-3);
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.06);
+    }
+
+    .article-title {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--text);
+      transition: color 0.2s;
+    }
+
     @media (max-width: 640px) {
-      .archive-item.has-modes { grid-template-columns: 1fr auto; }
+      .article-top-line { flex-wrap: wrap; }
+      .article-modes { gap: 4px; }
+      .mode-badge { padding: 2px 6px; font-size: 10px; }
     }
   </style>
 </head>
@@ -78,214 +146,338 @@
       </div>
     </section>
 
-    <!-- ════ FEATURED ════ -->
     <section class="section">
       <div class="container">
         <div class="section-header">
-          <h2>Featured</h2>
-        </div>
-        <div class="featured-grid stagger">
-          <a class="post-card post-featured" href="./image-models-preliminary-views.html" style="--i:0">
-            <div class="post-meta"><span>Mar 3, 2026</span><span class="tag">Benchmark</span><span style="color: var(--accent);">◉ ◆ ⬡</span></div>
-            <h3>Image model API baseline: March 2026</h3>
-            <p>9 models, 3 providers. Speed, reliability, content filtering, and IP character handling — benchmarked from production. Nano Banana 2 as general-purpose driver.</p>
-          </a>
-          <a class="post-card" href="./2026-03-03-zen-and-the-art-of-vibecoding.html" style="--i:1">
-            <div class="post-meta"><span>Mar 3, 2026</span><span class="tag">Lab Notes</span><span style="color: var(--accent);">◉ ◆ ⬡</span></div>
-            <h3>Zen and the Art of Vibe Coding</h3>
-            <p>An operating framework for infinite leverage. Screen assignment, input/output separation, and the two-hour daily disconnect.</p>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ ALL ARTICLES ════ -->
-    <section class="section" style="padding-top: 0;">
-      <div class="container">
-        <div class="section-header">
           <h2>All articles</h2>
-          <span class="section-count">33 notes</span>
+          <span class="section-count">34 notes</span>
         </div>
 
-        <!-- Daily Briefings -->
-        <div class="category-group-label">Daily Briefings</div>
-        <div class="archive-list">
-          <a class="archive-item" href="./2026-03-14-daily-ai-briefing.html">
-            <div class="archive-meta">Mar 14 · 5 min · Research</div>
-            <h3>Daily AI Research Briefing — March 14, 2026</h3>
-          </a>
-        </div>
+        <div class="articles-list">
 
-        <!-- Benchmarks & Evaluations -->
-        <div class="category-group-label">Benchmarks & Evaluations</div>
-        <div class="archive-list">
-          <a class="archive-item has-modes" href="./image-models-preliminary-views.html">
-            <div class="archive-meta">Mar 3 · 7 min · Benchmark</div>
-            <h3>Image model API baseline: March 2026</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
+          <!-- Mar 14 -->
+          <a class="article-row" href="./2026-03-14-daily-ai-briefing.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 5 min · Research</span>
+            </div>
+            <h3 class="article-title">Daily AI research briefing — March 14, 2026</h3>
           </a>
-          <a class="archive-item" href="./image-model-benchmark.html">
-            <div class="archive-meta">Mar 3 · 9 min · Benchmark</div>
-            <h3>Image generation API benchmark: 9 models across 3 providers</h3>
-          </a>
-          <a class="archive-item has-modes" href="./model-selection-framework.html">
-            <div class="archive-meta">Mar 3 · 9 min · Evaluation</div>
-            <h3>Evaluating large language models: a framework for production selection</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
-          </a>
-          <a class="archive-item" href="./codex53-vs-opus46.html">
-            <div class="archive-meta">Feb 22 · 8 min · Evaluation</div>
-            <h3>Reviewing ChatGPT Codex 5.3 vs Claude Opus 4.6 for core build</h3>
-          </a>
-          <a class="archive-item" href="./aesthetic-scoring-early-childhood.html">
-            <div class="archive-meta">Feb 20 · 6 min · Image Models</div>
-            <h3>Aesthetic scoring for early childhood: image models and prompts reviewed</h3>
-          </a>
-        </div>
 
-        <!-- Infrastructure & Architecture -->
-        <div class="category-group-label">Infrastructure & Architecture</div>
-        <div class="archive-list">
-          <a class="archive-item" href="./public-apis-usefulness-review.html">
-            <div class="archive-meta">Mar 4 · 12 min · Infrastructure</div>
-            <h3>Public APIs classification: a usefulness review of 400+ APIs</h3>
+          <a class="article-row" href="./2026-03-14-context-drought-anthropic-1m-context-ga.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 9 min · Agent Infrastructure</span>
+            </div>
+            <h3 class="article-title">The context drought: Anthropic ships 1M in GA, but the plateau is real</h3>
           </a>
-          <a class="archive-item" href="./api-provider-framework.html">
-            <div class="archive-meta">Mar 3 · 10 min · Infrastructure</div>
-            <h3>API provider selection: building a testing framework for production AI infrastructure</h3>
-          </a>
-          <a class="archive-item" href="./tutor-architecture.html">
-            <div class="archive-meta">Feb 25 · 10 min · Architecture</div>
-            <h3>Tutor architecture: how we structure AI tutoring systems</h3>
-          </a>
-          <a class="archive-item" href="./openclaw-docker-security.html">
-            <div class="archive-meta">Feb 25 · 9 min · Security</div>
-            <h3>Openclaw: security and deployment best practices with Docker</h3>
-          </a>
-          <a class="archive-item has-modes" href="./rag-without-hallucination.html">
-            <div class="archive-meta">Feb 21 · 7 min · RAG</div>
-            <h3>RAG without hallucination: answer from official documents only</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
-          </a>
-        </div>
 
-        <!-- Agent Systems & Architecture -->
-        <div class="category-group-label">Agent Systems & Architecture</div>
-        <div class="archive-list">
-          <a class="archive-item" href="./2026-03-14-context-drought-anthropic-1m-context-ga.html">
-            <div class="archive-meta">Mar 14 · 9 min · Agent Infrastructure</div>
-            <h3>The context drought: Anthropic ships 1M in GA, but the plateau is real</h3>
+          <a class="article-row" href="./2026-03-14-coding-agent-wars-march-2026.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 12 min · Agent Evaluation</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">Claude Code vs Codex vs Gemini CLI — the agent coding wars, March 2026</h3>
           </a>
-          <a class="archive-item has-modes" href="./2026-03-14-coding-agent-wars-march-2026.html">
-            <div class="archive-meta">Mar 14 · 12 min · Agent Evaluation</div>
-            <h3>Claude Code vs Codex vs Gemini CLI — the agent coding wars, March 2026</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
-          </a>
-          <a class="archive-item has-modes" href="./2026-03-14-agent-memory-architectures.html">
-            <div class="archive-meta">Mar 14 · 12 min · Architecture</div>
-            <h3>Agent memory architectures: how AI agents remember across sessions</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
-          </a>
-          <a class="archive-item has-modes" href="./2026-03-14-orchestrator-pattern-agent-design.html">
-            <div class="archive-meta">Mar 14 · 11 min · Architecture</div>
-            <h3>The orchestrator pattern: why the best AI agents don't work directly</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
-          </a>
-          <a class="archive-item has-modes" href="./2026-03-14-self-improving-agents-learning-loops.html">
-            <div class="archive-meta">Mar 14 · 10 min · Agent Systems</div>
-            <h3>Self-improving agents: continuous learning loops</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
-          </a>
-          <a class="archive-item has-modes" href="./2026-03-14-hermes-vs-openclaw-agent-platforms.html">
-            <div class="archive-meta">Mar 14 · 12 min · Analysis</div>
-            <h3>Hermes vs OpenClaw: two philosophies of agent orchestration</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
-          </a>
-          <a class="archive-item has-modes" href="./2026-03-14-openrouter-hunter-healer-agent-models.html">
-            <div class="archive-meta">Mar 14 · 10 min · Agent Infrastructure</div>
-            <h3>OpenRouter's Hunter and Healer models — purpose-built agent intelligence</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
-          </a>
-          <a class="archive-item has-modes" href="./2026-03-14-clawhub-agent-skill-ecosystem.html">
-            <div class="archive-meta">Mar 14 · 9 min · Ecosystem</div>
-            <h3>ClawHub: the agent skill ecosystem</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
-          </a>
-          <a class="archive-item has-modes" href="./2026-03-14-browser-use-agents-playwright-mcp.html">
-            <div class="archive-meta">Mar 14 · 6 min · Experiments</div>
-            <h3>Browser-use agents in the Playwright MCP era</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
-          </a>
-          <a class="archive-item" href="./2026-03-14-agent-harness-infrastructure-maturity.html">
-            <div class="archive-meta">Mar 14 · 12 min · Agent Infrastructure</div>
-            <h3>Agent harnesses hit production: the infrastructure maturity wave of March 2026</h3>
-          </a>
-          <a class="archive-item" href="./2026-03-14-agent-memory-new-context-window.html">
-            <div class="archive-meta">Mar 14 · 10 min · Agent Infrastructure</div>
-            <h3>Agent memory is the new context window</h3>
-          </a>
-          <a class="archive-item" href="./2026-03-14-agent-stack-consolidation-march-2026.html">
-            <div class="archive-meta">Mar 14 · 10 min · Trend Analysis</div>
-            <h3>Agent stack consolidation: what GitHub's trending page reveals about March 2026</h3>
-          </a>
-        </div>
 
-        <!-- Agents & Tooling -->
-        <div class="category-group-label">Agents & Tooling</div>
-        <div class="archive-list">
-          <a class="archive-item" href="./just-talk-to-it-summary.html">
-            <div class="archive-meta">Mar 3 · 7 min · Agents</div>
-            <h3>Just talk to it: why steipete's agentic coding manual is required reading</h3>
+          <a class="article-row" href="./2026-03-14-agent-memory-architectures.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 12 min · Architecture</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">Agent memory architectures: how AI agents remember across sessions</h3>
           </a>
-          <a class="archive-item" href="./just-talk-to-it-agentic-manual.html">
-            <div class="archive-meta">Feb 28 · 9 min · Agents</div>
-            <h3>"Just Talk To It" — an early manual for agentic engineering that still holds</h3>
-          </a>
-          <a class="archive-item" href="./nanoclaw-vs-openclaw.html">
-            <div class="archive-meta">Feb 24 · 7 min · Agents</div>
-            <h3>Nanoclaw vs Openclaw: which one should you deploy for your agent system</h3>
-          </a>
-          <a class="archive-item" href="./opencode-open-alternative.html">
-            <div class="archive-meta">Feb 23 · 6 min · Tooling</div>
-            <h3>Opencode: an open alternative to Claude Code</h3>
-          </a>
-        </div>
 
-        <!-- Experiments & Lab Notes -->
-        <div class="category-group-label">Experiments & Lab Notes</div>
-        <div class="archive-list">
-          <a class="archive-item has-modes" href="./the-great-acceleration.html">
-            <div class="archive-meta">Feb 28 · 12 min · Analysis</div>
-            <h3>The great acceleration</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
+          <a class="article-row" href="./2026-03-14-orchestrator-pattern-agent-design.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 11 min · Architecture</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">The orchestrator pattern: why the best AI agents don't work directly</h3>
           </a>
-          <a class="archive-item has-modes" href="./2026-03-14-moltbook-meta-acquisition.html">
-            <div class="archive-meta">Mar 14 · 10 min · Analysis</div>
-            <h3>Meta acquires Moltbook: the first agent-tooling acqui-hire</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
+
+          <a class="article-row" href="./2026-03-14-self-improving-agents-learning-loops.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 10 min · Agent Systems</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">Self-improving agents: continuous learning loops</h3>
           </a>
-          <a class="archive-item has-modes" href="./2026-03-14-ab-testing-agent-built-variants.html">
-            <div class="archive-meta">Mar 14 · 8 min · Experiments</div>
-            <h3>A/B testing with agent-built variants</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
+
+          <a class="article-row" href="./2026-03-14-hermes-vs-openclaw-agent-platforms.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 12 min · Analysis</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">Hermes vs OpenClaw: two philosophies of agent orchestration</h3>
           </a>
-          <a class="archive-item" href="./openrag-deployment-docker-blockers.html">
-            <div class="archive-meta">Mar 4 · 8 min · Experiments</div>
-            <h3>OpenRAG deployment blocked at Docker daemon: what 45 minutes revealed</h3>
+
+          <a class="article-row" href="./2026-03-14-openrouter-hunter-healer-agent-models.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 10 min · Agent Infrastructure</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">OpenRouter's Hunter and Healer models — purpose-built agent intelligence</h3>
           </a>
-          <a class="archive-item has-modes" href="./2026-03-03-zen-and-the-art-of-vibecoding.html">
-            <div class="archive-meta">Mar 3 · 4 min · Lab Notes</div>
-            <h3>Zen and the art of vibe coding</h3>
-            <div class="mode-dots"><span class="dot-std">◉</span><span class="dot-exp">◆</span><span class="dot-agt">⬡</span></div>
+
+          <a class="article-row" href="./2026-03-14-clawhub-agent-skill-ecosystem.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 9 min · Ecosystem</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">ClawHub: the agent skill ecosystem</h3>
           </a>
-          <a class="archive-item" href="./just-rebuild-it.html">
-            <div class="archive-meta">Mar 3 · 8 min · Experiments</div>
-            <h3>Just rebuild it: why we scrapped Flow Education four times</h3>
+
+          <a class="article-row" href="./2026-03-14-browser-use-agents-playwright-mcp.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 6 min · Experiments</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">Browser-use agents in the Playwright MCP era</h3>
           </a>
-          <a class="archive-item" href="./character-consistency-34-styles.html">
-            <div class="archive-meta">Feb 28 · 7 min · Experiments</div>
-            <h3>Character consistency across 34 art styles: what breaks and what holds</h3>
+
+          <a class="article-row" href="./2026-03-14-moltbook-meta-acquisition.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 10 min · Analysis</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">Meta acquires Moltbook: the first agent-tooling acqui-hire</h3>
           </a>
+
+          <a class="article-row" href="./2026-03-14-ab-testing-agent-built-variants.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 8 min · Experiments</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">A/B testing with agent-built variants</h3>
+          </a>
+
+          <a class="article-row" href="./2026-03-14-agent-harness-infrastructure-maturity.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 12 min · Agent Infrastructure</span>
+            </div>
+            <h3 class="article-title">Agent harnesses hit production: the infrastructure maturity wave of March 2026</h3>
+          </a>
+
+          <a class="article-row" href="./2026-03-14-agent-memory-new-context-window.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 10 min · Agent Infrastructure</span>
+            </div>
+            <h3 class="article-title">Agent memory is the new context window</h3>
+          </a>
+
+          <a class="article-row" href="./2026-03-14-agent-stack-consolidation-march-2026.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 14 · 10 min · Trend Analysis</span>
+            </div>
+            <h3 class="article-title">Agent stack consolidation: what GitHub's trending page reveals about March 2026</h3>
+          </a>
+
+          <!-- Mar 4 -->
+          <a class="article-row" href="./public-apis-usefulness-review.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 4 · 12 min · Infrastructure</span>
+            </div>
+            <h3 class="article-title">Public APIs classification: a usefulness review of 400+ APIs</h3>
+          </a>
+
+          <a class="article-row" href="./openrag-deployment-docker-blockers.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 4 · 8 min · Experiments</span>
+            </div>
+            <h3 class="article-title">OpenRAG deployment blocked at Docker daemon: what 45 minutes revealed</h3>
+          </a>
+
+          <!-- Mar 3 -->
+          <a class="article-row" href="./image-models-preliminary-views.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 3 · 7 min · Benchmark</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">Image model API baseline: March 2026</h3>
+          </a>
+
+          <a class="article-row" href="./image-model-benchmark.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 3 · 9 min · Benchmark</span>
+            </div>
+            <h3 class="article-title">Image generation API benchmark: 9 models across 3 providers</h3>
+          </a>
+
+          <a class="article-row" href="./model-selection-framework.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 3 · 9 min · Evaluation</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">Evaluating large language models: a framework for production selection</h3>
+          </a>
+
+          <a class="article-row" href="./api-provider-framework.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 3 · 10 min · Infrastructure</span>
+            </div>
+            <h3 class="article-title">API provider selection: building a testing framework for production AI infrastructure</h3>
+          </a>
+
+          <a class="article-row" href="./2026-03-03-zen-and-the-art-of-vibecoding.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 3 · 4 min · Lab Notes</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">Zen and the art of vibe coding</h3>
+          </a>
+
+          <a class="article-row" href="./just-talk-to-it-summary.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 3 · 7 min · Agents</span>
+            </div>
+            <h3 class="article-title">Just talk to it: why steipete's agentic coding manual is required reading</h3>
+          </a>
+
+          <a class="article-row" href="./just-rebuild-it.html">
+            <div class="article-top-line">
+              <span class="article-meta">Mar 3 · 8 min · Experiments</span>
+            </div>
+            <h3 class="article-title">Just rebuild it: why we scrapped Flow Education four times</h3>
+          </a>
+
+          <!-- Feb 28 -->
+          <a class="article-row" href="./the-great-acceleration.html">
+            <div class="article-top-line">
+              <span class="article-meta">Feb 28 · 12 min · Analysis</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">The great acceleration</h3>
+          </a>
+
+          <a class="article-row" href="./just-talk-to-it-agentic-manual.html">
+            <div class="article-top-line">
+              <span class="article-meta">Feb 28 · 9 min · Agents</span>
+            </div>
+            <h3 class="article-title">"Just Talk To It" — an early manual for agentic engineering that still holds</h3>
+          </a>
+
+          <a class="article-row" href="./character-consistency-34-styles.html">
+            <div class="article-top-line">
+              <span class="article-meta">Feb 28 · 7 min · Experiments</span>
+            </div>
+            <h3 class="article-title">Character consistency across 34 art styles: what breaks and what holds</h3>
+          </a>
+
+          <!-- Feb 25 -->
+          <a class="article-row" href="./tutor-architecture.html">
+            <div class="article-top-line">
+              <span class="article-meta">Feb 25 · 10 min · Architecture</span>
+            </div>
+            <h3 class="article-title">Tutor architecture: how we structure AI tutoring systems</h3>
+          </a>
+
+          <a class="article-row" href="./openclaw-docker-security.html">
+            <div class="article-top-line">
+              <span class="article-meta">Feb 25 · 9 min · Security</span>
+            </div>
+            <h3 class="article-title">Openclaw: security and deployment best practices with Docker</h3>
+          </a>
+
+          <!-- Feb 24 -->
+          <a class="article-row" href="./nanoclaw-vs-openclaw.html">
+            <div class="article-top-line">
+              <span class="article-meta">Feb 24 · 7 min · Agents</span>
+            </div>
+            <h3 class="article-title">Nanoclaw vs Openclaw: which one should you deploy for your agent system</h3>
+          </a>
+
+          <!-- Feb 23 -->
+          <a class="article-row" href="./opencode-open-alternative.html">
+            <div class="article-top-line">
+              <span class="article-meta">Feb 23 · 6 min · Tooling</span>
+            </div>
+            <h3 class="article-title">Opencode: an open alternative to Claude Code</h3>
+          </a>
+
+          <!-- Feb 22 -->
+          <a class="article-row" href="./codex53-vs-opus46.html">
+            <div class="article-top-line">
+              <span class="article-meta">Feb 22 · 8 min · Evaluation</span>
+            </div>
+            <h3 class="article-title">Reviewing ChatGPT Codex 5.3 vs Claude Opus 4.6 for core build</h3>
+          </a>
+
+          <!-- Feb 21 -->
+          <a class="article-row" href="./rag-without-hallucination.html">
+            <div class="article-top-line">
+              <span class="article-meta">Feb 21 · 7 min · RAG</span>
+              <div class="article-modes">
+                <span class="mode-badge mode-std">◉ Standard</span>
+                <span class="mode-badge mode-exp">◆ Experimental</span>
+                <span class="mode-badge mode-agt">⬡ Agent</span>
+              </div>
+            </div>
+            <h3 class="article-title">RAG without hallucination: answer from official documents only</h3>
+          </a>
+
+          <!-- Feb 20 -->
+          <a class="article-row" href="./aesthetic-scoring-early-childhood.html">
+            <div class="article-top-line">
+              <span class="article-meta">Feb 20 · 6 min · Image Models</span>
+            </div>
+            <h3 class="article-title">Aesthetic scoring for early childhood: image models and prompts reviewed</h3>
+          </a>
+
         </div>
       </div>
     </section>
