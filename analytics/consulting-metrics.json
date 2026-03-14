@@ -1,0 +1,99 @@
+{
+  "summary": {
+    "revenue_this_month": 0,
+    "revenue_last_month": 0,
+    "revenue_growth": 0,
+    "revenue_total": 0,
+    "active_clients": 1,
+    "total_clients": 1,
+    "pipeline_value": 5000,
+    "proposals_outstanding": 1,
+    "win_rate": 0,
+    "effective_rate": "0",
+    "hours_this_month": 2.5,
+    "hours_total": 2.5,
+    "last_updated": "2026-03-14T15:37:50.287Z"
+  },
+  "metrics": {
+    "finance": {
+      "revenue": {
+        "total": 0,
+        "this_month": 0,
+        "last_month": 0,
+        "growth_percent": 0
+      },
+      "pipeline": {
+        "value": 5000,
+        "proposals": 1
+      },
+      "expenses": {
+        "total": 0,
+        "this_month": 0
+      },
+      "profitability": {
+        "gross": 0,
+        "effective_hourly_rate": "0"
+      }
+    },
+    "growth": {
+      "clients": {
+        "active": 1,
+        "total": 1,
+        "new_this_month": 3
+      },
+      "deals": {
+        "won": 0,
+        "lost": 0,
+        "win_rate": 0,
+        "proposals_sent": 1
+      },
+      "activity": {
+        "calls_this_month": 1,
+        "hours_this_month": 2.5,
+        "calls_total": 1
+      }
+    },
+    "engagement": {
+      "client_health": [
+        {
+          "name": "Demo Client",
+          "revenue": 0,
+          "hours": 2.5,
+          "proposals": 1,
+          "calls": 1,
+          "last_contact": "2026-03-14",
+          "status": "prospect"
+        }
+      ]
+    }
+  },
+  "recent_activity": [
+    {
+      "date": "2026-03-14",
+      "type": "hours",
+      "client": "Demo Client",
+      "value": 2.5,
+      "note": "Initial research"
+    },
+    {
+      "date": "2026-03-14",
+      "type": "proposal",
+      "client": "Demo Client",
+      "value": 5000,
+      "note": "AI agent setup proposal"
+    },
+    {
+      "date": "2026-03-14",
+      "type": "call",
+      "client": "Demo Client",
+      "value": 30,
+      "note": "Test call to demonstrate system"
+    }
+  ],
+  "meta": {
+    "business_unit": "consulting",
+    "source": "analytics/data/events.jsonl",
+    "exported_at": "2026-03-14T15:37:50.287Z",
+    "version": "1.0"
+  }
+}
