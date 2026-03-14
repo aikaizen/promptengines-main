@@ -1,0 +1,52 @@
+{
+  "date": "2026-03-14",
+  "totalReviewed": 15,
+  "issues": [
+    {
+      "file": "the-great-acceleration.html",
+      "title": "The Great Acceleration",
+      "severity": "medium",
+      "issues": [
+        "Opens with hyperbolic framing: 'We are living through the most consequential six-year window in human history' — unsubstantiated claim presented as fact",
+        "Promotional closing: 'The acceleration is real. We are preparing for it.' reads like manifesto, not research",
+        "Synthetic volatility indices (6.2, 8.4, 9.1, 9.7) with no methodology shown for how these composites were calculated",
+        "'capability overhang', 'coordination collapse' presented as high-probability failure modes without evidence"
+      ],
+      "suggestedFixes": [
+        "Qualify the opening claim: 'potentially one of the most consequential' or frame as hypothesis",
+        "Remove manifesto-style closing; end with specific next steps or data preview",
+        "Add methodology note for volatility index calculation or label as illustrative estimates",
+        "Ground failure mode probabilities with historical analogies or cited expert analysis"
+      ]
+    },
+    {
+      "file": "zen-and-the-art-of-vibecoding.html",
+      "title": "Zen and the Art of Vibe Coding",
+      "severity": "medium",
+      "issues": [
+        "Uses 'leverage' four times in context of productivity ('infinite leverage', 'high leverage') — reads as self-help/business buzzword territory",
+        "Unsubstantiated health claim: 'It's probably why presidents and CEOs age so visibly. Look at Obama before and after office' — causal assertion without evidence, also politically loaded",
+        "'This is the curve that gets the most attention, and it is the easiest to measure. But it is not the most dangerous' — dramatic framing without backing",
+        "Missing source attribution for any of the psychological claims about leverage stress"
+      ],
+      "suggestedFixes": [
+        "Replace 'infinite leverage' with specific description of what that means in practical terms",
+        "Remove the Obama/Trump comparison or replace with cited research on executive stress",
+        "Add at least one cited source for the psychological effects of high-productivity environments",
+        "Ground 'not the most dangerous' with a specific example or data point"
+      ]
+    },
+    {
+      "file": "2026-03-04-public-apis-usefulness-review.html",
+      "title": "Public APIs Usefulness Review: 400 APIs, 5 Tiers, 10 That Matter",
+      "severity": "low",
+      "issues": [
+        "Meta footer reads like editorial notes leaked into the article: 'Article: 309 lines, 13,086 bytes' — should be in git metadata, not visible content"
+      ],
+      "suggestedFixes": [
+        "Remove the article self-referential line count and byte size from the public-facing methodology note"
+      ]
+    }
+  ],
+  "summary": "Reviewed 15 articles. 12 of 15 are clean — well-structured, evidence-grounded, and appropriately cautious. These read like research lab notes with specific observations, explicit uncertainty markers, and data tables. No marketing language issues. Two articles have medium-severity problems: 'The Great Acceleration' uses hyperbolic framing and unsubstantiated claims that read more like a manifesto than lab findings. 'Zen and the Art of Vibe Coding' mixes genuine operational insight with buzzy 'leverage' language and an unsupported political comparison. One minor issue in the public APIs article (metadata in visible content). The remaining articles — OpenRAG deployment, API provider framework, model selection framework, Just Rebuild It, character consistency, image models, RAG without hallucination, nanoclaw vs openclaw, codex53 vs opus46, aesthetic scoring, tutor architecture, and image-model benchmark — all maintain strong lab tone with specific observations, honest uncertainty acknowledgments, and appropriate use of synthetic data labels. No game-changing, revolutionary, seamless, robust, transformative, unleash, supercharge, empower, unlock, harness, or dive deep found anywhere."
+}
