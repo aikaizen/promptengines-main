@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulting Analytics Dashboard</title>
+  <style>
+    :root {
+      --bg: #0b0c0f;
+      --surface: #111318;
+      --border: #1f232b;
+      --text: #f2f4f8;
+      --text-2: #b8bdc3;
+      --text-3: #7d8795;
+      --accent: #2ec6ae;
+      --accent-dim: #122c29;
+      --green: #3ddc97;
+      --yellow: #ffd166;
+      --red: #ff6b6b;
+      --blue: #5dade2;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: var(--text-2);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .stat-value {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -1px;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+    .stat-card.revenue .stat-value { color: var(--green); }
+    .stat-card.proposals .stat-value { color: var(--yellow); }
+    .stat-card.deals .stat-value { color: var(--accent); }
+    .stat-card.hours .stat-value { color: var(--blue); }
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .section h2 {
+      font-size: 14px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th {
+      text-align: left;
+      color: var(--text-3);
+      font-weight: 500;
+      padding: 12px 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 12px 8px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-2);
+    }
+    tr:last-child td { border-bottom: none; }
+    .type-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .type-call { background: var(--accent-dim); color: var(--accent); }
+    .type-proposal { background: rgba(255, 209, 102, 0.1); color: var(--yellow); }
+    .type-win { background: rgba(61, 220, 151, 0.1); color: var(--green); }
+    .type-loss { background: rgba(255, 107, 107, 0.1); color: var(--red); }
+    .type-hours { background: rgba(93, 173, 226, 0.1); color: var(--blue); }
+    .type-expense { background: rgba(255, 107, 107, 0.1); color: var(--red); }
+    .type-custom { background: var(--surface); color: var(--text-3); }
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-3);
+    }
+    .refresh-btn {
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .refresh-btn:hover { opacity: 0.9; }
+    .actions { display: flex; gap: 12px; margin-bottom: 24px; }
+    code {
+      background: var(--bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Consulting Analytics</h1>
+    <p class="subtitle">Local data from <code>analytics/data/events.jsonl</code> — No third-party tracking</p>
+
+    <div class="actions">
+      <button class="refresh-btn" onclick="loadData()">Refresh Data</button>
+    </div>
+
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card revenue">
+        <div class="stat-value" id="totalRevenue">$0</div>
+        <div class="stat-label">Total Revenue</div>
+      </div>
+      <div class="stat-card proposals">
+        <div class="stat-value" id="totalProposals">0</div>
+        <div class="stat-label">Proposals Sent</div>
+      </div>
+      <div class="stat-card deals">
+        <div class="stat-value" id="totalWins">0</div>
+        <div class="stat-label">Deals Won</div>
+      </div>
+      <div class="stat-card hours">
+        <div class="stat-value" id="totalHours">0</div>
+        <div class="stat-label">Hours Logged</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="winRate">0%</div>
+        <div class="stat-label">Win Rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="effectiveRate">$0</div>
+        <div class="stat-label">Effective Rate/hr</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Recent Events</h2>
+      <table id="eventsTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Client</th>
+            <th>Value</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody id="eventsBody">
+          <tr><td colspan="5" class="empty-state">No events logged yet. Use <code>node scripts/log-work.js</code> to add data.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>By Client</h2>
+      <table id="clientsTable">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Revenue</th>
+            <th>Hours</th>
+            <th>Proposals</th>
+            <th>Calls</th>
+          </tr>
+        </thead>
+        <tbody id="clientsBody">
+          <tr><td colspan="5" class="empty-state">No client data yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section" style="margin-top: 32px;">
+      <h2>Quick Commands</h2>
+      <table>
+        <tbody>
+          <tr><td><code>node scripts/log-work.js call "Client Name" 30 "Discovery call"</code></td><td>Log a client call</td></tr>
+          <tr><td><code>node scripts/log-work.js proposal "Client Name" 5000 "AI agent setup"</code></td><td>Log proposal sent</td></tr>
+          <tr><td><code>node scripts/log-work.js win "Client Name" 5000 50 "Closed deal!"</code></td><td>Log closed deal</td></tr>
+          <tr><td><code>node scripts/log-work.js hours "Client Name" 4.5 "Architecture planning"</code></td><td>Log billable hours</td></tr>
+          <tr><td><code>node scripts/log-work.js stats</code></td><td>Show summary in terminal</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    async function loadData() {
+      try {
+        const response = await fetch('data/events.jsonl');
+        if (!response.ok) {
+          document.getElementById('eventsBody').innerHTML = 
+            '<tr><td colspan="5" class="empty-state">No data file found. Start logging events to see them here.</td></tr>';
+          return;
+        }
+        
+        const text = await response.text();
+        const events = text.trim().split('\n').filter(line => line).map(line => JSON.parse(line));
+        
+        if (events.length === 0) {
+          document.getElementById('eventsBody').innerHTML = 
+            '<tr><td colspan="5" class="empty-state">No events logged yet.</td></tr>';
+          return;
+        }
+
+        // Calculate stats
+        const stats = {
+          revenue: events.filter(e => e.type === 'win').reduce((sum, e) => sum + e.value, 0),
+          proposals: events.filter(e => e.type === 'proposal').length,
+          wins: events.filter(e => e.type === 'win').length,
+          losses: events.filter(e => e.type === 'loss').length,
+          hours: events.filter(e => e.type === 'hours').reduce((sum, e) => sum + e.value, 0),
+        };
+        
+        stats.winRate = stats.wins + stats.losses > 0 
+          ? ((stats.wins / (stats.wins + stats.losses)) * 100).toFixed(1) + '%' 
+          : '0%';
+        stats.effectiveRate = stats.hours > 0 
+          ? '$' + (stats.revenue / stats.hours).toFixed(0) 
+          : '$0';
+
+        // Update stat cards
+        document.getElementById('totalRevenue').textContent = '$' + stats.revenue.toLocaleString();
+        document.getElementById('totalProposals').textContent = stats.proposals;
+        document.getElementById('totalWins').textContent = stats.wins;
+        document.getElementById('totalHours').textContent = stats.hours.toFixed(1);
+        document.getElementById('winRate').textContent = stats.winRate;
+        document.getElementById('effectiveRate').textContent = stats.effectiveRate;
+
+        // Render events
+        const eventsHtml = events.slice(-20).reverse().map(e => `
+          <tr>
+            <td>${e.date}</td>
+            <td><span class="type-badge type-${e.type}">${e.type}</span></td>
+            <td>${e.client}</td>
+            <td>${e.value > 0 ? (e.type === 'win' || e.type === 'proposal' ? '$' : '') + e.value.toLocaleString() : '-'}</td>
+            <td>${e.note || '-'}</td>
+          </tr>
+        `).join('');
+        document.getElementById('eventsBody').innerHTML = eventsHtml;
+
+        // Calculate client stats
+        const clientStats = {};
+        events.forEach(e => {
+          if (!clientStats[e.client]) {
+            clientStats[e.client] = { revenue: 0, hours: 0, proposals: 0, calls: 0 };
+          }
+          if (e.type === 'win') clientStats[e.client].revenue += e.value;
+          if (e.type === 'hours') clientStats[e.client].hours += e.value;
+          if (e.type === 'proposal') clientStats[e.client].proposals++;
+          if (e.type === 'call') clientStats[e.client].calls++;
+        });
+
+        // Render clients
+        const clientsHtml = Object.entries(clientStats)
+          .sort((a, b) => b[1].revenue - a[1].revenue)
+          .map(([client, s]) => `
+            <tr>
+              <td>${client}</td>
+              <td>$${s.revenue.toLocaleString()}</td>
+              <td>${s.hours.toFixed(1)}h</td>
+              <td>${s.proposals}</td>
+              <td>${s.calls}</td>
+            </tr>
+          `).join('');
+        document.getElementById('clientsBody').innerHTML = clientsHtml;
+
+      } catch (err) {
+        console.error('Error loading data:', err);
+        document.getElementById('eventsBody').innerHTML = 
+          '<tr><td colspan="5" class="empty-state">Error loading data. Make sure you\'ve logged some events first.</td></tr>';
+      }
+    }
+
+    // Load on page load
+    loadData();
+  </script>
+</body>
+</html>
