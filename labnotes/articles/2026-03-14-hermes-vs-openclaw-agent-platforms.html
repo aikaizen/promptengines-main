@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermes vs OpenClaw: Two Agent Orchestration Models Compared — Prompt Engines Lab</title>
+  <meta name="description" content="Technical comparison of Nous Research's Hermes Agent (Python, self-evolving skills) and OpenClaw (Node.js gateway, 40+ channels). Architecture, capabilities, and use-case fit.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .article-content th, .article-content td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .article-content th { font-weight: 600; color: var(--text-2); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
+          March 14, 2026 · 12 min read · Analysis
+        </div>
+        
+        <h1>Hermes vs OpenClaw: Two Philosophies of Agent Orchestration</h1>
+        
+        <p>The personal AI agent space has bifurcated into two distinct architectural camps. Nous Research's Hermes Agent and OpenClaw both promise an always-available assistant you can reach from any messaging platform. They arrive at this goal through fundamentally different technical decisions — and those decisions matter for anyone choosing a platform today.</p>
+
+        <p>Hermes is Python-native, research-rooted, and built around a closed learning loop that lets the agent improve its own skills over time. OpenClaw is Node.js-based, gateway-centric, and designed as a messaging control plane that routes to an agent runtime. Neither is objectively "better." They optimize for different problems.</p>
+
+        <p>This comparison is based on current GitHub repositories (Hermes: ~6.8k stars; OpenClaw: active development, 40+ channel integrations), published documentation, and architectural analysis as of March 2026.</p>
+
+        <h2>Architecture: Learning Loop vs Gateway Router</h2>
+
+        <p>The most consequential difference is structural. Hermes builds the agent as the central product — everything exists to make the agent smarter over time. OpenClaw builds the gateway as the central product — the agent is one component in a larger messaging infrastructure.</p>
+
+        <h3>Hermes: The Self-Improving Agent</h3>
+
+        <p>Hermes runs as a Python process with a terminal UI, a messaging gateway, and a learning subsystem. Its core innovation is the skill lifecycle:</p>
+
+        <ol>
+          <li><strong>Autonomous skill creation:</strong> After complex tasks, the agent analyzes what it did and packages reusable knowledge into skill files</li>
+          <li><strong>Runtime self-improvement:</strong> Skills get better with use — execution traces feed back into skill refinement</li>
+          <li><strong>Nudged persistence:</strong> The agent periodically reminds itself to write down what it's learned, building persistent memory across sessions</li>
+          <li><strong>Evolutionary optimization:</strong> A separate self-evolution module (DSPy + GEPA) can optimize skills, prompts, and tool descriptions through genetic search — ~$2–10 per optimization run, no GPU required</li>
+        </ol>
+
+        <p>Terminal backends span six modes: local, Docker, SSH, Daytona, Singularity, and Modal. Daytona and Modal provide serverless persistence — the environment hibernates when idle and wakes on demand. This means Hermes can run on a $5 VPS with near-zero idle cost, or scale to a GPU cluster for research workloads.</p>
+
+        <p>The architecture flows through a single agent loop: receive input, select tools, execute, evaluate, store learnings. Skills are procedural memory — they encode "how to do X" rather than "what X is." The Honcho dialectic system builds user models over time, creating a deepening understanding of who the user is across sessions.</p>
+
+        <h3>OpenClaw: The Gateway as Control Plane</h3>
+
+        <p>OpenClaw runs a Node.js Gateway process that serves as the single source of truth for sessions, routing, and channel connections. The agent runtime (derived from pi-mono) is one of several connected surfaces:</p>
+
+        <ul>
+          <li><strong>Gateway:</strong> WebSocket-based control plane managing sessions, presence, config, cron, webhooks</li>
+          <li><strong>Agent runtime:</strong> Executes within workspace boundaries with injected context files (SOUL.md, AGENTS.md, USER.md)</li>
+          <li><strong>Channel adapters:</strong> 40+ messaging platforms — WhatsApp, Telegram, Discord, Slack, Signal, iMessage, IRC, Matrix, and dozens more</li>
+          <li><strong>Node network:</strong> iOS/Android companion devices providing camera, voice, and Canvas capabilities</li>
+        </ul>
+
+        <p>The routing model is channel-first. Inbound messages from different platforms get routed to isolated agent sessions. Each session maintains its own context, workspace state, and tool permissions. Multi-agent routing allows different channels or senders to hit different agent configurations.</p>
+
+        <p>Memory is file-based by design: SOUL.md for persona, AGENTS.md for instructions, MEMORY.md for long-term memory, daily memory files for raw logs. The agent reads these at session start and updates them throughout the session. It's simple, inspectable, and survives compaction — any file editor can modify the agent's "brain."</p>
+
+        <h2>Technical Capabilities Compared</h2>
+
+        <table>
+          <thead>
+            <tr><th>Capability</th><th>Hermes Agent</th><th>OpenClaw</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Runtime</td><td>Python 3.x</td><td>Node.js ≥22</td></tr>
+            <tr><td>Messaging channels</td><td>6 (Telegram, Discord, Slack, WhatsApp, Signal, CLI)</td><td>40+ (all above plus iMessage, IRC, Matrix, Teams, etc.)</td></tr>
+            <tr><td>Self-improving skills</td><td>✅ Built-in closed loop</td><td>❌ Manual skill authoring</td></tr>
+            <tr><td>Evolutionary optimization</td><td>✅ DSPy + GEPA module</td><td>❌ Not available</td></tr>
+            <tr><td>Terminal backends</td><td>6 (local, Docker, SSH, Daytona, Singularity, Modal)</td><td>1 (local + sandbox modes)</td></tr>
+            <tr><td>Serverless idle</td><td>✅ Via Daytona/Modal</td><td>❌ Gateway runs continuously</td></tr>
+            <tr><td>Multi-agent routing</td><td>✅ Subagent spawning</td><td>✅ Channel/account-level routing</td></tr>
+            <tr><td>Voice capabilities</td><td>Voice memo transcription</td><td>Voice Wake + Talk Mode (macOS/iOS/Android)</td></tr>
+            <tr><td>Visual workspace</td><td>❌ No Canvas</td><td>✅ Live Canvas with A2UI</td></tr>
+            <tr><td>Mobile companion apps</td><td>❌ No native apps</td><td>✅ macOS app + iOS/Android nodes</td></tr>
+            <tr><td>MCP integration</td><td>✅ First-class</td><td>✅ Via skills</td></tr>
+            <tr><td>Research features</td><td>✅ Batch trajectories, Atropos RL</td><td>❌ Not a focus</td></tr>
+            <tr><td>Migration tooling</td><td>✅ Built-in OpenClaw importer</td><td>N/A (established platform)</td></tr>
+            <tr><td>License</td><td>MIT</td><td>MIT</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Strengths and Weaknesses</h2>
+
+        <h3>Where Hermes Wins</h3>
+
+        <p><strong>Agent intelligence over time.</strong> This is Hermes's defining advantage. No other open-source agent ships with a built-in learning loop that creates skills from experience, improves them during use, and evolves them through genetic search. For users who want an agent that genuinely gets better at their specific workflows, this is the only option.</p>
+
+        <p><strong>Deployment flexibility.</strong> Six terminal backends including serverless options. The ability to run on a $5 VPS and hibernate to near-zero cost is a real operational advantage. SSH and Docker backends mean the agent can execute in isolated environments regardless of the host machine.</p>
+
+        <p><strong>Research infrastructure.</strong> Batch trajectory generation and Atropos RL integration position Hermes as a research platform, not just a personal assistant. Teams training the next generation of tool-calling models can use Hermes to generate and compress training data.</p>
+
+        <p><strong>Self-evolution.</strong> The DSPy + GEPA module (ICLR 2026 Oral) can automatically optimize skill files through evolutionary search, producing measurably better variants. All changes go through PR review — the agent proposes, humans approve.</p>
+
+        <h3>Where OpenClaw Wins</h3>
+
+        <p><strong>Channel coverage.</strong> 40+ messaging integrations vs. Hermes's 6. If you need to be reachable on iMessage, IRC, Microsoft Teams, Matrix, or any of the 30+ additional platforms OpenClaw supports, there's no substitute.</p>
+
+        <p><strong>Companion hardware.</strong> The macOS app, iOS/Android nodes, Voice Wake, Talk Mode, and Live Canvas create a hardware ecosystem that Hermes doesn't attempt. If your agent workflow involves camera capture, voice interaction, or visual output, OpenClaw's node network is essential.</p>
+
+        <p><strong>Maturity and stability.</strong> OpenClaw's gateway architecture is battle-tested across dozens of production deployments. The channel adapters have been refined through real-world usage patterns — reconnection logic, rate limiting, media handling.</p>
+
+        <p><strong>Gateway as platform.</strong> The Gateway's WebSocket API, Control UI, and webhook system make OpenClaw integrable into larger automation workflows. It's not just an agent — it's infrastructure.</p>
+
+        <h3>Where Both Struggle</h3>
+
+        <p>Neither platform solves the fundamental challenge of context window management at scale. Both rely on summarization and memory files to maintain coherence across long sessions, and both degrade when conversations exceed practical context limits. Hermes's session search (FTS5 + LLM summarization) is more sophisticated, but the underlying constraint is architectural — both are bound by the LLM's context window.</p>
+
+        <p>Multi-user support is limited in both. These are single-user personal assistants. Team deployments require separate instances with separate configurations.</p>
+
+        <h2>Use Case Fit</h2>
+
+        <table>
+          <thead>
+            <tr><th>Use Case</th><th>Recommended</th><th>Reasoning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Developer wanting an agent that learns their workflow</td><td><strong>Hermes</strong></td><td>Self-improving skills are unmatched</td></tr>
+            <tr><td>Multi-platform messaging (iMessage + Telegram + Slack)</td><td><strong>OpenClaw</strong></td><td>40+ channels vs 6</td></tr>
+            <tr><td>Research team generating training trajectories</td><td><strong>Hermes</strong></td><td>Atropos RL + batch generation</td></tr>
+            <tr><td>Always-on assistant with voice + camera</td><td><strong>OpenClaw</strong></td><td>Mobile nodes + Voice Wake</td></tr>
+            <tr><td>Budget deployment ($5 VPS, serverless idle)</td><td><strong>Hermes</strong></td><td>Daytona/Modal backends</td></tr>
+            <tr><td>Integration into automation workflows</td><td><strong>OpenClaw</strong></td><td>Gateway API + webhooks</td></tr>
+            <tr><td>Agent that evolves its own capabilities</td><td><strong>Hermes</strong></td><td>Self-evolution via DSPy + GEPA</td></tr>
+            <tr><td>Visual output / Canvas workflows</td><td><strong>OpenClaw</strong></td><td>Live Canvas with A2UI</td></tr>
+          </tbody>
+        </table>
+
+        <h2>The Migration Question</h2>
+
+        <p>Hermes ships with a built-in OpenClaw migration tool (<code>hermes claw migrate</code>). It imports SOUL.md, memories, skills, API keys, messaging settings, and command allowlists. This is notable — it signals that Hermes sees OpenClaw users as its primary acquisition target.</p>
+
+        <p>The migration is interactive with dry-run support. What gets imported:</p>
+
+        <ul>
+          <li>SOUL.md → persona file</li>
+          <li>MEMORY.md + USER.md → persistent memory</li>
+          <li>User-created skills → <code>~/.hermes/skills/openclaw-imports/</code></li>
+          <li>Command approval patterns → allowlist</li>
+          <li>Messaging configs → platform settings</li>
+          <li>API keys → allowlisted secrets (Telegram, OpenRouter, OpenAI, Anthropic, ElevenLabs)</li>
+        </ul>
+
+        <p>This suggests Hermes's community growth strategy is explicit: capture the existing OpenClaw user base by reducing switching cost to near zero.</p>
+
+        <h2>Conclusion</h2>
+
+        <p>Hermes and OpenClaw represent two mature but divergent approaches to personal AI agents. Hermes bets that the agent's ability to learn and improve is the differentiating feature — everything else is secondary. OpenClaw bets that reliable, broad messaging infrastructure is the differentiating feature — the agent is one component among many.</p>
+
+        <p>If you value an agent that gets smarter over time and can run cheaply on any infrastructure, Hermes is the clear choice. If you value broad platform coverage, hardware integration, and a stable gateway architecture, OpenClaw remains the more complete solution.</p>
+
+        <p>Both are MIT-licensed. Both are actively developed. Both deserve evaluation before committing to either. The good news: with Hermes's migration tooling, the switching cost between them is lower than it's ever been.</p>
+
+        <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+        <p style="color: var(--text-4); font-size: 0.875rem;">
+          <strong>Technical Appendix</strong><br>
+          Analysis date: March 14, 2026<br>
+          Hermes Agent: github.com/NousResearch/hermes-agent (~6.8k ★)<br>
+          Hermes Self-Evolution: github.com/NousResearch/hermes-agent-self-evolution (204 ★)<br>
+          OpenClaw: github.com/openclaw/openclaw<br>
+          Documentation: hermes-agent.nousresearch.com/docs · docs.openclaw.ai<br>
+          All star counts approximate at time of analysis.<br><br>
+          <strong>References:</strong><br>
+          Hermes Agent: https://github.com/NousResearch/hermes-agent<br>
+          Hermes Docs: https://hermes-agent.nousresearch.com/docs/<br>
+          OpenClaw: https://github.com/openclaw/openclaw<br>
+          OpenClaw Docs: https://docs.openclaw.ai<br>
+          Self-Evolution (GEPA): https://github.com/NousResearch/hermes-agent-self-evolution
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" style="border-top: 1px solid var(--border-subtle); margin-top: 4rem;">
+    <div class="container" style="padding: 2rem 0; text-align: center; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab Notes — Real experiments. Published findings.</p>
+    </div>
+  </footer>
+</body>
+</html>
