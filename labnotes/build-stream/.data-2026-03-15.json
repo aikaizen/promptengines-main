@@ -1,0 +1,473 @@
+{
+  "date": "2026-03-15",
+  "generatedAt": "2026-03-15T12:00:03.605Z",
+  "commits": [
+    {
+      "repo": "promptengines-main",
+      "hash": "c0f6e14bc758b75b8837e1c6e9177266c5f03e5f",
+      "shortHash": "c0f6e14",
+      "date": "2026-03-15T06:57:47Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/c0f6e14bc758b75b8837e1c6e9177266c5f03e5f",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "b9fb4ada841ad6a7dc5a47152b51c448d89e5c8d",
+      "shortHash": "b9fb4ad",
+      "date": "2026-03-15T03:09:40Z",
+      "subject": "Keyframe prompt always-prefix + ref images auto-expand",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/b9fb4ada841ad6a7dc5a47152b51c448d89e5c8d",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "videoterminal",
+      "hash": "4900506bd50a00f9049edd753089704bc4cca820",
+      "shortHash": "4900506",
+      "date": "2026-03-15T02:47:33Z",
+      "subject": "Add velocity UX: Continue Story CTA + transition keyframe mode",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/videoterminal/commit/4900506bd50a00f9049edd753089704bc4cca820",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "a7663b170d94cee939d0cef3fc8123afed9539e1",
+      "shortHash": "a7663b1",
+      "date": "2026-03-15T02:27:34Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/a7663b170d94cee939d0cef3fc8123afed9539e1",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "593a4e7712a805bcd453ad8a2373ae2f3536525b",
+      "shortHash": "593a4e7",
+      "date": "2026-03-15T01:57:05Z",
+      "subject": "feat(skill): mobile-first responsive design - A-grade UX patterns",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/593a4e7712a805bcd453ad8a2373ae2f3536525b",
+      "type": "feat",
+      "scope": "skill"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "0db74706e86a0f61f681a4a6296c1c25b20589a7",
+      "shortHash": "0db7470",
+      "date": "2026-03-15T01:41:20Z",
+      "subject": "fix(mobile): complete A-grade mobile UX - grids, pipeline, cards",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/0db74706e86a0f61f681a4a6296c1c25b20589a7",
+      "type": "fix",
+      "scope": "mobile"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "5ab1c5bad100dd7dadf03428ac1cf957fe23fead",
+      "shortHash": "5ab1c5b",
+      "date": "2026-03-15T01:21:58Z",
+      "subject": "fix(mobile): comprehensive mobile UX improvements - A grade",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/5ab1c5bad100dd7dadf03428ac1cf957fe23fead",
+      "type": "fix",
+      "scope": "mobile"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "de0587e6b94c2038f30d1b7772cf162c9f0aa94e",
+      "shortHash": "de0587e",
+      "date": "2026-03-14T20:21:14Z",
+      "subject": "fix(mobile): use minmax(0, 1fr) to prevent grid overflow from nowrap content",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/de0587e6b94c2038f30d1b7772cf162c9f0aa94e",
+      "type": "fix",
+      "scope": "mobile"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "9c678f5fcbb28029461cdd6ebd985cb49c2fff4d",
+      "shortHash": "9c678f5",
+      "date": "2026-03-14T20:18:45Z",
+      "subject": "fix(mobile): resolve hero text clipping and tighten mobile spacing",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/9c678f5fcbb28029461cdd6ebd985cb49c2fff4d",
+      "type": "fix",
+      "scope": "mobile"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "dce353ea2792bbc24328286e85a553e797eebe86",
+      "shortHash": "dce353e",
+      "date": "2026-03-14T19:54:36Z",
+      "subject": "fix(js): update rotator values to match Lab+Articles buttons",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/dce353ea2792bbc24328286e85a553e797eebe86",
+      "type": "fix",
+      "scope": "js"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "da04d0ad3d74631a2e35e4dada94cd4bb3b70e5e",
+      "shortHash": "da04d0a",
+      "date": "2026-03-14T19:43:46Z",
+      "subject": "fix(mobile): Lab Notes mobile UX — scrollable nav, tighter spacing, hidden hero aside",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/da04d0ad3d74631a2e35e4dada94cd4bb3b70e5e",
+      "type": "fix",
+      "scope": "mobile"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "1404a2c274117f9bc20ea61dd1dc08d824f80182",
+      "shortHash": "1404a2c",
+      "date": "2026-03-14T19:41:42Z",
+      "subject": "fix(mobile): restore truncation properties to commit-msg in 680px breakpoint",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/1404a2c274117f9bc20ea61dd1dc08d824f80182",
+      "type": "fix",
+      "scope": "mobile"
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "cc77d0aae12078b63f8e0110e9b8519ed0bb2b53",
+      "shortHash": "cc77d0a",
+      "date": "2026-03-14T19:04:56Z",
+      "subject": "fix: mobile UX — touch targets, overflow menus, bottom sheets, grid layout",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/cc77d0aae12078b63f8e0110e9b8519ed0bb2b53",
+      "type": "fix",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "d3e3908f1722297ca0923bd6dca6cd20cf3b590c",
+      "shortHash": "d3e3908",
+      "date": "2026-03-14T18:59:10Z",
+      "subject": "fix(css): add overflow constraints to terminal-line to prevent horizontal scroll",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/d3e3908f1722297ca0923bd6dca6cd20cf3b590c",
+      "type": "fix",
+      "scope": "css"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "504e6c2a41f8909d5c13f032d68f2d9eb4816ead",
+      "shortHash": "504e6c2",
+      "date": "2026-03-14T18:52:17Z",
+      "subject": "Revert: restore zoom and Track system with Lab+Articles",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/504e6c2a41f8909d5c13f032d68f2d9eb4816ead",
+      "type": "other",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "152ff1b296545143765e8050256827e099c48923",
+      "shortHash": "152ff1b",
+      "date": "2026-03-14T18:39:01Z",
+      "subject": "chore: update activity feed from GitHub commits",
+      "author": "github-actions[bot]",
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/152ff1b296545143765e8050256827e099c48923",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "488473dae4f6c383faee05c16c481d511c5dbdf6",
+      "shortHash": "488473d",
+      "date": "2026-03-14T18:20:22Z",
+      "subject": "feat(hero): replace Track/products with Lab+Articles CTAs, disable zoom",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/488473dae4f6c383faee05c16c481d511c5dbdf6",
+      "type": "feat",
+      "scope": "hero"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "94facc1db31510ebc34c6b0de417f1fcb95852f0",
+      "shortHash": "94facc1",
+      "date": "2026-03-14T18:12:38Z",
+      "subject": "fix(mobile): dropdown positioning and commit cards mobile layout",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/94facc1db31510ebc34c6b0de417f1fcb95852f0",
+      "type": "fix",
+      "scope": "mobile"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "cd103e6b54917d8ea06b880f1596a17d5260a9db",
+      "shortHash": "cd103e6",
+      "date": "2026-03-14T18:05:54Z",
+      "subject": "fix(articles): remove duplicate entries and v2/v3 separate listings",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/cd103e6b54917d8ea06b880f1596a17d5260a9db",
+      "type": "fix",
+      "scope": "articles"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "cd7d0548acdb141f47c02e16870ac6b65c13a1f5",
+      "shortHash": "cd7d054",
+      "date": "2026-03-14T17:40:46Z",
+      "subject": "fix(css): zoom-resistant layout patterns for mobile accessibility",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/cd7d0548acdb141f47c02e16870ac6b65c13a1f5",
+      "type": "fix",
+      "scope": "css"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "7ea7ad0efb5ec024759259bf9b79d725ba9fad71",
+      "shortHash": "7ea7ad0",
+      "date": "2026-03-14T17:26:39Z",
+      "subject": "fix(mobile): comprehensive mobile UX improvements for homepage",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/7ea7ad0efb5ec024759259bf9b79d725ba9fad71",
+      "type": "fix",
+      "scope": "mobile"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "f2d16fa66992082d83655b62989807ee83703271",
+      "shortHash": "f2d16fa",
+      "date": "2026-03-14T17:22:52Z",
+      "subject": "fix(articles): correct article links for Feb content",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/f2d16fa66992082d83655b62989807ee83703271",
+      "type": "fix",
+      "scope": "articles"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "d411ee3abf01d8df71b8b0ffaedea049f902d721",
+      "shortHash": "d411ee3",
+      "date": "2026-03-14T17:20:28Z",
+      "subject": "fix(articles): add date prefixes to all article links in index",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/d411ee3abf01d8df71b8b0ffaedea049f902d721",
+      "type": "fix",
+      "scope": "articles"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "d280ed56d8691abb8fdce1fc709e556b60e4314e",
+      "shortHash": "d280ed5",
+      "date": "2026-03-14T16:22:38Z",
+      "subject": "fix(articles): correct broken links in index — add missing March 3-4 articles",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/d280ed56d8691abb8fdce1fc709e556b60e4314e",
+      "type": "fix",
+      "scope": "articles"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "b53e84effab9edb641a45c078e67cf7bdf8070d3",
+      "shortHash": "b53e84e",
+      "date": "2026-03-14T15:38:20Z",
+      "subject": "feat(analytics): PantheonOS dashboard integration for consulting metrics",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/b53e84effab9edb641a45c078e67cf7bdf8070d3",
+      "type": "feat",
+      "scope": "analytics"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "a6f799d85974d3919b3a19ecfd4e05ff4d80502b",
+      "shortHash": "a6f799d",
+      "date": "2026-03-14T15:32:08Z",
+      "subject": "feat(analytics): two-tier analytics system for consulting",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/a6f799d85974d3919b3a19ecfd4e05ff4d80502b",
+      "type": "feat",
+      "scope": "analytics"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "02e0f05492938fe619495fb986df2e3e24aba212",
+      "shortHash": "02e0f05",
+      "date": "2026-03-14T15:22:34Z",
+      "subject": "feat(consulting): SEO-optimized consulting site with proof points",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/02e0f05492938fe619495fb986df2e3e24aba212",
+      "type": "feat",
+      "scope": "consulting"
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "8d9ba7506027fb13354e9b83c71fdf8c30b74a11",
+      "shortHash": "8d9ba75",
+      "date": "2026-03-14T15:15:17Z",
+      "subject": "content: add March 15 daily AI research briefing + generator script",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/8d9ba7506027fb13354e9b83c71fdf8c30b74a11",
+      "type": "content",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "ba6ed7568d3fa3fc8067683d00aa06484fc613a2",
+      "shortHash": "ba6ed75",
+      "date": "2026-03-14T15:14:13Z",
+      "subject": "content: add March 15 daily AI research briefing + generator script",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/ba6ed7568d3fa3fc8067683d00aa06484fc613a2",
+      "type": "content",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "2ab095548dce0e42ba05775ba02382fac3245c20",
+      "shortHash": "2ab0955",
+      "date": "2026-03-14T14:32:09Z",
+      "subject": "fix(articles): redesign index — flat chronological list, prominent mode badges",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/2ab095548dce0e42ba05775ba02382fac3245c20",
+      "type": "fix",
+      "scope": "articles"
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "96c62346201303d29c1ba4e2efece5a04019a4ac",
+      "shortHash": "96c6234",
+      "date": "2026-03-14T14:32:00Z",
+      "subject": "chore: remove dead ImageGenerator and ResultDisplay imports from App.tsx",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/96c62346201303d29c1ba4e2efece5a04019a4ac",
+      "type": "chore",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "cf256b5bf74ff477b073b1512147925bed7627c0",
+      "shortHash": "cf256b5",
+      "date": "2026-03-14T14:31:33Z",
+      "subject": "content: add daily AI research briefing for March 14, 2026",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/cf256b5bf74ff477b073b1512147925bed7627c0",
+      "type": "content",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "008e1ea7eb1adcedeeaf01788f56b1155e6f1d46",
+      "shortHash": "008e1ea",
+      "date": "2026-03-14T14:31:18Z",
+      "subject": "content: add daily AI research briefing for March 14, 2026",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/008e1ea7eb1adcedeeaf01788f56b1155e6f1d46",
+      "type": "content",
+      "scope": null
+    },
+    {
+      "repo": "storybookstudio",
+      "hash": "f590af570c4068ca07fb6436c89cf09e400fa53a",
+      "shortHash": "f590af5",
+      "date": "2026-03-14T13:30:13Z",
+      "subject": "feat: remove Generator tab, add Characters tab + inline generation modal",
+      "author": "aikaizen",
+      "email": "adil.islam@gmail.com",
+      "htmlUrl": "https://github.com/aikaizen/storybookstudio/commit/f590af570c4068ca07fb6436c89cf09e400fa53a",
+      "type": "feat",
+      "scope": null
+    },
+    {
+      "repo": "promptengines-main",
+      "hash": "c4b0d8490378a0a22ef523f240756a7a1c0df5ed",
+      "shortHash": "c4b0d84",
+      "date": "2026-03-14T13:03:37Z",
+      "subject": "chore(lab): update articles index with context drought article",
+      "author": "Andy Stable",
+      "email": "120840936+aikaizen@users.noreply.github.com",
+      "htmlUrl": "https://github.com/aikaizen/promptengines-main/commit/c4b0d8490378a0a22ef523f240756a7a1c0df5ed",
+      "type": "chore",
+      "scope": "lab"
+    }
+  ],
+  "stats": {
+    "byType": {
+      "chore": 5,
+      "other": 3,
+      "feat": 6,
+      "fix": 17,
+      "content": 4
+    },
+    "byAuthor": {
+      "github-actions[bot]": 3,
+      "aikaizen": 10,
+      "Andy Stable": 22
+    },
+    "byRepo": {
+      "promptengines-main": 30,
+      "videoterminal": 2,
+      "storybookstudio": 3
+    },
+    "total": 35
+  },
+  "summary": {
+    "totalCommits": 35,
+    "activeRepos": [
+      "promptengines-main",
+      "storybookstudio",
+      "videoterminal"
+    ],
+    "primaryTypes": [
+      [
+        "fix",
+        17
+      ],
+      [
+        "feat",
+        6
+      ],
+      [
+        "chore",
+        5
+      ]
+    ],
+    "activeAuthors": [
+      "github-actions[bot]",
+      "aikaizen",
+      "Andy Stable"
+    ]
+  }
+}
