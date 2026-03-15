@@ -901,6 +901,57 @@
         min-width: 0;
         flex: 1;
       }
+
+      /* Force single-column grids on small mobile */
+      .activity-grid,
+      .articles-grid,
+      .product-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      /* Pipeline vertical stack */
+      .pipeline {
+        flex-direction: column;
+        gap: 0;
+        margin-bottom: 16px;
+      }
+
+      .pipeline-stage {
+        border-radius: 8px !important;
+        padding: 12px;
+        width: 100%;
+      }
+
+      .pipeline-arrow {
+        transform: rotate(90deg);
+        padding: 8px 0;
+        font-size: 14px;
+      }
+
+      /* Product tags wrapping */
+      .product-features {
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .product-feature {
+        font-size: 9px;
+        padding: 4px 8px;
+        flex-shrink: 0;
+      }
+
+      .product-card {
+        padding: 20px;
+      }
+
+      .product-name {
+        font-size: 18px;
+      }
+
+      .product-pitch {
+        font-size: 14px;
+      }
     }
 
     .app-card-head {
@@ -1224,6 +1275,18 @@
 
       .follow-card {
         padding: 24px 18px;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .follow-links {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .follow-links a {
+        padding: 8px 0;
+        border-bottom: 1px solid var(--line);
       }
 
     }
@@ -1277,6 +1340,66 @@
       }
       .theme-label {
         font-size: 9px;
+      }
+
+      /* Portfolio grids - single column on mobile */
+      .portfolio-grid,
+      .portfolio-grid-3 {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .portfolio-card {
+        padding: 14px;
+      }
+
+      .portfolio-card-name {
+        font-size: 11px;
+      }
+
+      .portfolio-card-desc {
+        font-size: 12px;
+      }
+
+      /* Articles grid - single column */
+      .articles-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .article-card {
+        padding: 14px;
+      }
+
+      .article-card h3 {
+        font-size: 15px;
+      }
+
+      .article-card p {
+        font-size: 13px;
+      }
+
+      /* Footer adjustments */
+      .footer-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      /* OS grid adjustments */
+      .os-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .os-card,
+      .os-card-sm {
+        padding: 20px;
       }
     }
 
