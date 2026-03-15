@@ -191,107 +191,26 @@
       justify-content: flex-end;
     }
 
-    /* Mobile navigation improvements */
-    @media (max-width: 900px) {
-      .nav-inner {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 12px 0;
-        gap: 12px;
-        min-height: auto;
-      }
-
-      .nav-links {
-        gap: 6px 10px;
-        width: 100%;
-        justify-content: flex-start;
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        padding-bottom: 4px;
-      }
-
-      .nav-links::-webkit-scrollbar {
-        display: none;
-      }
-
-      .nav-links a,
-      .nav-dropdown-trigger {
-        font-size: 12px;
-        padding: 10px 12px;
-        white-space: nowrap;
-        min-height: 44px;
-        min-width: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .nav-dropdown {
-        position: static;
-      }
-
-      .nav-dropdown-menu {
-        position: fixed;
-        top: 120px;
-        left: 16px;
-        right: 16px;
-        min-width: auto;
-        max-width: calc(100% - 32px);
-        max-height: calc(100vh - 140px);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      .nav-dropdown-menu a {
-        min-height: 48px;
-        padding: 14px 16px;
-        font-size: 12px;
-      }
+    /* ═══ HAMBURGER BUTTON ═══ */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--muted);
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s, border-color 0.2s;
     }
-
-    @media (max-width: 680px) {
-      .brand {
-        font-size: 20px;
-      }
-
-      .nav-links {
-        gap: 4px 8px;
-      }
-
-      .nav-links a,
-      .nav-dropdown-trigger {
-        font-size: 11px;
-        padding: 8px 10px;
-        min-height: 44px;
-        min-width: 44px;
-      }
-
-      .nav-dropdown-menu {
-        position: fixed;
-        top: 110px;
-        left: 12px;
-        right: 12px;
-        min-width: auto;
-        max-width: calc(100% - 24px);
-        max-height: calc(100vh - 130px);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        border-radius: 12px;
-      }
-
-      .nav-dropdown-menu a {
-        padding: 16px;
-        font-size: 13px;
-        min-height: 52px;
-      }
-
-      .dd-tag {
-        font-size: 10px;
-        padding: 4px 8px;
-      }
-    }
+    .nav-toggle:hover { color: var(--accent); border-color: var(--accent); }
+    .nav-toggle svg { display: block; }
+    .nav-toggle .icon-close { display: none; }
+    .nav-toggle.is-active .icon-menu { display: none; }
+    .nav-toggle.is-active .icon-close { display: block; }
 
     .nav-links a {
       font-family: var(--font-mono);
@@ -402,6 +321,87 @@
       font-size: 9px;
       opacity: 0.5;
       letter-spacing: 0.05em;
+    }
+
+    /* ═══ MOBILE NAV — HAMBURGER ═══ */
+    @media (max-width: 900px) {
+      .nav-toggle { display: flex; }
+
+      .nav-inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        min-height: auto;
+        flex-wrap: wrap;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+        padding: 8px 0 4px;
+        border-top: 1px solid var(--line);
+        margin-top: 8px;
+      }
+
+      .nav-links.is-open { display: flex; }
+
+      .nav-links > li { width: 100%; }
+
+      .nav-links a,
+      .nav-dropdown-trigger {
+        font-size: 13px;
+        padding: 14px 4px;
+        white-space: nowrap;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        border-bottom: 1px solid rgba(42, 59, 89, 0.4);
+      }
+
+      .nav-links > li:last-child > a { border-bottom: none; }
+
+      .nav-dropdown { position: static; }
+
+      .nav-dropdown-menu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        padding: 0 0 0 16px;
+        min-width: auto;
+        background: transparent;
+        display: none;
+      }
+
+      .nav-dropdown.is-open .nav-dropdown-menu {
+        display: block;
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        padding: 0 0 0 16px;
+      }
+
+      .nav-dropdown-menu a {
+        min-height: 44px;
+        padding: 12px 8px;
+        font-size: 12px;
+        border-bottom: 1px solid rgba(42, 59, 89, 0.25);
+        border-radius: 0;
+      }
+
+      .nav-dropdown-menu a:last-child { border-bottom: none; }
     }
 
     .hero {
@@ -1184,21 +1184,6 @@
 
       .flow-info-grid {
         grid-template-columns: minmax(0, 1fr);
-      }
-
-      .nav-inner {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 12px 0;
-      }
-
-      .nav-links {
-        gap: 10px 16px;
-      }
-
-      .nav-dropdown-menu {
-        left: 0;
-        right: auto;
       }
 
       .hero {
@@ -2148,6 +2133,10 @@
     <nav>
       <div class="container nav-inner">
         <a class="brand" href="#top">Prompt <span>Engines</span></a>
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <svg class="icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
         <ul class="nav-links">
           <li><a href="https://lab.promptengines.com" target="_blank" rel="noopener noreferrer">Lab</a></li>
           <li class="nav-dropdown">
@@ -2664,6 +2653,28 @@
           dropdown.classList.remove('is-open');
         });
       }, { passive: true });
+    })();
+
+    /* ═══ HAMBURGER TOGGLE ═══ */
+    (function () {
+      var toggle = document.querySelector('.nav-toggle');
+      var navLinks = document.querySelector('.nav-links');
+      if (!toggle || !navLinks) return;
+
+      toggle.addEventListener('click', function () {
+        var open = navLinks.classList.toggle('is-open');
+        toggle.classList.toggle('is-active', open);
+        toggle.setAttribute('aria-expanded', open);
+      });
+
+      // Close menu when a non-dropdown link is clicked
+      navLinks.querySelectorAll('a:not(.nav-dropdown-trigger)').forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.classList.remove('is-open');
+          toggle.classList.remove('is-active');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
     })();
   </script>
 
