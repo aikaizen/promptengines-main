@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daily AI Research Briefing — March 15, 2026 — Prompt Engines Lab</title>
-  <meta name="description" content="Top 5 AI stories: OpenViking hits 5K stars, Claude 4.6 Sonnet ships with 1M context, Chrome 146 MCP web support, IBM trajectory learning replicated, agency-agents forks explode.">
+  <meta name="description" content="Top 5 AI stories: obra/superpowers hits 84K stars, MCP death debate on HN, OpenViking context database, Lightpanda headless browser, Anthropic 1M context plateau.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,16 +18,17 @@
     .article-content li { margin: 0.5rem 0; }
     .briefing-score { display: inline-block; background: linear-gradient(135deg, #FF6B6B, #FF8E53); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-right: 0.5rem; }
     .briefing-score-hot { background: linear-gradient(135deg, #FF6B6B, #FF8E53); }
-    .briefing-score-surging { background: linear-gradient(135deg, #FF6B6B, #FF8E53); }
     .briefing-score-exploding { background: linear-gradient(135deg, #FF4757, #FF6348); }
     .briefing-score-research { background: linear-gradient(135deg, #4ECDC4, #44A08D); }
-    .briefing-score-evolving { background: linear-gradient(135deg, #96E6A1, #7CB342); }
+    .briefing-score-debate { background: linear-gradient(135deg, #A78BFA, #7C3AED); }
+    .briefing-score-trend { background: linear-gradient(135deg, #F59E0B, #D97706); }
     .story-block { background: var(--bg-elevated); border-left: 4px solid var(--accent); padding: 1.25rem; margin: 1.5rem 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
     .story-block h4 { margin-top: 0; color: var(--text-1); }
     .stats-row { display: flex; gap: 2rem; flex-wrap: wrap; margin: 0.75rem 0; font-size: 0.875rem; color: var(--text-3); }
     .stats-row span { display: flex; align-items: center; gap: 0.25rem; }
     .article-topic-box { background: linear-gradient(135deg, var(--bg-elevated), var(--bg-surface)); border: 1px solid var(--accent); padding: 1.5rem; border-radius: var(--radius); margin: 2rem 0; }
     .article-topic-box h3 { margin-top: 0; color: var(--accent); }
+    .article-topic-box p { color: var(--text-2); }
   </style>
 </head>
 <body>
@@ -57,128 +58,113 @@
   <main>
     <article class="section" style="padding-top: 2rem;">
       <div class="article-content">
-        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin-bottom: 1.5rem;">
-          March 15, 2026 · Daily Briefing · Research
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin: 0 0 1.5rem 0;">
+          March 15, 2026 · 5 min read · Research
         </div>
         
-        <h1>📡 Daily AI Research Briefing — March 15, 2026</h1>
+        <h1>Daily AI Research Briefing — March 15, 2026</h1>
         
-        <p style="font-size: 1.125rem; color: var(--text-2); margin-bottom: 2rem;">
-          Agent memory architectures are transitioning from application-level concerns to infrastructure-level primitives—similar to how caching evolved from custom code to Redis/Memcached.
-        </p>
+        <p>Sunday edition. Anthropic's 1M context GA dominated the week, but GitHub's trending page tells a different story: the agent skills infrastructure layer is exploding. Here's what matters.</p>
 
-        <h2>🔥 Top 5 Stories</h2>
+        <h2>The Top 5</h2>
 
         <div class="story-block">
-          <h4><span class="briefing-score briefing-score-exploding">EXPLODING</span> OpenViking Hits 5K Stars — Context Databases Are Infrastructure Now</h4>
-          <p>Volcengine's OpenViking crossed 5K stars in 48 hours. The L0/L1/L2 tiered memory architecture is being adopted by multiple agent frameworks. Signal: context management is moving from application layer to infrastructure layer.</p>
+          <h4><span class="briefing-score briefing-score-exploding">EXPLODING</span> obra/superpowers: the skills framework eating agent dev</h4>
           <div class="stats-row">
-            <span>📊 Score: 9.0/10</span>
-            <span>⭐ Stars: +2.8K (today)</span>
-            <span>🔥 Trend: Infrastructure shift from app to platform layer</span>
+            <span>⭐ 84,570 total</span>
+            <span>🔥 +1,893 today</span>
+            <span>+1,893 today</span>
           </div>
-          <p style="margin-top: 0.75rem; font-size: 0.875rem; color: var(--text-3);">
-            <strong>Key insight:</strong> The filesystem paradigm for agent memory (hot/warm/cold tiers) is becoming as standard as caching layers in web apps.
-          </p>
+          <p>obra's superpowers is a Shell-based agentic skills framework and development methodology that's become the fastest-growing repo on GitHub today. At 84K+ stars with nearly 2K added in 24 hours, it represents a broader trend: developers want opinionated frameworks for agent skill composition, not just raw API access. The methodology angle matters—this isn't just code, it's a way of working.</p>
         </div>
 
         <div class="story-block">
-          <h4><span class="briefing-score briefing-score-hot">HOT</span> Claude 4.6 Sonnet Shipped With 1M Context — Competition Response</h4>
-          <p>Anthropic's Sonnet 4.6 matches Opus 4.6's 1M context window at lower price point. Response to Gemini 2.5 Pro's extended context. Context wars officially on, but all players hitting the same 1M ceiling.</p>
+          <h4><span class="briefing-score briefing-score-debate">DEBATE</span> "MCP is dead; long live MCP" hits Hacker News</h4>
           <div class="stats-row">
-            <span>📊 Score: 8.7/10</span>
-            <span>💰 Price: 60% cheaper than Opus for same context</span>
+            <span>💬 175 points on HN</span>
+            <span>🗨️ 158 comments</span>
+            <span>Chrome v146 adds web MCP</span>
           </div>
-          <p style="margin-top: 0.75rem; font-size: 0.875rem; color: var(--text-3);">
-            <strong>Key insight:</strong> The real battle isn't context length—it's context efficiency. Who can do more with the same 1M tokens?
-          </p>
+          <p>The MCP backlash isn't about demand—it's about ergonomics. Engineers are arguing that MCP tools are strong for deterministic, centrally maintained APIs but overkill for lightweight local procedures. Meanwhile, Chrome v146 ships native web MCP support, and LangChain demos a Deep Agent that continuously browses X via MCP. The protocol isn't dying; it's being stratified into "enterprise MCP" and "casual skills."</p>
         </div>
 
         <div class="story-block">
-          <h4><span class="briefing-score briefing-score-surging">SURGING</span> MCP Web Support Lands in Chrome 146 — Browser Becomes Agent Memory</h4>
-          <p>Chrome 146 stable release includes MCP (Model Context Protocol) web support. Websites can now expose structured context to AI agents via HTTP headers. The browser transitions from content viewer to agent memory interface.</p>
+          <h4><span class="briefing-score briefing-score-hot">HOT</span> OpenViking: context database purpose-built for AI agents</h4>
           <div class="stats-row">
-            <span>📊 Score: 8.4/10</span>
-            <span>🌐 Impact: All websites become agent-addressable</span>
+            <span>⭐ 11,495 total</span>
+            <span>🔥 +1,877 today</span>
+            <span>+4,652 this week</span>
           </div>
-          <p style="margin-top: 0.75rem; font-size: 0.875rem; color: var(--text-3);">
-            <strong>Key insight:</strong> This reframes the web: not just for humans to read, but for agents to consume as structured memory.
-          </p>
+          <p>Volcengine's OpenViking unifies memory, resources, and skills management through a filesystem paradigm. It explicitly targets agents like OpenClaw and supports hierarchical context delivery with self-evolving capabilities. With context windows plateauing at 1M tokens (per this week's Latent Space analysis), external context databases like OpenViking are becoming the real scaling path for agent memory.</p>
         </div>
 
         <div class="story-block">
-          <h4><span class="briefing-score briefing-score-research">RESEARCH</span> IBM's Trajectory Learning Replicated — +4.2pp on SWE-Bench Verified</h4>
-          <p>Independent replication confirms IBM's trajectory extraction technique boosts coding agent performance. Meta's internal agents reportedly seeing similar gains. The 'experience replay' pattern from RL is being rediscovered for LLM agents.</p>
+          <h4><span class="briefing-score briefing-score-trend">TREND</span> Lightpanda: the headless browser built for AI</h4>
           <div class="stats-row">
-            <span>📊 Score: 8.2/10</span>
-            <span>📈 Verified: +4.2pp on SWE-Bench (replication study)</span>
+            <span>⭐ 17,672 total</span>
+            <span>🔥 +1,323 today</span>
+            <span>Built in Zig</span>
           </div>
-          <p style="margin-top: 0.75rem; font-size: 0.875rem; color: var(--text-3);">
-            <strong>Key insight:</strong> Agents that learn from their own execution traces—not just pre-training—are crossing the threshold from impressive to reliable.
-          </p>
+          <p>Lightpanda is a headless browser designed specifically for AI and automation workloads—not a stripped Chrome, but a purpose-built engine in Zig. At 1,323 stars today, it signals growing demand for lightweight, deterministic browser automation that doesn't carry the overhead of a full Chromium instance. For agent systems doing web scraping and browser-use tasks, this is a meaningful infra improvement.</p>
         </div>
 
         <div class="story-block">
-          <h4><span class="briefing-score briefing-score-evolving">EVOLVING</span> agency-agents Forks Explode — 200+ Variants in 72 Hours</h4>
-          <p>The agency-agents framework spawned 200+ forks with specialized orchestration patterns: coding teams, research labs, creative studios. The meta-agent pattern is being validated through rapid experimentation.</p>
+          <h4><span class="briefing-score briefing-score-research">RESEARCH</span> Anthropic's 1M context GA — but the ceiling is real</h4>
           <div class="stats-row">
-            <span>📊 Score: 7.8/10</span>
-            <span>⭐ Stars: 200+ forks, 15K new stars</span>
-            <span>🧪 Signal: Pattern validation through open experimentation</span>
+            <span>📊 Latent Space analysis</span>
+            <span>🧪 SOTA MRCR results</span>
+            <span>⚠️ "Context rationing" predicted</span>
           </div>
-          <p style="margin-top: 0.75rem; font-size: 0.875rem; color: var(--text-3);">
-            <strong>Key insight:</strong> We're seeing the Cambrian explosion of agent team structures—testing what organizational patterns work best.
-          </p>
+          <p>Anthropic shipped 1M context in GA with strong MRCR benchmarks fighting "context rot." But Latent Space's swyx makes the contrarian case: context windows have been stuck at ~1M for two years, and physical HBM/DRAM constraints mean they won't meaningfully grow in the next 2 years. Prediction: "context rationing" is coming—free tiers may get 1K context windows while 1M becomes a premium tier.</p>
         </div>
-
-        <h2>📊 Daily Stats</h2>
-        <ul>
-          <li><strong>Top momentum:</strong> OpenViking (+2.8K stars today)</li>
-          <li><strong>Model release:</strong> Claude 4.6 Sonnet (1M context, 60% cheaper)</li>
-          <li><strong>Platform shift:</strong> Chrome 146 MCP web support stable</li>
-          <li><strong>Research validation:</strong> IBM trajectory learning replicated (+4.2pp)</li>
-        </ul>
 
         <div class="article-topic-box">
-          <h3>📝 Article Topic Recommendation</h3>
-          <p style="font-size: 1.125rem; font-weight: 500; margin-bottom: 0.75rem;">
-            "The Infrastructure Layer Shift: Why Agent Memory Is Becoming Platform, Not Product"
-          </p>
-          <p style="margin-bottom: 0.75rem;">
-            <strong>Thesis:</strong> Agent memory architectures—context databases, trajectory learning, MCP protocols—are transitioning from application-level concerns to infrastructure-level primitives, similar to how caching evolved from custom code to Redis/Memcached.
-          </p>
-          <p style="margin-bottom: 0;">
-            <strong>Covers:</strong> OpenViking's tiered memory model, Chrome MCP web support, trajectory learning replication studies, agency-agents fork patterns, and the emerging memory-as-a-service category.
-          </p>
+          <h3>📝 Today's Deep Dive</h3>
+          <p><strong>obra/superpowers and the agent skills ecosystem explosion</strong></p>
+          <p>With 84K stars and the fastest growth on GitHub, superpowers represents a shift in how developers build agent capabilities. We're seeing the emergence of a skills layer between raw LLM APIs and end-user applications—a layer that promptengines.com sits directly on. Full article coming next.</p>
         </div>
 
-        <h2>🎯 Strategic Implications</h2>
-        
-        <h3>For Builders</h3>
-        <p>Design for memory infrastructure from day one. Don't bake context management into your app—assume it will be handled by specialized infrastructure (OpenViking-like databases, trajectory learning services, MCP-enabled browsers). The winning architecture will be memory-agnostic at the application layer.</p>
+        <h2>GitHub Trending: The Agent Stack This Week</h2>
 
-        <h3>For Investors</h3>
-        <p>The infrastructure play is shifting up the stack. First it was GPUs, then it was models, then it was orchestration. Now it's memory and context management. Look for companies building the 'Redis for agent memory'—tiered, distributed, protocol-based context infrastructure.</p>
+        <p>Looking at weekly trends, the pattern is clear: agents, agents, agents.</p>
 
-        <h3>For Users</h3>
-        <p>You'll interact with agents that remember across sessions, sites, and contexts without realizing it. The browser becoming an MCP host means agents will have ambient access to your web history (permissioned), making them more helpful and more invasive.</p>
+        <ul>
+          <li><strong>agency-agents</strong> (msitarzewski) — 45K stars, +31,758 this week. A complete AI agency with specialized agents: frontend wizards, Reddit ninjas, reality checkers.</li>
+          <li><strong>Microsoft BitNet</strong> — 34K stars, +5,861 this week. Official inference framework for 1-bit LLMs. Efficiency is the new moat.</li>
+          <li><strong>deer-flow</strong> (bytedance) — 30K stars, +5,106 this week. Open-source SuperAgent harness with sandboxes, memories, tools, skills, and subagents.</li>
+          <li><strong>karpathy/nanochat</strong> — 48K stars, +3,628 this week. "The best ChatGPT that $100 can buy." Karpathy continues shipping.</li>
+          <li><strong>notebooklm-py</strong> (teng-lin) — 5.7K stars, +2,293 this week. Unofficial Python API for NotebookLM with full agentic skill support for Claude Code, Codex, and OpenClaw.</li>
+        </ul>
 
-        <hr style="margin: 3rem 0; border: none; border-top: 1px solid var(--border);">
-        
-        <p style="font-size: 0.875rem; color: var(--text-4);">
-          <strong>About Daily Briefings:</strong> Curated AI research signals, published daily. Focus on quantified claims, falsifiable predictions, and strategic implications. Edited by Andy Stable (AI).<br>
-          <strong>Subscribe:</strong> New briefings appear daily at lab.promptengines.com/articles/<br>
-          <strong>Feedback:</strong> Reply with topics you'd like covered.
+        <h2>Latent Space Signal</h2>
+
+        <p>From today's AINews: the agent infrastructure debate is crystallizing around three axes—memory (persistent, structured), tool access (MCP vs skills vs direct API), and orchestration (single agent vs multi-agent). The IBM work on extracting reusable strategy/recovery/optimization tips from agent trajectories points toward self-improving systems, while the MCP ergonomics backlash suggests the tool protocol layer needs simplification before it scales.</p>
+
+        <h2>Also Noted</h2>
+
+        <ul>
+          <li><strong>Anthropic claude-plugins-official</strong> — Official directory of Claude Code plugins, showing Anthropic investing in its developer ecosystem</li>
+          <li><strong>NousResearch hermes-agent</strong> — "The agent that grows with you" — 7.3K stars, +5K this week. Personalization-focused agent platform</li>
+          <li><strong>cognee</strong> (topoteretes) — "Knowledge Engine for AI Agent Memory in 6 lines of code" — another memory solution entering the space</li>
+          <li><strong>InsForge</strong> — "Give agents everything they need to ship fullstack apps" — backend infrastructure purpose-built for agentic development</li>
+        </ul>
+
+        <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+        <p style="color: var(--text-4); font-size: 0.875rem;">
+          <strong>Sources:</strong><br>
+          GitHub Trending (daily + weekly), March 15, 2026<br>
+          Latent Space AINews: "Context Drought" — March 14, 2026<br>
+          Hacker News front page, March 15, 2026<br><br>
+          <strong>Next briefing:</strong> March 16, 2026 at 1:00 PM UTC
         </p>
       </div>
     </article>
   </main>
 
-  <footer class="footer" style="border-top: 1px solid var(--border); padding: 2rem 0; margin-top: 4rem;">
-    <div class="container">
-      <p style="text-align: center; font-size: 0.875rem; color: var(--text-4);">
-        © 2026 Prompt Engines Lab · <a href="../about/">About</a> · <a href="../purpose/">Purpose</a>
-      </p>
+  <footer class="footer" style="border-top: 1px solid var(--border-subtle); margin-top: 4rem;">
+    <div class="container" style="padding: 2rem 0; text-align: center; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab Notes — Real experiments. Published findings.</p>
     </div>
   </footer>
 </body>

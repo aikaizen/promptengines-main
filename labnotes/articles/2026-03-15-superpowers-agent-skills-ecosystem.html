@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>obra/superpowers: The Agent Skills Ecosystem Explosion — Prompt Engines Lab</title>
+  <meta name="description" content="How obra/superpowers hit 84K stars and what it means for the agent skills layer. The shift from raw APIs to opinionated skill frameworks, and what it means for promptengines.com.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .article-content { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .article-content h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+    .article-content h3 { margin-top: 2rem; font-size: 1.25rem; }
+    .article-content p { line-height: 1.7; margin: 1rem 0; }
+    .article-content ul, .article-content ol { margin: 1rem 0; padding-left: 1.5rem; }
+    .article-content li { margin: 0.5rem 0; }
+    .article-content code { font-family: var(--mono); background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.875rem; }
+    .article-content pre { background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; }
+    .article-content pre code { background: none; padding: 0; }
+    .signal-box { background: var(--bg-elevated); border-left: 4px solid var(--accent); padding: 1.25rem; margin: 1.5rem 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+    .signal-box h4 { margin-top: 0; color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html">Lab<span>Notes</span></a>
+      <nav class="nav">
+        <a href="../team/">Team</a>
+        <a href="../purpose/">Purpose</a>
+        <div class="nav-dropdown">
+          <span>Labnotes</span>
+          <div class="nav-dropdown-menu">
+            <a href="../articles/">Articles</a>
+            <a href="../signals/">Signals</a>
+            <a href="../build-stream/">Build Stream</a>
+            <a href="../skills/">Skills</a>
+            <a href="../submit/">Submit Article</a>
+            <a href="../review/">Review <span style="font-size: 10px; padding: 2px 6px; background: var(--accent-dim); color: var(--accent); border-radius: 4px;">Internal</span></a>
+            <a href="../about/">About</a>
+          </div>
+        </div>
+        <a href="https://promptengines.com" target="_blank" rel="noopener noreferrer">PromptEngines.com</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="section" style="padding-top: 2rem;">
+      <div class="article-content">
+        <div class="article-meta" style="color: var(--text-4); font-size: 0.875rem; margin: 0 0 1.5rem 0;">
+          March 15, 2026 · 8 min read · Agent Infrastructure
+        </div>
+        
+        <h1>obra/superpowers: The Agent Skills Ecosystem Explosion</h1>
+        
+        <p>On March 15, 2026, obra/superpowers is the single fastest-growing repository on GitHub: 84,570 stars with 1,893 added in the last 24 hours. It's a Shell-based "agentic skills framework and software development methodology." Not a model. Not a hosting platform. A <em>way of composing agent capabilities</em>.</p>
+
+        <p>That should make anyone building in the agent space pay attention. Here's why it matters, what it signals, and what it means for the projects we're building.</p>
+
+        <h2>What Is Superpowers?</h2>
+
+        <p>superpowers is deceptively simple: it's a framework for defining, composing, and executing agent skills using Shell scripts. The "methodology" part is the key differentiator—it's not just code, it's a structured approach to building agent capabilities that can be shared, versioned, and composed.</p>
+
+        <p>The core idea: instead of writing monolithic agent code or configuring complex YAML pipelines, you write small, focused Shell scripts that define discrete capabilities. Each skill is self-contained, testable, and composable.</p>
+
+        <div class="signal-box">
+          <h4>Why Shell?</h4>
+          <p>Shell is the universal substrate of developer machines. No runtime dependencies, no package managers, no version conflicts. A skill written in Bash works everywhere—on a developer's laptop, in CI/CD, inside a container, on a Raspberry Pi. This is a deliberate architectural choice: maximum portability, minimum friction.</p>
+        </div>
+
+        <h2>The Trend Behind the Stars</h2>
+
+        <p>superpowers isn't growing in isolation. The entire agent skills layer is exploding this week:</p>
+
+        <ul>
+          <li><strong>agency-agents</strong> (45K stars, +31,758 this week) — a complete AI agency with specialized agents, each with "personality, processes, and proven deliverables"</li>
+          <li><strong>NousResearch hermes-agent</strong> (7.3K stars, +5K this week) — "The agent that grows with you," focused on personalization and learning</li>
+          <li><strong>deer-flow</strong> (bytedance, 30K stars, +5K this week) — SuperAgent harness with "sandboxes, memories, tools, skills and subagents"</li>
+          <li><strong>OpenViking</strong> (11.5K stars, +1.8K today) — context database specifically for agent memory and resource management</li>
+        </ul>
+
+        <p>The pattern: developers are moving up the stack from "call an LLM API" to "compose agent capabilities from pre-built components." The question is no longer "can the model do this?" but "how do I wire together the right skills, tools, and memory?"</p>
+
+        <h2>The Three-Layer Agent Stack</h2>
+
+        <p>What we're seeing crystallize is a three-layer stack:</p>
+
+        <ol>
+          <li><strong>Model layer</strong> — LLMs (Claude, GPT, Gemini, open-source). Commoditizing fast.</li>
+          <li><strong>Protocol layer</strong> — MCP, direct API calls, A2A. The transport mechanism for tools and data. Under active debate (see "MCP is dead; long live MCP" on Hacker News).</li>
+          <li><strong>Skills layer</strong> — frameworks like superpowers, ClawHub, and DeerFlow that define <em>what agents can do</em> and <em>how capabilities compose</em>.</li>
+        </ol>
+
+        <p>The skills layer is where the value is accumulating. Models are interchangeable. Protocols will standardize. But the library of well-tested, composable agent skills? That's a moat.</p>
+
+        <h2>What This Means for promptengines.com</h2>
+
+        <p>This trend directly intersects with our ecosystem. Here's the strategic read:</p>
+
+        <h3>1. Skills are the new content</h3>
+        <p>Just as blog posts and tutorials were the content that drove traffic in the SaaS era, well-crafted agent skills are becoming the content that drives adoption in the agent era. A skill that "just works" is worth more than a thousand-word tutorial.</p>
+
+        <h3>2. The methodology matters more than the code</h3>
+        <p>superpowers' explosive growth isn't because of its Shell scripts—it's because of the <em>methodology</em> for thinking about agent capabilities. The projects that define how to think about skills (not just what skills exist) will win.</p>
+
+        <h3>3. Memory and context are the new frontier</h3>
+        <p>With context windows plateauing at 1M tokens (Latent Space's "Context Drought" analysis from March 14), the real scaling path for agents is external context management. OpenViking's filesystem-based approach and cognee's "6 lines of code" pitch are both bets on this thesis. Any skills framework that integrates with persistent context systems will have an advantage.</p>
+
+        <h2>The MCP Debate: Skills vs. Protocols</h2>
+
+        <p>This week's Hacker News discussion ("MCP is dead; long live MCP," 175 points, 158 comments) is the other half of the story. The community is splitting into two camps:</p>
+
+        <p><strong>Team MCP:</strong> Tools need deterministic, centrally maintained APIs with rapidly changing ground truth. MCP provides that. Usage is still booming despite the backlash.</p>
+
+        <p><strong>Team Skills:</strong> Lightweight, local, natural-language procedures are sufficient for most use cases. MCP is over-engineered for what most agents need. Skills frameworks like superpowers prove this.</p>
+
+        <p>The pragmatic answer: both. MCP for enterprise integrations where you need type safety and contract enforcement. Skills for everything else. The frameworks that support both modes will win.</p>
+
+        <div class="signal-box">
+          <h4>Chrome v146: MCP Goes Browser-Native</h4>
+          <p>While the debate rages, Chrome v146 ships native web MCP support. A LangChain demo shows a Deep Agent continuously browsing X and compiling daily summaries via MCP. The protocol isn't dying—it's going browser-native, which changes the addressable market entirely.</p>
+        </div>
+
+        <h2>The Agent Memory Arms Race</h2>
+
+        <p>The most technically interesting thread from this week's AI news: persistent memory and self-improvement. IBM's work on extracting reusable strategy/recovery/optimization tips from agent trajectories points toward systems that learn from their own execution history.</p>
+
+        <p>Three memory approaches competing:</p>
+
+        <ul>
+          <li><strong>Vector databases</strong> (Chroma, Pinecone) — semantic search over past interactions. Mature but lossy.</li>
+          <li><strong>Context databases</strong> (OpenViking) — filesystem-based, hierarchical, self-evolving. Novel but unproven at scale.</li>
+          <li><strong>Structured memory</strong> (agent-internal files, JSON state) — deterministic, auditable, but manual. What most production agents actually use today.</li>
+        </ul>
+
+        <p>superpowers and similar frameworks will need to pick a memory strategy. The ones that make it easy to plug in different backends will have an advantage over those that hard-code a single approach.</p>
+
+        <h2>Practical Takeaways</h2>
+
+        <ol>
+          <li><strong>Invest in the skills layer.</strong> The model and protocol layers will commoditize. Skills—well-tested, composable, documented capabilities—are where defensibility lives.</li>
+          <li><strong>Start with Shell.</strong> superpowers' choice of Shell isn't accidental. It's the lowest-friction way to define agent capabilities. Consider whether your skills can be expressed as simple scripts before reaching for Python or TypeScript.</li>
+          <li><strong>Plan for context overflow.</strong> 1M context windows are the ceiling for the foreseeable future. Your agent architecture needs external memory, not just longer contexts.</li>
+          <li><strong>Watch the MCP stratification.</strong> Enterprise will use MCP. Everyone else will use skills. Build for both if you can, pick one if you must.</li>
+          <li><strong>Methodology > code.</strong> The fastest-growing projects this week aren't the ones with the most features—they're the ones with the clearest <em>approach</em>. Define how to think about the problem, then ship the code.</li>
+        </ol>
+
+        <h2>Conclusion</h2>
+
+        <p>obra/superpowers hitting 84K stars isn't about a Shell framework. It's a signal that the agent ecosystem is maturing past the "just wire up an API" phase into the "compose capabilities from a library of skills" phase. The projects that understand this shift—whether they're building skills, frameworks, or platforms—will capture the next wave of value.</p>
+
+        <p>The agent stack is consolidating. The skills layer is where the action is. And context management, not longer context windows, is the real scaling path.</p>
+
+        <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+        <p style="color: var(--text-4); font-size: 0.875rem;">
+          <strong>Related Lab Notes:</strong><br>
+          <a href="./2026-03-14-context-drought-anthropic-1m-context-ga.html">The Context Drought: Anthropic Ships 1M in GA</a><br>
+          <a href="./2026-03-14-agent-memory-architectures.html">Agent Memory Architectures</a><br>
+          <a href="./2026-03-14-agent-memory-new-context-window.html">Agent Memory Is the New Context Window</a><br><br>
+          <strong>References:</strong><br>
+          obra/superpowers: https://github.com/obra/superpowers<br>
+          Latent Space AINews "Context Drought": https://www.latent.space/p/ainews-context-drought<br>
+          Hacker News "MCP is dead; long live MCP": https://news.ycombinator.com/item (March 15, 2026)<br>
+          GitHub Trending: https://github.com/trending
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" style="border-top: 1px solid var(--border-subtle); margin-top: 4rem;">
+    <div class="container" style="padding: 2rem 0; text-align: center; color: var(--text-4); font-size: 0.875rem;">
+      <p>Prompt Engines Lab Notes — Real experiments. Published findings.</p>
+    </div>
+  </footer>
+</body>
+</html>
